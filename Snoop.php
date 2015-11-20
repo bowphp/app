@@ -1401,7 +1401,7 @@ class Snoop
     {
 
     	if ($key !== null) {
-    		return isset($_POST[$key]) ? $_POST[$key] : false;
+    		return $this->isBodyKey($key) ? $_POST[$key] : false;
     	}
     	return $_POST;
     }
@@ -1413,7 +1413,7 @@ class Snoop
      */
     public function isBodyKey($key)
     {
-    	return isset($this->body()[$key]) && !empty($this->body()[$key]);
+    	return isset($_POST[$key]) && !empty($_POST[$key]);
     }
 
     /**
@@ -1425,7 +1425,7 @@ class Snoop
     public function param($key = null)
     {
     	if ($key !== null) {
-    		return isset($_GET[$key]) ? $_GET[$key] : false;
+    		return $this->isParamKey($key) ? $_GET[$key] : false;
     	}
     	return $_GET;
     }
@@ -1433,14 +1433,42 @@ class Snoop
     /**
      * isParamKey, verifie si de Snoop::param
      * contient la cle definie.
+	 * @param string|int $key
      * @return mixed
      */
-    public function isParamKey()
+    public function isParamKey($key)
     {
-    	isset($this->param()[$key]);
+    	return isset($_GET[$key]) && !empty($key);
     }
 
+	/**
+	 * files, retoure les informations
+	 * du $_FILES
+	 * @return mixed
+	 */
+	public function files($key = null)
+	{
+		if ($key !== null) {
+			return isset($_FILES[$key]) ? (object) $_FILES[$key] : false;
+		}
+		return $_FILES;
+	}
 
+    /**
+     * isParamKey, verifie si de Snoop::param
+     * contient la cle definie.
+	 * @param string|int $key
+     * @return mixed
+     */
+    public function isFilesKey($key)
+    {
+    	return isset($_FILES[$key]) && !empty($_FILES[$key]);
+    }
+
+	/**
+	 * currentRoot, retourne la route courante
+	 * @return string
+	 */
     public function currentRoot()
     {
     	return $this->currentRoot;
