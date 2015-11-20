@@ -214,6 +214,9 @@ class Snoop
 	public function kill($message = "")
 	{
 		// Arret du processus.
+		if (!is_string($message)) {
+			$message = null;
+		}
 		die($message);
 	}
 
@@ -258,10 +261,24 @@ class Snoop
 	 * dans le tableau de session.
 	 * @param string|int $key
 	 * @param mixed $data
+	 * @throws \InvalidArgumentException
 	 */
 	public function addSession($key, $data) {
 		$this->startSession();
-		$_SESSION[$data];
+		if (!is_string($key)) {
+			throw new InvalidArgumentException("La clé doit être un chaine.", E_ERROR);
+		}
+		$_SESSION[$key] = $data;
+	}
+
+	/**
+	 * removeSession, supprime un entree dans la
+	 * table de session.
+	 * @param string $key
+	 */
+	public function removeSession($key)
+	{
+		unset($_SESSION[$key]);
 	}
 
 	/**
@@ -273,8 +290,7 @@ class Snoop
 	 */
 	private static function makeQuery($options, $cb = null)
 	{
-		/////// ----- Tutoriel ----- ///////
-		/**
+		/** NOTE:
 		 *	 | - where
 		 *	 | - order
 		 *	 | - limit | take.
@@ -422,7 +438,7 @@ class Snoop
 		 * Vérification de l'existance de la fonction de callback
 		 */
 		if ($cb !== null) {
-			/**
+			/** NOTE:
 			 * Execution de la fonction de rappel,
 			 * qui récupère une erreur ou la query
 			 * pour évantuel vérification
@@ -685,10 +701,10 @@ class Snoop
 	 */
 	public function disSerializationVariable($filePath)
 	{
-		# Ouverture du fichier de sérialisation.
+		// Ouverture du fichier de sérialisation.
 		$serializedData = @file_get_contents($filePath);
 		if (is_string($serializedData)) {
-			# On retourne l'element dé-sérialisé
+			// On retourne l'element dé-sérialisé
 			return unserialize($serializedData);
 		}
 		return $serializedData;
@@ -720,7 +736,7 @@ class Snoop
 			echo $errorList;
 			echo "</ul>";
 			echo "</div>";
-			# On arrete tout.
+			// On arrete tout.
 			$this->kill();
 		}
 	}
@@ -1299,6 +1315,17 @@ class Snoop
 		echo "</pre>";
     	$this->kill();
     }
+
+	public function it($message, $cb = null)
+	{
+		echo "<h2>{$message}</h2>";
+		if (is_callable($cb)) {
+			call_user_func_array($cb, [$this]);
+		} else {
+			$this->debug(array_slice(func_get_args(), 1, func_num_args()));
+		}
+		$this->kill();
+	}
 
     /**
      * convertHourToLetter, convert une heure en letter
