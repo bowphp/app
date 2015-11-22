@@ -300,6 +300,7 @@ class Snoop
 	public function removeSession($key)
 	{
 		unset($_SESSION[$key]);
+		return $this;
 	}
 
 	/**
