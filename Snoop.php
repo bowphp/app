@@ -1345,11 +1345,24 @@ class Snoop
     	if (count(func_get_args()) == 0) {
     		throw new InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
     	}
-		echo "<tt><pre>";
+    	ob_start();
     	foreach (func_get_args() as $key => $value) {
-    		echo var_export($value, true);
+    		var_dump($value);
+    		echo "\n";
     	}
-		echo "</pre><br/></tt>";
+		$content = ob_get_clean();
+    	$content = preg_replace("~\{\n\}~i", "[empty]", $content);
+		$content = preg_replace("~(string|int|object|stdclass|bool|double|float|array)~i", "<span style=\"color: rgba(255, 0, 0, 0.5); font-style: italic\">&lt;$0&gt;</span>", $content);
+		$content = preg_replace('~\((\d+)\)~i', "<span style=\"color: #498\">(len=$1)</span>", $content);
+		$content = preg_replace('~(\s".+")~i', "<span style=\"color: #458\">$0</span>", $content);
+		$content = preg_replace("~(=>)(\n\s?)+~i", "<span style=\"color: #754\"> =</span>", $content);
+		$content = preg_replace("~\[(.+)\]~i", "<span style=\"color:#666\">$0</span>", $content);
+		$content = preg_replace("~(\[)~i", "<span style=\"color: rgba(0, 10, 0, 0.2)\"> [[</span>", $content);
+		$content = preg_replace("~(\])~i", "<span style=\"color: rgba(0, 10, 0, 0.2)\">]]</span>", $content);
+		$content = "<pre><tt><div style=\"font-family: monaco, courier; font-size: 13px\">$content</div></tt></pre>";
+    	
+    	echo $content;
+
     	$this->kill();
     }
 
