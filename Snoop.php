@@ -241,6 +241,15 @@ class Snoop
 	}
 
 	/**
+     * filessessionIsEmpty
+     *	@return boolean
+     */
+    public function sessionIsEmpty()
+    {
+    	return empty($_SESSION);
+    }
+
+	/**
 	 * session, permet de manipuler le donnee
 	 * de session.
 	 * permet de recuperer d'une valeur ou
@@ -268,7 +277,11 @@ class Snoop
 		if (!is_string($key)) {
 			throw new InvalidArgumentException("La clé doit être un chaine.", E_ERROR);
 		}
-		$_SESSION[$key] = $data;
+		if ($this->isSessionKey($key)) {
+			array_push($_SESSION[$key], $data);
+		} else {
+			$_SESSION[$key] = $data;
+		}
 	}
 
 	/**
@@ -1056,8 +1069,8 @@ class Snoop
 	 */
 	public function uploadFile($file, array $extension, $cb = null, $hash = null)
 	{
-		if (!is_array($file)) {
-			self::callbackLauncher($cb, [new \InvalidArgumentException("Parametre invalide $file. Elle doit etre un tableau")]);
+		if (!is_object($file)) {
+			self::callbackLauncher($cb, [new \InvalidArgumentException("Parametre invalide " . print_r($file, true) .". Elle doit etre un tableau")]);
 		}
 
 		if (empty($file)) {
@@ -1415,6 +1428,15 @@ class Snoop
     {
     	return isset($_POST[$key]) && !empty($_POST[$key]);
     }
+    
+    /**
+     * bodyIsEmpty
+     *	@return boolean
+     */
+    public function bodyIsEmpty()
+    {
+    	return empty($_POST);
+    }
 
     /**
      * Param, returne les informations
@@ -1440,6 +1462,15 @@ class Snoop
     {
     	return isset($_GET[$key]) && !empty($key);
     }
+    
+    /**
+     * paramIsEmpty
+     *	@return boolean
+     */
+    public function paramIsEmpty()
+    {
+    	return empty($_GET);
+    }
 
 	/**
 	 * files, retoure les informations
@@ -1463,6 +1494,15 @@ class Snoop
     public function isFilesKey($key)
     {
     	return isset($_FILES[$key]) && !empty($_FILES[$key]);
+    }
+
+    /**
+     * filesIsEmpty
+     *	@return boolean
+     */
+    public function filesIsEmpty()
+    {
+    	return empty($_FILES);
     }
 
 	/**
