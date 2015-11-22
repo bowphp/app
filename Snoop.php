@@ -1552,4 +1552,9 @@ class Snoop
     	return $this->currentRoot;
     }
 
+    public static function mail()
+    {
+    	return Mail::load();
+    }
+
 }
