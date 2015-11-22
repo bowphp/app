@@ -46,6 +46,7 @@ class Snoop
 	private $root = "";
 	private $public = "";
 	private $currentRoot = "";
+	private $fileExtension = ["png", "jpg"];
 
 	/**
 	 * Configuration de date en francais.
@@ -272,13 +273,20 @@ class Snoop
 	 * @param mixed $data
 	 * @throws \InvalidArgumentException
 	 */
-	public function addSession($key, $data) {
+	public function addSession($key, $data, $next = null) {
+		
 		$this->startSession();
+
 		if (!is_string($key)) {
 			throw new InvalidArgumentException("La clé doit être un chaine.", E_ERROR);
 		}
-		if ($this->isSessionKey($key)) {
-			array_push($_SESSION[$key], $data);
+
+		if ($next === true) {
+			if ($this->isSessionKey($key)) {
+				array_push($_SESSION[$key], $data);
+			} else {
+				$_SESSION[$key] = $data;
+			}
 		} else {
 			$_SESSION[$key] = $data;
 		}
@@ -691,7 +699,7 @@ class Snoop
 		echo '<div style="margin: auto; width: 500px; text-align: center; font-size: 16px; color: red; border: 5px solid tomato; bordor-radius: 5px; padding: 10px;">';
 		echo $errorCode . " : " . $errorMessage;
 		echo '</div>';
-		$this->kill();
+		self::kill();
 	}
 
 	/**
@@ -1056,7 +1064,55 @@ class Snoop
 	public function setUploadFileName($filename)
 	{
 		self::$uploadFileName = $filename;
+		return $this;
 	}
+
+	/**
+	 * @param array|string extension
+	 */
+	public function setFileExtension($extension)
+	{
+		if (is_array($extension)) {
+			$this->fileExtension = $extension;
+		} else {
+			$this->fileExtension = func_get_args();
+		}
+		return $this;
+	}
+
+    /**
+    * setUploadedDir, fonction permettant de redefinir le repertoir d'upload
+    *
+    * @param string:path, le chemin du dossier de l'upload
+	* @throws \InvalidArgumentException
+	* @return \System\Snoop
+    */
+    public function setUploadDir($path)
+    {
+        if (is_string($path)) {
+            self::$uploadDir = $path;
+        } else {
+           throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+        }
+        return $this;
+    }
+
+    /**
+     * Modifie la taille predefinie de l'image a uploader.
+     *
+     * @param integer $size
+     * @throws \InvalidArgumentException
+	 * @return \System\Snoop
+     */
+    public function setFileSize($size)
+    {
+    	if (is_int($fzie)) {
+    		self::$fileSize = $size;
+    	} else {
+    		throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+    	}
+    	return $this;
+    }
 
 	/**
 	 * UploadFile, fonction permettant de uploader un fichier
@@ -1067,22 +1123,19 @@ class Snoop
 	 * @param string $hash=null
 	 * @return \System\Snoop
 	 */
-	public function uploadFile($file, array $extension, $cb = null, $hash = null)
+	public function uploadFile($file, $cb = null, $hash = null)
 	{
-		if (!is_object($file)) {
-			self::callbackLauncher($cb, [new \InvalidArgumentException("Parametre invalide " . print_r($file, true) .". Elle doit etre un tableau")]);
+		var_dump($file);
+		if (!is_object($file) && !is_array($file)) {
+			self::callbackLauncher($cb, [new \InvalidArgumentException("Parametre invalide <pre>" . var_export($file, true) ."</pre>. Elle doit etre un tableau ou un object StdClass")]);
 		}
 
 		if (empty($file)) {
 			self::callbackLauncher($cb, [new \InvalidArgumentException("Le fichier a uploader n'existe pas")]);
 		}
 
-        $file = (object) $file;
-
-        if (is_array($extension)) {
-            $extensionValide = $extension;
-        } else {
-            $cb = $extension;
+        if (is_array($file)) {
+        	$file = (object) $file;
         }
 
         # Si le fichier est bien dans le repertoir tmp de PHP
@@ -1105,13 +1158,19 @@ class Snoop
             if ($file->error === 0) {
                 if ($file->size <= self::$fileSize) {
                     $pathInfo = (object) pathinfo($file->name);
-                    if (in_array($pathInfo->extension, $extensionValide)) {
+                    if (in_array($pathInfo->extension, $this->fileExtension)) {
                         if ($hash !== null) {
-                        	if (self::$uploadFileName !== nul) $filename = hash($hash, self::$uploadFileName);
-                            else $filename = hash($hash, uniqid(rand(null, true)));
+                        	if (self::$uploadFileName !== nul) {
+                        		$filename = hash($hash, self::$uploadFileName);
+                        	} else {
+                        		$filename = hash($hash, uniqid(rand(null, true)));
+                        	}
                         } else {
-                        	if (self::$uploadFileName !== null) $filename = self::$uploadFileName;
-                        	else $filename = $pathInfo->filename;
+                        	if (self::$uploadFileName !== null) {
+                        		$filename = self::$uploadFileName;
+                        	} else {
+                        		$filename = $pathInfo->filename;
+                        	}
                         }
                         move_uploaded_file($file->tmp_name, self::$uploadDir . "/" . $filename . '.' . $pathInfo->extension);
                         # Status, fichier uploadé
@@ -1153,41 +1212,8 @@ class Snoop
         } else {
         	return $status;
         }
-        return $this;
-    }
 
-    /**
-    * setUploadedDir, fonction permettant de redefinir le repertoir d'upload
-    *
-    * @param string:path, le chemin du dossier de l'upload
-	* @throws \InvalidArgumentException
-	* @return \System\Snoop
-    */
-    public function setUploadDir($path)
-    {
-        if (is_string($path)) {
-            self::$uploadDir = $path;
-        } else {
-           throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
-        }
         return $this;
-    }
-
-    /**
-     * Modifie la taille predefinie de l'image a uploader.
-     *
-     * @param integer $size
-     * @throws \InvalidArgumentException
-	 * @return \System\Snoop
-     */
-    public function setFileSize($size)
-    {
-    	if (is_int($fzie)) {
-    		self::$fileSize = $size;
-    	} else {
-    		throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
-    	}
-    	return $this;
     }
 
     /**
@@ -1255,7 +1281,6 @@ class Snoop
 	 */
 	public function set($key, $value)
 	{
-
 		if (in_array($key, ["views", "engine", "public", "root"])) {
 			if (property_exists($this, $key)) {
 				$this->$key = $value;
@@ -1272,8 +1297,7 @@ class Snoop
      */
     public function redirect($path)
     {
-    	$path = $this->getRoot() . $path;
-    	header("Location: " . $path, true, 301);
+    	header("Location: " . $this->getRoot() . $path, true, 301);
     	$app->kill();
     }
 
@@ -1321,11 +1345,11 @@ class Snoop
     	if (count(func_get_args()) == 0) {
     		throw new InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
     	}
-		echo "<pre>";
+		echo "<tt><pre>";
     	foreach (func_get_args() as $key => $value) {
-    		var_dump($value);
+    		echo var_export($value, true);
     	}
-		echo "</pre>";
+		echo "</pre><br/></tt>";
     	$this->kill();
     }
 
@@ -1513,6 +1537,5 @@ class Snoop
     {
     	return $this->currentRoot;
     }
-
 
 }
