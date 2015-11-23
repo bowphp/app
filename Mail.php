@@ -14,6 +14,7 @@ class Mail
 	private $html = "";
 	private $sep = "";
 	private static $mail = null;
+	private $hash;
 
     /**
      * addHeader, Ajout une entête
@@ -34,6 +35,30 @@ class Mail
     public function to($to)
     {
     	$this->to = $to;
+    	return $this;
+    }
+
+    /**
+     * to, definir le receveur
+     * @param string $to
+     * @param Mail
+     */
+    public function addFile($file)
+    {
+    	if (!is_file($file)) {
+    		trigger_error("Ce n'est pas une fichier.", E_USER_ERROR);
+    	}
+
+    	$content = file_get_contents($file);
+    	$base_name = basename($file);
+
+    	$this->body("--PHP-mixed-{$this->hash}");
+    	$this->body("Content-Type: application/octect-stream; name=\"{$base_name}\"");
+    	$this->body("Content-Transfer-Encoding: base64");
+    	$this->body("Content-Disposition: attachement");
+    	$this->body(chunk_split(base64_encode($content));
+    	$this->body("\n\n");
+    	
     	return $this;
     }
 
@@ -65,7 +90,6 @@ class Mail
      */
     public function toHtml()
     {
-    	$this->addHeader("MIME-Version: 1.0");
     	$this->addHeader("Content-Type: text/html; charset=utf-8");
     	return $this;
     }
@@ -74,9 +98,9 @@ class Mail
      * @param body
      * @param Mail
      */
-    public function body()
+    public function body($body)
     {
-    	$this->body = $body;
+    	$this->body .= $body . "\n";
     	return $this;
     }
 
@@ -112,6 +136,10 @@ class Mail
 	   	} else {
 	        $this->sep = (strpos(PHP_OS, 'WIN') === false) ? "\n" : "\r\n";
         }
+        $this->hash = md5(date("r", time()));
+    	$this->addHeader("MIME-Version: 1.0");
+    	$this->addHeader("X-Mailer: PHP-" . phpversion());
+    	$this->addHeader("Content-Type: multipart/mixed; boundary=\"PHP-mixed-{$this->hash}\"");
 	}
 
     public static function load()
