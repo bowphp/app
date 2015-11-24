@@ -1,62 +1,86 @@
 <?php
 
-
+/**
+ * Systeme d'envoye de mail utilisant le fonction
+ * mail de php.
+ * @author Frank Dakia <dakiafranck@gmail.com>
+ * @package System
+ */
 
 namespace System;
 
 class Mail 
 {
-
-	private $headers = [];
-	private $to = null;
-	private $subject = null;
+	// Liste des entetes
+	private $headers = []; 
+	// definir le desitinataire
+	private $to = null; 
+	// definir l'object du mail
+	private $subject = null; 
+	// definir le message
 	private $message = null;
-	private $html = 0;
-	private $part = 0;
-	private $sep;
-	private $attach = [];
-	private $boundary;
-
+	// permet de compter le nombre content-type
+	private $part = 0; 
+	// definir le type de retoure chariot CRLF ou LF
+	private $sep; 
+	// definir le frontiere entre les contenus.
+	private $boundary; 
+	// Singleton de mail
 	private static $mail = null;
 
     /**
      * addHeader, Ajout une entête
      * @param string $head
-     * @param Mail
+     * @param self
      */
     public function addHeader($key, $value)
     {
-    	if (in_array($key, ["Date", "X-Mailer", "MIME-Version", "From", "Bcc", "Cc", "Subject"])) {
-	    	if (array_key_exists($key, $this->headers["top"])) {
-	    		if (!is_array($this->headers["top"][$key])) {
-	    			$old = $this->headers["top"][$key];
-	    			$this->headers["top"][$key] = [$old, $value];
-	    		} else {
-		    		array_push($this->headers["top"][$key], $value); 
-	    		}
-	    	} else {
-	    		$this->headers["top"][$key] = $value;
-	    	}
+    	if (array_key_exists($key, $this->headers["top"])) {
+    		if (!is_array($this->headers["top"][$key])) {
+    			$old = $this->headers["top"][$key];
+    			$this->headers["top"][$key] = [$old, $value];
+    		} else {
+	    		array_push($this->headers["top"][$key], $value);
+    		}
+    	} else {
+    		$this->headers["top"][$key] = $value;
     	}
     	return $this;
     }
 
+    /**
+     * addFeatureHeader, permet d'ajout une entete
+     * @param string $key
+     * @param string $value
+     * @return self
+     */
     private function addFeatureHeader($key, $value)
     {
     	if (strtolower($key) == "content-type") {
     		$this->headers["bottom"][$this->part] = [];
     		$this->part++;
     	}
+
     	if ($key == "data") {
     		$value = preg_replace("@\n$@", "", $value);
     		$data = $this->sep . $this->sep. $value;
     	} else {
     		$data = "$key: $value";
     	}
-    	array_push($this->headers["bottom"][$this->part - 1], $data);
+
+    	if (($this->part - 1) === -1) {
+		    array_push($this->headers["bottom"][$this->part], $data);
+    	} else {
+    		array_push($this->headers["bottom"][$this->part - 1], $data);
+    	}
+    	
     	return $this;
     }
 
+    /**
+     * formdtHeader, formateur d'entete smtp
+     * @return string
+     */
     public function formatHeader()
     {
     	$content_length = count($this->headers["bottom"]);
@@ -73,7 +97,8 @@ class Mail
     			$form .= $value . $sep;
     		}
     	} else {
-    		$form .= "Content-Type: multipart/mixed; boundary=\"{$this->boundary}\"{$sep}";
+    		$form .= "Content-Type: multipart/mixed; boundary=\"{$this->boundary}\"{$sep}{$sep}";
+    		$form .= $this->boundary . $sep;
     		foreach ($this->headers["bottom"] as $value) {
     			foreach ($value as $key => $v) {
     				$form .= $v . $sep;
@@ -99,21 +124,39 @@ class Mail
      * @param string $to=null
      * @param Mail
      */
-    public function to($to, $name = null)
+    public function to($to, $name = null, $smtp = false)
     {
-    	if ($this->to !== null) {
-    		$this->to .= ", ";
-    	}
-    	if (is_string($name)) {
-    		$this->to .= ucwords($name) . " <$to>";
+    	$to = $this->formatEmail($to, $name);
+
+    	if ($smtp === true) {
+    		$this->addFeatureHeader("To", $to);
     	} else {
-    		$this->to .= "$to"; 
+	    	if ($this->to !== null) {
+	    		$this->to .= ", ";
+	    	} else {
+	    		$this->to = $to;
+	    	}
     	}
     	return $this;
     }
 
+	/**
+	 * Formaté l'email recu.
+	 * @param  string
+	 * @param  string
+	 * @return array
+	 */
+	private function formatEmail($email, $name)
+	{
+		if (!$name && preg_match('#^(.+) +<(.*)>\z#', $email, $matches)) {
+			return [$matches[2] => $matches[1]];
+		} else {
+			return [$email => $name];
+		}
+	}
+
     /**
-     * addFile, permet d'ajout un fichier d'attachement
+     * addFile, Permet d'ajout un fichier d'attachement
      * @param string $file
      * @param Mail
      */
@@ -132,7 +175,7 @@ class Mail
     }
 
     /**
-     * subject, definit le suject du mail
+     * subject, Definit le suject du mail
      * @param string $subject
      * @param string $smtp=false
      * @param Mail
@@ -148,24 +191,24 @@ class Mail
     }
 
     /**
-     * from, definir l'expediteur du mail
+     * from, Definir l'expediteur du mail
      * @param string $from
      * @param string $name=null
      * @return self
      */
     public function from($from, $name = null, $smtp = false)
     {	
-    	$from = ($name !== null) ? (ucwords($name) . " &lt;{$from}&gt;") : $from;
-    	if ($smtp === true) {
-    		$this->addHeader("From", $from);
+    	$from = ($name !== null) ? (ucwords($name) . " <{$from}>") : $from;
+    	if (!isset($this->fromDefined)) {
+	    	$this->addHeader("From", $from);
     	} else {
-    		$this->from = $from;
+	    	$this->fromDefined = true;
     	}
     	return $this;
     }
 
     /**
-     * toHtml, definir le type de contenu en text/html
+     * toHtml, Definir le type de contenu en text/html
      * @param string $html=null
      * @return self
      */
@@ -177,7 +220,7 @@ class Mail
     	return $this;
     }
     /**
-     * toText, definir le corps du message
+     * toText, Definir le corps du message
      * @param string text
      * @return self
      */
@@ -189,15 +232,76 @@ class Mail
     	return $this;
     }
 
+	/**
+	 * Adds blind carbon copy
+	 * @param string $mail
+	 * @param string $name=null
+	 * @return self
+	 */
+    public function addBcc($mail, $name = null)
+    {
+    	$mail = ($name !== null) ? (ucwords($name) . " <{$mail}>") : $mail;
+    	$this->addHeader("Bcc", $mail);
+    }
+
+	/**
+	 * Adds carbon copy
+	 * @param string $mail
+	 * @param string $name=null
+	 * @return self
+	 */
+    public function addCc($mail, $name = null)
+    {
+    	$mail = ($name !== null) ? (ucwords($name) . " <{$mail}>") : $mail;
+    	$this->addHeader("Cc", $mail);
+    	return $this;
+    }
+
+	/**
+	 * Adds Reply-To
+	 * @param string $mail
+	 * @param string $name=null
+	 * @return self
+	 */
+    public function addReplyTo($mail, $name = null)
+    {
+    	$mail = ($name !== null) ? (ucwords($name) . " <{$mail}>") : $mail;
+    	$this->addHeader("Replay-To", $mail);
+    	return $this;
+    }
+	/**
+	 * Adds Return-Path
+	 * @param string $mail
+	 * @param string $name=null
+	 * @return self
+	 */
+    public function addReturnPath($mail, $name = null)
+    {
+    	$mail = ($name !== null) ? (ucwords($name) . " <{$mail}>") : $mail;
+    	$this->addHeader("Return-Path", $mail);
+    	return $this;
+    }
+
+	/**
+	 * Sets email priority.
+	 * @param  int $priority
+	 * @return self
+	 */
+	public function addPriority($priority)
+	{
+		$this->addHeader('X-Priority', (int) $priority);
+		return $this;
+	}
+
     /**
-     * message, definir le corps du message
+     * Message, definir le corps du message
      * @param string text
      * @return self
      */
     public function message($message)
     {
     	if (!is_string($message)) {
-    		throw new \InavlidArgumentException("parameter most be string " . gettype($message) . "given", 1);
+    		throw new \InavlidArgumentException(__METHOD__."() parameter most be string " . gettype($message) . "given", 1);
     	}
     	$this->message = $message;
     	return $this;
@@ -206,23 +310,21 @@ class Mail
     /**
      * send, Envoie le mail
      * @param callable|null $cb
-     * @param Mail
+     * @return self
      */
     public function send($cb = null)
     {
     	if (empty($this->to) || empty($this->subject) || empty($this->message)) {
-    		trigger_error("An error comming because your don't given the following parameter: SENDER, SUBJECT or MESSAGE.", E_USER_ERROR);
+    		trigger_error(__METHOD__. "(): an error comming because your don't given the following parameter: SENDER, SUBJECT or MESSAGE.", E_USER_ERROR);
     	}
 
     	$status = @mail($this->to, $this->subject, $this->message, $this->formatHeader());
 
     	if (is_callable($cb)) {
-    		call_user_func($cb, $status);
-    	} else {
-    		return $status;
+    		return call_user_func($cb, $status);
     	}
 
-    	return $this;
+    	return $status;
     }
     /**
      * Mise en privé des fonctions magic __clone et __construct

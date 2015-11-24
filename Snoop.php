@@ -1352,14 +1352,13 @@ class Snoop
     		echo "\n";
     	}
 		$content = ob_get_clean();
-    	$content = preg_replace("~\{\n\}~i", "[empty]", $content);
-		$content = preg_replace("~(string|int|object|stdclass|bool|double|float|array)~i", "<span style=\"color: rgba(255, 0, 0, 0.5); font-style: italic\">&lt;$0&gt;</span>", $content);
-		$content = preg_replace('~\((\d+)\)~i', "<span style=\"color: #498\">(len=$1)</span>", $content);
-		$content = preg_replace('~(\s".+")~i', "<span style=\"color: #458\">$0</span>", $content);
-		$content = preg_replace("~(=>)(\n\s?)+~i", "<span style=\"color: #754\"> =</span>", $content);
-		$content = preg_replace("~\[(.+)\]~i", "<span style=\"color:#666\">$0</span>", $content);
-		$content = preg_replace("~(\[)~i", "<span style=\"color: rgba(0, 10, 0, 0.2)\"> [[</span>", $content);
-		$content = preg_replace("~(\])~i", "<span style=\"color: rgba(0, 10, 0, 0.2)\">]]</span>", $content);
+    	$content = preg_replace("~\{\n+\s+?\}~i", "[empty]", $content);
+		$content = preg_replace("~(string|int|object|stdclass|bool|double|float|array)~i", "<span style=\"color: rgba(255, 0, 0, 0.5); font-style: italic\">&lt;$1&gt;</span>", $content);
+		$content = preg_replace('~\((\d+)\)~im', "<span style=\"color: #498\">(len=$1)</span>", $content);
+		$content = preg_replace('~\s(".+")~im', "<span style=\"color: #458\"> value($1)</span>", $content);
+		$content = preg_replace("~(=>)(\n\s+?)+~im", "<span style=\"color: #754\"> is</span>", $content);
+		$content = preg_replace("~(is</span>)\s+~im", "$1 ", $content);
+		$content = preg_replace("~\[(.+)\]~im", "<span style=\"color:#666\"><span style=\"color: red\">key:</span>$1<span style=\"color: red\"></span></span>", $content);
 		$content = "<pre><tt><div style=\"font-family: monaco, courier; font-size: 13px\">$content</div></tt></pre>";
     	
     	echo $content;
