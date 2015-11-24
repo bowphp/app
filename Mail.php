@@ -219,6 +219,7 @@ class Mail
     	if (is_string($html)) $this->addFeatureHeader("data", $html);
     	return $this;
     }
+    
     /**
      * toText, Definir le corps du message
      * @param string text
@@ -269,6 +270,7 @@ class Mail
     	$this->addHeader("Replay-To", $mail);
     	return $this;
     }
+
 	/**
 	 * Adds Return-Path
 	 * @param string $mail
@@ -326,6 +328,7 @@ class Mail
 
     	return $status;
     }
+
     /**
      * Mise en privé des fonctions magic __clone et __construct
      */
