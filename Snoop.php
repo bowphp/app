@@ -48,6 +48,9 @@ class Snoop
 	private $currentRoot = "";
 	private $fileExtension = ["png", "jpg"];
 
+	private static $inst = null;
+	private static $mail = null;
+
 	/**
 	 * Configuration de date en francais.
 	 */
@@ -68,7 +71,10 @@ class Snoop
 		"Nov"  => "Novembre", "Déc" => "Décembre"
 	];
 
-	public function __construct()
+	/**
+	 * Private construction
+	 */
+	private function __construct()
 	{
 		if (is_file(".config.json")) {
 			$config = json_decode(file_get_contents(".config.json"));
@@ -76,7 +82,38 @@ class Snoop
 			$this->appName = $config->appName;
 			$this->uploadDir = $config->uploadDir;
 		}
+		// NOTE: En reflection
+		// self::$mail = Mail::load();
 	}
+	/**
+	 * Private __clone
+	 */
+	private function __clone(){}
+
+	/**
+	 * Singleton system.
+	 * @return self
+	 */
+	public static function loader()
+	{	
+		if (self::$inst === null) {
+			self::$inst = new self;
+		}
+		return self::$inst;
+	}
+
+	/**
+	 * Singleton system.
+	 * @return Mail
+	 */
+	public static function mailer()
+	{	
+		if (self::$mail === null) {
+			self::$mail = Mail::load();
+		}
+		return self::$mail;
+	}
+
 	/**
 	 * mount, ajout un branchement.
 	 */
@@ -1352,7 +1389,7 @@ class Snoop
     		echo "\n";
     	}
 		$content = ob_get_clean();
-    	$content = preg_replace("~\{\n+\s+?\}~i", "[empty]", $content);
+    	$content = preg_replace("~\s?\{\n\s?\}~i", " is empty", $content);
 		$content = preg_replace("~(string|int|object|stdclass|bool|double|float|array)~i", "<span style=\"color: rgba(255, 0, 0, 0.5); font-style: italic\">&lt;$1&gt;</span>", $content);
 		$content = preg_replace('~\((\d+)\)~im', "<span style=\"color: #498\">(len=$1)</span>", $content);
 		$content = preg_replace('~\s(".+")~im', "<span style=\"color: #458\"> value($1)</span>", $content);
