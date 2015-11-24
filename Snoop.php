@@ -31,23 +31,33 @@ class Snoop
 	const SUCCESS = 7;
 	const WARNING = 6;
 
+	// Répertoire par defaut de upload
 	private static $uploadDir = "/public";
+	// Taille par defaut d'un fichier
 	private static $fileSize = 20000000;
+	// Nom d'un fichier
 	private static $uploadFileName = null;
+	// Collecteur de route.
 	private static $routes = [];
+	// Definition de contrainte sur un route.
 	private $with = [];
+	// Branchement global sur un liste de route
 	private $branch = "";
-
+	// Connection via la liason socket definir
 	private $withSocket = false;
+	// Object de connection
 	private static $db = null;
-
-	private $sanitaze = [];
+	// Represente la vue	
 	private $views = null;
+	// Represente de la racine de l'application
 	private $root = "";
+	// Represente le dossier public
 	private $public = "";
+	// Enregistre la route courante
 	private $currentRoot = "";
+	// Liste des extensions par defaut
 	private $fileExtension = ["png", "jpg"];
-
+	// Patter Singleton
 	private static $inst = null;
 	private static $mail = null;
 
@@ -62,6 +72,7 @@ class Snoop
 		"Sept" => "Sep", "Oct"  => "Oct",
 		"Nov"  => "Nov", "Déc"  => "Dec"
 	];
+
 	private static $month = [
 		"Jan"  => "Janvier", "Fév"  => "Fevrier",
 		"Mars" => "Mars", "Avr"  => "Avril",
@@ -78,20 +89,24 @@ class Snoop
 	{
 		if (is_file(".config.json")) {
 			$config = json_decode(file_get_contents(".config.json"));
-			$this->setTimeZone($config->timeZone);
-			$this->appName = $config->appName;
-			$this->uploadDir = $config->uploadDir;
+			if (isset($config->timeZone)) {
+				$this->setTimeZone($config->timeZone);
+			}
+			$this->appName = isset($config->appName) ? $config->appName : $this->appName ;
+			$this->uploadDir = isset($config->uploadDir) ? $config->uploadDir : $this->uploadDir ;
+			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
 		}
 		// NOTE: En reflection
 		// self::$mail = Mail::load();
 	}
+
 	/**
 	 * Private __clone
 	 */
 	private function __clone(){}
 
 	/**
-	 * Singleton system.
+	 * Pattern Singleton.
 	 * @return self
 	 */
 	public static function loader()
@@ -103,15 +118,29 @@ class Snoop
 	}
 
 	/**
-	 * Singleton system.
+	 * Pattern singleton et factory.
 	 * @return Mail
 	 */
-	public static function mailer()
+	public static function mailFactory($smtp = null)
 	{	
 		if (self::$mail === null) {
-			self::$mail = Mail::load();
+
+			if ($smtp === true) {
+				self::$mail = SmtpMail::load("smpt");
+			} else {
+				self::$mail = Mail::load();
+			}
 		}
 		return self::$mail;
+	}
+	/**
+	 * réinitialise le configuration
+	 * @return self
+	 */
+	public function initConfig()
+	{
+		self::$mail = null;
+		return $this;
 	}
 
 	/**
@@ -1349,7 +1378,7 @@ class Snoop
     }
 
     /**
-     * getAll, permet de recuperer simple tout les donnees
+     * find, permet de recuperer simple tout les donnees
      * dans un table.
      * @param string $table
      * @throws \InvalidArgumentException
@@ -1397,12 +1426,16 @@ class Snoop
 		$content = preg_replace("~(is</span>)\s+~im", "$1 ", $content);
 		$content = preg_replace("~\[(.+)\]~im", "<span style=\"color:#666\"><span style=\"color: red\">key:</span>$1<span style=\"color: red\"></span></span>", $content);
 		$content = "<pre><tt><div style=\"font-family: monaco, courier; font-size: 13px\">$content</div></tt></pre>";
-    	
-    	echo $content;
 
-    	$this->kill();
+    	$this->kill($content);
     }
 
+    /**
+     * systeme de debugage avec message d'info
+     * @param string $message
+     * @param callable $cb=null
+     * @return void
+     */
 	public function it($message, $cb = null)
 	{
 		echo "<h2>{$message}</h2>";
@@ -1588,9 +1621,14 @@ class Snoop
     	return $this->currentRoot;
     }
 
-    public static function mail()
-    {
-    	return Mail::load();
-    }
+    /*----------------------------------
+	| NOTE: En reflection
+	|-----------------------------------
+	|    public static function mail()
+	|    {
+	|    	return Mail::load();
+	|    }
+    |
+    */
 
 }
