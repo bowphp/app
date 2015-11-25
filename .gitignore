@@ -1,4 +1,5 @@
 test/**
 Mail/**
 Exception/**
+.env.php
 Form.php
