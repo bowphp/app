@@ -418,6 +418,7 @@ class Snoop
 				$order = '';
 				$limit = '';
 				$grby  = '';
+				$between = '';
 
 				if (isset($options["join"])) {
 					$join = " INNER JOIN " . $options['join']["otherTable"] . " ON " . implode(" = ", $options['join']['on']);
@@ -437,18 +438,20 @@ class Snoop
 				 *| ORDER BY |
 				 * ----------
 				 */
-				if (isset($options['order'])) {
-					// Un ternaire de vérification.
-					$order = " ORDER BY " . $options['order'][0] . ($options['order'][1] === true ? " ASC" : " DESC");
+				if (isset($options['-order'])) {
+					$order = " ORDER BY " . $options['-order'] . " DESC";
+				} else if (isset($options['+order'])) {
+					$order = " ORDER BY " . $options['+order'] . " ASC";
 				}
+
 				/*
 				 * Vérification de l'existance d'un clause:
 				 * _______
 				 *| LIMIT |
 				 * -------
 				 */
-				if (isset($options['limit'])) {
-					$limit = " LIMIT " . $options['limit'];
+				if (isset($options['limit']) || isset($options["take"])) {
+					$limit = " LIMIT " . (isset($options['limit']) ? $options['limit'] : $options['take']);
 				}
 				/**
 				 * Vérification de l'existance d'un clause:
@@ -469,10 +472,23 @@ class Snoop
 					$data = "*";
 				}
 				/**
+				 * Vérification de l'existance d'un clause:
+				 * ----------
+				 *| BETWEEN  |
+				 * ----------
+				 */
+
+				if (isset($options["between"])) {
+					$between = $options[0] . " NOT BETWEEN " . implode(" AND ", $options["between"]);
+				} else if (isset($options["-between"])) {
+					$between = $options[0] . " BETWEEN " . implode(" AND ", $options["between"][1]);
+				}
+
+				/**
 				 * Edition de la SQL Statement facultatif.
 				 * construction de la SQL Statement finale.
 				 */
-				$query = "SELECT " .$data . " FROM " . $options['table'] . $join . $where . $order . $limit . $grby;
+				$query = "SELECT " . $data . " FROM " . $options['table'] . $join . $where . ($where !== "" ? $between : "") . $order . $limit . $grby;
 				break;
 				/**
 				 * Niveau équivalant à un quelconque
