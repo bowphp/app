@@ -57,7 +57,7 @@ class SmtpMail implements IHeader
 		return $this;
 	}
 
-	public function connection($url, $username, $password, $secure, $tls = false)
+	public function connection($url, $username, $password, $secure = false, $tls = false)
 	{
 		@list($url, $port) = explode(":", $url, 2);
 		
@@ -75,20 +75,20 @@ class SmtpMail implements IHeader
 		$this->sock = fsockopen($url, $port, $errno, $errstr, 50);}
 		
 		if ($this->sock === null) {
-			throw new ErrorException(__METHOD__."(): can not connect to {$url}:{$port}", E_USER_ERROR);
+			throw new SOCKException(__METHOD__."(): can not connect to {$url}:{$port}", E_USER_ERROR);
 		}
 
 		stream_set_timeout($this->sock, 20, 0);
 		$this->read();
 		$host = isset($_SERVER['HTTP_HOST']) && preg_match('#^[\w.-]+\z#', $_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-		$this->write("EHLO $host", $code=250);
+		$this->write("EHLO $host", 250);
 
 		if ((int) $this->read() != 250) {
 			$this->write("EHLO $host", 250);
 		}
 
 		if ($tls === true) {
-			$this->write("STARTTLS", $code=250);
+			$this->write("STARTTLS", 220);
 			$secured = stream_socket_enable_crypto($this->connection, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 			if (!$secured) {
 				throw new ErrorException(__METHOD__."(): Can not secure you connection with tls.", 1);
@@ -102,6 +102,12 @@ class SmtpMail implements IHeader
 			$this->write(base64_encode($this->password), 235, "password");
 		}
 
+	}
+
+	private function disconnect()
+	{
+		fclose($this->connection);
+		$this->connection = null;
 	}
 
 	private function read()
@@ -118,9 +124,15 @@ class SmtpMail implements IHeader
 		return $s;
 	}
 
-	private function write($command, $code)
+	private function write($command, $code, $message)
 	{
-
+		fwrite($this->connection, $command . PHP_EOF);
+		if ($code) {
+			$response = $this->read();
+			if (!in_array((int) $response, (array) $code, true)) {
+				throw new SnoopSmptException("Serveur SMTP did not accepted " . (isset($message) ? $message : '') . ". Avec l'error: $response", 1);
+			}
+		}
 	}
 
 }
