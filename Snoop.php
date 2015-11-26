@@ -31,6 +31,13 @@ class Snoop
 	const SUCCESS = 7;
 	const WARNING = 6;
 
+	private static $header = [
+			200 => 'Status: 200 OK',
+			301 => 'Status: Moved Permanently',
+			401 => 'Status: Unauthorized',
+			404 => 'Status: Not Found'
+	    ];
+
 	// Répertoire par defaut de upload
 	private static $uploadDir = "/public";
 	// Taille par defaut d'un fichier
@@ -60,6 +67,8 @@ class Snoop
 	// Patter Singleton
 	private static $inst = null;
 	private static $mail = null;
+	private static $appName = null;
+	private static $logLevel = "dev";
 
 	/**
 	 * Configuration de date en francais.
@@ -92,9 +101,10 @@ class Snoop
 			if (isset($config->timeZone)) {
 				$this->setTimeZone($config->timeZone);
 			}
-			$this->appName = isset($config->appName) ? $config->appName : $this->appName ;
+			self::$appName = isset($config->appName) ? $config->appName : $this->appName ;
 			$this->uploadDir = isset($config->uploadDir) ? $config->uploadDir : $this->uploadDir ;
 			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
+			self::$logLevel = isset($config->logLevel) ? $config->logLevel : $this->logLevel;
 		}
 		// NOTE: En reflection
 		// self::$mail = Mail::load();
@@ -439,9 +449,9 @@ class Snoop
 				 * ----------
 				 */
 				if (isset($options['-order'])) {
-					$order = " ORDER BY " . $options['-order'] . " DESC";
+					$order = " ORDER BY " . (is_array($options['-order']) ? implode(", ", $options["-order"]) : $options["-order"]) . " DESC";
 				} else if (isset($options['+order'])) {
-					$order = " ORDER BY " . $options['+order'] . " ASC";
+					$order = " ORDER BY " . (is_array($options['+order']) ? implode(", ", $options["+order"]) : $options["+order"]) . " ASC";
 				}
 
 				/*
@@ -451,8 +461,15 @@ class Snoop
 				 * -------
 				 */
 				if (isset($options['limit']) || isset($options["take"])) {
-					$limit = " LIMIT " . (isset($options['limit']) ? $options['limit'] : $options['take']);
+					if (isset($options['limit'])) {
+						$param = $options['limit'];
+					} else {
+						$param = $options['take'];
+					}
+					$param = is_array($param) ? implode(", ", $param) : $param;
+					$limit = " LIMIT " . $param;
 				}
+
 				/**
 				 * Vérification de l'existance d'un clause:
 				 * ----------
@@ -779,9 +796,16 @@ class Snoop
 		$error = $pdoStatement->errorInfo();
 		$errorCode = current($error);
 		$errorMessage = end($error);
-		echo '<div style="margin: auto; width: 500px; text-align: center; font-size: 16px; color: red; border: 5px solid tomato; bordor-radius: 5px; padding: 10px;">';
-		echo $errorCode . " : " . $errorMessage;
-		echo '</div>';
+		$content =  $errorCode . " : " . $errorMessage;
+
+		if (self::$logLevel == "dev") {
+			echo '<div style="margin: auto; width: 500px; text-align: center; font-size: 16px; color: red; border: 5px solid tomato; bordor-radius: 5px; padding: 10px;">';
+			echo $content;
+			echo '</div>';
+		} else {
+			self::log($content);
+		}
+	
 		self::kill();
 	}
 
@@ -1087,7 +1111,6 @@ class Snoop
 	 */
 	public function sanitaze($data, $secure = false)
 	{
-
 		if ($secure) {
 			$method = "secureString";
 		} else {
@@ -1125,7 +1148,8 @@ class Snoop
 	 * @return string
 	 * @author Franck Dakia <dakiafranck@gmail.com>
 	 */
-	public function sanitazeString($data) {
+	public function sanitazeString($data) 
+	{
 		return stripslashes(trim($data));
 	}
 
@@ -1143,6 +1167,8 @@ class Snoop
 
 	/**
 	 * Modifier le nom par defaut du file uploader.
+	 * @param string $filename
+	 * @return self
 	 */
 	public function setUploadFileName($filename)
 	{
@@ -1208,7 +1234,7 @@ class Snoop
 	 */
 	public function uploadFile($file, $cb = null, $hash = null)
 	{
-		var_dump($file);
+
 		if (!is_object($file) && !is_array($file)) {
 			self::callbackLauncher($cb, [new \InvalidArgumentException("Parametre invalide <pre>" . var_export($file, true) ."</pre>. Elle doit etre un tableau ou un object StdClass")]);
 		}
@@ -1226,7 +1252,6 @@ class Snoop
 
   			$dirPart = explode("/", self::$uploadDir);
   			$end = array_pop($dirPart);
-
   			if ($end == "") {
   				self::$uploadDir = implode(DIRECTORY_SEPARATOR, $dirPart);
   			} else {
@@ -1380,6 +1405,7 @@ class Snoop
      */
     public function redirect($path)
     {
+    	echo '<a href="' . $path . '" >' . self::$header(301) . '</a>';
     	header("Location: " . $this->getRoot() . $path, true, 301);
     	$app->kill();
     }
@@ -1389,7 +1415,7 @@ class Snoop
      */
     public function redirectTo404()
     {
-    	header("Status: Not Found", false, 404);
+    	$this->setHeader(404);
     	return $this;
     }
 
@@ -1426,7 +1452,7 @@ class Snoop
     public function debug()
     {
     	if (count(func_get_args()) == 0) {
-    		throw new InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
+    		throw new \InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
     	}
     	ob_start();
     	foreach (func_get_args() as $key => $value) {
@@ -1465,6 +1491,7 @@ class Snoop
 
     /**
      * convertHourToLetter, convert une heure en letter
+     * Format: HH:MM:SS
      * @param string $hour
      * @return string
      */
@@ -1484,11 +1511,11 @@ class Snoop
     		$minutes .= "s";
     	}
 
-    	if ($hourPart[2] > 0) {
-    		$secondes = trim($this->convertDate($hourPart[2])) . " secondes";
+    	if (isset($hourPart[2]) && $hourPart[2] > 0) {
+    		$secondes =  " " . trim($this->convertDate($hourPart[2])) . " secondes";
     	}
 
-    	return trim(strtolower($heures . " " . $minutes . " " . $secondes));
+    	return trim(strtolower($heures . " " . $minutes . $secondes));
     }
 
     /**
@@ -1637,6 +1664,97 @@ class Snoop
     	return $this->currentRoot;
     }
 
+    /**
+     * Modifie les entete http
+     * @param int $code
+     */
+    public function setHeader($code)
+    {	
+    	if (!in_array((int) $code, array_keys(self::$header), true)) {
+    		header($header[$code], true, $code);
+    	} else {
+    		if ($this->logLevel == "prod") {
+    			self::log("Can't set header.");
+    		}
+    	}
+    }
+
+    /**
+     * Logeur d'erreur.
+     */
+    private function log($message)
+    {
+		$f_log = fopen(".error_log", "a+");
+		if ($f_log != null) {
+			fprintf($f_log, "[%s] - %s:%d:[%s]\n", date("r"), $_SERVER['REMOTE_ADDR'], $_SERVER["REMOTE_PORT"], $message);
+			fclose($f_log);
+		}
+    }
+    /**
+     * Verifie si on n'est dans le cas
+     * d'un requete XHR.
+     * @return boolean
+     */
+    public function isXhr()
+    {
+    	if (isset($_SERVER["HTTP_REQUEST_WITH"])) {
+    		if (strtolower($_SERVER["HTTP_REQUEST_WITH"]) == "xmlhttprequest") {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
+    /**
+     * Createur de token csrf
+     * @return void
+     */
+    public function createCsrfToken()
+    {
+    	if (!$this->isSessionKey("csrfToken")) {
+	    	$this->addSession("csrfToken", $this->generateToken());
+    	}
+    }
+
+    /**
+     * Generer une cle cripte en md5
+     * @return string
+     */
+    public function generateToken()
+    {
+    	return md5(base64_encode(openssl_random_pseudo_bytes(23)) . date("Y-m-d H:i:s") . uniqid(rand(), true);
+    }
+
+    /**
+     * Recuperer un token csrf generer
+     * @return mixed
+     */
+    public function getCsrfToken()
+    {
+    	return $app->session("csrfToken");
+    }
+
+    /**
+     * Detruie un token
+     */
+    public function expireCsrfToken()
+    {
+	    $this->removeSession("csrfToken");
+    }
+
+    /**
+     * Verifcateur de token csrf valide
+  	 * @return boolean
+     */
+    public function verifyCsrfToken($token)
+    {
+    	if ($this->isSessionKey("csrfToken") && $token === $this->session("csrfToken")) {
+    		return true;
+    	}
+
+    	return false;
+    }
+
     /*----------------------------------
 	| NOTE: En reflection
 	|-----------------------------------
@@ -1646,5 +1764,4 @@ class Snoop
 	|    }
     |
     */
-
 }
