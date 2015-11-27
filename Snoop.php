@@ -197,7 +197,7 @@ class Snoop
 	 */
 	public function any($path, $cb)
 	{
-		return $this->get($path, $cb)->post($path, $cb);
+		return $this->get($path, $cb)->post($path, $cb)->delete($path, $cb)->put($path, $cb)->update($path, $cb);
 	}
 
 	/**
@@ -208,7 +208,7 @@ class Snoop
 	 */
 	public function delete($path, $cb)
 	{
-		return $this->addHttpVerbe("_DETELE", $path, $cb);
+		return $this->addHttpVerbe("_DELETE", $path, $cb);
 	}
 
 	/**
@@ -241,7 +241,7 @@ class Snoop
 	 */
 	public function head($path, $cb)
 	{
-		return $this->addHttpVerbe("__HEAD", $path, $cb);
+		return $this->addHttpVerbe("_HEAD", $path, $cb);
 	}
 
 	/**
@@ -271,6 +271,9 @@ class Snoop
 	 */
 	public function post($path, $cb)
 	{
+		if ($this->isBodyKey("method")) {
+			return $this;
+		}
 		$this->currentRoot = $this->branch . $path;
 		return $this->routeLoader("POST", $this->currentRoot, $cb);
 	}
@@ -321,7 +324,8 @@ class Snoop
 		}
 
 		if ($error) {
-			$this->redirectTo404()->render("404.php");
+			$this->setHeader(404);
+			self::log("[404] route -" . $this->getUri() . "- non definie");
 		}
 
 	}
@@ -910,7 +914,7 @@ class Snoop
 	 * @param string $filePath
 	 * @return mixed
 	 */
-	public function disSerializationVariable($filePath)
+	public function disSerialization($filePath)
 	{
 		// Ouverture du fichier de sérialisation.
 		$serializedData = @file_get_contents($filePath);
@@ -1488,7 +1492,7 @@ class Snoop
      */
     public function redirect($path)
     {
-    	echo '<a href="' . $path . '" >' . self::$header(301) . '</a>';
+    	echo '<a href="' . $path . '" >' . self::$header[301] . '</a>';
     	header("Location: " . $this->getRoot() . $path, true, 301);
     	$app->kill();
     }
@@ -1753,10 +1757,10 @@ class Snoop
      */
     public function setHeader($code)
     {	
-    	if (!in_array((int) $code, array_keys(self::$header), true)) {
-    		header($header[$code], true, $code);
+    	if (in_array((int) $code, array_keys(self::$header), true)) {
+    		header(self::$header[$code], true, $code);
     	} else {
-    		if ($this->logLevel == "prod") {
+    		if (self::$logLevel == "prod") {
     			self::log("Can't set header.");
     		}
     	}
@@ -1792,7 +1796,7 @@ class Snoop
      * Createur de token csrf
      * @return void
      */
-    public function createCsrfToken()
+    public function createTokenCsrf()
     {
     	if (!$this->isSessionKey("csrf")) {
 	    	$this->addSession("csrf", (object) ["token" => $this->generateToken(), "expirate" => $this->csrfExpirateTime]);
@@ -1803,16 +1807,16 @@ class Snoop
      * Generer une cle cripte en md5
      * @return string
      */
-    public function generateToken()
+    public function generateTokenCsrf()
     {
-    	return md5(base64_encode(openssl_random_pseudo_bytes(23)) . date("Y-m-d H:i:s") . uniqid(rand(), true);
+    	return md5(base64_encode(openssl_random_pseudo_bytes(23)) . date("Y-m-d H:i:s") . uniqid(rand(), true));
     }
 
     /**
      * Recuperer un token csrf generer
      * @return mixed
      */
-    public function getCsrfToken()
+    public function getTokenCsrf()
     {
     	return $app->session("csrf");
     }
