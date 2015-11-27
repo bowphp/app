@@ -63,6 +63,7 @@ class Snoop
 	private $public = "";
 	// Enregistre la route courante
 	private $currentRoot = "";
+	private $error404 = null;
 	// Liste des extensions par defaut
 	private $fileExtension = ["png", "jpg"];
 	// Patter Singleton
@@ -159,19 +160,22 @@ class Snoop
 
 	/**
 	 * mount, ajout un branchement.
+	 * @param string $branchName
+	 * @param callable|null $middelware
+	 * @return self
 	 */
 	public function mount($branchName, $middelware = null)
 	{
 		if ($middelware !== null) {
-			$r = call_user_func($middelware, $branchName);
+			call_user_func($middelware, $branchName);
 		}
 		$this->branch .= $branchName;
 		return $this;
 	}
 
 	/**
-	 * unmount, detruit le branchement en cour.
-	 * @return Snoop
+	 * unmount, détruit le branchement en cour.
+	 * @return self
 	 */
 	public function unmount()
 	{
@@ -183,7 +187,7 @@ class Snoop
 	 * get, route de type GET
 	 * @param string $path
 	 * @param callable $cb
-	 * @return selt
+	 * @return self
 	 */
 	public function get($path, $cb)
 	{
@@ -199,7 +203,12 @@ class Snoop
 	 */
 	public function any($path, $cb)
 	{
-		return $this->get($path, $cb)->post($path, $cb)->delete($path, $cb)->put($path, $cb)->update($path, $cb);
+		$this->post($path, $cb)
+		->delete($path, $cb)
+		->put($path, $cb)
+		->update($path, $cb)
+		->get($path, $cb);
+		return $this;
 	}
 
 	/**
@@ -244,6 +253,17 @@ class Snoop
 	public function head($path, $cb)
 	{
 		return $this->addHttpVerbe("_HEAD", $path, $cb);
+	}
+
+	/**
+	 * any, route de tout type PUT
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function to404($cb)
+	{
+		$this->error404 = $cb;
+		return $this;
 	}
 
 	/**
@@ -326,6 +346,9 @@ class Snoop
 
 		if ($error) {
 			$this->setHeader(404);
+			if ($this->error404 !== null && is_callable($this->error404)) {
+				call_user_func($this->error404);
+			}
 			self::log("[404] route -" . $this->getUri() . "- non definie");
 		}
 
@@ -502,6 +525,7 @@ class Snoop
 		 *	 	"grby" => "column"
 		 *	 ];
 		 */
+		$query = "";
 		switch ($options['type']) {
 			/**
 			 * Niveau équivalant à un quelconque SQL Statement de type:
@@ -662,8 +686,8 @@ class Snoop
 	/**
 	 * callbackLauncher, permet de lancer des callback.
 	 *
-	 * @param collable $cb
-	 * @param array $option
+	 * @param callable $cb
+	 * @param array|bool $option
 	 * @throws \Exception
 	 */
 	private static function callbackLauncher($cb, $option)
@@ -742,7 +766,6 @@ class Snoop
 			/**
 			 * Construction de l'objet PDO
 			 */
-			$dns = "";
 			if ($this->withSocket === true) {
 				$dns = $c["socket"] . ";dbname=". $c['dbname'];
 			} else {
@@ -773,9 +796,9 @@ class Snoop
 	 * bindValueAndExecuteQuery, fonction permettant d'executer des SQL Statement
 	 *
 	 * @param array $data
-	 * @param PDOStatement $pdoStatement
+	 * @param \PDOStatement $pdoStatement
 	 * @param bool $retournData
-	 * @return StdClass $resultat
+	 * @return \StdClass $resultat
 	 */
 	private static function bindValueAndExecuteQuery($data, $pdoStatement, $retournData = false)
 	{
@@ -804,7 +827,7 @@ class Snoop
 			$pdoStatement->bindValue(":$key", $value, $param);
 		}
 		/**
-		 * Récupération de l'etat de l'execution.
+		 * Récupération de l'état de l'execution.
 		 */
 		$status = $pdoStatement->execute();
 		/**
@@ -833,9 +856,9 @@ class Snoop
 	}
 
 	/**
-	 * rangeField, fonction permettant de securiser les données.
+	 * rangeField, fonction permettant de sécuriser les données.
 	 *
-	 * @param array $data, les donnes à securiser
+	 * @param array $data, les données à sécuriser
 	 * @return array $field
 	 */
 	private static function rangeField($data)
@@ -852,13 +875,13 @@ class Snoop
 			$i++;
 		}
 		/**
-		 * Retourne une chaine de caractere.
+		 * Retourne une chaine de caractère.
 		 */
 		return $field;
 	}
 
 	/**
-	 * filter, fonction permettant de filtrer les données
+	 * filter, fonction permettant de filter les données
 	 *
 	 * @param array $opts
 	 * @param callable $cb
@@ -879,7 +902,7 @@ class Snoop
 	/**
 	 * getPdoError, fonction permettant d'obtenir des informations sur une erreur PDO
 	 *
-	 * @param PDO|PDOStatement $pdoStatement
+	 * @param \PDO|\PDOStatement $pdoStatement
 	 */
 	private static function getPdoError($pdoStatement)
 	{
@@ -889,7 +912,7 @@ class Snoop
 		$content =  $errorCode . " : " . $errorMessage;
 
 		if (self::$logLevel == "dev") {
-			echo '<div style="margin: auto; width: 500px; text-align: center; font-size: 16px; color: red; border: 5px solid tomato; bordor-radius: 5px; padding: 10px;">';
+			echo '<div style="margin: auto; width: 500px; text-align: center; font-size: 16px; color: red; border: 5px solid tomato; border-radius: 5px; padding: 10px;">';
 			echo $content;
 			echo '</div>';
 		} else {
@@ -948,7 +971,7 @@ class Snoop
 		 * Vérification d'erreur
 		 */
 		if ($error) {
-			echo '<div style="border-radius: 5px; border: 1px solid #eee; backgroud: tomato">';
+			echo '<div style="border-radius: 5px; border: 1px solid #eee; background: tomato">';
 			echo "<h1>Attaque stoped</h1>";
 			echo "<ul style=\"color:red\">";
 			echo $errorList;
@@ -1035,7 +1058,7 @@ class Snoop
 		/**
 		 * Retourne avec les millieme associer.
 		 */
-		return ($millieme === 1 ? "mil":($millieme > 1 ? $nombreEnLettre["unite"][$millieme]." mil" : "")).($millieme ? " ".$tmp : $tmp);
+		return ($millieme === 1 ? "mil":($millieme > 1 ? $nombreEnLettre["unite"][(int) $millieme]." mil" : "")).($millieme ? " ".$tmp : $tmp);
 	}
 
 	/**
@@ -1075,7 +1098,7 @@ class Snoop
 				} else {
 					return  null;
 				}
-				$month = array_values(elf::$month);
+				$month = array_values(self::$month);
 			}
 			return $month[$value];
 		}
@@ -1108,8 +1131,6 @@ class Snoop
 	{
 		$date1 = date_create();
 		$date2 = date_create($datenaiss);
-		$requette = true;
-		$error = false;
 
 		if ($date1 !== false && $date2 !== false) {
 			$diff = date_diff($date1, $date2);
@@ -1117,17 +1138,7 @@ class Snoop
 				if ($age === true) {
 					return $diff->y;
 				}
-				if ($diff->y === 0) {
-					if ($diff->m < 3) {
-						$requette = false;
-					} else {
-						if ($diff->m === 3 && $diff->h === 0) {
-							$requette = false;
-						}
-					}
-				} else {
-					$error = true;
-				}
+				$error = true;
 			} else {
 				$error = true;
 			}
@@ -1142,7 +1153,7 @@ class Snoop
 	 *
 	 * @param $date1
 	 * @param $date2
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function diffEntre2Date($date1, $date2)
 	{
@@ -1151,7 +1162,7 @@ class Snoop
 			if ($date_r) {
 				return $date_r;
 			}
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			$this->kill($e);
 		}
 		return $this;
@@ -1171,13 +1182,13 @@ class Snoop
 	 * @param array $options
 	 * @param bool|false $return
 	 * @param bool|false $lastInsertId
-	 * @throws ErrorException
-	 * @return array
+	 * @throws \ErrorException
+	 * @return array|self|\StdClass
 	 */
 	public function query(array $options, $return = false, $lastInsertId = false)
 	{
-		if (self::$db === null) {
-			throw new \ErrorException("La connection n'est pas initialiser.<br/>Snoop::connection('default'[,function])");
+		if (self::$db !== null) {
+			throw new \ErrorException(__METHOD__ . "(): La connection n'est pas initialiser.<br/>Snoop::connection('default'[,function])");
 		}
 
 		$sqlStatement = self::makeQuery($options["query"]);
@@ -1199,6 +1210,9 @@ class Snoop
 
 	/**
 	 * Sanitaze data.
+	 * @param string|array|\StdClass
+	 * @param bool $secure
+	 * @return mixed
 	 */
 	public function sanitaze($data, $secure = false)
 	{
@@ -1318,7 +1332,6 @@ class Snoop
 	 * UploadFile, fonction permettant de uploader un fichier
 	 *
 	 * @param array $file information sur le fichier, $_FILES
-	 * @param array $extension liste de extension valide
 	 * @param callable|null $cb
 	 * @param string $hash=null
 	 * @return \System\Snoop
@@ -1359,7 +1372,7 @@ class Snoop
 					$pathInfo = (object) pathinfo($file->name);
 					if (in_array($pathInfo->extension, $this->fileExtension)) {
 						if ($hash !== null) {
-							if (self::$uploadFileName !== nul) {
+							if (self::$uploadFileName !== null) {
 								$filename = hash($hash, self::$uploadFileName);
 							} else {
 								$filename = hash($hash, uniqid(rand(null, true)));
@@ -1425,7 +1438,7 @@ class Snoop
 	public function switchTo($enterKey, $cb)
 	{
 		if (!is_string($enterKey)) {
-			self::callbackLauncher($cb, [new InvalidArgumentException("parametre invalide")]);
+			self::callbackLauncher($cb, [new \InvalidArgumentException("parametre invalide")]);
 		} else {
 			self::$db = null;
 			self::connection($enterKey, $cb);
@@ -1444,7 +1457,7 @@ class Snoop
 	{
 		$c = explode("/", $zone);
 		if (count($c) != 2) {
-			throw new \ErrorException("La definition de la zone est invale");
+			throw new \ErrorException("La definition de la zone est invalide");
 		}
 		date_default_timezone_set($zone);
 		return $this;
@@ -1453,7 +1466,7 @@ class Snoop
 	/**
 	 * render, require $filenae
 	 * @param string $filename
-	 * @param mixed|null $data
+	 * @param mixed|null $bind
 	 * @return \System\Snoop
 	 */
 	public function render($filename, $bind = null)
@@ -1543,7 +1556,7 @@ class Snoop
 	public function debug()
 	{
 		if (count(func_get_args()) == 0) {
-			throw new \InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
+			throw new \InvalidArgumentException("Vous devez donner un paramtre à la function", 1);
 		}
 		ob_start();
 		foreach (func_get_args() as $key => $value) {
@@ -1564,7 +1577,7 @@ class Snoop
 	}
 
 	/**
-	 * systeme de debugage avec message d'info
+	 * systeme de débugage avec message d'info
 	 * @param string $message
 	 * @param callable $cb=null
 	 * @return void
@@ -1611,16 +1624,16 @@ class Snoop
 
 	/**
 	 * convertDateToLetter, convert une date sous forme de letter
-	 * @param string $date_string
+	 * @param string $dateString
 	 * @return string
 	 */
 	public function convertDateToLetter($dateString)
 	{
 		$formData = array_reverse(explode("-", $dateString));
-		$r = trim(convertDate($formData[0])." ". getMonth((int)$formData[1])) . " " . trim(convertDate($formData[2]));
+		$r = trim($this->convertDate($formData[0])." ". $this->getMonth((int)$formData[1])) . " " . trim($this->convertDate($formData[2]));
 		$p = explode(" ", $r);
 
-		if (strtolwer($p[0]) == "un") {
+		if (strtolower($p[0]) == "un") {
 			$p[0] = "permier";
 		}
 		return trim(implode(" ", $p));
@@ -1663,7 +1676,8 @@ class Snoop
 	/**
 	 * isBodyKey, verifie si de Snoop::body
 	 * contient la cle definie.
-	 * @return mixed
+	 * @param mixed $key
+	 * @return mixed $key
 	 */
 	public function isBodyKey($key)
 	{
@@ -1716,6 +1730,7 @@ class Snoop
 	/**
 	 * files, retoure les informations
 	 * du $_FILES
+	 * @param string|null $key
 	 * @return mixed
 	 */
 	public function files($key = null)
@@ -1843,7 +1858,7 @@ class Snoop
 	public function csrfIsExpirate($time)
 	{
 		if ($this->isSessionKey("csrf")) {
-			if ($this->getCsrfToken()->expirate >= (int) $time) {
+			if ($this->getTokenCsrf()->expirate >= (int) $time) {
 				return true;
 			}
 		}
@@ -1875,7 +1890,7 @@ class Snoop
 	 */
 	public function verifyCsrfToken($token)
 	{
-		if ($this->isSessionKey("csrf") && $token === $this->session("csrf")) {
+		if ($this->isSessionKey("csrf") && $token === $this->getTokenCsrf()->token) {
 			return true;
 		}
 		return false;
