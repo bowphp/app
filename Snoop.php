@@ -208,7 +208,7 @@ class Snoop
 	 */
 	public function delete($path, $cb)
 	{
-		return $this->addHttpVerbe("__DETELE", $path, $cb);
+		return $this->addHttpVerbe("_DETELE", $path, $cb);
 	}
 
 	/**
@@ -219,7 +219,7 @@ class Snoop
 	 */
 	public function update($path, $cb)
 	{
-		return $this->addHttpVerbe("__UPDATE", $path, $cb);
+		return $this->addHttpVerbe("_UPDATE", $path, $cb);
 	}
 
 	/**
@@ -230,7 +230,7 @@ class Snoop
 	 */
 	public function put($path, $cb)
 	{
-		return $this->addHttpVerbe("__PUT", $path, $cb);
+		return $this->addHttpVerbe("_PUT", $path, $cb);
 	}
 
 	/**
