@@ -8,15 +8,16 @@
  * - Zokora Elvis
  * @+- 10/06/2015 fast web app building
  * @package Snoope
-*/
+ */
 
 namespace System;
 
 class Snoop
 {
 	/**
-	 * Liste des consta
-	 * @var unknown
+	 * Liste des constances
+	 * d'execution de Requete
+	 * SQL.
 	 */
 	const SELECT = 1;
 	const UPDATE = 2;
@@ -24,19 +25,19 @@ class Snoop
 	const INSERT = 4;
 
 	/**
-	 * Liste de constante d'erreur
-	 * @var unknown
+	 * Liste des constantes d'erreur
+	 * pour l'upload de fichier.
 	 */
 	const ERROR = 5;
 	const SUCCESS = 7;
 	const WARNING = 6;
 
 	private static $header = [
-			200 => 'Status: 200 OK',
-			301 => 'Status: Moved Permanently',
-			401 => 'Status: Unauthorized',
-			404 => 'Status: Not Found'
-	    ];
+		200 => 'Status: 200 OK',
+		301 => 'Status: Moved Permanently',
+		401 => 'Status: Unauthorized',
+		404 => 'Status: Not Found'
+	];
 
 	// Répertoire par defaut de upload
 	private static $uploadDir = "/public";
@@ -50,7 +51,7 @@ class Snoop
 	private $with = [];
 	// Branchement global sur un liste de route
 	private $branch = "";
-	// Connection via la liason socket definir
+	// Connection via la liaison socket définir
 	private $withSocket = false;
 	// Object de connection
 	private static $db = null;
@@ -102,11 +103,11 @@ class Snoop
 			if (isset($config->timeZone)) {
 				$this->setTimeZone($config->timeZone);
 			}
-			$this->uploadDir = isset($config->uploadDir) ? $config->uploadDir : $this->uploadDir;
+			self::$uploadDir = isset($config->uploadDir) ? $config->uploadDir : self::$uploadDir;
 			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
 			$this->csrfExpirateTime = isset($config->csrfExpirateTime) ? $config->csrfExpirateTime: 50000;
-			self::$logLevel = isset($config->logLevel) ? $config->logLevel : $this->logLevel;
-			self::$appName = isset($config->appName) ? $config->appName : $this->appName;
+			self::$logLevel = isset($config->logLevel) ? $config->logLevel : self::$logLevel;
+			self::$appName = isset($config->appName) ? $config->appName : self::$appName;
 		}
 		// NOTE: En reflection
 		// self::$mail = Mail::load();
@@ -122,7 +123,7 @@ class Snoop
 	 * @return self
 	 */
 	public static function loader()
-	{	
+	{
 		if (self::$inst === null) {
 			self::$inst = new self;
 		}
@@ -131,14 +132,15 @@ class Snoop
 
 	/**
 	 * Pattern singleton et factory.
+	 * @param boolean $smtp=false
 	 * @return Mail
 	 */
-	public static function mailFactory($smtp = null)
-	{	
+	public static function mailFactory($smtp = false)
+	{
 		if (self::$mail === null) {
 
 			if ($smtp === true) {
-				self::$mail = SmtpMail::load("smpt");
+				self::$mail = SmtpMail::load();
 			} else {
 				self::$mail = Mail::load();
 			}
@@ -267,7 +269,7 @@ class Snoop
 	 *
 	 * @param string $path
 	 * @param callable $cb
- 	 * @return \System\Snoop
+	 * @return \System\Snoop
 	 */
 	public function post($path, $cb)
 	{
@@ -283,7 +285,7 @@ class Snoop
 	 * @param string $method
 	 * @param string $path
 	 * @param callable $cb
- 	 * @return \System\Snoop
+	 * @return \System\Snoop
 	 */
 	private function routeLoader($method, $path, $cb)
 	{
@@ -309,7 +311,6 @@ class Snoop
 	 */
 	public function run()
 	{
-
 		header("X-Powered-by: Snoop-Framework");
 		$error = true;
 		if (isset(self::$routes[$this->getMethod()])) {
@@ -405,13 +406,13 @@ class Snoop
 	}
 
 	/**
-     * filessessionIsEmpty
-     *	@return boolean
-     */
-    public function sessionIsEmpty()
-    {
-    	return empty($_SESSION);
-    }
+	 * filessessionIsEmpty
+	 *	@return boolean
+	 */
+	public function sessionIsEmpty()
+	{
+		return empty($_SESSION);
+	}
 
 	/**
 	 * session, permet de manipuler le donnee
@@ -434,14 +435,15 @@ class Snoop
 	 * dans le tableau de session.
 	 * @param string|int $key
 	 * @param mixed $data
+	 * @param boolean $next=null
 	 * @throws \InvalidArgumentException
 	 */
 	public function addSession($key, $data, $next = null) {
-		
+
 		$this->startSession();
 
 		if (!is_string($key)) {
-			throw new InvalidArgumentException("La clé doit être un chaine.", E_ERROR);
+			throw new \InvalidArgumentException("La clé doit être un chaine.", E_ERROR);
 		}
 
 		if ($next === true) {
@@ -459,6 +461,7 @@ class Snoop
 	 * removeSession, supprime un entree dans la
 	 * table de session.
 	 * @param string $key
+	 * @return self
 	 */
 	public function removeSession($key)
 	{
@@ -594,13 +597,13 @@ class Snoop
 				 */
 				$query = "SELECT " . $data . " FROM " . $options['table'] . $join . $where . ($where !== "" ? $between : "") . $order . $limit . $grby;
 				break;
-				/**
-				 * Niveau équivalant à un quelconque
-			 	 * SQL Statement de type:
-				 * _____________
-			 	 *| INSERT INTO |
-			 	 * -------------
-			 	 */
+			/**
+			 * Niveau équivalant à un quelconque
+			 * SQL Statement de type:
+			 * _____________
+			 *| INSERT INTO |
+			 * -------------
+			 */
 			case self::INSERT:
 				/**
 				 * Sécurisation de donnée.
@@ -611,30 +614,30 @@ class Snoop
 				 */
 				$query = "INSERT INTO " . $options['table'] . " SET " . $field;
 				break;
-				/**
-				 * Niveau équivalant à un quelconque
-				 * SQL Statement de type:
-				 * ________
-				 *| UPDATE |
-				 * --------
-				 */
+			/**
+			 * Niveau équivalant à un quelconque
+			 * SQL Statement de type:
+			 * ________
+			 *| UPDATE |
+			 * --------
+			 */
 			case self::UPDATE:
 				/**
 				 * Sécurisation de donnée.
 				 */
-				$field = rangeField($options['data']);
+				$field = self::rangeField($options['data']);
 				/**
 				 * Edition de la SQL Statement facultatif.
 				 */
 				$query = "UPDATE " . $options['table'] . " SET " . $field . " WHERE " . $options['where'];
 				break;
-				/**
-				 * Niveau équivalant à un quelconque
-				 * SQL Statement de type:
-				 * _____________
-				 *| DELETE FROM |
-				 * -------------
-				 */
+			/**
+			 * Niveau équivalant à un quelconque
+			 * SQL Statement de type:
+			 * _____________
+			 *| DELETE FROM |
+			 * -------------
+			 */
 			case self::DELETE:
 				/**
 				 * Edition de la SQL Statement facultatif.
@@ -673,7 +676,7 @@ class Snoop
 					throw $option[0];
 				} else {
 					if (!is_bool($option)) {
-						throw $option;
+						throw new \ErrorException("Une erreur est survenue." . var_export($option));
 					}
 				}
 			}
@@ -683,7 +686,7 @@ class Snoop
 	/**
 	 * withSocket, initialise un connection
 	 * avec le socket definie dans .env.php
-	 * @return Snoop
+	 * @return self
 	 */
 	public function withSocket() {
 		$this->withSocket = true;
@@ -693,8 +696,8 @@ class Snoop
 	 * connection, est un fonction permettant de créer et rétourner un objet PDO
 	 *
 	 * @param string $option, objet de connection rétourné par makeConnectionOject
-	 * @param callable $cb [optional]
-	 * @return PDO $db
+	 * @param callable $cb=null
+	 * @return \PDO $db
 	 */
 	public function connection($option = null, $cb = null)
 	{
@@ -749,9 +752,9 @@ class Snoop
 				}
 			}
 			self::$db = new \PDO($dns, $c['user'], $c['pass'], [
-					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8",
-					\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ
-				]);
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8",
+				\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ
+			]);
 		} catch (\PDOException $e) {
 			/**
 			 * Lancement d'exception
@@ -810,10 +813,10 @@ class Snoop
 		$resultat = new \StdClass;
 		/**
 		 * On vérifie si la récupération de donnée est active.
-	 	 */
+		 */
 		if ($retournData === true) {
 			/**
-		 	 * Récupération des données.
+			 * Récupération des données.
 			 */
 			if ($pdoStatement->rowCount() == 1) {
 				$fetch = "fetch";
@@ -892,7 +895,7 @@ class Snoop
 		} else {
 			self::log($content);
 		}
-	
+
 		self::kill();
 	}
 
@@ -1149,7 +1152,7 @@ class Snoop
 				return $date_r;
 			}
 		} catch (Exception $e) {
-			$app->kill($e);
+			$this->kill($e);
 		}
 		return $this;
 	}
@@ -1168,6 +1171,7 @@ class Snoop
 	 * @param array $options
 	 * @param bool|false $return
 	 * @param bool|false $lastInsertId
+	 * @throws ErrorException
 	 * @return array
 	 */
 	public function query(array $options, $return = false, $lastInsertId = false)
@@ -1235,7 +1239,7 @@ class Snoop
 	 * @return string
 	 * @author Franck Dakia <dakiafranck@gmail.com>
 	 */
-	public function sanitazeString($data) 
+	public function sanitazeString($data)
 	{
 		return stripslashes(trim($data));
 	}
@@ -1276,39 +1280,39 @@ class Snoop
 		return $this;
 	}
 
-    /**
-    * setUploadedDir, fonction permettant de redefinir le repertoir d'upload
-    *
-    * @param string:path, le chemin du dossier de l'upload
-	* @throws \InvalidArgumentException
-	* @return \System\Snoop
-    */
-    public function setUploadDir($path)
-    {
-        if (is_string($path)) {
-            self::$uploadDir = $path;
-        } else {
-           throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
-        }
-        return $this;
-    }
-
-    /**
-     * Modifie la taille predefinie de l'image a uploader.
-     *
-     * @param integer $size
-     * @throws \InvalidArgumentException
+	/**
+	 * setUploadedDir, fonction permettant de redefinir le repertoir d'upload
+	 *
+	 * @param string:path, le chemin du dossier de l'upload
+	 * @throws \InvalidArgumentException
 	 * @return \System\Snoop
-     */
-    public function setFileSize($size)
-    {
-    	if (is_int($fzie)) {
-    		self::$fileSize = $size;
-    	} else {
-    		throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
-    	}
-    	return $this;
-    }
+	 */
+	public function setUploadDir($path)
+	{
+		if (is_string($path)) {
+			self::$uploadDir = $path;
+		} else {
+			throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+		}
+		return $this;
+	}
+
+	/**
+	 * Modifie la taille predefinie de l'image a uploader.
+	 *
+	 * @param integer $size
+	 * @throws \InvalidArgumentException
+	 * @return \System\Snoop
+	 */
+	public function setFileSize($size)
+	{
+		if (is_int($size)) {
+			self::$fileSize = $size;
+		} else {
+			throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+		}
+		return $this;
+	}
 
 	/**
 	 * UploadFile, fonction permettant de uploader un fichier
@@ -1330,130 +1334,130 @@ class Snoop
 			self::callbackLauncher($cb, [new \InvalidArgumentException("Le fichier a uploader n'existe pas")]);
 		}
 
-        if (is_array($file)) {
-        	$file = (object) $file;
-        }
+		if (is_array($file)) {
+			$file = (object) $file;
+		}
 
-        # Si le fichier est bien dans le repertoir tmp de PHP
-        if (is_uploaded_file($file->tmp_name)) {
+		# Si le fichier est bien dans le repertoir tmp de PHP
+		if (is_uploaded_file($file->tmp_name)) {
 
-  			$dirPart = explode("/", self::$uploadDir);
-  			$end = array_pop($dirPart);
-  			if ($end == "") {
-  				self::$uploadDir = implode(DIRECTORY_SEPARATOR, $dirPart);
-  			} else {
-  				self::$uploadDir = implode(DIRECTORY_SEPARATOR, $dirPart) . "/" . $end;
-  			}
+			$dirPart = explode("/", self::$uploadDir);
+			$end = array_pop($dirPart);
+			if ($end == "") {
+				self::$uploadDir = implode(DIRECTORY_SEPARATOR, $dirPart);
+			} else {
+				self::$uploadDir = implode(DIRECTORY_SEPARATOR, $dirPart) . "/" . $end;
+			}
 
-            if (!is_dir(self::$uploadDir)) {
-                @mkdir(self::$uploadDir, 0766);
-            }
+			if (!is_dir(self::$uploadDir)) {
+				@mkdir(self::$uploadDir, 0766);
+			}
 
-            # Si le fichier est bien uploader, avec aucune error
-            if ($file->error === 0) {
-                if ($file->size <= self::$fileSize) {
-                    $pathInfo = (object) pathinfo($file->name);
-                    if (in_array($pathInfo->extension, $this->fileExtension)) {
-                        if ($hash !== null) {
-                        	if (self::$uploadFileName !== nul) {
-                        		$filename = hash($hash, self::$uploadFileName);
-                        	} else {
-                        		$filename = hash($hash, uniqid(rand(null, true)));
-                        	}
-                        } else {
-                        	if (self::$uploadFileName !== null) {
-                        		$filename = self::$uploadFileName;
-                        	} else {
-                        		$filename = $pathInfo->filename;
-                        	}
-                        }
-                        move_uploaded_file($file->tmp_name, self::$uploadDir . "/" . $filename . '.' . $pathInfo->extension);
-                        # Status, fichier uploadé
-                        $status = [
-                            "status" => self::SUCCESS,
-                            "message" => "File Uploaded"
-                        ];
-                    } else {
-                        # Status, extension du fichier
-                        $status = [
-                            "status" => self::ERROR,
-                            "message" => "Availabe File, verify file type"
-                        ];
-                    }
-                } else {
-                    # Status, la taille est invalide
-                    $status = [
-                        "status" => self::ERROR,
-                        "message" => "File is more big, max size " . self::$fileSize. " octets."
-                    ];
-                }
-            } else {
-                # Status, fichier erroné.
-                $status = [
-                    "status" => self::ERROR,
-                    "message" => "Le fichier possède des erreurs"
-                ];
-            }
-        } else {
-            # Status, fichier non uploadé
-            $status = [
-                "status" => self::ERROR,
-                "message" => "Le fichier n'a pas pus être uploader"
-            ];
-        }
+			# Si le fichier est bien uploader, avec aucune error
+			if ($file->error === 0) {
+				if ($file->size <= self::$fileSize) {
+					$pathInfo = (object) pathinfo($file->name);
+					if (in_array($pathInfo->extension, $this->fileExtension)) {
+						if ($hash !== null) {
+							if (self::$uploadFileName !== nul) {
+								$filename = hash($hash, self::$uploadFileName);
+							} else {
+								$filename = hash($hash, uniqid(rand(null, true)));
+							}
+						} else {
+							if (self::$uploadFileName !== null) {
+								$filename = self::$uploadFileName;
+							} else {
+								$filename = $pathInfo->filename;
+							}
+						}
+						move_uploaded_file($file->tmp_name, self::$uploadDir . "/" . $filename . '.' . $pathInfo->extension);
+						# Status, fichier uploadé
+						$status = [
+							"status" => self::SUCCESS,
+							"message" => "File Uploaded"
+						];
+					} else {
+						# Status, extension du fichier
+						$status = [
+							"status" => self::ERROR,
+							"message" => "Availabe File, verify file type"
+						];
+					}
+				} else {
+					# Status, la taille est invalide
+					$status = [
+						"status" => self::ERROR,
+						"message" => "File is more big, max size " . self::$fileSize. " octets."
+					];
+				}
+			} else {
+				# Status, fichier erroné.
+				$status = [
+					"status" => self::ERROR,
+					"message" => "Le fichier possède des erreurs"
+				];
+			}
+		} else {
+			# Status, fichier non uploadé
+			$status = [
+				"status" => self::ERROR,
+				"message" => "Le fichier n'a pas pus être uploader"
+			];
+		}
 
-        if ($cb !== null) {
-            call_user_func_array($cb, [(object) $status, isset($filename) ? $filename : null, isset($ext) ? $ext : null]);
-        } else {
-        	return $status;
-        }
+		if ($cb !== null) {
+			call_user_func_array($cb, [(object) $status, isset($filename) ? $filename : null, isset($ext) ? $ext : null]);
+		} else {
+			return $status;
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * switchTo, permet de ce connecter a une autre base de donnee.
-     *
-     * @param string $enterKey
-     * @param callable $cb
+	/**
+	 * switchTo, permet de ce connecter a une autre base de donnee.
+	 *
+	 * @param string $enterKey
+	 * @param callable $cb
 	 * @return \System\Snoop
-     */
-    public function switchTo($enterKey, $cb)
-    {
-    	if (!is_string($enterKey)) {
-    		self::callbackLauncher($cb, [new InvalidArgumentException("parametre invalide")]);
-    	} else {
-    		self::$db = null;
-    		self::connection($enterKey, $cb);
-    	}
-    	return $this;
-    }
+	 */
+	public function switchTo($enterKey, $cb)
+	{
+		if (!is_string($enterKey)) {
+			self::callbackLauncher($cb, [new InvalidArgumentException("parametre invalide")]);
+		} else {
+			self::$db = null;
+			self::connection($enterKey, $cb);
+		}
+		return $this;
+	}
 
-    /**
-     * setTimeZone, modifie la zone horaire.
-     *
-     * @param string $zone
-     * @throws \ErrorException
+	/**
+	 * setTimeZone, modifie la zone horaire.
+	 *
+	 * @param string $zone
+	 * @throws \ErrorException
 	 * @return \System\Snoop
-     */
-    public function setTimeZone($zone)
-    {
-    	$c = explode("/", $zone);
-    	if (count($c) != 2) {
-    		throw new \ErrorException("La definition de la zone est invale");
-    	}
-    	date_default_timezone_set($zone);
-    	return $this;
-    }
+	 */
+	public function setTimeZone($zone)
+	{
+		$c = explode("/", $zone);
+		if (count($c) != 2) {
+			throw new \ErrorException("La definition de la zone est invale");
+		}
+		date_default_timezone_set($zone);
+		return $this;
+	}
 
-    /**
-     * render, require $filenae
-     * @param string $filename
-     * @param mixed|null $data
+	/**
+	 * render, require $filenae
+	 * @param string $filename
+	 * @param mixed|null $data
 	 * @return \System\Snoop
-     */
-    public function render($filename, $bind = null)
-    {
+	 */
+	public function render($filename, $bind = null)
+	{
 		if (is_string($bind)) {
 			$bind = new \StdClass($bind);
 		} else if (is_array($bind)) {
@@ -1464,9 +1468,9 @@ class Snoop
 			$filename = $this->views ."/".$filename;
 		}
 		// Render du fichier demander.
-	    require $filename;
-    	return $this;
-    }
+		require $filename;
+		return $this;
+	}
 
 	/**
 	 * Set, permet de redefinir la configuartion
@@ -1485,69 +1489,69 @@ class Snoop
 		}
 	}
 
-    /**
-     * redirect, permet de lancer une redirection
-     * vers l'url passer en parametre
-     * @param string $path
-     */
-    public function redirect($path)
-    {
-    	echo '<a href="' . $path . '" >' . self::$header[301] . '</a>';
-    	header("Location: " . $this->getRoot() . $path, true, 301);
-    	$app->kill();
-    }
+	/**
+	 * redirect, permet de lancer une redirection
+	 * vers l'url passer en parametre
+	 * @param string $path
+	 */
+	public function redirect($path)
+	{
+		echo '<a href="' . $path . '" >' . self::$header[301] . '</a>';
+		header("Location: " . $this->getRoot() . $path, true, 301);
+		$this->kill();
+	}
 
-    /**
-     * redirectTo404, redirige vers 404
-     */
-    public function redirectTo404()
-    {
-    	$this->setHeader(404);
-    	return $this;
-    }
+	/**
+	 * redirectTo404, redirige vers 404
+	 */
+	public function redirectTo404()
+	{
+		$this->setHeader(404);
+		return $this;
+	}
 
-    /**
-     * find, permet de recuperer simple tout les donnees
-     * dans un table.
-     * @param string $table
-     * @throws \InvalidArgumentException
-     * @return array|object
-     */
-    public function find($table, $cb = null)
-    {
-    	if (!is_string($table)) {
-    		throw new \InvalidArgumentException("Le nom de la table doit etre une chaine de caractere.");
-    	}
-
-    	$data = self::query([
-    		"query" => [
-    			"type" => self::SELECT,
-    			"table" => $table
-    		]
-    	], true);
-
-    	if ($cb !== null) {
-    		return call_user_func($cb, $data);
-    	}
-    	return $data;
-    }
-
-    /**
-     * Lance un var_dump sur les varibles passees en parametre.
+	/**
+	 * find, permet de recuperer simple tout les donnees
+	 * dans un table.
+	 * @param string $table
 	 * @throws \InvalidArgumentException
-     */
-    public function debug()
-    {
-    	if (count(func_get_args()) == 0) {
-    		throw new \InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
-    	}
-    	ob_start();
-    	foreach (func_get_args() as $key => $value) {
-    		var_dump($value);
-    		echo "\n";
-    	}
+	 * @return array|object
+	 */
+	public function find($table, $cb = null)
+	{
+		if (!is_string($table)) {
+			throw new \InvalidArgumentException("Le nom de la table doit etre une chaine de caractere.");
+		}
+
+		$data = self::query([
+			"query" => [
+				"type" => self::SELECT,
+				"table" => $table
+			]
+		], true);
+
+		if ($cb !== null) {
+			return call_user_func($cb, $data);
+		}
+		return $data;
+	}
+
+	/**
+	 * Lance un var_dump sur les varibles passees en parametre.
+	 * @throws \InvalidArgumentException
+	 */
+	public function debug()
+	{
+		if (count(func_get_args()) == 0) {
+			throw new \InvalidArgumentExecption("Vous devez donner un paramtre à la function", 1);
+		}
+		ob_start();
+		foreach (func_get_args() as $key => $value) {
+			var_dump($value);
+			echo "\n";
+		}
 		$content = ob_get_clean();
-    	$content = preg_replace("~\s?\{\n\s?\}~i", " is empty", $content);
+		$content = preg_replace("~\s?\{\n\s?\}~i", " is empty", $content);
 		$content = preg_replace("~(string|int|object|stdclass|bool|double|float|array)~i", "<span style=\"color: rgba(255, 0, 0, 0.5); font-style: italic\">&lt;$1&gt;</span>", $content);
 		$content = preg_replace('~\((\d+)\)~im', "<span style=\"color: #498\">(len=$1)</span>", $content);
 		$content = preg_replace('~\s(".+")~im', "<span style=\"color: #458\"> value($1)</span>", $content);
@@ -1556,15 +1560,15 @@ class Snoop
 		$content = preg_replace("~\[(.+)\]~im", "<span style=\"color:#666\"><span style=\"color: red\">key:</span>$1<span style=\"color: red\"></span></span>", $content);
 		$content = "<pre><tt><div style=\"font-family: monaco, courier; font-size: 13px\">$content</div></tt></pre>";
 
-    	$this->kill($content);
-    }
+		$this->kill($content);
+	}
 
-    /**
-     * systeme de debugage avec message d'info
-     * @param string $message
-     * @param callable $cb=null
-     * @return void
-     */
+	/**
+	 * systeme de debugage avec message d'info
+	 * @param string $message
+	 * @param callable $cb=null
+	 * @return void
+	 */
 	public function it($message, $cb = null)
 	{
 		echo "<h2>{$message}</h2>";
@@ -1576,138 +1580,138 @@ class Snoop
 		$this->kill();
 	}
 
-    /**
-     * convertHourToLetter, convert une heure en letter
-     * Format: HH:MM:SS
-     * @param string $hour
-     * @return string
-     */
-    public function convertHourToLetter($hour)
-    {
-    	$hourPart = explode(":", $hour);
-    	$heures = trim($this->convertDate($hourPart[0])) . " heure";
-    	$minutes = trim($this->convertDate($hourPart[1])) . " minute";
+	/**
+	 * convertHourToLetter, convert une heure en letter
+	 * Format: HH:MM:SS
+	 * @param string $hour
+	 * @return string
+	 */
+	public function convertHourToLetter($hour)
+	{
+		$hourPart = explode(":", $hour);
+		$heures = trim($this->convertDate($hourPart[0])) . " heure";
+		$minutes = trim($this->convertDate($hourPart[1])) . " minute";
 
-    	$secondes = "";
+		$secondes = "";
 
-    	if ($hourPart[0] > 1) {
-    		$heures .= "s";
-    	}
+		if ($hourPart[0] > 1) {
+			$heures .= "s";
+		}
 
-    	if ($hourPart[1] > 1) {
-    		$minutes .= "s";
-    	}
+		if ($hourPart[1] > 1) {
+			$minutes .= "s";
+		}
 
-    	if (isset($hourPart[2]) && $hourPart[2] > 0) {
-    		$secondes =  " " . trim($this->convertDate($hourPart[2])) . " secondes";
-    	}
+		if (isset($hourPart[2]) && $hourPart[2] > 0) {
+			$secondes =  " " . trim($this->convertDate($hourPart[2])) . " secondes";
+		}
 
-    	return trim(strtolower($heures . " " . $minutes . $secondes));
-    }
+		return trim(strtolower($heures . " " . $minutes . $secondes));
+	}
 
-    /**
-     * convertDateToLetter, convert une date sous forme de letter
-     * @param string $date_string
-     * @return string
-     */
-    public function convertDateToLetter($dateString)
-    {
-    	$formData = array_reverse(explode("-", $dateString));
-    	$r = trim(convertDate($formData[0])." ". getMonth((int)$formData[1])) . " " . trim(convertDate($formData[2]));
-    	$p = explode(" ", $r);
+	/**
+	 * convertDateToLetter, convert une date sous forme de letter
+	 * @param string $date_string
+	 * @return string
+	 */
+	public function convertDateToLetter($dateString)
+	{
+		$formData = array_reverse(explode("-", $dateString));
+		$r = trim(convertDate($formData[0])." ". getMonth((int)$formData[1])) . " " . trim(convertDate($formData[2]));
+		$p = explode(" ", $r);
 
-    	if (strtolwer($p[0]) == "un") {
-    		$p[0] = "permier";
-    	}
-    	return trim(implode(" ", $p));
-    }
+		if (strtolwer($p[0]) == "un") {
+			$p[0] = "permier";
+		}
+		return trim(implode(" ", $p));
+	}
 
-    /**
-     * GetRoot, retourne la route definir.
-     * @return string
-     */
-    public function getRoot()
-    {
-    	return $this->root;
-    }
+	/**
+	 * GetRoot, retourne la route definir.
+	 * @return string
+	 */
+	public function getRoot()
+	{
+		return $this->root;
+	}
 
-    /**
-     * GetPublicPath, retourne la route definir pour
-     * dossier public.
-     * @return string
-     */
-    public function getPublicPath()
-    {
-    	return $this->public;
-    }
+	/**
+	 * GetPublicPath, retourne la route definir pour
+	 * dossier public.
+	 * @return string
+	 */
+	public function getPublicPath()
+	{
+		return $this->public;
+	}
 
-    /**
-     * body, returne les informations
-     * du POST
-     * @param string $key=null
-     * @return array
-     */
-    public function body($key = null)
-    {
+	/**
+	 * body, returne les informations
+	 * du POST
+	 * @param string $key=null
+	 * @return array
+	 */
+	public function body($key = null)
+	{
 
-    	if ($key !== null) {
-    		return $this->isBodyKey($key) ? $_POST[$key] : false;
-    	}
-    	return $_POST;
-    }
+		if ($key !== null) {
+			return $this->isBodyKey($key) ? $_POST[$key] : false;
+		}
+		return $_POST;
+	}
 
-    /**
-     * isBodyKey, verifie si de Snoop::body
-     * contient la cle definie.
-     * @return mixed
-     */
-    public function isBodyKey($key)
-    {
-    	return isset($_POST[$key]) && !empty($_POST[$key]);
-    }
-    
-    /**
-     * bodyIsEmpty
-     *	@return boolean
-     */
-    public function bodyIsEmpty()
-    {
-    	return empty($_POST);
-    }
+	/**
+	 * isBodyKey, verifie si de Snoop::body
+	 * contient la cle definie.
+	 * @return mixed
+	 */
+	public function isBodyKey($key)
+	{
+		return isset($_POST[$key]) && !empty($_POST[$key]);
+	}
 
-    /**
-     * Param, returne les informations
-     * du GET
-     * @param string $key=null
-     * @return array
-     */
-    public function param($key = null)
-    {
-    	if ($key !== null) {
-    		return $this->isParamKey($key) ? $_GET[$key] : false;
-    	}
-    	return $_GET;
-    }
+	/**
+	 * bodyIsEmpty
+	 *	@return boolean
+	 */
+	public function bodyIsEmpty()
+	{
+		return empty($_POST);
+	}
 
-    /**
-     * isParamKey, verifie si de Snoop::param
-     * contient la cle definie.
+	/**
+	 * Param, returne les informations
+	 * du GET
+	 * @param string $key=null
+	 * @return array
+	 */
+	public function param($key = null)
+	{
+		if ($key !== null) {
+			return $this->isParamKey($key) ? $_GET[$key] : false;
+		}
+		return $_GET;
+	}
+
+	/**
+	 * isParamKey, verifie si de Snoop::param
+	 * contient la cle definie.
 	 * @param string|int $key
-     * @return mixed
-     */
-    public function isParamKey($key)
-    {
-    	return isset($_GET[$key]) && !empty($key);
-    }
-    
-    /**
-     * paramIsEmpty
-     *	@return boolean
-     */
-    public function paramIsEmpty()
-    {
-    	return empty($_GET);
-    }
+	 * @return mixed
+	 */
+	public function isParamKey($key)
+	{
+		return isset($_GET[$key]) && !empty($key);
+	}
+
+	/**
+	 * paramIsEmpty
+	 *	@return boolean
+	 */
+	public function paramIsEmpty()
+	{
+		return empty($_GET);
+	}
 
 	/**
 	 * files, retoure les informations
@@ -1722,165 +1726,168 @@ class Snoop
 		return $_FILES;
 	}
 
-    /**
-     * isParamKey, verifie si de Snoop::param
-     * contient la cle definie.
+	/**
+	 * isParamKey, verifie si de Snoop::param
+	 * contient la cle definie.
 	 * @param string|int $key
-     * @return mixed
-     */
-    public function isFilesKey($key)
-    {
-    	return isset($_FILES[$key]) && !empty($_FILES[$key]);
-    }
+	 * @return mixed
+	 */
+	public function isFilesKey($key)
+	{
+		return isset($_FILES[$key]) && !empty($_FILES[$key]);
+	}
 
-    /**
-     * filesIsEmpty
-     *	@return boolean
-     */
-    public function filesIsEmpty()
-    {
-    	return empty($_FILES);
-    }
+	/**
+	 * filesIsEmpty
+	 *	@return boolean
+	 */
+	public function filesIsEmpty()
+	{
+		return empty($_FILES);
+	}
 
 	/**
 	 * currentRoot, retourne la route courante
 	 * @return string
 	 */
-    public function currentRoot()
-    {
-    	return $this->currentRoot;
-    }
+	public function currentRoot()
+	{
+		return $this->currentRoot;
+	}
 
-    /**
-     * Modifie les entete http
-     * @param int $code
-     */
-    public function setHeader($code)
-    {	
-    	if (in_array((int) $code, array_keys(self::$header), true)) {
-    		header(self::$header[$code], true, $code);
-    	} else {
-    		if (self::$logLevel == "prod") {
-    			self::log("Can't set header.");
-    		}
-    	}
-    }
+	/**
+	 * Modifie les entete http
+	 * @param int $code
+	 */
+	public function setHeader($code)
+	{
+		if (in_array((int) $code, array_keys(self::$header), true)) {
+			header(self::$header[$code], true, $code);
+		} else {
+			if (self::$logLevel == "prod") {
+				self::log("Can't set header.");
+			}
+		}
+	}
 
-    /**
-     * Logeur d'erreur.
-     */
-    private function log($message)
-    {
+	/**
+	 * Logeur d'erreur.
+	 * @param string $message
+	 */
+	private function log($message)
+	{
 		$f_log = fopen(".error_log", "a+");
 		if ($f_log != null) {
 			fprintf($f_log, "[%s] - %s:%d:[%s]\n", date("r"), $_SERVER['REMOTE_ADDR'], $_SERVER["REMOTE_PORT"], $message);
 			fclose($f_log);
 		}
-    }
-    /**
-     * Verifie si on n'est dans le cas
-     * d'un requete XHR.
-     * @return boolean
-     */
-    public function isXhr()
-    {
-    	if (isset($_SERVER["HTTP_REQUEST_WITH"])) {
-    		if (strtolower($_SERVER["HTTP_REQUEST_WITH"]) == "xmlhttprequest") {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
+	}
+	/**
+	 * Verifie si on n'est dans le cas
+	 * d'un requete XHR.
+	 * @return boolean
+	 */
+	public function isXhr()
+	{
+		if (isset($_SERVER["HTTP_REQUEST_WITH"])) {
+			if (strtolower($_SERVER["HTTP_REQUEST_WITH"]) == "xmlhttprequest") {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Createur de token csrf
-     * @return void
-     */
-    public function createTokenCsrf()
-    {
-    	if (!$this->isSessionKey("csrf")) {
-	    	$this->addSession("csrf", (object) ["token" => $this->generateToken(), "expirate" => $this->csrfExpirateTime]);
-    	}
-    }
+	/**
+	 * Createur de token csrf
+	 * @return void
+	 */
+	public function createTokenCsrf()
+	{
+		if (!$this->isSessionKey("csrf")) {
+			$this->addSession("csrf", (object) ["token" => $this->generateTokenCsrf(), "expirate" => $this->csrfExpirateTime]);
+		}
+	}
 
-    /**
-     * Generer une cle cripte en md5
-     * @return string
-     */
-    public function generateTokenCsrf()
-    {
-    	return md5(base64_encode(openssl_random_pseudo_bytes(23)) . date("Y-m-d H:i:s") . uniqid(rand(), true));
-    }
+	/**
+	 * Generer une cle cripte en md5
+	 * @return string
+	 */
+	public function generateTokenCsrf()
+	{
+		return md5(base64_encode(openssl_random_pseudo_bytes(23)) . date("Y-m-d H:i:s") . uniqid(rand(), true));
+	}
 
-    /**
-     * Recuperer un token csrf generer
-     * @return mixed
-     */
-    public function getTokenCsrf()
-    {
-    	return $app->session("csrf");
-    }
+	/**
+	 * Recuperer un token csrf generer
+	 * @return mixed
+	 */
+	public function getTokenCsrf()
+	{
+		return $this->session("csrf");
+	}
 
-    /**
-     * Modifie le delai d'expiration d'un token.
-     * @param int
-     */
-    public function setCsrfExpirateTime($time)
-    {
-    	$this->csrfExpirateTime = (int) $time;
-    }
+	/**
+	 * Modifie le delai d'expiration d'un token.
+	 * @param int
+	 */
+	public function setCsrfExpirateTime($time)
+	{
+		$this->csrfExpirateTime = (int) $time;
+	}
 
-    /**
-     * Verifie si le token en expire
-     * @return boolean
-     */
-    public function csrfIsExpirate($time)
-    {
-    	if ($this->isSessionKey("csrf")) {
-    		if ($this->getCsrfToken()->expirate >= (int) $time) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
+	/**
+	 * Verifie si le token en expire
+	 * @param int $time
+	 * @return boolean
+	 */
+	public function csrfIsExpirate($time)
+	{
+		if ($this->isSessionKey("csrf")) {
+			if ($this->getCsrfToken()->expirate >= (int) $time) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Detruie un token
-     */
-    public function expireCsrfToken()
-    {
-	    $this->removeSession("csrf");
-    }
+	/**
+	 * Detruie un token
+	 */
+	public function expireCsrfToken()
+	{
+		$this->removeSession("csrf");
+	}
 
-    /**
-     * Recuper la provenance de la requete
-     * courant.
-     * @return string
-     */
-    public function requestReferer()
-    {
-    	return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : null;
-    }
+	/**
+	 * Recuper la provenance de la requete
+	 * courant.
+	 * @return string
+	 */
+	public function requestReferer()
+	{
+		return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : null;
+	}
 
-    /**
-     * Verifcateur de token csrf valide
-  	 * @return boolean
-     */
-    public function verifyCsrfToken($token)
-    {
-    	if ($this->isSessionKey("csrf") && $token === $this->session("csrf")) {
-    		return true;
-    	}
-    	return false;
-    }
+	/**
+	 * Verifcateur de token csrf valide
+	 * @param string $token
+	 * @return boolean
+	 */
+	public function verifyCsrfToken($token)
+	{
+		if ($this->isSessionKey("csrf") && $token === $this->session("csrf")) {
+			return true;
+		}
+		return false;
+	}
 
-    /*----------------------------------
-	| NOTE: En reflection
-	|-----------------------------------
-	|    public static function mail()
-	|    {
-	|    	return Mail::load();
-	|    }
+	/*----------------------------------
+    | NOTE: En reflection
+    |-----------------------------------
+    |    public static function mail()
+    |    {
+    |    	return Mail::load();
+    |    }
     |
     */
 }
