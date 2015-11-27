@@ -69,6 +69,7 @@ class Snoop
 	private static $mail = null;
 	private static $appName = null;
 	private static $logLevel = "dev";
+	private $csrfExpirateTime;
 
 	/**
 	 * Configuration de date en francais.
@@ -101,10 +102,11 @@ class Snoop
 			if (isset($config->timeZone)) {
 				$this->setTimeZone($config->timeZone);
 			}
-			self::$appName = isset($config->appName) ? $config->appName : $this->appName ;
-			$this->uploadDir = isset($config->uploadDir) ? $config->uploadDir : $this->uploadDir ;
+			$this->uploadDir = isset($config->uploadDir) ? $config->uploadDir : $this->uploadDir;
 			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
+			$this->csrfExpirateTime = isset($config->csrfExpirateTime) ? $config->csrfExpirateTime: 50000;
 			self::$logLevel = isset($config->logLevel) ? $config->logLevel : $this->logLevel;
+			self::$appName = isset($config->appName) ? $config->appName : $this->appName;
 		}
 		// NOTE: En reflection
 		// self::$mail = Mail::load();
@@ -177,15 +179,87 @@ class Snoop
 
 	/**
 	 * get, route de type GET
-	 *
 	 * @param string $path
 	 * @param callable $cb
-	 * @return Snoop
+	 * @return selt
 	 */
 	public function get($path, $cb)
 	{
 		$this->currentRoot = $this->branch . $path;
 		return $this->routeLoader("GET", $this->currentRoot, $cb);
+	}
+
+	/**
+	 * any, route de tout type GET et POST
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function any($path, $cb)
+	{
+		return $this->get($path, $cb)->post($path, $cb);
+	}
+
+	/**
+	 * any, route de tout type DELETE
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function delete($path, $cb)
+	{
+		return $this->addHttpVerbe("__DETELE", $path, $cb);
+	}
+
+	/**
+	 * any, route de tout type UPDATE
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function update($path, $cb)
+	{
+		return $this->addHttpVerbe("__UPDATE", $path, $cb);
+	}
+
+	/**
+	 * any, route de tout type PUT
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function put($path, $cb)
+	{
+		return $this->addHttpVerbe("__PUT", $path, $cb);
+	}
+
+	/**
+	 * any, route de tout type PUT
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	public function head($path, $cb)
+	{
+		return $this->addHttpVerbe("__HEAD", $path, $cb);
+	}
+
+	/**
+	 * addHttpVerbe, permet d'ajout les autres verbes https
+	 * PUT, DELETE, UPDATE, HEAD
+	 * @param string $method
+	 * @param string $path
+	 * @param callable $cb
+	 * @return self
+	 */
+	private function addHttpVerbe($method, $path, $cb)
+	{
+		if ($this->isBodyKey("method")) {
+			if ($this->body("method") === $method) {
+				$this->routeLoader($this->getMethod(), $this->branch . $path, $cb);
+			}
+		}
+		return $this;
 	}
 
 	/**
@@ -235,8 +309,8 @@ class Snoop
 
 		header("X-Powered-by: Snoop-Framework");
 		$error = true;
-		if (isset(self::$routes[$_SERVER["REQUEST_METHOD"]])) {
-			foreach (self::$routes[$_SERVER["REQUEST_METHOD"]] as $route) {
+		if (isset(self::$routes[$this->getMethod()])) {
+			foreach (self::$routes[$this->getMethod()] as $route) {
 				if ($route->match($this->getUri($this->root))) {
 					$route->call();
 					$error = false;
@@ -265,6 +339,15 @@ class Snoop
 			$uri = $_SERVER["REQUEST_URI"];
 		}
 		return str_replace($path, "", $uri);
+	}
+
+	/**
+	 * Retourne la methode de la requete.
+	 * @return string
+	 */
+	public function getMethod()
+	{
+		return $_SERVER["REQUEST_METHOD"];
 	}
 
 	/**
@@ -1711,8 +1794,8 @@ class Snoop
      */
     public function createCsrfToken()
     {
-    	if (!$this->isSessionKey("csrfToken")) {
-	    	$this->addSession("csrfToken", $this->generateToken());
+    	if (!$this->isSessionKey("csrf")) {
+	    	$this->addSession("csrf", (object) ["token" => $this->generateToken(), "expirate" => $this->csrfExpirateTime]);
     	}
     }
 
@@ -1731,7 +1814,30 @@ class Snoop
      */
     public function getCsrfToken()
     {
-    	return $app->session("csrfToken");
+    	return $app->session("csrf");
+    }
+
+    /**
+     * Modifie le delai d'expiration d'un token.
+     * @param int
+     */
+    public function setCsrfExpirateTime($time)
+    {
+    	$this->csrfExpirateTime = (int) $time;
+    }
+
+    /**
+     * Verifie si le token en expire
+     * @return boolean
+     */
+    public function csrfIsExpirate($time)
+    {
+    	if ($this->isSessionKey("csrf")) {
+    		if ($this->getCsrfToken()->expirate >= (int) $time) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -1739,7 +1845,17 @@ class Snoop
      */
     public function expireCsrfToken()
     {
-	    $this->removeSession("csrfToken");
+	    $this->removeSession("csrf");
+    }
+
+    /**
+     * Recuper la provenance de la requete
+     * courant.
+     * @return string
+     */
+    public function requestReferer()
+    {
+    	return isset($_SERVER["HTTP_REFERER"]) ? $_SERVER["HTTP_REFERER"] : null;
     }
 
     /**
@@ -1748,10 +1864,9 @@ class Snoop
      */
     public function verifyCsrfToken($token)
     {
-    	if ($this->isSessionKey("csrfToken") && $token === $this->session("csrfToken")) {
+    	if ($this->isSessionKey("csrf") && $token === $this->session("csrf")) {
     		return true;
     	}
-
     	return false;
     }
 
