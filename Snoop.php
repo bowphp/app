@@ -971,9 +971,9 @@ class Snoop
 		 * Vérification d'erreur
 		 */
 		if ($error) {
-			echo '<div style="border-radius: 5px; border: 1px solid #eee; background: tomato">';
+			echo '<div style="border-radius: 3px; border: 1px solid #eee; background: tomato; padding: 10px; ">';
 			echo "<h1>Attaque stoped</h1>";
-			echo "<ul style=\"color:red\">";
+			echo "<ul style=\"color: white\">";
 			echo $errorList;
 			echo "</ul>";
 			echo "</div>";
@@ -1187,7 +1187,7 @@ class Snoop
 	 */
 	public function query(array $options, $return = false, $lastInsertId = false)
 	{
-		if (self::$db !== null) {
+		if (self::$db === null) {
 			throw new \ErrorException(__METHOD__ . "(): La connection n'est pas initialiser.<br/>Snoop::connection('default'[,function])");
 		}
 
@@ -1894,6 +1894,15 @@ class Snoop
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * @param mixed $data
+	 */
+	public function sendToJson($data)
+	{
+		header("Content-Type: application/json; charset=utf-8");
+		$this->kill(json_encode($data));
 	}
 
 	/*----------------------------------
