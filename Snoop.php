@@ -57,6 +57,8 @@ class Snoop
 	private static $db = null;
 	// Represente la vue	
 	private $views = null;
+	// Systeme de template
+	private $engine = null;
 	// Represente de la racine de l'application
 	private $root = "";
 	// Represente le dossier public
@@ -106,7 +108,7 @@ class Snoop
 			}
 			self::$uploadDir = isset($config->uploadDir) ? $config->uploadDir : self::$uploadDir;
 			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
-			$this->csrfExpirateTime = isset($config->csrfExpirateTime) ? $config->csrfExpirateTime: 50000;
+			$this->csrfExpirateTime = isset($config->csrfExpirateTime) ? $config->csrfExpirateTime: 12000;
 			self::$logLevel = isset($config->logLevel) ? $config->logLevel : self::$logLevel;
 			self::$appName = isset($config->appName) ? $config->appName : self::$appName;
 		}
@@ -189,8 +191,14 @@ class Snoop
 	 * @param callable $cb
 	 * @return self
 	 */
-	public function get($path, $cb)
+	public function get($path, $cb = null)
 	{
+		if ($cb == null) {
+			$prop = $path;
+			if (property_exists($this, $prop)) {
+				return $this->$prop;
+			}
+		}
 		$this->currentRoot = $this->branch . $path;
 		return $this->routeLoader("GET", $this->currentRoot, $cb);
 	}
@@ -398,14 +406,19 @@ class Snoop
 	/**
 	 * Kill process
 	 * @param string $message=""
+	 * @param bool $log=false
 	 */
-	public function kill($message = "")
+	public function kill($message = "", $log = false)
 	{
-		// Arret du processus.
 		if (!is_string($message)) {
 			$message = null;
 		}
-		die($message);
+		if ($log) {
+			$this->log($message);
+		} else {
+			echo $message;
+		}
+		die();
 	}
 
 	/**
@@ -1282,7 +1295,8 @@ class Snoop
 	}
 
 	/**
-	 * @param array|string extension
+	 * @param $extension
+	 * @return $this
 	 */
 	public function setFileExtension($extension)
 	{
@@ -1464,12 +1478,12 @@ class Snoop
 	}
 
 	/**
-	 * render, require $filenae
+	 * render, require $filename
 	 * @param string $filename
 	 * @param mixed|null $bind
 	 * @return \System\Snoop
 	 */
-	public function render($filename, $bind = null)
+	public function requireView($filename, $bind = null)
 	{
 		if (is_string($bind)) {
 			$bind = new \StdClass($bind);
@@ -1486,7 +1500,73 @@ class Snoop
 	}
 
 	/**
-	 * Set, permet de redefinir la configuartion
+	 * render, require $filename
+	 * @param string $filename
+	 * @param mixed|null $bind
+	 * @return \System\Snoop
+	 */
+	public function requireFile($filename, $bind = null)
+	{
+		$bind = (object) $bind;
+		require $filename;
+		return $this;
+	}
+
+	/**
+	 * render, require $filename
+	 * @param string $filename
+	 * @param mixed|null $bind
+	 * @return \System\Snoop
+	 */
+	public function render($filename, $bind = null)
+	{
+		if ($this->views !== null) {
+			$filename = $this->views . "/". $filename;
+		}
+		
+		$template = $this->templateLoader($filename);
+
+		if ($bind === null) {
+			$bind = [];
+		}
+
+		if ($this->engine == "twig") {
+			echo $template->render("template", $bind);
+		} else {
+			echo $template->render(file_get_contents($filename), $bind);
+		}
+		return $this;
+	}
+
+	/**
+	 * templateLoader, charge le moteur template a utiliser.
+	 * @param null $filename
+	 * @return \Mustache_Engine|null|\Twig_Environment
+	 * @throws \ErrorException
+	 */
+	private function templateLoader($filename = null)
+	{
+		if ($this->engine === null || !in_array($this->engine, ["twig", "mustache"], true)) {
+			throw new \ErrorException("Invalide template de definition");
+		}
+		$tpl = null;
+
+		if ($this->engine == "twig") {
+			require_once 'vendor/twig/twig/lib/Twig/Autoloader.php';
+			\Twig_Autoloader::register();
+
+			$loader = new \Twig_Loader_Array([
+				'template' => file_get_contents($filename)
+			]);
+			$tpl = new \Twig_Environment($loader);
+		} else {
+			$tpl = new \Mustache_Engine();
+		}
+		return $tpl;
+	}
+
+	/**
+	 * Set, permet de rédéfinir la configuartion
 	 * @param string $key
 	 * @param string $value
 	 * @throws \InvalidArgumentException
@@ -1527,6 +1607,7 @@ class Snoop
 	 * find, permet de recuperer simple tout les donnees
 	 * dans un table.
 	 * @param string $table
+	 * @param callable|null $cb
 	 * @throws \InvalidArgumentException
 	 * @return array|object
 	 */
@@ -1550,7 +1631,7 @@ class Snoop
 	}
 
 	/**
-	 * Lance un var_dump sur les varibles passees en parametre.
+	 * Lance un var_dump sur les variables passées en parametre.
 	 * @throws \InvalidArgumentException
 	 */
 	public function debug()
@@ -1804,8 +1885,8 @@ class Snoop
 	 */
 	public function isXhr()
 	{
-		if (isset($_SERVER["HTTP_REQUEST_WITH"])) {
-			if (strtolower($_SERVER["HTTP_REQUEST_WITH"]) == "xmlhttprequest") {
+		if (isset($_SERVER["HTTP_X_REQUESTED_WITH"])) {
+			if (strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest") {
 				return true;
 			}
 		}
@@ -1819,7 +1900,7 @@ class Snoop
 	public function createTokenCsrf()
 	{
 		if (!$this->isSessionKey("csrf")) {
-			$this->addSession("csrf", (object) ["token" => $this->generateTokenCsrf(), "expirate" => $this->csrfExpirateTime]);
+			$this->addSession("csrf", (object) ["token" => $this->generateTokenCsrf(), "expirate" => time() + $this->csrfExpirateTime]);
 		}
 	}
 
@@ -1855,7 +1936,7 @@ class Snoop
 	 * @param int $time
 	 * @return boolean
 	 */
-	public function csrfIsExpirate($time)
+	public function tokenCsrfIsExpirate($time)
 	{
 		if ($this->isSessionKey("csrf")) {
 			if ($this->getTokenCsrf()->expirate >= (int) $time) {
@@ -1868,7 +1949,7 @@ class Snoop
 	/**
 	 * Detruie un token
 	 */
-	public function expireCsrfToken()
+	public function expireTokenCsrf()
 	{
 		$this->removeSession("csrf");
 	}

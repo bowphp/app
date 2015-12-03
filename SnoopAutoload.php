@@ -14,10 +14,10 @@ class SnoopAutoload
 		$class = str_replace("System/", "", $class);
 
 		$class = __DIR__. "/" . $class . ".php";
+
 		if (is_file($class)) {
 			require $class;
 		}
-
 	}
 
 	public static function register() {
