@@ -73,7 +73,7 @@ class Snoop
 	private static $mail = null;
 	private static $appName = null;
 	private static $logLevel = "dev";
-	private $csrfExpirateTime;
+	private $tokenCsrfExpirateTime;
 
 	/**
 	 * Configuration de date en francais.
@@ -108,7 +108,7 @@ class Snoop
 			}
 			self::$uploadDir = isset($config->uploadDir) ? $config->uploadDir : self::$uploadDir;
 			$this->fileExtension = isset($config->extension) ? $config->extension : $this->fileExtension;
-			$this->csrfExpirateTime = isset($config->csrfExpirateTime) ? $config->csrfExpirateTime: 12000;
+			$this->tokenCsrfExpirateTime = isset($config->tokenCsrfExpirateTime) ? $config->tokenCsrfExpirateTime: 12000;
 			self::$logLevel = isset($config->logLevel) ? $config->logLevel : self::$logLevel;
 			self::$appName = isset($config->appName) ? $config->appName : self::$appName;
 		}
@@ -1320,7 +1320,7 @@ class Snoop
 		if (is_string($path)) {
 			self::$uploadDir = $path;
 		} else {
-			throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+			throw new \InvalidArgumentException("L'argument donnée a la fontion doit etre un entier");
 		}
 		return $this;
 	}
@@ -1337,7 +1337,7 @@ class Snoop
 		if (is_int($size)) {
 			self::$fileSize = $size;
 		} else {
-			throw new \InvalidArgumentException("L'argument donnee a la fontion doit etre un entier");
+			throw new \InvalidArgumentException("L'argument donnée a la fontion doit etre un entier");
 		}
 		return $this;
 	}
@@ -1895,12 +1895,16 @@ class Snoop
 
 	/**
 	 * Createur de token csrf
+	 * @param int $time=null
 	 * @return void
 	 */
-	public function createTokenCsrf()
+	public function createTokenCsrf($time = null)
 	{
 		if (!$this->isSessionKey("csrf")) {
-			$this->addSession("csrf", (object) ["token" => $this->generateTokenCsrf(), "expirate" => time() + $this->csrfExpirateTime]);
+			if (is_int($time)) {
+				$this->tokenCsrfExpirateTime = $time;
+			}
+			$this->addSession("csrf", (object) ["token" => $this->generateTokenCsrf(), "expirate" => time() + $this->tokenCsrfExpirateTime]);
 		}
 	}
 
@@ -1920,15 +1924,6 @@ class Snoop
 	public function getTokenCsrf()
 	{
 		return $this->session("csrf");
-	}
-
-	/**
-	 * Modifie le delai d'expiration d'un token.
-	 * @param int
-	 */
-	public function setCsrfExpirateTime($time)
-	{
-		$this->csrfExpirateTime = (int) $time;
 	}
 
 	/**
@@ -1969,7 +1964,7 @@ class Snoop
 	 * @param string $token
 	 * @return boolean
 	 */
-	public function verifyCsrfToken($token)
+	public function verifyTokenCsrf($token)
 	{
 		if ($this->isSessionKey("csrf") && $token === $this->getTokenCsrf()->token) {
 			return true;
