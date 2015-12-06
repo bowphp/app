@@ -74,7 +74,9 @@ Class Route
 		} else {
 			if (preg_match_all("#:([\w]+)#", $this->path, $match)) {
 				foreach ($match[1] as $key => $value) {
-					$path = preg_replace("#:$value$#", "(" . $this->with[$value] . ")", $this->path);
+					if (array_key_exists($value, $this->with)) {
+						$path = preg_replace("#:$value$#", "(" . $this->with[$value] . ")", $this->path);
+					}
 				}
 			}
 			$this->with = [];
