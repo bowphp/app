@@ -112,7 +112,8 @@ class Snoop
 			self::$logLevel = isset($config->logLevel) ? $config->logLevel : self::$logLevel;
 			self::$appName = isset($config->appName) ? $config->appName : self::$appName;
 		}
-		// NOTE: En reflection
+		set_error_handler([__CLASS__, "errorHandler"]);
+		// TODO: En reflection
 		// self::$mail = Mail::load();
 	}
 
@@ -352,7 +353,7 @@ class Snoop
 		}
 
 		if ($error) {
-			$this->setHeader(404);
+			$this->setResponseCode(404);
 			if ($this->error404 !== null && is_callable($this->error404)) {
 				call_user_func($this->error404);
 			}
@@ -989,7 +990,7 @@ class Snoop
 			echo $errorList;
 			echo "</ul>";
 			echo "</div>";
-			// On arrete tout.
+			// On arrête tout.
 			$this->kill();
 		}
 	}
@@ -1181,7 +1182,7 @@ class Snoop
 	}
 
 	/**
-	 * Insertion des donnees dans
+	 * Insertion des données dans la DB
 	 * ====================== MODEL ======================
 	 *	$options = [
 	 *		"query" => [
@@ -1189,7 +1190,7 @@ class Snoop
 	 *			"type" => INSERT|SELECT|DELETE|UPDATE,
 	 *			"data" => $data2pointAdded
 	 *		],
-	 *		"data" => "les donnees a inserer."
+	 *		"data" => "les données a insérer."
 	 *	];
 	 * @param array $options
 	 * @param bool|false $return
@@ -1233,7 +1234,6 @@ class Snoop
 		} else {
 			$method = "sanitazeString";
 		}
-
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {
 				if (is_string($value)) {
@@ -1259,7 +1259,7 @@ class Snoop
 
 	/**
 	 * sanitazeString, fonction permettant de nettoyer
-	 * une chaine de caractere des caracteres ajoutre
+	 * une chaine de caractère des caractères ajoutés
 	 * par secureString
 	 * @param string $data
 	 * @return string
@@ -1272,7 +1272,7 @@ class Snoop
 
 	/**
 	 * secureString, fonction permettant de nettoyer
-	 * une chaine de caractere des caracteres ',<tag>,&nbsp
+	 * une chaine de caractère des caractères ',<tag>,&nbsp;
 	 * @param string $data
 	 * @return string
 	 * @author Franck Dakia <dakiafranck@gmail.com>
@@ -1309,7 +1309,6 @@ class Snoop
 
 	/**
 	 * setUploadedDir, fonction permettant de redefinir le repertoir d'upload
-	 *
 	 * @param string:path, le chemin du dossier de l'upload
 	 * @throws \InvalidArgumentException
 	 * @return \System\Snoop
@@ -1325,8 +1324,7 @@ class Snoop
 	}
 
 	/**
-	 * Modifie la taille predefinie de l'image a uploader.
-	 *
+	 * Modifie la taille prédéfinie de l'image a uploader.
 	 * @param integer $size
 	 * @throws \InvalidArgumentException
 	 * @return \System\Snoop
@@ -1336,7 +1334,7 @@ class Snoop
 		if (is_int($size)) {
 			self::$fileSize = $size;
 		} else {
-			throw new \InvalidArgumentException("L'argument donnée a la fontion doit etre un entier");
+			throw new \InvalidArgumentException("L'argument donnée à la fonction doit être de type entier");
 		}
 		return $this;
 	}
@@ -1364,7 +1362,7 @@ class Snoop
 			$file = (object) $file;
 		}
 
-		# Si le fichier est bien dans le repertoir tmp de PHP
+		# Si le fichier est bien dans le répertoire tmp de PHP
 		if (is_uploaded_file($file->tmp_name)) {
 
 			$dirPart = explode("/", self::$uploadDir);
@@ -1443,7 +1441,6 @@ class Snoop
 
 	/**
 	 * switchTo, permet de ce connecter a une autre base de donnee.
-	 *
 	 * @param string $enterKey
 	 * @param callable $cb
 	 * @return \System\Snoop
@@ -1468,8 +1465,7 @@ class Snoop
 	 */
 	public function setTimeZone($zone)
 	{
-		$c = explode("/", $zone);
-		if (count($c) != 2) {
+		if (count(explode("/", $zone)) != 2) {
 			throw new \ErrorException("La definition de la zone est invalide");
 		}
 		date_default_timezone_set($zone);
@@ -1522,13 +1518,10 @@ class Snoop
 		if ($this->views !== null) {
 			$filename = $this->views . "/". $filename;
 		}
-		
 		$template = $this->templateLoader($filename);
-
 		if ($bind === null) {
 			$bind = [];
 		}
-
 		if ($this->engine == "twig") {
 			echo $template->render("template", $bind);
 		} else {
@@ -1546,7 +1539,7 @@ class Snoop
 	private function templateLoader($filename = null)
 	{
 		if ($this->engine === null || !in_array($this->engine, ["twig", "mustache"], true)) {
-			throw new \ErrorException("Invalide template de definition");
+			throw new \ErrorException("Erreur: template n'est pas définir");
 		}
 		$tpl = null;
 
@@ -1582,8 +1575,7 @@ class Snoop
 	}
 
 	/**
-	 * redirect, permet de lancer une redirection
-	 * vers l'url passer en parametre
+	 * redirect, permet de lancer une redirection vers l'url passer en paramêtre
 	 * @param string $path
 	 */
 	public function redirect($path)
@@ -1598,7 +1590,7 @@ class Snoop
 	 */
 	public function redirectTo404()
 	{
-		$this->setHeader(404);
+		$this->setResponseCode(404);
 		return $this;
 	}
 
@@ -1615,14 +1607,12 @@ class Snoop
 		if (!is_string($table)) {
 			throw new \InvalidArgumentException("Le nom de la table doit etre une chaine de caractere.");
 		}
-
 		$data = self::query([
 			"query" => [
 				"type" => self::SELECT,
 				"table" => $table
 			]
 		], true);
-
 		if ($cb !== null) {
 			return call_user_func($cb, $data);
 		}
@@ -1635,7 +1625,7 @@ class Snoop
 	 */
 	public function debug()
 	{
-		if (count(func_get_args()) == 0) {
+		if (func_num_args() == 0) {
 			throw new \InvalidArgumentException("Vous devez donner un paramtre à la function", 1);
 		}
 		ob_start();
@@ -1720,7 +1710,7 @@ class Snoop
 	}
 
 	/**
-	 * GetRoot, retourne la route definir.
+	 * GetRoot, retourne la route principale.
 	 * @return string
 	 */
 	public function getRoot()
@@ -1729,8 +1719,7 @@ class Snoop
 	}
 
 	/**
-	 * GetPublicPath, retourne la route definir pour
-	 * dossier public.
+	 * GetPublicPath, retourne la route definir pour dossier public.
 	 * @return string
 	 */
 	public function getPublicPath()
@@ -1739,8 +1728,8 @@ class Snoop
 	}
 
 	/**
-	 * body, returne les informations
-	 * du POST
+	 * body, retourne les informations du POST ou une seule si un clé est
+	 * passée paramètre
 	 * @param string $key=null
 	 * @return array
 	 */
@@ -1754,8 +1743,7 @@ class Snoop
 	}
 
 	/**
-	 * isBodyKey, verifie si de Snoop::body
-	 * contient la cle definie.
+	 * isBodyKey, vérifie si de Snoop::body contient la clé definie.
 	 * @param mixed $key
 	 * @return mixed $key
 	 */
@@ -1765,7 +1753,7 @@ class Snoop
 	}
 
 	/**
-	 * bodyIsEmpty
+	 * bodyIsEmpty, vérifie si le tableau $_POST est vide.
 	 *	@return boolean
 	 */
 	public function bodyIsEmpty()
@@ -1774,8 +1762,8 @@ class Snoop
 	}
 
 	/**
-	 * Param, returne les informations
-	 * du GET
+	 * Param, retourne les informations du GET ou une seule si un clé est
+	 * passée paramètre
 	 * @param string $key=null
 	 * @return array
 	 */
@@ -1788,8 +1776,7 @@ class Snoop
 	}
 
 	/**
-	 * isParamKey, verifie si de Snoop::param
-	 * contient la cle definie.
+	 * isParamKey, vérifie si de Snoop::param contient la cle definie.
 	 * @param string|int $key
 	 * @return mixed
 	 */
@@ -1799,7 +1786,7 @@ class Snoop
 	}
 
 	/**
-	 * paramIsEmpty
+	 * paramIsEmpty, vérifie si le tableau $_GET est vide.
 	 *	@return boolean
 	 */
 	public function paramIsEmpty()
@@ -1808,8 +1795,7 @@ class Snoop
 	}
 
 	/**
-	 * files, retoure les informations
-	 * du $_FILES
+	 * files, retourne les informations du $_FILES
 	 * @param string|null $key
 	 * @return mixed
 	 */
@@ -1822,8 +1808,7 @@ class Snoop
 	}
 
 	/**
-	 * isParamKey, verifie si de Snoop::param
-	 * contient la cle definie.
+	 * isParamKey, vérifie si Snoop::files contient la clé définie.
 	 * @param string|int $key
 	 * @return mixed
 	 */
@@ -1833,7 +1818,7 @@ class Snoop
 	}
 
 	/**
-	 * filesIsEmpty
+	 * filesIsEmpty, vérifie si le tableau $_FILES est vide.
 	 *	@return boolean
 	 */
 	public function filesIsEmpty()
@@ -1851,7 +1836,7 @@ class Snoop
 	}
 
 	/**
-	 * Modifie les entete http
+	 * Modifie les entétes http
 	 * @param int $code
 	 */
 	public function setResponseCode($code)
@@ -1866,7 +1851,7 @@ class Snoop
 	}
 
 	/**
-	 * Modifie les entete http
+	 * Modifie les entétes http
 	 * @param string $key
 	 * @param string $value
 	 * @return self
@@ -1890,8 +1875,7 @@ class Snoop
 		}
 	}
 	/**
-	 * Verifie si on n'est dans le cas
-	 * d'un requete XHR.
+	 * Verifie si on n'est dans le cas d'un requête XHR.
 	 * @return boolean
 	 */
 	public function isXhr()
@@ -1920,7 +1904,7 @@ class Snoop
 	}
 
 	/**
-	 * Generer une cle cripte en md5
+	 * Générer une clé cripté en md5
 	 * @return string
 	 */
 	public function generateTokenCsrf()
@@ -1929,7 +1913,7 @@ class Snoop
 	}
 
 	/**
-	 * Recuperer un token csrf generer
+	 * Retourne un token csrf generer
 	 * @return mixed
 	 */
 	public function getTokenCsrf()
@@ -1938,7 +1922,7 @@ class Snoop
 	}
 
 	/**
-	 * Verifie si le token en expire
+	 * Vérifie si le token en expire
 	 * @param int $time
 	 * @return boolean
 	 */
@@ -1953,7 +1937,7 @@ class Snoop
 	}
 
 	/**
-	 * Detruie un token
+	 * Détruie le token
 	 */
 	public function expireTokenCsrf()
 	{
@@ -1961,8 +1945,7 @@ class Snoop
 	}
 
 	/**
-	 * Recuper la provenance de la requete
-	 * courant.
+	 * Retourne la provenance de la requête courant.
 	 * @return string
 	 */
 	public function requestReferer()
@@ -1971,7 +1954,7 @@ class Snoop
 	}
 
 	/**
-	 * Verifcateur de token csrf valide
+	 * Vérifie si token csrf est valide
 	 * @param string $token
 	 * @return boolean
 	 */
@@ -1992,8 +1975,20 @@ class Snoop
 		$this->kill(json_encode($data));
 	}
 
+	/**
+	 * Personnalisation du lanceur d'erreur
+	 * @param int $errno
+	 * @param string $errstr
+	 * @param string $errfile
+	 * @param int $errline
+	 * @param array $errcontext
+	 */
+	private function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
+	{
+
+	}
 	/*----------------------------------
-    | NOTE: En reflection
+    | TODO: En reflection, définition d'un email loader.
     |-----------------------------------
     |    public static function mail()
     |    {
