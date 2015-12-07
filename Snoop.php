@@ -1866,6 +1866,18 @@ class Snoop
 	}
 
 	/**
+	 * Modifie les entete http
+	 * @param string $key
+	 * @param string $value
+	 * @return self
+	 */
+	public function setHeader($key, $value)
+	{
+		header("$key: $value");
+		return $this;
+	}
+
+	/**
 	 * Logeur d'erreur.
 	 * @param string $message
 	 */
