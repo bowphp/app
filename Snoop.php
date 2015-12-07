@@ -1577,7 +1577,7 @@ class Snoop
 				$this->$key = $value;
 			}
 		} else {
-			throw new \InvalidArgumentException("Le premier argument n'est pas un argument de confoguartion");
+			throw new \InvalidArgumentException("Le premier argument n'est pas un argument de configuration");
 		}
 	}
 
@@ -1863,6 +1863,18 @@ class Snoop
 				self::log("Can't set header.");
 			}
 		}
+	}
+
+	/**
+	 * Modifie les entete http
+	 * @param string $key
+	 * @param string $value
+	 * @return self
+	 */
+	public function setHeader($key, $value)
+	{
+		header("$key: $value");
+		return $this;
 	}
 
 	/**
