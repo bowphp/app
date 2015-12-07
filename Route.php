@@ -28,7 +28,7 @@ Class Route
 	private $match;
 
 	/**
-	 * Regle supplementaire de validation
+	 * Régle supplementaire de validation
 	 * d'url
 	 * @var $with
 	 */
@@ -37,9 +37,9 @@ Class Route
 
 	/**
 	 * contructeur
-	 *
 	 * @param string $path
 	 * @param callable $cb
+     * @param array $with
 	 */
 	public function __construct($path, $cb, $with)
 	{
@@ -50,39 +50,43 @@ Class Route
 	}
 
 	/**
-	 * match, verifir si le path de la REQUEST est conforme a celle
+	 * match, vérifie si le path de la REQUEST est conforme a celle
 	 * definir par le routier
-	 *
-	 * @param string $path
+	 * @param string $url
+     * @return bool.
 	 */
 	public function match($url)
 	{
-		if (preg_match("#(.+)/$#", $url, $match)) {
+		if (preg_match("~(.+)/$~", $url, $match)) {
 			$url = end($match);
 		}
 
-		if (preg_match("#(.+)/$#", $this->path, $match)) {
+		if (preg_match("~(.+)/$~", $this->path, $match)) {
 			$this->path = end($match);
 		}
 
 		if (count(explode("/", $this->path)) != count(explode("/", $url))) {
 			return false;
 		}
-
+        $path = "";
 		if (empty($this->with)) {
-			$path = preg_replace("#:\w+#", "([^\s]+)", $this->path);
+			$path = preg_replace("~:\w+~", "([^\s]+)", $this->path);
 		} else {
-			if (preg_match_all("#:([\w]+)#", $this->path, $match)) {
+			if (preg_match_all("~:([\w]+)~", $this->path, $match)) {
+                $tmpPath =  $this->path;
 				foreach ($match[1] as $key => $value) {
-					if (array_key_exists($value, $this->with)) {
-						$path = preg_replace("#:$value$#", "(" . $this->with[$value] . ")", $this->path);
-					}
-				}
+                    if (array_key_exists($value, $this->with)) {
+                        $tmpPath = preg_replace("~:$value~", "(" . $this->with[$value] . ")", $tmpPath);
+                    }
+                }
+                if ($tmpPath !== $this->path) {
+                    $path = $tmpPath;
+                }
 			}
 			$this->with = [];
 		}
 
-		if (preg_match("#^$path$#", $url, $match)) {
+		if (preg_match("~^$path$~", $url, $match)) {
 			array_shift($match);
 			$this->match = str_replace("/", "", $match);
 			return true;
