@@ -319,7 +319,6 @@ class Snoop
 	{
 		self::$routes[$method][] = new Route($path, $cb, $this->with);
 		$this->with = [];
-
 		return $this;
 	}
 
@@ -330,7 +329,7 @@ class Snoop
 	 */
 	public function with(array $otherRule)
 	{
-		$this->with = $otherRule;
+		$this->with = array_merge($this->with, $otherRule);
 		return $this;
 	}
 
@@ -1855,7 +1854,7 @@ class Snoop
 	 * Modifie les entete http
 	 * @param int $code
 	 */
-	public function setHeader($code)
+	public function setResponseCode($code)
 	{
 		if (in_array((int) $code, array_keys(self::$header), true)) {
 			header(self::$header[$code], true, $code);
