@@ -112,7 +112,42 @@ class Snoop
 			self::$logLevel = isset($config->logLevel) ? $config->logLevel : self::$logLevel;
 			self::$appName = isset($config->appName) ? $config->appName : self::$appName;
 		}
-		set_error_handler([__CLASS__, "errorHandler"]);
+		set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
+			$type = "error";
+			switch ((int) $errno) {
+				case E_ERROR:
+				case E_USER_ERROR:
+					$type = "fatal";
+					break;
+				case E_WARNING:
+				case E_USER_WARNING:
+					$type = "warning";
+					break;
+				case E_NOTICE:
+				case E_USER_NOTICE:
+					$type = "notice";
+					break;
+			}
+			self::log("[$type] $errstr at line $errline in $errfile");
+		});
+		set_exception_handler(function(\Exception $e) {
+			$type = "error";
+			switch ($e->getCode()) {
+				case E_ERROR:
+				case E_USER_ERROR:
+					$type = "fatal";
+					break;
+				case E_WARNING:
+				case E_USER_WARNING:
+					$type = "warning";
+					break;
+				case E_NOTICE:
+				case E_USER_NOTICE:
+					$type = "notice";
+					break;
+			}
+			self::log("[$type] " . $e->getMessage() . " at line " . $e->getLine() . " in " . $e->getFile());
+		});
 		// TODO: En reflection
 		// self::$mail = Mail::load();
 	}
@@ -1870,7 +1905,7 @@ class Snoop
 	{
 		$f_log = fopen(".error_log", "a+");
 		if ($f_log != null) {
-			fprintf($f_log, "[%s] - %s:%d:[%s]\n", date("r"), $_SERVER['REMOTE_ADDR'], $_SERVER["REMOTE_PORT"], $message);
+			fprintf($f_log, "[%s] - %s:%d: %s\n", date("Y-m-d H:i:s"), $_SERVER['REMOTE_ADDR'], $_SERVER["REMOTE_PORT"], $message);
 			fclose($f_log);
 		}
 	}
@@ -1881,7 +1916,8 @@ class Snoop
 	public function isXhr()
 	{
 		if (isset($_SERVER["HTTP_X_REQUESTED_WITH"])) {
-			if (strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest") {
+			$xhrObj = strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]);
+			if ($xhrObj == "xmlhttprequest" || $xhrObj == "activexobject") {
 				return true;
 			}
 		}
@@ -1926,7 +1962,7 @@ class Snoop
 	 * @param int $time
 	 * @return boolean
 	 */
-	public function tokenCsrfIsExpirate($time)
+	public function tokenCsrfTimeIsExpirate($time)
 	{
 		if ($this->isSessionKey("csrf")) {
 			if ($this->getTokenCsrf()->expirate >= (int) $time) {
@@ -1939,7 +1975,7 @@ class Snoop
 	/**
 	 * Détruie le token
 	 */
-	public function expireTokenCsrf()
+	public function killTokenCsrf()
 	{
 		$this->removeSession("csrf");
 	}
@@ -1956,14 +1992,19 @@ class Snoop
 	/**
 	 * Vérifie si token csrf est valide
 	 * @param string $token
+	 * @param int $time[optional]
 	 * @return boolean
 	 */
-	public function verifyTokenCsrf($token)
+	public function verifyTokenCsrf($token, $time = null)
 	{
+		$status = false;
 		if ($this->isSessionKey("csrf") && $token === $this->getTokenCsrf()->token) {
-			return true;
+			$status = true;
+			if ($time !== null && is_int($time)) {
+				$status = $status && $this->tokenCsrfTimeIsExpirate($time);
+			}
 		}
-		return false;
+		return $status;
 	}
 	
 	/**
@@ -1975,19 +2016,7 @@ class Snoop
 		$this->kill(json_encode($data));
 	}
 
-	/**
-	 * Personnalisation du lanceur d'erreur
-	 * @param int $errno
-	 * @param string $errstr
-	 * @param string $errfile
-	 * @param int $errline
-	 * @param array $errcontext
-	 */
-	private function errorHandler($errno, $errstr, $errfile, $errline, $errcontext)
-	{
-
-	}
-	/*----------------------------------
+	/*---------------------------------
     | TODO: En reflection, définition d'un email loader.
     |-----------------------------------
     |    public static function mail()
