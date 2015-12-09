@@ -10,7 +10,7 @@ namespace System;
 Class Route
 {
 	/**
-	 * Les callaback a lance si le url
+	 * Le callaback a lance si le url
 	 * de la requete de matcher.
 	 * @var $cb
 	 */
@@ -32,7 +32,6 @@ Class Route
 	 * d'url
 	 * @var $with
 	 */
-
 	private $with;
 
 	/**
