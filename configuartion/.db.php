@@ -4,25 +4,28 @@
 | Configuration de la base donnee.
 |---------------------------------
 | On retourne la configuration
-| de la base de donnee
+| des bases de donnees utilise par
+| l'application.
 */
 return [
+    // La base de donnee sur laquelle se connectera l'application
+    // par defaut
     "default" => [
         "scheme" => "mysql",
         "host" => "localhost",
-        "user" => "root",
+        "user" => "test",
         "pass" => "papac1010",
-        "dbname" => "cb_data_base",
+        "dbname" => "test",
         "port" => "",
-        "socket" => "/var/run/mysqld/mysqld.sock"
+        "socket" => "path to socket"
     ],
-    "cb_online" => [
+    "other" => [
         "scheme" => "mysql",
         "host" => "localhost",
-        "user" => "root",
-        "pass" => "papac1010",
-        "dbname" => "cb_data_base",
-        "port" => "",
-        "socket" => "/var/run/mysqld/mysqld.sock"
+        "user" => "user name",
+        "pass" => "passe word",
+        "dbname" => "data base name",
+        "port" => "sgbd port",
+        "socket" => "path to socket"
     ]
 ];
