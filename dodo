@@ -1,0 +1,10 @@
+#!/usr/local/env php
+<?php
+
+require "vendor/autoload.php";
+
+use System\Artisan;
+
+$status = Artisan::run(argc, argv);
+
+exit($status);

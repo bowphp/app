@@ -7,13 +7,13 @@
 | que l'application utilisera pour
 | Gerer l'envoye de mail.
 */
-return [
+return (object) [
     // Le type de service utiliser pour l'envoye de mail
     // php-mail or smtp
     // Si smtp est definie alors les cles password et username doivent avoir des values.
     "type" => "php-mail",
-    "email" => [
-        "username": "johon@gmail.com",
-        "password": "your password"
+    "email" => (object) [
+        "username" => "johon@gmail.com",
+        "password" => "your password"
     ]
 ];
