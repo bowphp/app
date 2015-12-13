@@ -3,7 +3,7 @@
 
 require "vendor/autoload.php";
 
-use System\Artisan;
+use System\Core\Artisan;
 
 $status = Artisan::run(argc, argv);
 
