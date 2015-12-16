@@ -18,7 +18,7 @@ return (object) [
             "scheme" => "mysql",
             "host" => "localhost",
             "user" => "test",
-            "pass" => "papac1010",
+            "pass" => "test",
             "dbname" => "test",
             "port" => "",
             "socket" => ""

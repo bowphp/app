@@ -1,14 +1,8 @@
 <?php
 
+namespace App\Provider;
 
-abstract class Controller
+class BaseController
 {
 
-    abstract public function index();
-
-    abstract public function create();
-
-    abstract public function delete();
-
-    abstract public function show();
 }

@@ -1,8 +1,5 @@
 <?php
 
-$app->get('/user', function($request, $response) use ($app) {
-
-	return $response->render("Wellcome");
-	// or view("Wellcome");
-
+$app->get("/", function() {
+	echo "Hello world";
 });

@@ -1,16 +1,20 @@
 <?php
 
-namesapce App\Http\MyController;
+namespace App\Http\MyController;
 
-use System\ViewsRender as View;
-use System\Database as DB;
-use App\Provider\BaseController.php as Controller;
+use System\Database\DB;
+use App\Provider\BaseController as Controller;
 
 class UserController extends Controller
 {
-    public function index($id)
+    public static function index($req, $res)
     {
-        $users = DB::table("users")->get((int) $id);
-        return Views::show("users@index.php", $users);
+        DB::connection();
+    	$res->render("contributors", [
+    		"liste" => DB::select("select * from users"),
+			"info" => "<info@diagnostic.com>", 
+			"licence" => "Licence MIT@" . date("Y"), 
+			"name" => "The Snoop Framework"
+		]);
     }
 }

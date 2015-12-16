@@ -30,6 +30,20 @@ return (object) [
     // chemin du fichier 404
 	"notFoundFileName" => dirname(__DIR__) . "/application/views/404.php",
     // Template par defaut utiliser. Le systeme implement 3 moteur de template
-    // Valeur possible: Twig, mustache, jade
-  	"template" => "twig"
+    // Valeur possible: twig, mustache, jade
+  	"template" => "mustache",
+    // Le repertoire des vues
+    "views" => dirname(__DIR__) . "/app/views",
+    // Le repertoire de cache.
+    "cacheFolder" => dirname(__DIR__) . "/cache/template",
+    // Liste des namespaces
+    "names" => [
+        "namespace" => [
+            "controller" => "App\Http\MyController",
+            "middleware" => "App\Http\Middleware",
+            "autoload" => dirname(__DIR__) . "/app/autoload"
+        ],
+        // Liste de middleware
+        "middleware" => ["auth"]
+    ]
 ];

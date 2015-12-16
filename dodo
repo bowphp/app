@@ -5,6 +5,6 @@ require "vendor/autoload.php";
 
 use System\Core\Artisan;
 
-$status = Artisan::run(argc, argv);
+$status = Artisan::run($argc, $argv);
 
 exit($status);
