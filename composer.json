@@ -2,16 +2,15 @@
     "name": "papac/snoop",
     "description": "The Snoop Framework",
     "type": "projet",
-    "keywords": ["framework", "snoop"],
     "require": {
-        "php": ">=5.5.9",
-        "papac/snoopformework": "1.8"
+        "papac/snoopframework": "1.1"
     },
-    "require-dev": {},
     "license": "MIT",
-    "autoload": {
-        "psr-0": {
-            "App\\": "app/"
+    "authors": [
+        {
+            "name": "Franck Dakia",
+            "email": "dakiafranck@gmail.com"
         }
-    }
+    ],
+    "minimum-stability": "dev"
 }
