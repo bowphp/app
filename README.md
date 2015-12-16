@@ -1,0 +1,3 @@
+# Snoop
+
+The Snoop Framework
