@@ -5,27 +5,26 @@
 // -----------------------------------------------------------------
 // Chargement principaux de l'application
 
-require dirname(__DIR__) . "/configuration/bootstrap.php";
+$config = require dirname(__DIR__) . "/configuration/bootstrap.php";
 
-use System\Core\Snoop;
 use System\Database\DB;
-use System\SnoopAutoload;
+use System\Core\Application;
+use System\ApplicationAutoload;
+
+ApplicationAutoload::register();
 
 
 
-SnoopAutoload::register();
+
 // Creation de l'application
+$app = Application::loader($config->init);
+DB::loadConfiguration($config->db);
+Logger::loadConfiguration($config->init);
 
-$app = Snoop::loader($init);
-$app->set("root", "/Php/Snoop");
+require dirname(__DIR__) . "/vendor/papac/snoopframework/src/Support/Helper.php";
 
-
-// Inclusion du point d'entrer du systeme de routing
-function db() {
-	return DB::class;
-}
 
 require "Http/Router/index.php";
 
-
+// Lancement de l'application
 $app->run();
