@@ -1,10 +1,28 @@
 #!/usr/local/env php
 <?php
+$doc = <<< DOC
+**make** cree des controllers, middleware, et model
+
+	1. controller nom_du_controlleur
+	2. middleware nom_du_middleware
+	3. model nom_du_model
+
+**table** manipulation de table
+
+	1. up cree la table
+	3. fill remplir la table
+	5. drop supprime la table
+
+**route** liste des informations sur les routes definire dans l'app
+
+	1. list liste de route
+	2. name lsite + nom de route.
+DOC;
 
 require "vendor/autoload.php";
 
-use System\Core\Artisan;
+// use System\Core\Artisan;
 
-$status = Artisan::run($argc, $argv);
-
+// $status = Artisan::run($argc, $argv);
+$status = 0;
 exit($status);
