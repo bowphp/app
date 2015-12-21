@@ -17,11 +17,11 @@ $response = \System\Http\Response::load($app);
 $request = \System\Http\Request::load($app);
 
 DB::loadConfiguration(require "configuration/db.php");
-DB::connection();
+
 
 if (!function_exists("db")) {
 	function db() {
-		return DB::class;
+		return DB::connection();
 	}
 }
 
@@ -259,8 +259,20 @@ if (!function_exists("send")) {
 	}
 }
 
+if (!function_exists("query")) {
+	function query($option) {
+		return DB::query($option);
+	}
+}
+
+if (!function_exists("switch_to")) {
+	function switch_to($name, $cb = null) {
+		DB::switchTo($name, $cb);
+	}
+}
+
 if (!function_exists("curljson")) {
-	function curljson($url, $array = false) {
+	function curljson($url) {
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$data = curl_exec($ch);

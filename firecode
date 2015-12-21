@@ -112,7 +112,6 @@ namespace App\Http\Controller;
 
 
 use Exception;
-use System\Database\DB;
 use System\Http\Request;
 use System\Http\Response;
 use System\Support\Logger as Log;
@@ -130,12 +129,6 @@ class {$controllerName} extends Controller
 	 */
     public function index(Request \$req, Response \$res)
     {
-        DB::connection(function(\$err) {
-        	if (\$err instanceof Exception) {
-        		Log::error(\$err->getMessage());
-        		die();
-        	}
-        });
         // do something here
     	\$res->send("Hello world");
     }
