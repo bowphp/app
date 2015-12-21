@@ -5,24 +5,14 @@
 // -----------------------------------------------------------------
 // Chargement principaux de l'application
 
+require dirname(__DIR__) . "/vendor/autoload.php";
+
 $config = require dirname(__DIR__) . "/configuration/bootstrap.php";
 
-use System\Database\DB;
-use System\Core\Application;
-use System\ApplicationAutoload;
-
-ApplicationAutoload::register();
-
-
-
-
 // Creation de l'application
-$app = Application::loader($config->init);
-DB::loadConfiguration($config->db);
-Logger::loadConfiguration($config->init);
+$app = \System\Core\Application::loader($config->init);
 
-require dirname(__DIR__) . "/vendor/papac/snoopframework/src/Support/Helper.php";
-
+$app->set("engine", "mustache");
 
 require "Http/Router/index.php";
 

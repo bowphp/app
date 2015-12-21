@@ -22,15 +22,6 @@ return (object) [
             "dbname" => "test",
             "port" => "",
             "socket" => ""
-        ],
-        "other" => [
-            "scheme" => "mysql",
-            "host" => "localhost",
-            "user" => "user name",
-            "pass" => "passe word",
-            "dbname" => "data base name",
-            "port" => "sgbd port",
-            "socket" => ""
         ]
     ]
 ];

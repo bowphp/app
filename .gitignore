@@ -2,4 +2,5 @@
 /test/**
 tmp/
 snoopframework/*
-.note*
+.node.md
+apache_error.log

@@ -5,7 +5,7 @@
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
-        "papac/snoopframework": "1.4"
+        "papac/snoopframework": "^1.4"
     },
     "license": "MIT",
     "authors": [
@@ -15,6 +15,9 @@
         }
     ],
     "autoload": {
+        "files": [
+            "Helper.php"
+        ],
         "psr-0": {
             "App\\": "app/"
         }

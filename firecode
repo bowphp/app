@@ -1,0 +1,237 @@
+#!/usr/local/env php
+<?php
+
+class Firecode
+{
+
+	private function __construct() {}
+	private function __clone() {}
+
+	/**
+	 * @param $argc
+	 * @param $argv
+	 * @return int
+	 */
+	public static function run($argc, $argv)
+	{
+		
+		$argc -= 1;
+		array_shift($argv);
+
+		if (in_array($argc, [0, 1, 2]) || (isset($argv[0]) && $argv[0] === "help")) {
+			static::usage();
+		}
+
+		$action = $argv[0];
+		$param = $argv[1];
+		$name = $argv[2];
+		$status = 0;
+		switch ($action) {
+			case 'make':
+				switch ($param) {
+					case '--model':
+					case '-m':
+						static::createModel($name);
+						break;
+					case '--controller':
+					case '-c':
+						$status = static::createController($name);
+						break;
+					case '--middleware':
+					case '-r':
+						$status = static::createMiddleware($name);
+						break;
+					default:
+						$status = static::usage();
+						break;
+				}		
+				break;
+			case 'migrate':
+				break;
+			case 'help':
+				$status = static::usage();
+				break;
+			default:
+				$status = static::usage();
+				break;
+		}
+		return $status;
+	}
+
+	/**
+	 * @param $middlewareName
+	 * @return int
+	 */
+	private static function createMiddleware($middlewareName)
+	{
+		if (file_exists("app/Http/Middleware/$middlewareName.php")) {
+			echo "\033[1;31mMiddleware <\033[1;33m@\033[1;31m$middlewareName\033[00m\033[1;31m> already exist.\033[00m";
+			return 1;
+		}
+
+$middlewareTemplate = <<< CM
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+
+class {$middlewareName}
+{
+
+	public function handler(\$req, \$res, Closure \$next = null)
+	{
+		// do something here
+		// call \$next(\$req, \$res);
+	}
+}
+
+CM;
+
+		file_put_contents("app/Http/Middleware/$middlewareName.php", $middlewareTemplate);
+		echo "\033[1;32mMiddleware \033[00m@@{$middlewareName}\033[1;32m Created.\033[00m";
+		return 0;
+	}
+
+	/**
+	 * @param $controllerName
+	 * @return int
+	 */
+	private static function createController($controllerName)
+	{
+
+		if (file_exists("app/Http/Controller/$controllerName.php")) {
+			echo "\033[1;31mController <\033[1;33m@\033[1;31m$controllerName\033[00m\033[1;31m> already exist.\033[00m";
+			return 1;
+		}
+
+$controllerTemplate = <<< CC
+<?php
+
+namespace App\Http\Controller;
+
+
+use Exception;
+use System\Database\DB;
+use System\Http\Request;
+use System\Http\Response;
+use System\Support\Logger as Log;
+use App\Provider\BaseController as Controller;
+
+
+class {$controllerName} extends Controller
+{
+	/**
+	 * Start point
+	 *
+	 * @param Request \$req
+	 * @param Response \$res
+	 * @return mixed
+	 */
+    public function index(Request \$req, Response \$res)
+    {
+        DB::connection(function(\$err) {
+        	if (\$err instanceof Exception) {
+        		Log::error(\$err->getMessage());
+        		die();
+        	}
+        });
+        // do something here
+    	\$res->send("Hello world");
+    }
+
+	/**
+	 * Delete data
+	 *
+	 * @param Request \$req
+	 * @param Response \$res
+	 * @return mixed
+	 */
+    public function delete(\$req, \$res)
+    {
+        
+    	// do something here
+
+    }
+
+	/**
+	 * Add information
+	 *
+	 * @param Request \$req
+	 * @param Response \$res
+	 */
+    public function add(\$req, \$res)
+    {
+       
+       // do something here
+       // eg. DB::insert("insert into your_table values(1, 'name')");
+    	
+    }
+	/**
+	 * get all information
+	 *
+	 * @param Request \$req
+	 * @param Response \$res
+	 * @return mixed
+	 */
+    public function get(Request \$req, Response \$res, \$id)
+    {
+    	// do something here.
+    }
+}
+CC;
+
+		file_put_contents("app/Http/Controller/$controllerName.php", $controllerTemplate);
+		echo "\033[1;32mController \033[00m@@{$controllerName}\033[1;32m Created.\033[00m";
+
+		return 0;
+	}
+
+	/**
+	 * @param $modelName
+	 * @return int
+	 */
+	private static function createModel($modelName)
+	{
+		if (file_exists("app/Http/Model/$modelName.php")) {
+			echo "\033[1;33mModel <\033[1;33m@\033[1;31m$modelName\033[00m\033[1;31m> already exist.\033[00m";
+			return 1;
+		}
+		echo "\033[1;32mModel \033[00m@@{$modelName}\033[1;32m Created.\033[00m";
+
+		return 0;
+	}
+
+	/**
+	 * @return int
+	 */
+	private static function usage()
+	{
+
+$usage = <<< USAGE
+
+firecode usage: php firecode :command :option :stdout-file-name
+
+\033[1;31mcommand\033[00m:
+
+ \033[1;32mmake\033[00m create a user class
+  option:
+   \033[1;33m--controller\033[00m | \033[1;32m-c\033[00m 	for create controller
+   \033[1;33m--model\033[00m | \033[1;32m-m\033[00m 	for create model
+   \033[1;33m--middleware\033[00m | \033[1;32m-r\033[00m 	for create middleware
+
+ \033[1;32mmigrate\033[00m create migration of user model
+  option:
+   \033[1;33m--up\033[00m		To create migration \033[1;31m(in building)\033[00m
+   \033[1;33m--down\033[00m	To drop migration \033[1;31m(in building)\033[00m
+   \033[1;33m--truncate\033[00m	To truncate table \033[1;31m(in building)\033[00m
+
+
+USAGE;
+		echo $usage;
+
+		return 1;
+	}
+}
+
+$s = Firecode::run($argc, $argv);

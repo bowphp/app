@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\MyController;
+namespace App\Http\Controller;
 
 use System\Database\DB;
 use App\Provider\BaseController as Controller;
