@@ -22,7 +22,7 @@ class BaseController
 		$middleware = $this->middleware_namespace . $name;
 		if (class_exists($middleware)) {
 			$class = new $middleware();
-			return call_user_func_array([$class, "hanlder", $data);
+			return call_user_func_array([$class, "hanlder"], $data);
 		}
 	}
 
