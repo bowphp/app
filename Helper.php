@@ -9,6 +9,10 @@ use System\Support\Logger;
 use System\Support\Security;
 
 $app = \System\Core\Application::loader(require "configuration/init.php");
+
+global $response;
+global $request;
+
 $response = \System\Http\Response::load($app);
 $request = \System\Http\Request::load($app);
 
@@ -22,7 +26,7 @@ if (!function_exists("db")) {
 }
 
 if (!function_exists("view")) {
-	function view($template, $data) {
+	function view($template, $data = []) {
 		global $response;
 		$response->view($template, $data);
 	}

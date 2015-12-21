@@ -31,7 +31,7 @@ return (object) [
 	"notFoundFileName" => dirname(__DIR__) . "/app/views/404.php",
     // Template par defaut utiliser. Le systeme implement 3 moteur de template
     // Valeur possible: twig, mustache, jade
-  	"template" => "mustache",
+  	"template" => "twig",
     // Le repertoire des vues
     "views" => dirname(__DIR__) . "/app/views",
     // Le repertoire de cache.

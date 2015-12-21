@@ -1,7 +1,7 @@
 <?php
 
-$app->get("/:id", function($req) {
+$app->get("/", function($req, $res) {
 
-	echo "Hello world " . $req->params->id;
+	$res->render("welcome");
 
-})->where(["id" => "[a-zA-Z]+"]);
+});
