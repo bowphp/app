@@ -1,6 +1,5 @@
 /vendor/
 /test/**
-tmp/
-snoopframework/*
 .node.md
 apache_error.log
+.idea/**/*
