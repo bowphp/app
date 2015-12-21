@@ -39,8 +39,8 @@ return (object) [
     // Liste des namespaces
     "names" => [
         "namespace" => [
-            "controller" => "App\Http\MyController",
-            "middleware" => "App\Http\Middleware",
+            "controller" => "App\\Http\\Controller",
+            "middleware" => "App\\Http\\Middleware",
             "autoload" => dirname(__DIR__) . "/app/UserApplicationAutoload"
         ],
         // Liste de middleware
