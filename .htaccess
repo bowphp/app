@@ -4,5 +4,5 @@ Options -indexes
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ app.php
+RewriteRule ^ app/index.php
 </IfModule>

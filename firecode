@@ -47,6 +47,8 @@ class Firecode
 				}		
 				break;
 			case 'migrate':
+					$status = 0;
+					echo "\033[1;32mIn dev\033[00m";
 				break;
 			case 'help':
 				$status = static::usage();

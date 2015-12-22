@@ -3,10 +3,10 @@
 // -----------------------------------------------------------------
 // Chargement des configurations
 // -----------------------------------------------------------------
-// Chargement principaux de l'application
+// Chargement des principaux fichier de l'application
+// -----------------------------------------------------------------
 
 require dirname(__DIR__) . "/vendor/autoload.php";
-
 $config = require dirname(__DIR__) . "/configuration/bootstrap.php";
 
 // Creation de l'application

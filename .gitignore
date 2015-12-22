@@ -1,5 +1,5 @@
 /vendor/
 /test/**
-.node.md
 apache_error.log
 .idea/**/*
+.node.md

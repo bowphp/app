@@ -13,14 +13,6 @@ return (object) [
 	"appname" => "The Snoop Framework",
     // La local
 	"timezone" => "Africa/Abidjan",
-    // Liste des extensions valides en cas d'upload de fichier
-	"uploadFileExtension" => [ "jpg", "png", "jpeg" ],
-    // Repertoire d'upload de fichier, Deux types sont valides
-    // :folder|:ftp
-	"uploadConfiguration" => (object) [
-        "type" => "folder",
-        "dirname" => dirname(__DIR__) . "/app/public/upload"
-    ],
     // Niveau de log
 	"loglevel" => "dev",
     // Repertoire de log
@@ -29,7 +21,7 @@ return (object) [
 	"tokenExpirateTime" => 50000,
     // chemin du fichier 404
 	"notFoundFileName" => dirname(__DIR__) . "/app/views/404.php",
-    // Template par defaut utiliser. Le systeme implement 3 moteur de template
+    // Template par defaut utiliser par Snoop. Le systeme implement 3 moteur de template
     // Valeur possible: twig, mustache, jade
   	"template" => "twig",
     // Le repertoire des vues

@@ -6,6 +6,7 @@ require "vendor/papac/snoopframework/src/ApplicationAutoload.php";
 use System\Database\DB;
 use System\Support\Util;
 use System\Support\Logger;
+use System\Support\Resource;
 use System\Support\Security;
 
 $app = \System\Core\Application::loader(require "configuration/init.php");
@@ -17,6 +18,7 @@ $response = \System\Http\Response::load($app);
 $request = \System\Http\Request::load($app);
 
 DB::loadConfiguration(require "configuration/db.php");
+Resource::configure(require "configuration/resource.php");
 
 
 if (!function_exists("db")) {
@@ -78,7 +80,6 @@ if (!function_exists("show_error")) {
 	function show_error() {
 
 		$db = db();
-		var_dump($db);
 
 		return $db::getLastErreur();
 	}
@@ -128,6 +129,27 @@ if (!function_exists("kill")) {
 if (!function_exists("mailto")) {
 	function mailto($to, $message, $header) {
 
+	}
+}
+
+if (!function_exists("body")) {
+	function body() {
+        global $request;
+        return $request->body();
+	}
+}
+
+if (!function_exists("files")) {
+	function files() {
+        global $request;
+        return $request->files();
+	}
+}
+
+if (!function_exists("query")) {
+	function query() {
+        global $request;
+        return $request->query();
 	}
 }
 
@@ -193,12 +215,6 @@ if (!function_exists("store")) {
 			}
 		}
 		\System\Support\Resource::uploadFile($file);
-	}
-}
-
-if (!function_exists("curlarray")) {
-	function curlarray($url) {
-		curljson($url, true);
 	}
 }
 
@@ -273,11 +289,15 @@ if (!function_exists("switch_to")) {
 
 if (!function_exists("curljson")) {
 	function curljson($url) {
+
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
 		$data = curl_exec($ch);
 		curl_close($ch);
+
 		setheader("content-type", "application/json; charset=utf-8");
 		send($data);
+
 	}
 }
