@@ -19,13 +19,14 @@ class Firecode
 		array_shift($argv);
 
 		if (in_array($argc, [0, 1, 2]) || (isset($argv[0]) && $argv[0] === "help")) {
-			static::usage();
+			return static::usage();
 		}
 
 		$action = $argv[0];
 		$param = $argv[1];
 		$name = $argv[2];
 		$status = 0;
+
 		switch ($action) {
 			case 'make':
 				switch ($param) {
@@ -44,7 +45,7 @@ class Firecode
 					default:
 						$status = static::usage();
 						break;
-				}		
+				}
 				break;
 			case 'migrate':
 					$status = 0;
@@ -77,11 +78,19 @@ $middlewareTemplate = <<< CM
 namespace App\Http\Middleware;
 
 use Closure;
+use System\Http\Request
 
 class {$middlewareName}
 {
-
-	public function handler(\$req, \$res, Closure \$next = null)
+	/**
+	 * Fonction de lancement du middleware.
+	 *
+	 * @param Request \$req
+	 * @param Closure \$next
+	 *
+	 * @return mixed
+	 */
+	public function handler(Request \$req, Closure \$next = null)
 	{
 		// do something here
 		// call \$next(\$req, \$res);
@@ -92,6 +101,7 @@ CM;
 
 		file_put_contents("app/Http/Middleware/$middlewareName.php", $middlewareTemplate);
 		echo "\033[1;32mMiddleware \033[00m@@{$middlewareName}\033[1;32m Created.\033[00m";
+
 		return 0;
 	}
 
@@ -104,6 +114,7 @@ CM;
 
 		if (file_exists("app/Http/Controller/$controllerName.php")) {
 			echo "\033[1;31mController <\033[1;33m@\033[1;31m$controllerName\033[00m\033[1;31m> already exist.\033[00m";
+
 			return 1;
 		}
 
@@ -115,8 +126,6 @@ namespace App\Http\Controller;
 
 use Exception;
 use System\Http\Request;
-use System\Http\Response;
-use System\Support\Logger as Log;
 use App\Provider\BaseController as Controller;
 
 
@@ -126,23 +135,21 @@ class {$controllerName} extends Controller
 	 * Start point
 	 *
 	 * @param Request \$req
-	 * @param Response \$res
 	 * @return mixed
 	 */
-    public function index(Request \$req, Response \$res)
+    public function index(Request \$req)
     {
         // do something here
-    	\$res->send("Hello world");
+    	return response("Hello world", 304);
     }
 
 	/**
 	 * Delete data
 	 *
 	 * @param Request \$req
-	 * @param Response \$res
 	 * @return mixed
 	 */
-    public function delete(\$req, \$res)
+    public function delete(Request \$req)
     {
         
     	// do something here
@@ -155,23 +162,23 @@ class {$controllerName} extends Controller
 	 * @param Request \$req
 	 * @param Response \$res
 	 */
-    public function add(\$req, \$res)
+    public function add(Request \$req)
     {
        
        // do something here
-       // eg. DB::insert("insert into your_table values(1, 'name')");
+       // eg. insert("insert into your_table values(1, 'name')");
     	
     }
 	/**
 	 * get all information
 	 *
 	 * @param Request \$req
-	 * @param Response \$res
 	 * @return mixed
 	 */
-    public function get(Request \$req, Response \$res, \$id)
+    public function get(Request \$req)
     {
     	// do something here.
+    	// e.g table("your_table")->get() // retourne une liste
     }
 }
 CC;
@@ -190,8 +197,10 @@ CC;
 	{
 		if (file_exists("app/Http/Model/$modelName.php")) {
 			echo "\033[1;33mModel <\033[1;33m@\033[1;31m$modelName\033[00m\033[1;31m> already exist.\033[00m";
+
 			return 1;
 		}
+
 		echo "\033[1;32mModel \033[00m@@{$modelName}\033[1;32m Created.\033[00m";
 
 		return 0;

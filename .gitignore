@@ -1,5 +1,7 @@
 /vendor/
 /test/**
 apache_error.log
-.idea/**/*
-.node.md
+/.idea/**/*
+/.node.md
+logger/*.log
+/public/upload/*

@@ -10,9 +10,10 @@ return (object) [
     // Répertoire d'upload de fichier, Deux types sont valides
     // :folder|:ftp
     "uploadConfiguration" => (object) [
+        "type" => "folder",
         "config" => [
             "folder" => [
-                "dirname" => dirname(__DIR__) . "/app/public/upload"
+                "dirname" => dirname(__DIR__) . "/public/upload"
             ],
             "ftp" => (object) [
                 "password" => "mot de passe ftp",
@@ -21,7 +22,6 @@ return (object) [
                 "tls" => false, // A `true` pour activer une connection sécurisé.
                 "timeout" => 50 // Temps d'attente de connection
             ]
-        ],
-        "type" => "folder"
+        ]
     ]
 ];

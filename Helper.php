@@ -23,7 +23,8 @@ Resource::configure(require "configuration/resource.php");
 
 if (!function_exists("db")) {
 	function db() {
-		return DB::connection();
+		DB::connection();
+		return DB::class;
 	}
 }
 
@@ -40,8 +41,8 @@ if (!function_exists("table")) {
 	}
 }
 
-if (!function_exists("querymaker")) {
-	function querymaker($sql, $data, $method) {
+if (!function_exists("query_maker")) {
+	function query_maker($sql, $data, $method) {
 
 		$db = db();
 
@@ -53,8 +54,8 @@ if (!function_exists("querymaker")) {
 	}
 }
 
-if (!function_exists("lastinsertid")) {
-	function lastinsertid() {
+if (!function_exists("last_insert_id")) {
+	function last_insert_id() {
 
 		$db = db();
 
@@ -62,8 +63,8 @@ if (!function_exists("lastinsertid")) {
 	}
 }
 
-if (!function_exists("queryresponse")) {
-	function queryresponse($method, $param) {
+if (!function_exists("query_response")) {
+	function query_response($method, $param) {
 
 		global $response;
 		$param = array_slice(func_get_args(), 1);
@@ -76,59 +77,50 @@ if (!function_exists("queryresponse")) {
 	}
 }
 
-if (!function_exists("show_error")) {
-	function show_error() {
-
-		$db = db();
-
-		return $db::getLastErreur();
+if (!function_exists("show_last_db_error")) {
+	function show_last_db_error() {
+		return DB::getLastErreur();
 	}
 }
 
 if (!function_exists("select")) {
 	function select($sql, array $data = []) {
-		return querymaker($sql, $data, "select");
+		return query_maker($sql, $data, "select");
 	}
 }
 
 if (!function_exists("insert")) {
 	function insert($sql, array $data = []) {
-		return querymaker($sql, $data, "insert");
+		return query_maker($sql, $data, "insert");
 	}
 }
 
 if (!function_exists("delete")) {
 	function delete($sql, array $data = []) {
-		return querymaker($sql, $data, "delete");
+		return query_maker($sql, $data, "delete");
 	}
 }
 
 if (!function_exists("update")) {
 	function update($sql, array $data = []) {
-		return querymaker($sql, $data, "update");
+		return query_maker($sql, $data, "update");
 	}
 }
 
 if (!function_exists("statement")) {
 	function statement($sql, array $data = []) {
-		return querymaker($sql, $data, "statement");
+		return query_maker($sql, $data, "statement");
 	}
 }
 
 if (!function_exists("kill")) {
-	function kill($message = null, $log = false) {
+	function kill($message = null, $log = false, $code = 200) {
 
 		if ($log === true) {
 			log($message, $log=0);
 		}
-
+		statuscode($code);
 		die($message);
-	}
-}
-
-if (!function_exists("mailto")) {
-	function mailto($to, $message, $header) {
-
 	}
 }
 
@@ -210,31 +202,29 @@ if (!function_exists("store")) {
 	function store(array $file, $filename = null, $dirname = null) {
 		if (!is_null($filename) && is_string($filename)) {
 			\System\Support\Resource::setUploadFileName($filename);
-			if (!is_null($dirname)) {
-				\System\Support\Resource::setUploadDir($dirname);
-			}
 		}
-		\System\Support\Resource::uploadFile($file);
+		if (!is_null($dirname)) {
+			\System\Support\Resource::setUploadDir($dirname);
+		}
+		\System\Support\Resource::store($file);
 	}
 }
 
 if (!function_exists("json")) {
-	function json($data) {
-		queryresponse("json", $data);
+	function json($data, $code = 200) {
+		query_response("json", $data, $code);
 	}
 }
 
 if (!function_exists("statuscode")) {
 	function statuscode($code) {
-		if (is_int($code)) {
-			queryresponse("setCode", $code);
-		}
+		query_response("setCode", (int) $code);
 	}
 }
 
 if (!function_exists("sanitaze")) {
 	function sanitaze($data) {
-		if (is_int($data)) {
+		if (is_int($data) || is_string($data)) {
 			return $data;
 		} else {
 			return Security::sanitaze($data);
@@ -244,7 +234,7 @@ if (!function_exists("sanitaze")) {
 
 if (!function_exists("secure")) {
 	function secure($data) {
-		if (is_int($data)) {
+		if (is_int($data) || is_string($data)) {
 			return $data;
 		} else {
 			return Security::sanitaze($data, true);
@@ -259,19 +249,19 @@ if (!function_exists("response")) {
 			return $response;
 		}
 		statuscode($code);
-		return queryresponse("render", $template, $data);
+		return query_response("render", $template, $data);
 	}
 }
 
 if (!function_exists("setheader")) {
 	function setheader($key, $value) {
-		queryresponse("setHeader", $key, $value);
+		query_response("setHeader", $key, $value);
 	}
 }
 
 if (!function_exists("send")) {
 	function send($data) {
-		queryresponse("send", $data);
+		query_response("send", $data);
 	}
 }
 
@@ -288,16 +278,12 @@ if (!function_exists("switch_to")) {
 }
 
 if (!function_exists("curljson")) {
-	function curljson($url) {
-
+	function curljson($url, $code = 200) {
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
 		$data = curl_exec($ch);
 		curl_close($ch);
-
-		setheader("content-type", "application/json; charset=utf-8");
-		send($data);
-
+		$data = json_decode($data);
+		json($data, $code);
 	}
 }
