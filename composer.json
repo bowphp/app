@@ -1,11 +1,11 @@
 {
-    "name": "papac/snoop",
+    "name": "snoop/snoop",
     "description": "The Snoop Framework",
     "keywords": ["framework", "snoop"],
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
-        "papac/snoopframework": "1.4.*"
+        "snoop/snoopframework": "1.4.*"
     },
     "license": "MIT",
     "authors": [
