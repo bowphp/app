@@ -1,10 +1,12 @@
 <?php
 
+
 namespace App\Http\Controller;
 
 
+use Snoop\Database\DB;
+use Snoop\Http\Request;
 use App\Provider\BaseController as Controller;
-use System\Http\Request;
 
 
 class UserController extends Controller

@@ -10,7 +10,7 @@ require dirname(__DIR__) . "/vendor/autoload.php";
 $config = require dirname(__DIR__) . "/configuration/bootstrap.php";
 
 // Creation de l'application
-$app = \System\Core\Application::loader($config->init);
+$app = \Snoop\Core\Application::loader($config->init);
 
 require "Http/Router/index.php";
 

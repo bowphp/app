@@ -3,7 +3,6 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Hello</title>
-	<link rel="stylesheet" href="/public/css/prism.css">
 	<style type="text/css">
 		body {
 			/*background: url(/public/images/snoop.gif) no-repeat center top 100px;*/
@@ -15,7 +14,6 @@
 			font-family: Helvetica, Arial;
 		}
 		p.name {
-			border-left: solid 10px #1F2839;
 			padding: 10px;
 			margin-top: 100px;
 		}
@@ -30,7 +28,7 @@
 		a {
 			font-size: 13px;
 			border-radius: 2px;
-			background-color: #333333;
+			background-color: #555;
 			color: #fff;
 			padding: 5px;
 			text-decoration: none;
@@ -42,6 +40,16 @@
 		.f {
 			color: #bd362f;
 		}
+		.shell, .php {
+			font-family: monaco;
+			padding: 8px;
+			border-radius: 5px;
+			background-color: #555;
+			color: #fff;
+		}
+		.shell {
+			margin-bottom: 5px;
+		}
 	</style>
 </head>
 <body>
@@ -50,11 +58,19 @@
 			<span class="i">The Snoop Framework, simplify your webdev</span><br/>
 			<a href="https://github.com/papac/snoop.git" target="_blank">fork me</a> &middot; <a href="https://papac.github.io" target="_blank">doc</a>
 		</p>
-		<pre><code class="language-css">$ composer create-projet papac/snoop</code></pre>
-		<pre><code class="language-php">$app->get("/", function($req, $res) {
-	render("welcome");
-});</code></pre>
+		<div class="shell">$ composer create-projet snoop/snoop --prefer-dist App</div>
+		<!-- <div class="php">
+			<div>1 $app->get("/", function($req, $res) {</div>
+			<div>2&nbsp;</div>
+			<div>3<span style="position:relative; left: 50px;">render("welcome");</span></div>
+			<div>4&nbsp;</div>
+			<div>5 });</div>
+		</div> -->
 	</div>
-	<script type="text/javascript" src="/public/javascript/prism.js"></script>
+	<script type="text/javascript">
+		var shell = document.querySelector(".shell");
+		var css = document.querySelector(".css");
+
+	</script>
 </body>
 </html>

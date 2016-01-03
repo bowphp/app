@@ -1,21 +1,30 @@
 <?php
 
-require "vendor/papac/snoopframework/src/ApplicationAutoload.php";
-\System\ApplicationAutoload::register();
 
-use System\Database\DB;
-use System\Support\Util;
-use System\Support\Logger;
-use System\Support\Resource;
-use System\Support\Security;
+use Snoop\Database\DB;
+use Snoop\Support\Util;
+use Snoop\Support\Logger;
+use Snoop\Support\Resource;
+use Snoop\Support\Security;
 
-$app = \System\Core\Application::loader(require "configuration/init.php");
+
+if (file_exists("vendor/snoop/snoopframework/src/ApplicationAutoload.php")):
+
+require "vendor/snoop/snoopframework/src/ApplicationAutoload.php";
+\Snoop\ApplicationAutoload::register();
+
+define("SELECT", DB::SELECT);
+define("INSERT", DB::INSERT);
+define("UPDATE", DB::UPDATE);
+define("DELETE", DB::DELETE);
+
+$app = \Snoop\Core\Application::loader(require "configuration/init.php");
 
 global $response;
 global $request;
 
-$response = \System\Http\Response::load($app);
-$request = \System\Http\Request::load($app);
+$response = \Snoop\Http\Response::load($app);
+$request = \Snoop\Http\Request::load($app);
 
 DB::loadConfiguration(require "configuration/db.php");
 Resource::configure(require "configuration/resource.php");
@@ -23,7 +32,6 @@ Resource::configure(require "configuration/resource.php");
 
 if (!function_exists("db")) {
 	function db() {
-		DB::connection();
 		return DB::class;
 	}
 }
@@ -201,12 +209,12 @@ if (!function_exists("c_csrf")) {
 if (!function_exists("store")) {
 	function store(array $file, $filename = null, $dirname = null) {
 		if (!is_null($filename) && is_string($filename)) {
-			\System\Support\Resource::setUploadFileName($filename);
+			\Snoop\Support\Resource::setUploadFileName($filename);
 		}
 		if (!is_null($dirname)) {
-			\System\Support\Resource::setUploadDir($dirname);
+			\Snoop\Support\Resource::setUploadDir($dirname);
 		}
-		\System\Support\Resource::store($file);
+		\Snoop\Support\Resource::store($file);
 	}
 }
 
@@ -265,8 +273,8 @@ if (!function_exists("send")) {
 	}
 }
 
-if (!function_exists("query")) {
-	function query($option) {
+if (!function_exists("my_query")) {
+	function my_query($option) {
 		return DB::query($option);
 	}
 }
@@ -287,3 +295,5 @@ if (!function_exists("curljson")) {
 		json($data, $code);
 	}
 }
+
+endif;
