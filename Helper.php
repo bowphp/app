@@ -1,7 +1,7 @@
 <?php
 
 
-use Snoop\Database\DB;
+use Snoop\Database\Database as DB;
 use Snoop\Support\Util;
 use Snoop\Support\Logger;
 use Snoop\Support\Resource;
@@ -37,9 +37,9 @@ if (!function_exists("db")) {
 }
 
 if (!function_exists("view")) {
-	function view($template, $data = []) {
+	function view($template, $data = [], $code = 200) {
 		global $response;
-		$response->view($template, $data);
+		$response->view($template, $data, $code);
 	}
 }
 
@@ -251,13 +251,19 @@ if (!function_exists("secure")) {
 }
 
 if (!function_exists("response")) {
-	function response($template = null, $data = null, $code = 200) {
+	function response($template = null, $code = 200, $type = "text/html") {
+		
+		global $response;
+		
 		if (is_null($template)) {
-			global $response;
 			return $response;
 		}
+		
+		setHeader("Content-Type", $type);
 		statuscode($code);
-		return query_response("render", $template, $data);
+		query_response("send", $template);
+
+		return $response;
 	}
 }
 
@@ -274,7 +280,7 @@ if (!function_exists("send")) {
 }
 
 if (!function_exists("my_query")) {
-	function my_query($option) {
+	function my_query(array $option) {
 		return DB::query($option);
 	}
 }

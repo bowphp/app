@@ -1,7 +1,7 @@
-/vendor/
-/test/**
+vendor/
+test/**
 apache_error.log
-/.idea/**/*
-/.node.md
+.idea/**/*
+.node.*
 logger/*.log
-/public/upload/*
+public/upload/*

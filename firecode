@@ -78,10 +78,12 @@ $middlewareTemplate = <<< CM
 namespace App\Http\Middleware;
 
 use Closure;
-use System\Http\Request
+use Snoop\Http\Request;
+use Snoop\Database\Database as DB;
 
 class {$middlewareName}
 {
+
 	/**
 	 * Fonction de lancement du middleware.
 	 *
@@ -93,10 +95,9 @@ class {$middlewareName}
 	public function handler(Request \$req, Closure \$next = null)
 	{
 		// do something here
-		// call \$next(\$req, \$res);
 	}
-}
 
+}
 CM;
 
 		file_put_contents("app/Http/Middleware/$middlewareName.php", $middlewareTemplate);
@@ -125,7 +126,8 @@ namespace App\Http\Controller;
 
 
 use Exception;
-use System\Http\Request;
+use Snoop\Http\Request;
+use Snoop\Database\Database as DB;
 use App\Provider\BaseController as Controller;
 
 
@@ -239,3 +241,4 @@ USAGE;
 }
 
 $s = Firecode::run($argc, $argv);
+exit($s);

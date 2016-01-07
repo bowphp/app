@@ -3,6 +3,6 @@
 
 $app->get("/", function ($req) {
 
-    return response("welcome");
+	view("template.welcome");
 
 });

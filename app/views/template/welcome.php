@@ -49,6 +49,7 @@
 		}
 		.shell {
 			margin-bottom: 5px;
+			color: #ccc;
 		}
 	</style>
 </head>
@@ -59,18 +60,13 @@
 			<a href="https://github.com/papac/snoop.git" target="_blank">fork me</a> &middot; <a href="https://papac.github.io" target="_blank">doc</a>
 		</p>
 		<div class="shell">$ composer create-projet snoop/snoop --prefer-dist App</div>
-		<!-- <div class="php">
-			<div>1 $app->get("/", function($req, $res) {</div>
-			<div>2&nbsp;</div>
-			<div>3<span style="position:relative; left: 50px;">render("welcome");</span></div>
-			<div>4&nbsp;</div>
-			<div>5 });</div>
-		</div> -->
 	</div>
 	<script type="text/javascript">
 		var shell = document.querySelector(".shell");
-		var css = document.querySelector(".css");
-
+		var content = shell.innerHTML;
+		content = content.replace(/(\$)/g, '<span style="color: red">$1</span>');
+		content = content.replace(/(create-projet|--prefer-dist)/g, '<span style="color: orange">$1</span>');
+		shell.innerHTML = content;
 	</script>
 </body>
 </html>

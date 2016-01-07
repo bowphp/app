@@ -1,4 +1,1 @@
-<?php
-
-
-echo "Not found file";
+Not found file
