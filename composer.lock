@@ -4,79 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "330b76540c5a66bf4a82c95af4aca799",
-    "content-hash": "ef6001079cdc0a3ac772acdc718e38ab",
+    "hash": "f8626135f47e0f4c13aaf9b665a798b0",
+    "content-hash": "ed6ab89e74b367248921840c316e0878",
     "packages": [
         {
-            "name": "mustache/mustache",
-            "version": "v2.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bobthecow/mustache.php.git",
-                "reference": "c745b01956caf27d26b55a72a90aff56bc169cd6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/c745b01956caf27d26b55a72a90aff56bc169cd6",
-                "reference": "c745b01956caf27d26b55a72a90aff56bc169cd6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.4"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "~1.6",
-                "phpunit/phpunit": "~3.7|~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Mustache": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Justin Hileman",
-                    "email": "justin@justinhileman.info",
-                    "homepage": "http://justinhileman.com"
-                }
-            ],
-            "description": "A Mustache implementation in PHP.",
-            "homepage": "https://github.com/bobthecow/mustache.php",
-            "keywords": [
-                "mustache",
-                "templating"
-            ],
-            "time": "2015-08-15 19:23:13"
-        },
-        {
             "name": "snoop/snoopframework",
-            "version": "dev-master",
+            "version": "v1.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/papac/snoopframework.git",
-                "reference": "27026c39f924d6c98611fa78cc4334d3e6c02174"
+                "reference": "4f7f26571faa08b6f10261ea2649e580a3df8287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/papac/snoopframework/zipball/27026c39f924d6c98611fa78cc4334d3e6c02174",
-                "reference": "27026c39f924d6c98611fa78cc4334d3e6c02174",
+                "url": "https://api.github.com/repos/papac/snoopframework/zipball/4f7f26571faa08b6f10261ea2649e580a3df8287",
+                "reference": "4f7f26571faa08b6f10261ea2649e580a3df8287",
                 "shasum": ""
             },
             "require-dev": {
-                "kylekatarnls/jade-php": "^1.3",
+                "monolog/monolog": "^1.17",
                 "mustache/mustache": "^2.9",
-                "twig/extensions": "^1.3",
                 "twig/twig": "^1.23"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "System\\": "src/"
+                    "Snoop\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -98,120 +51,7 @@
                 "framework",
                 "snoopframework"
             ],
-            "time": "2015-12-30 09:53:07"
-        },
-        {
-            "name": "twig/extensions",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
-                "shasum": ""
-            },
-            "require": {
-                "twig/twig": "~1.20|~2.0"
-            },
-            "require-dev": {
-                "symfony/translation": "~2.3"
-            },
-            "suggest": {
-                "symfony/translation": "Allow the time_diff output to be translated"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Twig_Extensions_": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Common additional features for Twig that do not directly belong in core",
-            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
-            "keywords": [
-                "i18n",
-                "text"
-            ],
-            "time": "2015-08-22 16:38:35"
-        },
-        {
-            "name": "twig/twig",
-            "version": "1.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "db93842e80d758f6c74c3e1f1f088badb3fc84f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7df0a5512db43c1b6adc20dfcb12f1b22d6edad7",
-                "reference": "db93842e80d758f6c74c3e1f1f088badb3fc84f0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.7"
-            },
-            "require-dev": {
-                "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~2.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.23-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Twig_": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com",
-                    "role": "Project Founder"
-                },
-                {
-                    "name": "Twig Team",
-                    "homepage": "http://twig.sensiolabs.org/contributors",
-                    "role": "Contributors"
-                }
-            ],
-            "description": "Twig, the flexible, fast, and secure template language for PHP",
-            "homepage": "http://twig.sensiolabs.org",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2015-11-17 12:22:13"
+            "time": "2016-01-09 17:01:48"
         }
     ],
     "packages-dev": [],
