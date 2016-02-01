@@ -1,0 +1,303 @@
+#!/usr/local/env php
+<?php
+
+class Firecode
+{
+
+	private function __construct() {}
+	private function __clone() {}
+
+	/**
+	 * @param $argc
+	 * @param $argv
+	 * @return int
+	 */
+	public static function run($argc, $argv)
+	{
+		
+		$argc -= 0;
+		array_shift($argv);
+
+		if ($argc == 0) {
+			$argv[0] = "help";
+		}
+
+		$status = 0;
+
+		switch ($argv[0]) {
+			
+			case 'make':
+				if (!isset($argv[0]) || !isset($argv[1]) || !isset($argv[2])) {
+					return static::usage();
+				}
+				$name = $argv[2];
+				switch ($argv[1]) {
+					case '--model':
+					case '-m':
+						static::createModel($name);
+						break;
+					case '--controller':
+					case '-c':
+						$status = static::createController($name);
+						break;
+					case '--middleware':
+					case '-r':
+						$status = static::createMiddleware($name);
+						break;
+					default:
+						$status = static::usage();
+						break;
+				}
+				break;
+			
+			case 'migrate':
+					$status = 0;
+					echo "\033[0;32mIn dev\033[00m";
+				break;
+
+			case 'help':
+				$status = static::usage();
+				break;
+
+			case 'server':
+				$r = fopen("php://stdout", "r");
+				if (isset($argv[1])) {
+					$port = $argv[1];
+				} else {
+					$port = "5000";
+				}
+				if ($r) {
+					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-c for shutdon it\n");
+				}
+				`php -S localhost:$port server.php`;
+				break;
+	
+			default:
+				$status = static::usage();
+				break;
+		}
+		
+		return $status;
+
+	}
+
+	/**
+	 * @param $middlewareName
+	 * @return int
+	 */
+	private static function createMiddleware($middlewareName)
+	{
+		if (file_exists("app/Http/Middleware/$middlewareName.php")) {
+			echo "\033[0;31mMiddleware <\033[0;33m@\033[0;31m$middlewareName\033[00m\033[0;31m> already exist.\033[00m";
+			return 0;
+		}
+
+$middlewareTemplate = <<< CM
+<?php
+
+namespace App\Middleware;
+
+use Bow\Request;
+use Bow\Database\Database as DB;
+
+class {$middlewareName}
+{
+
+	/**
+	 * Fonction de lancement du middleware.
+	 *
+	 * @param Request \$req
+	 * @param Closure \$next
+	 *
+	 * @return mixed
+	 */
+	public function handler(Request \$req)
+	{
+		// do something here
+	}
+
+}
+CM;
+
+		file_put_contents("app/Http/Middleware/$middlewareName.php", $middlewareTemplate);
+		echo "\033[0;32mMiddleware \033[00m@@{$middlewareName}\033[0;32m Created.\033[00m";
+
+		return 0;
+	}
+
+	/**
+	 * @param $controllerName
+	 * @return int
+	 */
+	private static function createController($controllerName)
+	{
+
+		if (file_exists("app/Http/Controller/$controllerName.php")) {
+			echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m";
+
+			return 0;
+		}
+
+$controllerTemplate =<<<CC
+<?php
+
+namespace App\Controller;
+
+
+use Exception;
+use Bow\Request;
+use Bow\Database\Database as Db;
+
+
+class {$controllerName} extends App\Controller
+{
+
+	/**
+	 * Start point
+	 *
+	 * @param Request \$req
+	 * @return mixed
+	 */
+   public function index(Request \$req)
+   {
+		 // do something here
+		 return response("Hello world", 304);
+   }
+
+	/**
+	 * Delete data
+	 *
+	 * @param Request \$req
+	 * @return mixed
+	 */
+   public function delete(Request \$req)
+	 {
+		 // do something here
+   }
+
+	/**
+	 * Add information
+	 *
+	 * @param Request \$req
+	 * @param Response \$res
+	 */
+   public function add(Request \$req)
+   {
+		 // do something here
+		 // eg. insert("insert into your_table values(1, 'name')");	
+	 }
+
+	/**
+	 * get all information
+	 *
+	 * @param Request \$req
+	 * @return mixed
+	 */
+   public function get(Request \$req)
+   {
+		 // do something here.
+		 // e.g table("your_table")->get() // retourne une liste
+	 }
+
+}
+CC;
+
+		file_put_contents("app/Http/Controller/$controllerName.php", $controllerTemplate);
+		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m Created.\033[00m";
+
+		return 0;
+	}
+
+	/**
+	 * @param $modelName
+	 * @return int
+	 */
+	private static function createModel($modelName)
+	{
+		$tableName = strtolower($modelName);
+		$modelName = ucfirst($modelName);
+
+$model = <<<MODEL
+<?php
+
+namespace App;
+
+use Bow\Database\Table;
+use Bow\Exception\TableException;
+
+class ${modelName}
+{
+	
+	/**
+	 * Facade
+	 *
+	 * @return Table
+	 */
+	public static function __callStatic(\$method, \$arg)
+	{
+		\$table = table("$tableName");
+		
+		if (method_exists(\$table, \$method)) {
+			
+			return \$table->\$method;
+
+		} else {
+	
+			throw new TableException("method \$method not found", 1);
+
+		}
+
+	}
+
+}
+
+MODEL;
+		if (file_exists("app/Http/Model/$modelName.php")) {
+
+			echo "\033[0;33mModel <\033[0;33m@\033[0;31m$modelName\033[00m\033[0;31m> already exist.\033[00m";
+
+			return 0;
+
+		}
+
+		file_put_contents("app/Http/Model/$modelName.php", $model);
+		
+		echo "\033[0;32mModel \033[00m@@{$modelName}\033[0;32m Created.\033[00m";
+
+		return 0;
+	}
+
+	/**
+	 * @return int
+	 */
+	private static function usage()
+	{
+
+$usage = <<< USAGE
+
+firecode usage: php firecode :command :option :stdout-file-name
+
+\033[0;31mcommand\033[00m:
+
+ \033[0;32mmake\033[00m create a user class
+  option:
+   \033[0;33m--controller\033[00m | \033[0;32m-c\033[00m 	for create controller
+   \033[0;33m--model\033[00m | \033[0;32m-m\033[00m 	for create model
+   \033[0;33m--middleware\033[00m | \033[0;32m-r\033[00m 	for create middleware
+
+ \033[0;32mmigrate\033[00m create migration of user model
+  option:
+   \033[0;33m--up\033[00m		To create migration \033[0;31m(in building)\033[00m
+   \033[0;33m--down\033[00m	To drop migration \033[0;31m(in building)\033[00m
+   \033[0;33m--truncate\033[00m	To truncate table \033[0;31m(in building)\033[00m
+
+
+USAGE;
+		echo $usage;
+
+		return 0;
+	}
+}
+
+$s = Firecode::run($argc, $argv);
+exit($s);
