@@ -1,1 +1,10 @@
+<<<<<<< Updated upstream
 
+=======
+[2015-12-16 10:22:17] - 127.0.0.1:45246: [404] route -/Php/Snoop/users/post- non definie
+[2015-12-16 10:23:03] - 127.0.0.1:45247: [404] route -/Php/Snoop/users/post- non definie
+[2015-12-16 10:47:13] - 127.0.0.1:45269: [404] route -/Php/Snoop/users- non definie
+[2015-12-16 10:47:16] - 127.0.0.1:45269: [404] route -/Php/Snoop/users- non definie
+[2015-12-16 10:47:28] - 127.0.0.1:45270: [404] route -/Php/Snoop/users- non definie
+[2015-12-16 11:00:02] - 127.0.0.1:45281: [404] route -/Php/Snoop/users- non definie
+>>>>>>> Stashed changes

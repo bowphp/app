@@ -1,11 +1,11 @@
 {
-    "name": "snoop/snoop",
-    "description": "The Snoop Framework",
-    "keywords": ["framework", "snoop"],
+    "name": "bow/bow",
+    "description": "The bow Framework",
+    "keywords": ["framework", "bow"],
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
-        "snoop/snoopframework": "0.1.1"
+        "bow/framework": "0.1.1"
     },
     "license": "MIT",
     "authors": [
@@ -16,7 +16,7 @@
     ],
     "autoload": {
         "files": [
-            "Helper.php"
+            "helper.php"
         ],
         "psr-0": {
             "App\\": "app/"

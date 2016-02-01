@@ -1,4 +1,4 @@
 <?php
 
 
-require "app/index.php";
+require "app/app.php";

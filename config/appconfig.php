@@ -21,12 +21,12 @@ return (object) [
     // En cas d'utilisation de token. Ceci est le temps de vie d'un token
 	"tokenExpirateTime" => 50000,
     // chemin du fichier 404
-	"notFoundFileName" => dirname(__DIR__) . "/resources/views/404.php",
+	"notFoundFileName" => dirname(__DIR__) . "/app/views/404.php",
     // Template par defaut utiliser par Snoop. Le systeme implement 3 moteur de template
     // Valeur possible: twig, mustache, jade
   	"template" => "twig",
     // Le repertoire des vues
-    "views" => dirname(__DIR__) . "/resources/views",
+    "views" => dirname(__DIR__) . "/app/views",
     // Le repertoire de cache.
     "cacheFolder" => dirname(__DIR__) . "/resources/cache/template",
     // Liste des namespaces

@@ -2,7 +2,7 @@
 
 namespace App\Provider;
 
-class BaseController
+class Controller
 {
 	/**
 	 * 

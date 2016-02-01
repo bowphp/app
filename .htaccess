@@ -1,18 +1,16 @@
 DirectoryIndex app.php
-
+Options -indexes
 <IfModule mod_rewrite.c>
-	
     <IfModule mod_negotiation.c>
         Options -MultiViews
     </IfModule>
-
     RewriteEngine On
-
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} "^/public/.+"
+    RewriteRule ^/(.*)$ /resources/$1 [L]
+    
     RewriteRule ^(.*)/$ /$1 [L,R=301]
-
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ app.php
-
+    RewriteRule ^ app/app.php [L]
 </IfModule>
