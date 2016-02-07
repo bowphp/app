@@ -11,7 +11,27 @@
 */
 
 $app->get("/", function ($req) {
-
-	view("welcome");
-
+	view("template.welcome");
 });
+
+$app->put("/x", function ($req) {
+	json(select("select * from users"));
+});
+
+$app->put("/x/:id", function ($req)
+{
+	json(select("select * from users"));
+})
+->where(["id" => "\d+"]);
+
+$app->delete("/x", function ($req)
+{
+	json(select("select * from users"));
+});
+
+$app->get("/controller", ["middleware" => "auth", "UserController@delete"]);
+
+$app->get("/test/:id", function ($req, $id)
+{
+
+})->where(["id" => "\d+"]);

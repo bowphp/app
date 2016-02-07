@@ -16,9 +16,7 @@ class Auth
 	 */
 	public function handler(Request $req)
 	{
-
-		response("Hello world, i'm a middleware.");
-
+		response("<h1>Hello world, i'm a middleware.</h1>");
 		return true;
 	}
 }

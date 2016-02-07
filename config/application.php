@@ -17,7 +17,7 @@ return (object) [
     // Niveau de log
 	"loglevel" => "dev",
     // Repertoire de log
-    "logDirecotoryName" => dirname(__DIR__) . "/logger",
+    "logDirecotoryName" => dirname(__DIR__) . "/storage/logs",
     // En cas d'utilisation de token. Ceci est le temps de vie d'un token
 	"tokenExpirateTime" => 50000,
     // chemin du fichier 404
@@ -28,7 +28,7 @@ return (object) [
     // Le repertoire des vues
     "views" => dirname(__DIR__) . "/app/views",
     // Le repertoire de cache.
-    "cacheFolder" => dirname(__DIR__) . "/resources/cache/template",
+    "cacheFolder" => dirname(__DIR__) . "/storage/cache/template",
     // Liste des namespaces
     "names" => [
         "namespace" => [
@@ -40,7 +40,8 @@ return (object) [
         "middleware" => ["auth"],
         "app_autoload" => "App\\Autoload"
     ],
-    "type" => "dev"
+    "type" => "dev",
+    "cipher" => __DIR__ . "/.key"
 ];
 
 // 44 23 89 69

@@ -4,3 +4,4 @@ apache_error.log
 .idea/**/*
 .node*
 public/upload/*
+composer.lock

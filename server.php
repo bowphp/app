@@ -1,4 +1,4 @@
 <?php
 
 
-require "app/app.php";
+require "public/app.php";

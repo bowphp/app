@@ -1,20 +1,20 @@
-#!/usr/local/env php
+#!/usr/bin/env php
 <?php
 
 class Firecode
 {
-
 	private function __construct() {}
 	private function __clone() {}
 
 	/**
+	 * Lance FIRE.
+	 * 
 	 * @param $argc
 	 * @param $argv
 	 * @return int
 	 */
 	public static function run($argc, $argv)
 	{
-		
 		$argc -= 0;
 		array_shift($argv);
 
@@ -25,24 +25,32 @@ class Firecode
 		$status = 0;
 
 		switch ($argv[0]) {
-			
-			case 'make':
-				if (!isset($argv[0]) || !isset($argv[1]) || !isset($argv[2])) {
+			case 'generate':
+				if (!isset($argv[0]) || !isset($argv[1])) {
 					return static::usage();
 				}
-				$name = $argv[2];
+				if (!in_array($argv[1], ["key", "-k"])) {
+					if (!isset($argv[2])) {
+						return static::usage();
+					}
+					$name = $argv[2];
+				}
 				switch ($argv[1]) {
-					case '--model':
+					case 'model':
 					case '-m':
 						static::createModel($name);
 						break;
-					case '--controller':
+					case 'controller':
 					case '-c':
 						$status = static::createController($name);
 						break;
-					case '--middleware':
+					case 'middleware':
 					case '-r':
 						$status = static::createMiddleware($name);
+						break;
+					case 'key':
+					case '-k':
+						$status = static::generateKey();
 						break;
 					default:
 						$status = static::usage();
@@ -67,7 +75,7 @@ class Firecode
 					$port = "5000";
 				}
 				if ($r) {
-					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-c for shutdon it\n");
+					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-c for shutdown it\n");
 				}
 				`php -S localhost:$port server.php`;
 				break;
@@ -78,7 +86,6 @@ class Firecode
 		}
 		
 		return $status;
-
 	}
 
 	/**
@@ -87,7 +94,9 @@ class Firecode
 	 */
 	private static function createMiddleware($middlewareName)
 	{
-		if (file_exists("app/Http/Middleware/$middlewareName.php")) {
+		$middlewareName = ucfirst($middlewareName);
+
+		if (file_exists("app/Middleware/$middlewareName.php")) {
 			echo "\033[0;31mMiddleware <\033[0;33m@\033[0;31m$middlewareName\033[00m\033[0;31m> already exist.\033[00m";
 			return 0;
 		}
@@ -97,7 +106,7 @@ $middlewareTemplate = <<< CM
 
 namespace App\Middleware;
 
-use Bow\Request;
+use Bow\Http\Request;
 use Bow\Database\Database as DB;
 
 class {$middlewareName}
@@ -119,7 +128,7 @@ class {$middlewareName}
 }
 CM;
 
-		file_put_contents("app/Http/Middleware/$middlewareName.php", $middlewareTemplate);
+		file_put_contents("app/Middleware/$middlewareName.php", $middlewareTemplate);
 		echo "\033[0;32mMiddleware \033[00m@@{$middlewareName}\033[0;32m Created.\033[00m";
 
 		return 0;
@@ -131,8 +140,10 @@ CM;
 	 */
 	private static function createController($controllerName)
 	{
-
-		if (file_exists("app/Http/Controller/$controllerName.php")) {
+		if (!preg_match("#controller$#", $controllerName)) {
+			$controllerName = ucfirst($controllerName) . "Controller";
+		}
+		if (file_exists("app/Controller/$controllerName.php")) {
 			echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m";
 
 			return 0;
@@ -145,7 +156,7 @@ namespace App\Controller;
 
 
 use Exception;
-use Bow\Request;
+use Bow\Http\Request;
 use Bow\Database\Database as Db;
 
 
@@ -158,11 +169,11 @@ class {$controllerName} extends App\Controller
 	 * @param Request \$req
 	 * @return mixed
 	 */
-   public function index(Request \$req)
-   {
-		 // do something here
-		 return response("Hello world", 304);
-   }
+   	public function index(Request \$req)
+   	{
+		// do something here
+		return response("Hello world", 304);
+   	}
 
 	/**
 	 * Delete data
@@ -170,10 +181,10 @@ class {$controllerName} extends App\Controller
 	 * @param Request \$req
 	 * @return mixed
 	 */
-   public function delete(Request \$req)
-	 {
-		 // do something here
-   }
+   	public function delete(Request \$req)
+	{
+		// do something here
+ 	}
 
 	/**
 	 * Add information
@@ -181,11 +192,11 @@ class {$controllerName} extends App\Controller
 	 * @param Request \$req
 	 * @param Response \$res
 	 */
-   public function add(Request \$req)
-   {
-		 // do something here
-		 // eg. insert("insert into your_table values(1, 'name')");	
-	 }
+   	public function add(Request \$req)
+   	{
+		// do something here
+		// eg. insert("insert into your_table values(1, 'name')");	
+	}
 
 	/**
 	 * get all information
@@ -193,16 +204,16 @@ class {$controllerName} extends App\Controller
 	 * @param Request \$req
 	 * @return mixed
 	 */
-   public function get(Request \$req)
-   {
-		 // do something here.
-		 // e.g table("your_table")->get() // retourne une liste
-	 }
+ 	public function get(Request \$req)
+   	{
+		// do something here.
+		// e.g table("your_table")->get()// retourne une liste
+	}
 
 }
 CC;
 
-		file_put_contents("app/Http/Controller/$controllerName.php", $controllerTemplate);
+		file_put_contents("app/Controller/$controllerName.php", $controllerTemplate);
 		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m Created.\033[00m";
 
 		return 0;
@@ -236,23 +247,17 @@ class ${modelName}
 	public static function __callStatic(\$method, \$arg)
 	{
 		\$table = table("$tableName");
-		
 		if (method_exists(\$table, \$method)) {
-			
 			return \$table->\$method;
-
 		} else {
-	
 			throw new TableException("method \$method not found", 1);
-
 		}
-
 	}
 
 }
 
 MODEL;
-		if (file_exists("app/Http/Model/$modelName.php")) {
+		if (file_exists("app/Model/$modelName.php")) {
 
 			echo "\033[0;33mModel <\033[0;33m@\033[0;31m$modelName\033[00m\033[0;31m> already exist.\033[00m";
 
@@ -260,7 +265,7 @@ MODEL;
 
 		}
 
-		file_put_contents("app/Http/Model/$modelName.php", $model);
+		file_put_contents("app/Model/$modelName.php", $model);
 		
 		echo "\033[0;32mModel \033[00m@@{$modelName}\033[0;32m Created.\033[00m";
 
@@ -279,22 +284,30 @@ firecode usage: php firecode :command :option :stdout-file-name
 
 \033[0;31mcommand\033[00m:
 
- \033[0;32mmake\033[00m create a user class
+ \033[0;32mgenerate\033[00m create a user class
   option:
-   \033[0;33m--controller\033[00m | \033[0;32m-c\033[00m 	for create controller
-   \033[0;33m--model\033[00m | \033[0;32m-m\033[00m 	for create model
-   \033[0;33m--middleware\033[00m | \033[0;32m-r\033[00m 	for create middleware
+   \033[0;33mcontroller\033[00m | \033[0;32m-c\033[00m 	for create controller
+   \033[0;33mmodel\033[00m | \033[0;32m-m\033[00m 	for create model
+   \033[0;33mmiddleware\033[00m | \033[0;32m-r\033[00m 	for create middleware
+   \033[0;33mkey\033[00m | \033[0;32m-k\033[00m 	for create new app key
 
  \033[0;32mmigrate\033[00m create migration of user model
   option:
-   \033[0;33m--up\033[00m		To create migration \033[0;31m(in building)\033[00m
-   \033[0;33m--down\033[00m	To drop migration \033[0;31m(in building)\033[00m
-   \033[0;33m--truncate\033[00m	To truncate table \033[0;31m(in building)\033[00m
+   \033[0;33mup\033[00m		To create migration \033[0;31m(in building)\033[00m
+   \033[0;33mdown\033[00m	To drop migration \033[0;31m(in building)\033[00m
+   \033[0;33mtruncate\033[00m	To truncate table \033[0;31m(in building)\033[00m
 
 
 USAGE;
 		echo $usage;
 
+		return 0;
+	}
+
+	private function generateKey() {
+		$key = md5(base64_encode(openssl_random_pseudo_bytes(23) . date('Y-m-d H:i:s')));
+		file_put_contents("config/.key", $key);
+		echo $key;
 		return 0;
 	}
 }
