@@ -5,3 +5,4 @@ apache_error.log
 .node*
 public/upload/*
 composer.lock
+.syslog/*
