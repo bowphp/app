@@ -12,5 +12,5 @@
 */
 
 $app->get("/", function ($req) {
-	view("template.welcome");
+	view("welcome");
 });

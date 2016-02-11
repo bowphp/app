@@ -1,8 +1,5 @@
 vendor/
 test/**
-apache_error.log
-.idea/**/*
-.node*
-public/upload/*
-composer.lock
 .syslog/*
+app/views/test/*
+storage/cache/template/*

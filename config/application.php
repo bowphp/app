@@ -11,7 +11,7 @@
 
 return (object) [
     // Nom de l'Application
-	"appname" => "The Snoop Framework",
+	"appname" => "The Bow Framework",
     // La local
 	"timezone" => "Africa/Abidjan",
     // Niveau de log

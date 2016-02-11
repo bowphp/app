@@ -13,8 +13,9 @@ require_once dirname(__DIR__) . "/vendor/bow/framework/src/BowAutoload.php";
 \Bow\BowAutoload::register();
 
 // Creation de l'application
-$app = Bow\Core\Application::configure($config->application);
+$app = Bow\Core\Application::configure(configuration());
 
+// Chargement des routeurs.
 require dirname(__DIR__) . "/app/Router/routes.php";
 
 // Lancement de l'application
