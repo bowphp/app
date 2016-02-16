@@ -5,15 +5,15 @@
 |-----------------------------------
 | On retourne la configuration
 | que l'application utilisera pour
-| Gerer l'envoye de mail.
+| Gérer l'envoye de mail.
 */
 return (object) [
     // Le type de service utiliser pour l'envoye de mail
-    // php-mail or smtp
-    // Si smtp est definie alors les cles password et username doivent avoir des values.
-    "type" => "php-mail",
+    // mail ou smtp
+    // Si smtp est définie alors les clés password et username doivent avoir des values.
+    "type" => "mail",
     "email" => (object) [
-        "username" => "johon@gmail.com",
+        "username" => "johon@gmdivail.com",
         "password" => "your password",
         "tls" => true,
         "timeout" => 50

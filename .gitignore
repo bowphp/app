@@ -4,3 +4,4 @@ test/**
 app/views/test/*
 storage/cache/template/*
 .idea/*
+config/.key

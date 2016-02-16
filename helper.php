@@ -113,7 +113,7 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 
 	if (!function_exists("get_last_db_error")) {
 		/**
-		 * Retourne les informations de la derniere requete
+		 * Retourne les informations de la dernière requete
 		 * @return array
 		 */
 		function get_last_db_error() {
@@ -184,7 +184,7 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 	if (!function_exists("kill")) {
 		/**
 		 * kill c'est une alias de die, sauf le fait qu'il peut logger
-		 * le message que vous lui donné.
+		 * le message que vous lui donnée.
 		 * @param string $message
 		 * @param boolean $log=false
 		 */

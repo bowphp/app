@@ -2,10 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>Hello</title>
+	<title>Welcome to Bow</title>
 	<style type="text/css">
 		body {
-			/*background: url(/public/images/snoop.gif) no-repeat center top 100px;*/
 			margin: auto;
 			width: 550px;
 			text-align: center;
@@ -37,21 +36,20 @@
 		a:hover {
 			background-color: #555;
 		}
-		.f {
-			color: #bd362f;
-			font-weight: bolder;
-			font-family: "Courier";
-			position: relative;
-		}
 		.shell {
 			margin-bottom: 5px;
+			font-family: courier;
 			color: #ccc;
-			font-family: "Courier";
 			padding: 8px;
 			border-radius: 5px;
 			background-color: #eee;
 			font-weight: bold;
-			color: #555;
+		}
+		.f {
+			color: #bd362f;
+			font-weight: bolder;
+			font-family: courier;
+			position: relative;
 		}
 	</style>
 </head>

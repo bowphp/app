@@ -10,8 +10,8 @@
 return (object) [
     // Fetch mode.
     "fetch" => PDO::FETCH_OBJ,
-    // La base de donnee sur laquelle se connectera l'application
-    // par defaut
+    // La base de donnée sur laquelle se connectera l'application
+    // par défaut
     "connections" =>
     [
         "default" => [
@@ -30,7 +30,9 @@ return (object) [
             "pass" => "password",
             "dbname" => "database name",
             "port" => "",
-            "socket" => ""
+            "socket" => "",
+            // sqlite seulement,
+            "create_database" => false
         ]
     ]
 ];

@@ -7,7 +7,6 @@
 |
 */
 require dirname(__DIR__) . "/vendor/autoload.php";
-$config = require dirname(__DIR__) . "/config/bootstrap.php";
 
 require_once dirname(__DIR__) . "/vendor/bow/framework/src/BowAutoload.php";
 \Bow\BowAutoload::register();

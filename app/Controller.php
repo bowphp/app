@@ -5,7 +5,6 @@ namespace App;
 class Controller
 {
 	/**
-	 * 
 	 * @var string
 	 */
 	protected $middleware_base_namespace = "App\\Http\\Middleware";
@@ -24,6 +23,7 @@ class Controller
 			$class = new $middleware();
 			return call_user_func_array([$class, "hanlder"], $data);
 		}
-	}
 
+		return true;
+	}
 }

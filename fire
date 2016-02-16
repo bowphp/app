@@ -29,6 +29,7 @@ class Firecode
 				if (!isset($argv[0]) || !isset($argv[1])) {
 					return static::usage();
 				}
+				$name = "";
 				if (!in_array($argv[1], ["key", "-k"])) {
 					if (!isset($argv[2])) {
 						return static::usage();
@@ -77,7 +78,7 @@ class Firecode
 				if ($r) {
 					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-C for shutdown it\n");
 				}
-				`php -S localhost:$port server.php`;
+				shell_exec("php -S localhost:$port server.php");
 				break;
 	
 			default:
@@ -116,7 +117,7 @@ class {$middlewareName}
 	 *
 	 * @param Request \$req
 	 * @param Closure \$next
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function handler(Request \$req)
 	{
@@ -246,6 +247,8 @@ class ${modelName}
 		} else {
 			throw new TableException("method \$method not found", 1);
 		}
+
+		return \$table;
 	}
 }
 
@@ -300,9 +303,9 @@ USAGE;
 	 * @return integer
 	 */
 	private function generateKey() {
-		$key = md5(base64_encode(openssl_random_pseudo_bytes(23) . date('Y-m-d H:i:s')));
+		$key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
 		file_put_contents("config/.key", $key);
-		echo "[new app-key: \033[0;32m$key\033[00m ]\n";
+		echo "[new app-key: \033[0;32m$key\033[00m ::length[" . strlen($key) . "]::]\n";
 		return 0;
 	}
 }
