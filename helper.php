@@ -80,9 +80,8 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 
 	if (!function_exists("query_maker")) {
 		function query_maker($sql, $data, $method) {
-			$db = db();
 
-			if (method_exists($db, $method)) {
+			if (method_exists(Database::class, $method)) {
 				return Database::$method($sql, $data);
 			}
 
@@ -91,20 +90,21 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 	}
 
 	if (!function_exists("last_insert_id")) {
+		/**
+		 * Retourne le dernier ID suite a une requete INSERT sur un table dont ID est
+		 * auto_increment.
+		 */
 		function last_insert_id() {
-			$db = db();
-
-			return $Database::lastInsertId();
+			return Database::lastInsertId();
 		}
 	}
 
 	if (!function_exists("query_response")) {
 		function query_response($method, $param) {
 			global $response;
-			$param = array_slice(func_get_args(), 1);
 
 			if (method_exists($response, $method)) {
-				return call_user_func_array([$response, $method], $param);
+				return call_user_func_array([$response, $method], array_slice(func_get_args(), 1));
 			}
 
 			return null;
@@ -112,52 +112,97 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 	}
 
 	if (!function_exists("get_last_db_error")) {
+		/**
+		 * Retourne les informations de la derniere requete
+		 * @return array
+		 */
 		function get_last_db_error() {
 			return Database::getLastErreur();
 		}
 	}
 
 	if (!function_exists("select")) {
+		/**
+		 * statement lance des requete SQL de type SELECT
+		 * @param string $sql
+		 * @param array $data
+		 * @return integer
+		 */
 		function select($sql, array $data = []) {
 			return query_maker($sql, $data, "select");
 		}
 	}
 
 	if (!function_exists("insert")) {
+		/**
+		 * statement lance des requete SQL de type INSERT
+		 * @param string $sql
+		 * @param array $data
+		 * @return integer
+		 */
 		function insert($sql, array $data = []) {
 			return query_maker($sql, $data, "insert");
 		}
 	}
 
 	if (!function_exists("delete")) {
+		/**
+		 * statement lance des requete SQL de type DELETE
+		 * @param string $sql
+		 * @param array $data
+		 * @return integer
+		 */
 		function delete($sql, array $data = []) {
 			return query_maker($sql, $data, "delete");
 		}
 	}
 
 	if (!function_exists("update")) {
+		/**
+		 * update lance des requete SQL de type UPDATE
+		 * @param string $sql
+		 * @param array $data
+		 * @return integer
+		 */
 		function update($sql, array $data = []) {
 			return query_maker($sql, $data, "update");
 		}
 	}
 
 	if (!function_exists("statement")) {
+		/**
+		 * statement lance des requete SQL de type CREATE TABLE|ALTER TABLE|RENAME|DROP TABLE
+		 * @param string $sql
+		 * @param array $data
+		 * @return integer
+		 */
 		function statement($sql, array $data = []) {
 			return query_maker($sql, $data, "statement");
 		}
 	}
 
 	if (!function_exists("kill")) {
-		function kill($message = null, $log = false, $code = 200) {
+		/**
+		 * kill c'est une alias de die, sauf le fait qu'il peut logger
+		 * le message que vous lui donné.
+		 * @param string $message
+		 * @param boolean $log=false
+		 */
+		function kill($message = null, $log = false) {
 			if ($log === true) {
 				log($message);
 			}
-			statuscode($code);
 			die($message);
 		}
 	}
 
 	if (!function_exists("slugify")) {
+		/**
+		 * slugify, transforme un chaine de caractere en slug
+		 * eg. la chaine "58 comprendre bow framework" -> "58-comprendre-bow-framework"
+		 * @param string $str
+		 * @return string
+		 */
 		function slugify($str) {
 			return Util::slugify($str);
 		}
@@ -241,7 +286,7 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 		 * @param array $data
 		 * @param integer $code=200 
 		 */
-		function json(array $data, $code = 200) {
+		function json($data, $code = 200) {
 			return query_response("json", $data, $code);
 		}
 	}
@@ -312,8 +357,25 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 	}
 
 	if (!function_exists("setheader")) {
+		/**
+		 * modifie les entêtes HTTP
+		 * @param string $key le nom de l'entête http
+		 * @param string $value la valeur à assigner
+		 */
 		function setheader($key, $value) {
 			query_response("setHeader", $key, $value);
+		}
+	}
+
+	if (!function_exists("sendfile")) {
+		/**
+		 * sendfile c'est un alias de require, mais vas chargé les fichiers contenu dans
+		 * la vie de l'application. Ici <code>sendfile</code> résoue le problème de scope.
+		 * @param string $filename le nom du fichier
+		 * @param array $bind les donnees la exporter
+		 */
+		function sendfile($filename, $bind = []) {
+			query_response("sendFile", $filename, $bind);
 		}
 	}
 
@@ -323,26 +385,52 @@ if (file_exists(__DIR__ . "/vendor/bow/framework/src/BowAutoload.php")) {
 		}
 	}
 
-	if (!function_exists("my_query")) {
-		function my_query(array $option) {
+	if (!function_exists("c_sql")) {
+		/**
+		 * Execute des requetes sql customisé
+		 * @return array
+		 */
+		function c_sql(array $option) {
 			return Database::query($option);
 		}
 	}
 
 	if (!function_exists("switch_to")) {
+		/**
+		 * switch to, permet de changer de base de donnée.
+		 * @param string $name nom de l'entré
+		 * @param callable $cb fonction de callback
+		 */
 		function switch_to($name, $cb = null) {
 			Database::switchTo($name, $cb);
 		}
 	}
 
-	if (!function_exists("curljson")) {
-		function curljson($url, $code = 200) {
+	if (!function_exists("curl")) {
+		/**
+		 * curl lance un requete vers une autre source de resource
+		 * @param string $url
+		 */
+		function curl($url) {
 			$ch = curl_init($url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			if (! curl_setopt($ch, CURLOPT_RETURNTRANSFER, true)) {
+				curl_close($ch);
+				return null;
+			}
 			$data = curl_exec($ch);
 			curl_close($ch);
-			$data = json_decode($data);
-			json($data, $code);
+			return json_encode($data);
+		}
+	}
+
+	if (!function_exists("url")) {
+		/**
+		 * url retourne l'url courant
+		 * @return string $url
+		 */
+		function url() {
+			global $requeste;
+			return $requeste->url();
 		}
 	}
 }

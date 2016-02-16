@@ -3,3 +3,4 @@ test/**
 .syslog/*
 app/views/test/*
 storage/cache/template/*
+.idea/*

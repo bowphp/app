@@ -11,6 +11,20 @@
 |
 */
 
+use App\Model\Users;
+
 $app->get("/", function ($req) {
 	view("welcome");
 });
+
+$app->group("/test", [ "middleware" => "auth", function() use ($app) {
+
+	$app->get('/', function() {
+		send('<a href="' . url() . '">test curl</a>');
+	});
+
+	$app->get("/curl", function() {
+		send(curl("http://bow.dev/test"));
+	});
+
+}]);

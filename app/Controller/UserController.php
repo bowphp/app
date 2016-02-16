@@ -2,16 +2,14 @@
 
 namespace App\Controller;
 
-
 use Exception;
 use App\Controller;
+use App\Model\Users;
 use Bow\Http\Request;
-use Bow\Database\Database as Db;
-
+use Bow\Database\Database;
 
 class UserController extends Controller
 {
-
 	/**
 	 * Start point
 	 *
@@ -21,19 +19,8 @@ class UserController extends Controller
    	public function index(Request $req)
    	{
 		// do something here
-		return response("Hello world");
+		return json(["message" => "hello world"]);
    	}
-
-	/**
-	 * Delete data
-	 *
-	 * @param Request $req
-	 * @return mixed
-	 */
-   	public function delete(Request $req)
-	{
-		echo "User is deleted.";
- 	}
 
 	/**
 	 * Add information
@@ -44,7 +31,6 @@ class UserController extends Controller
    	public function add(Request $req)
    	{
 		// do something here
-		// eg. insert("insert into your_table values(1, 'name')");	
 	}
 
 	/**
@@ -56,7 +42,16 @@ class UserController extends Controller
  	public function get(Request $req)
    	{
 		// do something here.
-		// e.g table("your_table")->get()// retourne une liste
 	}
-
+	
+	/**
+	 * Delete data
+	 *
+	 * @param Request $req
+	 * @return mixed
+	 */
+   	public function delete(Request $req)
+	{
+		// do something here
+ 	}
 }

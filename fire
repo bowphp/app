@@ -60,7 +60,7 @@ class Firecode
 			
 			case 'migrate':
 					$status = 0;
-					echo "\033[0;32mIn dev\033[00m";
+					echo "\033[0;32mIn dev\033[00m\n";
 				break;
 
 			case 'help':
@@ -68,14 +68,14 @@ class Firecode
 				break;
 
 			case 'server':
-				$r = fopen("php://stdout", "r");
 				if (isset($argv[1])) {
-					$port = $argv[1];
+					$port = (int) $argv[1];
 				} else {
 					$port = "5000";
 				}
+				$r = fopen("php://stdout", "r");
 				if ($r) {
-					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-c for shutdown it\n");
+					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-C for shutdown it\n");
 				}
 				`php -S localhost:$port server.php`;
 				break;
@@ -97,7 +97,7 @@ class Firecode
 		$middlewareName = ucfirst($middlewareName);
 
 		if (file_exists("app/Middleware/$middlewareName.php")) {
-			echo "\033[0;31mMiddleware <\033[0;33m@\033[0;31m$middlewareName\033[00m\033[0;31m> already exist.\033[00m";
+			echo "\033[0;31mMiddleware <\033[0;33m@\033[0;31m$middlewareName\033[00m\033[0;31m> already exist.\033[00m\n";
 			return 0;
 		}
 
@@ -107,29 +107,25 @@ $middlewareTemplate = <<< CM
 namespace App\Middleware;
 
 use Bow\Http\Request;
-use Bow\Database\Database as DB;
+use Bow\Database\Database;
 
 class {$middlewareName}
 {
-
 	/**
 	 * Fonction de lancement du middleware.
 	 *
 	 * @param Request \$req
 	 * @param Closure \$next
-	 *
 	 * @return mixed
 	 */
 	public function handler(Request \$req)
 	{
 		// do something here
 	}
-
 }
 CM;
-
 		file_put_contents("app/Middleware/$middlewareName.php", $middlewareTemplate);
-		echo "\033[0;32mMiddleware \033[00m@@{$middlewareName}\033[0;32m Created.\033[00m";
+		echo "\033[0;32mMiddleware \033[00m@@{$middlewareName}\033[0;32m Created.\033[00m\n";
 
 		return 0;
 	}
@@ -140,12 +136,18 @@ CM;
 	 */
 	private static function createController($controllerName)
 	{
-		if (!preg_match("#controller$#", $controllerName)) {
+		if (!preg_match("/controller$/i", $controllerName)) {
 			$controllerName = ucfirst($controllerName) . "Controller";
+		} else {
+			if (preg_match("/^(.+)(controller)$/", $controllerName, $match)) {
+				array_shift($match);
+				$controllerName = ucfirst($match[0]) . ucfirst($match[1]);
+			} else {
+				$controllerName = ucfirst($controllerName);
+			}
 		}
 		if (file_exists("app/Controller/$controllerName.php")) {
-			echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m";
-
+			echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m\n";
 			return 0;
 		}
 
@@ -154,15 +156,13 @@ $controllerTemplate =<<<CC
 
 namespace App\Controller;
 
-
 use Exception;
+use App\Controller;
 use Bow\Http\Request;
-use Bow\Database\Database as Db;
+use Bow\Database\Database;
 
-
-class {$controllerName} extends App\Controller
+class {$controllerName} extends Controller
 {
-
 	/**
 	 * Start point
 	 *
@@ -171,20 +171,8 @@ class {$controllerName} extends App\Controller
 	 */
    	public function index(Request \$req)
    	{
-		// do something here
-		return response("Hello world", 304);
+		// do something here.
    	}
-
-	/**
-	 * Delete data
-	 *
-	 * @param Request \$req
-	 * @return mixed
-	 */
-   	public function delete(Request \$req)
-	{
-		// do something here
- 	}
 
 	/**
 	 * Add information
@@ -194,8 +182,7 @@ class {$controllerName} extends App\Controller
 	 */
    	public function add(Request \$req)
    	{
-		// do something here
-		// eg. insert("insert into your_table values(1, 'name')");	
+		// do something here.
 	}
 
 	/**
@@ -207,14 +194,23 @@ class {$controllerName} extends App\Controller
  	public function get(Request \$req)
    	{
 		// do something here.
-		// e.g table("your_table")->get()// retourne une liste
 	}
 
+	/**
+	 * Delete data
+	 *
+	 * @param Request \$req
+	 * @return mixed
+	 */
+   	public function delete(Request \$req)
+	{
+		// do something here.
+ 	}
 }
 CC;
 
 		file_put_contents("app/Controller/$controllerName.php", $controllerTemplate);
-		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m Created.\033[00m";
+		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m Created.\033[00m\n";
 
 		return 0;
 	}
@@ -231,14 +227,12 @@ CC;
 $model = <<<MODEL
 <?php
 
-namespace App;
+namespace App\Model;
 
-use Bow\Database\Table;
 use Bow\Exception\TableException;
 
 class ${modelName}
 {
-	
 	/**
 	 * Facade
 	 *
@@ -246,28 +240,24 @@ class ${modelName}
 	 */
 	public static function __callStatic(\$method, \$arg)
 	{
-		\$table = table("$tableName");
+		\$table = table("${tableName}");
 		if (method_exists(\$table, \$method)) {
-			return \$table->\$method;
+			return call_user_func_array([\$table, \$method], \$arg);
 		} else {
 			throw new TableException("method \$method not found", 1);
 		}
 	}
-
 }
 
 MODEL;
-		if (file_exists("app/Model/$modelName.php")) {
-
-			echo "\033[0;33mModel <\033[0;33m@\033[0;31m$modelName\033[00m\033[0;31m> already exist.\033[00m";
-
+		if (file_exists("app/Model/${modelName}.php")) {
+			echo "\033[0;33mModel <\033[0;33m@\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m";
 			return 0;
-
 		}
 
-		file_put_contents("app/Model/$modelName.php", $model);
+		file_put_contents("app/Model/${modelName}.php", $model);
 		
-		echo "\033[0;32mModel \033[00m@@{$modelName}\033[0;32m Created.\033[00m";
+		echo "\033[0;32mModel \033[00m@@${modelName}\033[0;32m Created.\033[00m\n";
 
 		return 0;
 	}
@@ -287,14 +277,14 @@ firecode usage: php firecode :command :option :stdout-file-name
  \033[0;32mgenerate\033[00m create a user class
   option:
    \033[0;33mcontroller\033[00m | \033[0;32m-c\033[00m 	for create controller
-   \033[0;33mmodel\033[00m | \033[0;32m-m\033[00m 	for create model
+   \033[0;33mmodel\033[00m | \033[0;32m-m\033[00m		for create model
    \033[0;33mmiddleware\033[00m | \033[0;32m-r\033[00m 	for create middleware
-   \033[0;33mkey\033[00m | \033[0;32m-k\033[00m 	for create new app key
+   \033[0;33mkey\033[00m | \033[0;32m-k\033[00m		for create new app key
 
  \033[0;32mmigrate\033[00m create migration of user model
   option:
    \033[0;33mup\033[00m		To create migration \033[0;31m(in building)\033[00m
-   \033[0;33mdown\033[00m	To drop migration \033[0;31m(in building)\033[00m
+   \033[0;33mdown\033[00m		To drop migration \033[0;31m(in building)\033[00m
    \033[0;33mtruncate\033[00m	To truncate table \033[0;31m(in building)\033[00m
 
 
@@ -304,10 +294,15 @@ USAGE;
 		return 0;
 	}
 
+	/**
+	 * generate key
+	 * 
+	 * @return integer
+	 */
 	private function generateKey() {
 		$key = md5(base64_encode(openssl_random_pseudo_bytes(23) . date('Y-m-d H:i:s')));
 		file_put_contents("config/.key", $key);
-		echo $key;
+		echo "[new app-key: \033[0;32m$key\033[00m ]\n";
 		return 0;
 	}
 }
