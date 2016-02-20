@@ -23,8 +23,8 @@
         }
     },
 	"script": {
-        "post-install-cmd": [
-            "php -r \"echo base64_encode(openssl_random_pseudo_bytes(23) . date('Y-m-d H:i:s'));\" > config/.key"
+        "post-create-project-cmd": [
+            "php -r \"echo base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));\" > config/.key"
         ]
 	},
     "minimum-stability": "dev"
