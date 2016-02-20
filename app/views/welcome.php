@@ -57,7 +57,7 @@
 	<div>
 		<p class="name f-g"><span class="f">Bow.framework</span><span class="i">The Bow . Framework, simplify your webdev</span></p>
 		<p><a href="https://github.com/papac/bow.git" target="_blank">fork me</a> <a href="https://papac.github.io" target="_blank">doc</a></p>
-		<div class="shell"><span style="color: red">$</span> composer <span style="color: #bd362f">create-projet</span> bow/bow <span style="color: #bd362f">--prefer-dist</span> App</div>
+		<div class="shell"><span style="color: red">$</span> composer <span style="color: #bd362f">create-projet</span> papac/bow <span style="color: #bd362f">--prefer-dist</span> App</div>
 	</div>
 </body>
 </html>

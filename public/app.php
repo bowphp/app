@@ -6,10 +6,7 @@
 |	Chargement des principaux fichier de l'application
 |
 */
-require dirname(__DIR__) . "/vendor/autoload.php";
-
-require_once dirname(__DIR__) . "/vendor/bow/framework/src/BowAutoload.php";
-\Bow\BowAutoload::register();
+require_once dirname(__DIR__) . "/vendor/autoload.php";
 
 // Creation de l'application
 $app = Bow\Core\Application::configure(configuration());

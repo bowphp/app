@@ -14,3 +14,7 @@
 $app->get("/", function ($req) {
 	view("welcome");
 });
+
+$app->get("/test", function() {
+    view("test.exemple");
+});
