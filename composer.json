@@ -24,7 +24,7 @@
     },
 	"script": {
         "post-create-project-cmd": [
-            "php -r \"echo base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));\" > config/.key"
+            "php fire generate key"
         ]
 	},
     "minimum-stability": "dev"

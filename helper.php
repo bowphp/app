@@ -15,15 +15,18 @@ use Bow\Support\Resource;
 use Bow\Database\Database;
 use Bow\Core\AppConfiguration;
 
-require __DIR__ . "/vendor/autoload.php";
+require __DIR__ . "/vendor/papac/framework/src/BowAutoload.php";
+\Bow\BowAutoload::register();
 
 define("SELECT", Database::SELECT);
 define("INSERT", Database::INSERT);
 define("UPDATE", Database::UPDATE);
 define("DELETE", Database::DELETE);
 
-AppConfiguration::configure(require "config/application.php");
-$response = \Bow\Http\Response::configure(AppConfiguration::takeInstance());
+global $request;
+global $response;
+
+$response = \Bow\Http\Response::configure(AppConfiguration::configure(require "config/application.php"));
 $request  = \Bow\Http\Request::configure();
 
 Database::configure(require "config/database.php");
@@ -53,18 +56,18 @@ if (!function_exists("view")) {
      * view
      * @param string $template
      * @param array $data
-     * @return interger $code=200
+     * @param int $code
+     * @return mixed
      */
     function view($template, $data = [], $code = 200) {
-        global $response;
-        $response->view($template, $data, $code);
+        return $GLOBALS["response"]->view($template, $data, $code);
     }
 }
 
 if (!function_exists("table")) {
     /**
      * @param string $tableName, le nom d'un table.
-     * @return mixed
+     * @return Bow\Database\Table
      */
     function table($tableName) {
         return Database::table($tableName);
@@ -94,10 +97,9 @@ if (!function_exists("last_insert_id")) {
 
 if (!function_exists("query_response")) {
     function query_response($method, $param) {
-        global $response;
 
-        if (method_exists($response, $method)) {
-            return call_user_func_array([$response, $method], array_slice(func_get_args(), 1));
+        if (method_exists($GLOBALS["response"], $method)) {
+            return call_user_func_array([$GLOBALS["response"], $method], array_slice(func_get_args(), 1));
         }
 
         return null;
@@ -207,8 +209,7 @@ if (!function_exists("body")) {
      * manipule la variable global $_POST
      */
     function body() {
-        global $request;
-        return $request->body();
+        return $GLOBALS["request"]->body();
     }
 }
 
@@ -218,8 +219,7 @@ if (!function_exists("files")) {
      * manipule la variable global $_FILES
      */
     function files() {
-        global $request;
-        return $request->files();
+        return $GLOBALS["request"]->files();
     }
 }
 
@@ -229,8 +229,7 @@ if (!function_exists("query")) {
      * manipule la variable global $_GET
      */
     function query() {
-        global $request;
-        return $request->query();
+        return $GLOBALS["request"]->query();
     }
 }
 
@@ -337,17 +336,17 @@ if (!function_exists("response")) {
      * @return Response
      */
     function response($template = null, $code = 200, $type = "text/html") {
-        global $response;
+
 
         if (is_null($template)) {
-            return $response;
+            return $GLOBALS["response"];
         }
 
         setHeader("Content-Type", $type);
         statuscode($code);
         query_response("send", $template);
 
-        return $response;
+        return $GLOBALS["response"];
     }
 }
 
@@ -382,8 +381,10 @@ if (!function_exists("send")) {
 
 if (!function_exists("c_sql")) {
     /**
-     * Execute des requetes sql customisé
-     * @return array
+     * Execute des requêtes sql customisé
+     *
+     * @param array $option
+     * @return array|StdClass|null
      */
     function c_sql(array $option) {
         return Database::query($option);
@@ -425,7 +426,6 @@ if (!function_exists("url")) {
      * @return string $url
      */
     function url() {
-        global $requeste;
-        return $requeste->url();
+        return $GLOBALS["request"]->url();
     }
 }

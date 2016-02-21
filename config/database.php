@@ -16,23 +16,41 @@ return (object) [
     [
         "default" => [
             "scheme" => "mysql",
-            "host" => "localhost",
-            "user" => "test",
-            "pass" => "test",
-            "dbname" => "test",
-            "port" => "",
-            "socket" => ""
+            "mysql" =>
+            [
+                "hostname" => "localhost",
+                "username" => "user name",
+                "password" => "user password",
+                "database" => "database name",
+                "charset" => "utf8",
+                "collation" => "utf8_unicode_ci",
+                "port" => null,
+                "socket" => null
+            ],
+            "sqlite" => [
+                "driver" => "sqlite",
+                "database" => "database/sqlite",
+                "prefix" => ""
+            ]
         ],
         "produits" => [
-            "scheme" => "mysql|sqlite",
-            "host" => "hoastname",
-            "user" => "username",
-            "pass" => "password",
-            "dbname" => "database name",
-            "port" => "",
-            "socket" => "",
-            // sqlite seulement,
-            "create_database" => false
+            "scheme" => "mysql",
+            "mysql" =>
+            [
+                "hostname" => "hoastname",
+                "username" => "username",
+                "password" => "password",
+                "database" => "database name",
+                "charset" => "utf8",
+                "collation" => "utf8_unicode_ci",
+                "port" => null,
+                "socket" => null
+            ],
+            "sqlite" => [
+                "driver" => "sqlite",
+                "database" => "database/sqlite",
+                "prefix" => ""
+            ]
         ]
     ]
 ];
