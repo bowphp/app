@@ -5,7 +5,7 @@
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
-        "papac/framework": "0.2.1"
+        "papac/framework": ">=0.2.2"
     },
     "license": "MIT",
     "authors": [
