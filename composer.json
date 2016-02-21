@@ -22,7 +22,7 @@
             "App\\": "app/"
         }
     },
-	"script": {
+	"scripts": {
         "post-create-project-cmd": [
             "php fire generate key"
         ]
