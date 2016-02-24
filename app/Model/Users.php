@@ -8,7 +8,9 @@ class Users
 {
 	/**
 	 * Facade
-	 *
+	 * @param string $method
+	 * @param array $arg
+	 * @throws TableException
 	 * @return Table
 	 */
 	public static function __callStatic($method, $arg)

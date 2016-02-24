@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-class Firecode
+class Bow
 {
 	private function __construct() {}
 	private function __clone() {}
@@ -116,7 +116,7 @@ class {$middlewareName}
 	 * Fonction de lancement du middleware.
 	 *
 	 * @param Request \$req
-	 * @param Closure \$next
+	 * @param mixed
 	 * @return boolean
 	 */
 	public function handler(Request \$req)
@@ -198,6 +198,17 @@ class {$controllerName} extends Controller
 	}
 
 	/**
+	 * update method
+	 *
+	 * @param Request \$req
+	 * @return mixed
+	 */
+ 	public function update(Request \$req)
+   	{
+		// do something here.
+	}
+
+	/**
 	 * Delete data
 	 *
 	 * @param Request \$req
@@ -211,7 +222,7 @@ class {$controllerName} extends Controller
 CC;
 
 		file_put_contents("app/Controller/$controllerName.php", $controllerTemplate);
-		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m Created.\033[00m\n";
+		echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m have been Create.\033[00m\n";
 
 		return 0;
 	}
@@ -236,7 +247,8 @@ class ${modelName}
 {
 	/**
 	 * Facade
-	 *
+	 * @param string \$method
+	 * @param array \$arg
 	 * @return Table
 	 */
 	public static function __callStatic(\$method, \$arg)
@@ -273,7 +285,7 @@ MODEL;
 
 $usage = <<< USAGE
 
-firecode usage: php firecode :command :option :stdout-file-name
+Bow usage: php bow :command :option :stdout-file-name
 
 \033[0;31mcommand\033[00m:
 
