@@ -102,12 +102,11 @@ class Bow
 			return 0;
 		}
 
-$middlewareTemplate = <<< CM
+$middlewareTemplate = <<<CM
 <?php
 
 namespace App\Middleware;
 
-use Bow\Http\Request;
 use Bow\Database\Database;
 
 class {$middlewareName}
@@ -115,11 +114,10 @@ class {$middlewareName}
 	/**
 	 * Fonction de lancement du middleware.
 	 *
-	 * @param Request \$req
 	 * @param mixed
 	 * @return boolean
 	 */
-	public function handler(Request \$req)
+	public function handler()
 	{
 		// do something here
 	}
@@ -147,6 +145,7 @@ CM;
 				$controllerName = ucfirst($controllerName);
 			}
 		}
+
 		if (file_exists("app/Controller/$controllerName.php")) {
 			echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m\n";
 			return 0;
@@ -159,7 +158,6 @@ namespace App\Controller;
 
 use Exception;
 use App\Controller;
-use Bow\Http\Request;
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
@@ -167,10 +165,9 @@ class {$controllerName} extends Controller
 	/**
 	 * Start point
 	 *
-	 * @param Request \$req
 	 * @return mixed
 	 */
-   	public function index(Request \$req)
+   	public function index()
    	{
 		// do something here.
    	}
@@ -178,10 +175,9 @@ class {$controllerName} extends Controller
 	/**
 	 * Add information
 	 *
-	 * @param Request \$req
 	 * @param Response \$res
 	 */
-   	public function add(Request \$req)
+   	public function add()
    	{
 		// do something here.
 	}
@@ -189,10 +185,9 @@ class {$controllerName} extends Controller
 	/**
 	 * get all information
 	 *
-	 * @param Request \$req
 	 * @return mixed
 	 */
- 	public function get(Request \$req)
+ 	public function get()
    	{
 		// do something here.
 	}
@@ -200,10 +195,9 @@ class {$controllerName} extends Controller
 	/**
 	 * update method
 	 *
-	 * @param Request \$req
 	 * @return mixed
 	 */
- 	public function update(Request \$req)
+ 	public function update()
    	{
 		// do something here.
 	}
@@ -211,10 +205,9 @@ class {$controllerName} extends Controller
 	/**
 	 * Delete data
 	 *
-	 * @param Request \$req
 	 * @return mixed
 	 */
-   	public function delete(Request \$req)
+   	public function delete()
 	{
 		// do something here.
  	}
@@ -267,7 +260,8 @@ class ${modelName}
 MODEL;
 		if (file_exists("app/Model/${modelName}.php")) {
 			echo "\033[0;33mModel <\033[0;33m@\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m";
-			return 0;
+
+            return 0;
 		}
 
 		file_put_contents("app/Model/${modelName}.php", $model);
@@ -283,7 +277,7 @@ MODEL;
 	private static function usage()
 	{
 
-$usage = <<< USAGE
+$usage = <<<USAGE
 
 Bow usage: php bow :command :option :stdout-file-name
 
@@ -318,9 +312,10 @@ USAGE;
 		$key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
 		file_put_contents("config/.key", $key);
 		echo "[new app-key: \033[0;32m$key\033[00m ::length[" . strlen($key) . "]::]\n";
+
 		return 0;
 	}
 }
 
-$s = Firecode::run($argc, $argv);
+$s = Bow::run($argc, $argv);
 exit($s);

@@ -11,8 +11,9 @@ Options -indexes
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)/$ /$1 [R=301,L]
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ app.php [L]
 </IfModule>

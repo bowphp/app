@@ -5,11 +5,14 @@
  */
 
 return (object) [
+    
     // Liste des extensions valides en cas d'upload de fichier
     "upload_file_extension" => [ "jpg", "png", "jpeg", "ico", "git", "doc", "pdf" ],
+
     // Répertoire d'upload de fichier, Deux types sont valides
-    // :folder|:ftp
     "upload_directory" => dirname(__DIR__) . "/resoures/public/upload",
+
+    // FTP. configuration
     "ftp" => [
         "password" => "mot de passe ftp",
         "username" => "nom d'utilisateur ftp",

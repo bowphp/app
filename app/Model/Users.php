@@ -11,7 +11,7 @@ class Users
 	 * @param string $method
 	 * @param array $arg
 	 * @throws TableException
-	 * @return Table
+	 * @return \Bow\Database\Table
 	 */
 	public static function __callStatic($method, $arg)
 	{

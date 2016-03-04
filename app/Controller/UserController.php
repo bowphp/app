@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Controller;
-use Bow\Http\Request;
 use Bow\Database\Database;
 
 class UserController extends Controller
@@ -11,10 +10,9 @@ class UserController extends Controller
 	/**
 	 * Start point
 	 *
-	 * @param Request $req
 	 * @return mixed
 	 */
-   	public function index(Request $req)
+   	public function index()
    	{
 		// do something here
 		return json(["message" => "hello world"]);
@@ -23,10 +21,9 @@ class UserController extends Controller
 	/**
 	 * Add information
 	 *
-	 * @param Request $req
 	 * @return mixed
 	 */
-   	public function add(Request $req)
+   	public function add()
    	{
 		// do something here
 	}
@@ -34,10 +31,9 @@ class UserController extends Controller
 	/**
 	 * get all information
 	 *
-	 * @param Request $req
 	 * @return mixed
 	 */
- 	public function get(Request $req)
+ 	public function get()
    	{
 		// do something here.
 	}
@@ -45,10 +41,9 @@ class UserController extends Controller
 	/**
 	 * Update data
 	 *
-	 * @param Request $req
 	 * @return mixed
 	 */
-   	public function update(Request $req)
+   	public function update()
 	{
 		// do something here
  	}
@@ -56,10 +51,9 @@ class UserController extends Controller
 	/**
 	 * Delete data
 	 *
-	 * @param Request $req
 	 * @return mixed
 	 */
-	public function delete(Request $req)
+	public function delete()
 	{
 		// do something here
 	}

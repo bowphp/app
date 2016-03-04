@@ -1,19 +1,25 @@
 <?php
 
 /*------------------------------------------------
-| Configuration de la base donnee.
+| Configuration de la base donnée.
 |-------------------------------------------------
 | On retourne la configuration
 | des bases de données utilisées par l'application.
 | support mysql
 */
 return (object) [
+    
     // Fetch mode.
     "fetch" => PDO::FETCH_OBJ,
+
     // La base de donnée sur laquelle se connectera l'application
     // par défaut
     "connections" =>
     [
+        // la base de donnee par defaut.
+        // c'est sur cette base de donnee que bow va
+        // se connecte automatique. Alors vous devez absolument
+        // pas modifier la cle 'default'
         "default" => [
             "scheme" => "mysql",
             "mysql" =>
@@ -33,6 +39,8 @@ return (object) [
                 "prefix" => ""
             ]
         ],
+
+        // La definition d'une autre base de donnee.
         "produits" => [
             "scheme" => "mysql",
             "mysql" =>
