@@ -8,8 +8,10 @@ class Users
 {
 	/**
 	 * Facade
-	 *
-	 * @return Table
+	 * @param string $method
+	 * @param array $arg
+	 * @throws TableException
+	 * @return \Bow\Database\Table
 	 */
 	public static function __callStatic($method, $arg)
 	{

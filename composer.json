@@ -15,16 +15,13 @@
         }
     ],
     "autoload": {
-        "files": [
-            "helper.php"
-        ],
         "psr-0": {
             "App\\": "app/"
         }
     },
 	"scripts": {
         "post-create-project-cmd": [
-            "php fire generate key"
+            "php bow generate key"
         ]
 	},
     "minimum-stability": "dev"

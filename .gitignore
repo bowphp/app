@@ -5,3 +5,6 @@ app/views/test/*
 storage/cache/template/*
 .idea/*
 config/.key
+migration/*
+public/images
+public/logo.svg

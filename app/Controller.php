@@ -7,7 +7,7 @@ class Controller
 	/**
 	 * @var string
 	 */
-	protected $middleware_base_namespace = "App\\Http\\Middleware";
+	protected $middleware_base_namespace = "App\\Middleware";
 
 	/**
 	 * Lanceur de middleware
@@ -18,10 +18,11 @@ class Controller
 	 */
 	public function middleware($name, $data)
 	{
-		$middleware = $this->middleware_base_namespace . $name;
+		$middleware = $this->middleware_base_namespace . "\\" . $name;
+
 		if (class_exists($middleware)) {
 			$class = new $middleware();
-			return call_user_func_array([$class, "hanlder"], $data);
+			return call_user_func_array([$class, "hanlder"], !is_array($data) ? [$data] : $data);
 		}
 
 		return true;

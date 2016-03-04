@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-	<meta charset="utf-8"/>
-	<title>Welcome to Bow</title>
+	<meta http-equiv="content" content="text/html; charset=utf-8"/>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<title>Bow.Framewoork - work</title>
 	<style type="text/css">
 		body {
 			margin: auto;
@@ -39,7 +41,7 @@
 		.shell {
 			margin-bottom: 5px;
 			font-family: courier;
-			color: #ccc;
+			color: #999;
 			padding: 8px;
 			border-radius: 5px;
 			background-color: #eee;
