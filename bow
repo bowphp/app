@@ -8,9 +8,9 @@ class Bow
 
 	/**
 	 * Lance FIRE.
-	 * 
-	 * @param $argc
-	 * @param $argv
+	 *
+	 * @param array $argc
+	 * @param array $argv
 	 * @return int
 	 */
 	public static function run($argc, $argv)
@@ -58,7 +58,7 @@ class Bow
 						break;
 				}
 				break;
-			
+
 			case 'migrate':
 					$status = 0;
 					echo "\033[0;32mIn dev\033[00m\n";
@@ -80,12 +80,12 @@ class Bow
 				}
 				shell_exec("php -S localhost:$port server.php");
 				break;
-	
+
 			default:
 				$status = static::usage();
 				break;
 		}
-		
+
 		return $status;
 	}
 
@@ -265,7 +265,7 @@ MODEL;
 		}
 
 		file_put_contents("app/Model/${modelName}.php", $model);
-		
+
 		echo "\033[0;32mModel \033[00m@@${modelName}\033[0;32m Created.\033[00m\n";
 
 		return 0;
@@ -305,7 +305,7 @@ USAGE;
 
 	/**
 	 * generate key
-	 * 
+	 *
 	 * @return integer
 	 */
 	private function generateKey() {
