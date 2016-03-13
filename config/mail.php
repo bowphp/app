@@ -11,13 +11,23 @@ return (object) [
     // Le type de service utiliser pour l'envoye de mail
     // mail ou smtp
     // Si smtp est définie alors les clés password et username doivent avoir des values.
-    "driver" => "mail",
+    "driver" => "smtp",
 
-    // mail authantification
-    "mail" => (object) [
-        "username" => "johon@gmail.com",
+    // encodage
+    "charset"  => "utf8",
+
+    // mail authentification
+    "smtp" => (object) [
+        "hostname" => "smpt.gmail.com",
+        "username" => "johon",
         "password" => "your password",
-        "tls" => true,
-        "timeout" => 50
+        "tls"      => true,
+        "timeout"  => 50
+    ],
+
+    // mail authentification
+    "mail" => [
+        "provider" => "exemple.com",
+        "username" => "info"
     ]
 ];
