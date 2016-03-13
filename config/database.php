@@ -8,7 +8,7 @@
 | support mysql
 */
 return (object) [
-    
+
     // Fetch mode.
     "fetch" => PDO::FETCH_OBJ,
 
@@ -28,7 +28,7 @@ return (object) [
                 "username" => "user name",
                 "password" => "user password",
                 "database" => "database name",
-                "charset" => "utf8",
+                "charset"  => "utf8",
                 "collation" => "utf8_unicode_ci",
                 "port" => null,
                 "socket" => null
@@ -41,7 +41,7 @@ return (object) [
         ],
 
         // La definition d'une autre base de donnee.
-        "produits" => [
+        "other" => [
             "scheme" => "mysql",
             "mysql" =>
             [
@@ -49,7 +49,7 @@ return (object) [
                 "username" => "username",
                 "password" => "password",
                 "database" => "database name",
-                "charset" => "utf8",
+                "charset"  => "utf8",
                 "collation" => "utf8_unicode_ci",
                 "port" => null,
                 "socket" => null

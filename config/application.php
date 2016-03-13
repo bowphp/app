@@ -14,9 +14,12 @@ return (object) [
     // Nom de l'Application
 	"app_name" => "The Bow Framework",
 
+<<<<<<< HEAD
     // Racine de l'application
     "app_root" => "/app",
 
+=======
+>>>>>>> develop
     // La local
 	"timezone" => "Africa/Abidjan",
 
@@ -33,11 +36,11 @@ return (object) [
 	"not_found_file_name" => dirname(__DIR__) . "/app/views/404.php",
 
     // Template par defaut utiliser par Bow. Le systeme implement 3 moteur de template
-    // Valeur possible: twig, mustache, jade-php
-  	"template_engine" => "twig",
+    // Valeur possible: twig, mustache, jade
+  	"template" => "twig",
 
-	// extension des fichiers de template.
-	"template_extension" => ".php",
+    // Extension des pages de vues
+    "template_extension" => ".php",
 
     // Le repertoire des vues. C'est dans ce repertoire que
     // vous allez mettre tous vos vues.
@@ -53,7 +56,7 @@ return (object) [
     "classes" => [
 
         // Liste de namespace valide de l'application
-        "namespace"      => [
+        "namespace" => [
             "controller" => "App\\Controller",
             "middleware" => "App\\Middleware",
             "app"        => "App\\Autoload",
@@ -64,15 +67,17 @@ return (object) [
         // * il faudra l'enregistré dans ce tableau
         // e.g: ["Auth", "Other middleware name"]
         "middlewares" => ["Auth"],
+
+        // autoload de l'application
         "autoload"    => dirname(__DIR__) . "/app/autoload"
     ],
 
-    // Le mode
+    // Le mode de debugage de l'application
 	// develope | production
     "debug"   => "develope",
 
-	// clé de l'application
+	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
-	// <code>: php bow generate key` </code>
+	// <code>: `php bow generate key` </code>
     "app_key" => __DIR__ . "/.key"
 ];
