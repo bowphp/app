@@ -18,7 +18,7 @@ return (object) [
 
     // mail authentification
     "smtp" => (object) [
-        "hostname" => "smpt.gmail.com",
+        "hostname" => "smpt.exemple.com",
         "username" => "johon",
         "password" => "your password",
         "tls"      => true,
