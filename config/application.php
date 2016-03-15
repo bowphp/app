@@ -4,8 +4,8 @@
 | Configuration de l'application
 |--------------------------------------------------------------
 |
-| On retourne la configuration que l'application utilisera pour
-| lancer la configuration initiale de l'application
+| On retourne la configuration que php utilisera pour
+| lancer la configuration initiale de bow
 |
 */
 
@@ -46,10 +46,11 @@ return (object) [
 
     // Le repertoire des vues. C'est dans ce repertoire que
     // vous allez mettre tous vos vues.
-    // Les vues doivent avoir une instantion *.php
+    // Les vues doivent avoir l' instantion que vous avez définir
+	// dans 'template_extension' si non erreur sera lancé
     "views_path" => dirname(__DIR__) . "/app/views",
 
-    // Liste des *namespaces* valident de votre application
+    // Liste des **namespaces** valident de votre application
     // * concernant les middleware
     "classes" => [
 
@@ -70,9 +71,9 @@ return (object) [
         "autoload"    => dirname(__DIR__) . "/app/autoload"
     ],
 
-    // Le mode de debugage de l'application
-	// develope | production
-    "debug"   => "develope",
+    // Le mode de débogage de l'application
+	// developpement | production
+    "debug"   => "developpement",
 
 	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
