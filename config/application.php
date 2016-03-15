@@ -64,8 +64,10 @@ return (object) [
         // Liste de middleware
         // * ici quand vous générez un middleware
         // * il faudra l'enregistré dans ce tableau
-        // e.g: ["Auth", "Other middleware name"]
-        "middlewares" => ["Auth"],
+        // e.g: ["Auth", "autre nom de middleware"]
+        "middlewares" => [
+			"Auth"
+		],
 
         // autoload de l'application
         "autoload"    => dirname(__DIR__) . "/app/autoload"
