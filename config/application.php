@@ -14,12 +14,10 @@ return (object) [
     // Nom de l'Application
 	"app_name" => "The Bow Framework",
 
-<<<<<<< HEAD
     // Racine de l'application
-    "app_root" => "/app",
+	// e.g "/app"
+    "app_root" => "",
 
-=======
->>>>>>> develop
     // La local
 	"timezone" => "Africa/Abidjan",
 
