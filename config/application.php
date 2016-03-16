@@ -78,8 +78,8 @@ return (object) [
     ],
 
     // Le mode de débogage de l'application
-	// developpement | production
-    "debug"   => "developpement",
+	// development | production
+    "debug"   => "development",
 
 	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
