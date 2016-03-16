@@ -1,0 +1,19 @@
+{# twig exemple #}
+{% set errno = 404 %}
+{% set errmessage = "Not found file" %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ errno }}</title>
+    </head>
+    <body>
+        <div style="margin: auto; width: 800; font-size: 20px">
+            <h1><b>{{ errno }}</b></h1>
+            <p>
+                <b>{{ errmessage }}</b>
+            </p>
+        </div>
+    </body>
+</html>

@@ -16,10 +16,13 @@ return (object) [
     // par défaut
     "connections" =>
     [
-        // la base de donnee par defaut.
-        // c'est sur cette base de donnee que bow va
-        // se connecte automatique. Alors vous devez absolument
-        // pas modifier la cle 'default'
+        // la base de donnee par defaut, c'est sur cette base de donnee que bow va
+        // se connecte automatique. Alors vous ne devez absolument
+        // pas modifier la cle 'default'.
+        // Dans le case contraire vous devez executer le code
+        // dans chaque route.
+        // `db("le nom de cle")` or
+        // `Bow\Database\Database::connection("le nom de la cle")`
         "default" => [
             "scheme" => "mysql",
             "mysql" =>

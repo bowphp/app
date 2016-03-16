@@ -9,4 +9,4 @@ if ($stderr) {
 
 fclose($stderr);
 
-require "public/app.php";
+require "public/index.php";

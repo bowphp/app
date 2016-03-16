@@ -4,8 +4,8 @@
 | Configuration de l'application
 |--------------------------------------------------------------
 |
-| On retourne la configuration que l'application utilisera pour
-| lancer la configuration initiale de l'application
+| On retourne la configuration que php utilisera pour
+| lancer la configuration initiale de bow
 |
 */
 
@@ -37,25 +37,30 @@ return (object) [
 
     // Template par defaut utiliser par Bow. Le systeme implement 3 moteur de template
     // Valeur possible: twig, mustache, jade
-  	"template" => "twig",
+  	"template_engine" => "twig",
 
     // Extension des pages de vues
-    "template_extension" => ".php",
+    "template_extension" => ".twig",
+
+	// Le repertoire de cache.
+	// quand le cache sera remplit c'est à vous de le vidé
+	"template_cache_folder" => dirname(__DIR__) . "/storage/cache",
+
+	// active le systeme suppression de cache.
+	// Quand la valeur est à true
+	"template_clear_cache" => false,
 
     // Le repertoire des vues. C'est dans ce repertoire que
     // vous allez mettre tous vos vues.
-    // Les vues doivent avoir une instantion *.php
-    "views" => dirname(__DIR__) . "/app/views",
+    // Les vues doivent avoir l' instantion que vous avez définir
+	// dans 'template_extension' si non erreur sera lancé
+    "views_path" => dirname(__DIR__) . "/app/views",
 
-    // Le repertoire de cache.
-    // quand le cache sera remplit c'est à vous de le vidé
-    "cache_folder" => dirname(__DIR__) . "/storage/cache",
-
-    // Liste des *namespaces* valident de votre application
+    // Liste des **namespaces** valident de votre application
     // * concernant les middleware
     "classes" => [
 
-        // Liste de namespace valide de l'application
+        // Liste de namespace valide de l'applicareqtion
         "namespace" => [
             "controller" => "App\\Controller",
             "middleware" => "App\\Middleware",
@@ -65,16 +70,18 @@ return (object) [
         // Liste de middleware
         // * ici quand vous générez un middleware
         // * il faudra l'enregistré dans ce tableau
-        // e.g: ["Auth", "Other middleware name"]
-        "middlewares" => ["Auth"],
+        // e.g: ["Auth", "autre nom de middleware"]
+        "middlewares" => [
+			"Auth"
+		],
 
         // autoload de l'application
         "autoload"    => dirname(__DIR__) . "/app/autoload"
     ],
 
-    // Le mode de debugage de l'application
-	// develope | production
-    "debug"   => "develope",
+    // Le mode de débogage de l'application
+	// developpement | production
+    "debug"   => "developpement",
 
 	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
