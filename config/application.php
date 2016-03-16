@@ -46,7 +46,7 @@ return (object) [
 
 	// active le systeme suppression de cache.
 	// Quand la valeur est à true
-	"template_clear_cache" => false,
+	"template_clear_cache" => true,
 
     // Le repertoire des vues. C'est dans ce repertoire que
     // vous allez mettre tous vos vues.
