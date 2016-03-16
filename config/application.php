@@ -54,7 +54,7 @@ return (object) [
     // * concernant les middleware
     "classes" => [
 
-        // Liste de namespace valide de l'application
+        // Liste de namespace valide de l'applicareqtion
         "namespace" => [
             "controller" => "App\\Controller",
             "middleware" => "App\\Middleware",

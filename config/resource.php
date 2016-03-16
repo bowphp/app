@@ -5,12 +5,12 @@
  */
 
 return (object) [
-    
+
     // Liste des extensions valides en cas d'upload de fichier
     "upload_file_extension" => [ "jpg", "png", "jpeg", "ico", "git", "doc", "pdf" ],
 
     // Répertoire d'upload de fichier, Deux types sont valides
-    "upload_directory" => dirname(__DIR__) . "/resoures/public/upload",
+    "upload_directory" => dirname(__DIR__) . "/storage/upload",
 
     // FTP. configuration
     "ftp" => [
