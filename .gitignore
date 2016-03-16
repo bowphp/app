@@ -2,7 +2,7 @@ vendor/
 test/**
 .syslog/*
 app/views/test/*
-storage/cache/template/*
+storage/cache/**
 .idea/*
 config/.key
 migration/*
