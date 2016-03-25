@@ -35,6 +35,8 @@ return (object) [
 
     // Template par defaut utiliser par Bow. Le systeme implement 3 moteur de template
     // Valeur possible: twig, mustache, jade
+	// - Le nom du package mustache: mustache/mustache
+	// - Le nom du package jade: kylekatarnls/jade-php
   	"template_engine" => "twig",
 
     // Extension des pages de vues

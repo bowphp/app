@@ -16,15 +16,18 @@ return (object) [
     // par défaut
     "connections" =>
     [
-        // la base de donnee par defaut, c'est sur cette base de donnee que bow va
+        // la base de donnée par defaut, c'est sur cette base de donnée que bow va
         // se connecte automatique. Alors vous ne devez absolument
         // pas modifier la cle 'default'.
         // Dans le case contraire vous devez executer le code
         // dans chaque route.
         // `db("le nom de cle")` or
-        // `Bow\Database\Database::connection("le nom de la cle")`
+        // `Bow\Database\Database::connection("le nom de la clé")`
         "default" => [
+            // represente sur quel SGDB le site va se connecté.
             "scheme" => "mysql",
+
+            // la configuration de mysql
             "mysql" =>
             [
                 "hostname" => "localhost",

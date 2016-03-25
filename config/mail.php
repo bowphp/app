@@ -27,7 +27,13 @@ return (object) [
 
     // mail authentification
     "mail" => [
-        "provider" => "exemple.com",
-        "username" => "info"
+        "concat" => [
+            "address" => "concat@exemple.com",
+            "username" => "Address de contact"
+        ],
+        "info" => [
+            "address" => "info@exemple.com",
+            "username" => "Address d'Information"
+        ]
     ]
 ];
