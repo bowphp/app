@@ -311,7 +311,7 @@ USAGE;
 	private function generateKey() {
 		$key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
 		file_put_contents("config/.key", $key);
-		echo "[new app-key: \033[0;32m$key\033[00m ::length[" . strlen($key) . "]::]\n";
+		echo "\033[0;32m$key\033[00m\n";
 
 		return 0;
 	}
