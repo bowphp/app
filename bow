@@ -7,50 +7,45 @@ class Bow
 	private final function __clone() {}
 
 	/**
-	 * Lance FIRE.
+	 * Lance Bow.
 	 *
-	 * @param array $argc
+	 * @param int $argc
 	 * @param array $argv
 	 * @return int
 	 */
-	public static function run($argc, $argv)
+	public static function run($argc, array $argv)
 	{
-		$argc -= 0;
-		array_shift($argv);
+        $status = 0;
+		$argc -= 1;
+        array_shift($argv);
 
-		if ($argc == 0) {
-			$argv[0] = "help";
-		}
+        if ($argc <= 0) {
+            $argv[0] = "help";
+        }
 
-		$status = 0;
+        // formate cmd.
+        list($cmd, $param)  = explode(":", $argv[0]);
 
-		switch ($argv[0]) {
+		switch ($cmd) {
 			case 'generate':
-				if (!isset($argv[0]) || !isset($argv[1])) {
-					return static::usage();
-				}
-				$name = "";
-				if (!in_array($argv[1], ["key", "-k"])) {
-					if (!isset($argv[2])) {
-						return static::usage();
-					}
-					$name = $argv[2];
-				}
-				switch ($argv[1]) {
+                $name = null;
+				if ($param !== "key") {
+                    if (!isset($argv[1])) {
+                        return static::usage();
+                    }
+                    $name = $argv[1];
+                }
+				switch ($param) {
 					case 'model':
-					case '-m':
 						static::createModel($name);
 						break;
 					case 'controller':
-					case '-c':
 						$status = static::createController($name);
 						break;
 					case 'middleware':
-					case '-r':
 						$status = static::createMiddleware($name);
 						break;
 					case 'key':
-					case '-k':
 						$status = static::generateKey();
 						break;
 					default:
@@ -60,8 +55,33 @@ class Bow
 				break;
 
 			case 'migrate':
-					$status = 0;
-					echo "\033[0;32mIn dev\033[00m\n";
+                    $table = null;
+                    $date = null;
+                    if (!isset($argv[1])) {
+                        return static::usage();
+                    } else {
+                        $table = $argv[1];
+                    }
+                    if (isset($argv[2])) {
+                        if (preg_match("#^[0-9]{4}_[0-9]{2}_[0-9]{2}$#", $argv[2])) {
+                            $date = $argv[2];
+                        }
+                    }
+                    switch($param) {
+                        case "make":
+                            static::createMigration($table);
+                            break;
+                        case "up":
+                            static::migrate($table, $date, "up");
+                            break;
+                        case "down":
+                            static::migrate($table, $date, "down");
+                            break;
+                        default:
+                            return static::usage();
+                            break;
+                    }
+
 				break;
 
 			case 'help':
@@ -74,10 +94,13 @@ class Bow
 				} else {
 					$port = "5000";
 				}
-				$r = fopen("php://stdout", "r");
+                // resource.
+				$r = fopen("php://stdout", "w");
 				if ($r) {
 					fwrite($r, "Web Server start at http://localhost:$port\nCtrl-C for shutdown it\n");
 				}
+				fclose($r);
+                // lancement du serveur.
 				shell_exec("php -S localhost:$port server.php");
 				break;
 
@@ -89,6 +112,65 @@ class Bow
 		return $status;
 	}
 
+    /**
+     * @param string $table
+     */
+    private static function createMigration($table)
+    {
+        $className = ucfirst($table);
+$migrate = <<<doc
+<?php
+
+use \Bow\Database\Migration\Schema;
+use \Bow\Database\Migration\Blueprint;
+use \Bow\Database\Migration\Migration;
+
+class Create{$className}Table extends Migration
+{
+    /**
+     * create {$table} table
+     */
+    public function up()
+    {
+        Schema::create("$table", function(Blueprint \$table) {
+            // do something
+        });
+    }
+
+    /**
+     * drop a table {$table}
+     */
+    public function down()
+    {
+        Schema::drop("$table");
+    }
+}
+doc;
+        file_put_contents(__DIR__."/migration/create_{$table}_table_" . date("Y_m_d") . ".php", $migrate);
+        echo "\033[0;32mMigration file for $table created.\033[00m\n";
+    }
+
+    /**
+     * @param string $table le nom de table
+     * @param string $date la date de migration qui represente un cle unique pour la migration
+     * @param string $type le type de migration up|down
+     * @return int
+     * @throws ErrorException
+     */
+    private static function migrate($table, $date, $type)
+    {
+        $file = strtolower(__DIR__ ."/migration/create_{$table}_table_{$date}.php");
+
+        if (file_exists($file)) {
+            @include $file;
+            $class = "Create".ucfirst($table)."Table";
+            call_user_func([new $class, "$type"]);
+        } else {
+            throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
+        }
+
+        return 0;
+    }
 	/**
 	 * @param $middlewareName
 	 * @return int
@@ -292,9 +374,9 @@ Bow usage: php bow :command :option :stdout-file-name
 
  \033[0;32mmigrate\033[00m create migration of user model
   option:
-   \033[0;33mup\033[00m		To create migration \033[0;31m(in building)\033[00m
+   \033[0;33mup\033[00m		Update || create table of the migration \033[0;31m(in building)\033[00m
    \033[0;33mdown\033[00m		To drop migration \033[0;31m(in building)\033[00m
-   \033[0;33mtruncate\033[00m	To truncate table \033[0;31m(in building)\033[00m
+   \033[0;33mcreate\033[00m	To create migration \033[0;31m(in building)\033[00m
 
 
 USAGE;
@@ -311,7 +393,7 @@ USAGE;
 	private function generateKey() {
 		$key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
 		file_put_contents("config/.key", $key);
-		echo "\033[0;32m$key\033[00m\n";
+		echo "appkey: \033[0;32m$key\033[00m\n";
 
 		return 0;
 	}

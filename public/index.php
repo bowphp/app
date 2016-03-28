@@ -3,12 +3,12 @@
 /*-------------------------------------------------------
 |
 |	Chargement des configurations
-|	Chargement des principaux fichier de l'application
+|	Chargement des principaux fichiers de l'application Bow
 |
 */
 require_once dirname(__DIR__) . "/vendor/autoload.php";
 
-// Creation de l'application
+// Création de l'application
 $app = Bow\Core\Application::configure(configuration());
 
 // Chargement des routeurs.
