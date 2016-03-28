@@ -162,6 +162,7 @@ doc;
         $file = strtolower(__DIR__ ."/migration/create_{$table}_table_{$date}.php");
 
         if (file_exists($file)) {
+            require __DIR__ . "/vendor/autoload.php";
             @include $file;
             $class = "Create".ucfirst($table)."Table";
             call_user_func([new $class, "$type"]);

@@ -4,5 +4,4 @@ test/**
 app/views/test/*
 .idea/*
 config/.key
-migration/*
 public/logo.svg
