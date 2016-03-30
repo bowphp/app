@@ -12,7 +12,7 @@ require_once __DIR__."/public/index.php";
 /**
  * @var Resource
  */
-$stderr = fopen("php://stdout", "w");
+$stderr = fopen("php://stderr", "w");
 
 if ($stderr) {
 	// code d'erreur.
@@ -20,7 +20,7 @@ if ($stderr) {
 
 	if ($code >= 200 && $code <= 299) {
 		$c = "2";
-	} else if ($code >= 400 && $code <= 500) {
+	} else if ($code >= 400 && $code <= 599) {
 		$c = "1";
 	} else {
 		$c = "3";
