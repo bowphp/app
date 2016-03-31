@@ -17,7 +17,7 @@ return (object) [
     "charset"  => "utf8",
 
     // mail authentification
-    "smtp" => (object) [
+    "smtp" => [
         "hostname" => "smpt.exemple.com",
         "username" => "johon",
         "password" => "your password",
