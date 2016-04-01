@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . "/vendor/autoload.php";
-
 class Bow
 {
 	private final function __construct() {}
@@ -161,7 +159,7 @@ doc;
      */
     private static function migrate($table, $date, $type)
     {
-        $file = strtolower(__DIR__ ."/migration/create_{$table}_table_{$date}.php");
+        $file = __DIR__.strtolower("/migration/create_{$table}_table_{$date}.php");
 
         if (file_exists($file)) {
             require __DIR__ . "/vendor/autoload.php";
@@ -402,5 +400,12 @@ USAGE;
 	}
 }
 
-$s = Bow::run($argc, $argv);
+try {
+	$s = Bow::run($argc, $argv);
+} catch (Exception $e) {
+	echo "\033[0;31m" . $e->getMessage() . "\033[00m\n";
+} finally {
+	$s = 1;
+}
+
 exit($s);

@@ -21,7 +21,7 @@
     },
 	"scripts": {
         "post-create-project-cmd": [
-            "php bow generate key"
+            "php bow generate:key"
         ]
 	},
     "minimum-stability": "dev"
