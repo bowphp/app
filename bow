@@ -180,7 +180,7 @@ doc;
 	{
 		$middlewareName = ucfirst($middlewareName);
 
-		if (file_exists("app/Middleware/$middlewareName.php")) {
+		if (file_exists(__DIR__ . "/app/Middleware/$middlewareName.php")) {
 			echo "\033[0;31mMiddleware <\033[0;33m@\033[0;31m$middlewareName\033[00m\033[0;31m> already exist.\033[00m\n";
 			return 0;
 		}
@@ -206,7 +206,7 @@ class {$middlewareName}
 	}
 }
 CM;
-		file_put_contents("app/Middleware/$middlewareName.php", $middlewareTemplate);
+		file_put_contents(__DIR__."/app/Middleware/$middlewareName.php", $middlewareTemplate);
 		echo "\033[0;32mMiddleware \033[00m@@{$middlewareName}\033[0;32m Created.\033[00m\n";
 
 		return 0;
