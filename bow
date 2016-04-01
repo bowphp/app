@@ -368,17 +368,16 @@ Bow usage: php bow :command :option :stdout-file-name
 
  \033[0;32mgenerate\033[00m create a user class
   option:
-   \033[0;33mcontroller\033[00m | \033[0;32m-c\033[00m 	for create controller
-   \033[0;33mmodel\033[00m | \033[0;32m-m\033[00m		for create model
-   \033[0;33mmiddleware\033[00m | \033[0;32m-r\033[00m 	for create middleware
-   \033[0;33mkey\033[00m | \033[0;32m-k\033[00m		for create new app key
+   \033[0;33mgenerate:controller\033[00m 	for create controller
+   \033[0;33mgenerate:model\033[00m 	for create model
+   \033[0;33mgenerate:middleware\033[00m  for create middleware
+   \033[0;33mgenerate:key\033[00m 	for create new app key
 
  \033[0;32mmigrate\033[00m create migration of user model
   option:
-   \033[0;33mup\033[00m		Update || create table of the migration \033[0;31m(in building)\033[00m
-   \033[0;33mdown\033[00m		To drop migration \033[0;31m(in building)\033[00m
-   \033[0;33mcreate\033[00m	To create migration \033[0;31m(in building)\033[00m
-
+   \033[0;33mmigrate:up\033[00m		Update || create table of the migration
+   \033[0;33mmigrate:down\033[00m		To drop migration
+   \033[0;33mmigrate:make\033[00m		To create migration
 
 USAGE;
 		echo $usage;
