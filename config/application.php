@@ -54,7 +54,7 @@ return (object) [
     // vous allez mettre tous vos vues.
     // Les vues doivent avoir l' instantion que vous avez définir
 	// dans 'template_extension' si non erreur sera lancé
-    "views_path" => dirname(__DIR__) . "/app/views",
+    "views_path" => dirname(__DIR__) . "/app/Views",
 
     // Liste des **namespaces** valident de votre application
     // * concernant les middleware
