@@ -42,6 +42,9 @@ return (object) [
     // Extension des pages de vues
     "template_extension" => ".twig",
 
+    // Le chemin vers les fichiers statics
+    "static_files_directory" => dirname(__DIR__) . "/public",
+
 	// Le repertoire de cache.
 	// quand le cache sera remplit c'est à vous de le vidé
 	"template_cache_folder" => dirname(__DIR__) . "/storage/cache",
