@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use Vap\Exception\TableException;
+use Bow\Exception\TableException;
 
 class Users
 {
@@ -11,7 +11,7 @@ class Users
 	 * @param string $method
 	 * @param array $arg
 	 * @throws TableException
-	 * @return \Vap\Database\Table
+	 * @return \Bow\Database\Table
 	 */
 	public static function __callStatic($method, $arg)
 	{

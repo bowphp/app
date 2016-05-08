@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller;
-use Vap\Database\Database;
+use Bow\Database\Database;
 
 class UserController extends Controller
 {

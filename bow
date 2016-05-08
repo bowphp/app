@@ -128,9 +128,9 @@ class Bow
         $migrate = <<<doc
 <?php
 
-use \Vap\Database\Migration\Schema;
-use \Vap\Database\Migration\Blueprint;
-use \Vap\Database\Migration\Migration;
+use \Bow\Database\Migration\Schema;
+use \Bow\Database\Migration\Blueprint;
+use \Bow\Database\Migration\Migration;
 
 class Create{$className}Table extends Migration
 {
@@ -197,7 +197,7 @@ doc;
 
 namespace App\Middleware;
 
-use Vap\Database\Database;
+use Bow\Database\Database;
 
 class {$middlewareName}
 {
@@ -248,7 +248,7 @@ namespace App\Controller;
 
 use Exception;
 use App\Controller;
-use Vap\Database\Database;
+use Bow\Database\Database;
 
 class {$controllerName} extends Controller
 {
@@ -324,7 +324,7 @@ CC;
 
 namespace App\Model;
 
-use Vap\Exception\TableException;
+use Bow\Exception\TableException;
 
 class ${modelName}
 {

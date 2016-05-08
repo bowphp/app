@@ -21,7 +21,7 @@ return (object) [
         // Dans le case contraire vous devez executer le code
         // dans chaque route.
         // `db("le nom de cle")` or
-        // `Vap\Database\Database::connection("le nom de la clé")`
+        // `Bow\Database\Database::connection("le nom de la clé")`
         "default" => [
             // represente sur quel SGDB le site va se connecté.
             "scheme" => "mysql",
