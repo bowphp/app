@@ -9,7 +9,7 @@
 require_once dirname(__DIR__) . "/vendor/autoload.php";
 
 // Création de l'application
-$app = Bow\Core\Application::configure(configuration());
+$app = Vap\Core\Application::configure(configuration());
 
 // Chargement des routeurs.
 require dirname(__DIR__) . "/app/Router/routes.php";

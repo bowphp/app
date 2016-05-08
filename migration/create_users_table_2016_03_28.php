@@ -1,9 +1,9 @@
 <?php
 
-use \Bow\Database\Migration\Schema;
-use \Bow\Database\Migration\Migration;
-use \Bow\Database\Migration\TableColumnsMaker;
-use \Bow\Database\Migration\AlterTable as Alter;
+use \Vap\Database\Migration\Schema;
+use \Vap\Database\Migration\Migration;
+use \Vap\Database\Migration\TableColumnsMaker;
+use \Vap\Database\Migration\AlterTable as Alter;
 
 class CreateUsersTable extends Migration
 {

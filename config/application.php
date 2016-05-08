@@ -5,7 +5,7 @@
 |--------------------------------------------------------------
 |
 | On retourne la configuration que php utilisera pour
-| lancer la configuration initiale de bow
+| lancer la configuration initiale de vap
 |
 */
 
@@ -89,6 +89,6 @@ return (object) [
 
 	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
-	// <code>: `php bow generate key` </code>
+	// <code>: `php vap generate key` </code>
     "app_key" => __DIR__ . "/.key"
 ];

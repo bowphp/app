@@ -15,13 +15,13 @@ return (object) [
     // par défaut
     "connections" =>
     [
-        // la base de donnée par defaut, c'est sur cette base de donnée que bow va
+        // la base de donnée par defaut, c'est sur cette base de donnée que vap va
         // se connecte automatique. Alors vous ne devez absolument
         // pas modifier la cle 'default'.
         // Dans le case contraire vous devez executer le code
         // dans chaque route.
         // `db("le nom de cle")` or
-        // `Bow\Database\Database::connection("le nom de la clé")`
+        // `Vap\Database\Database::connection("le nom de la clé")`
         "default" => [
             // represente sur quel SGDB le site va se connecté.
             "scheme" => "mysql",
