@@ -11,6 +11,9 @@ return (object) [
     // Fetch mode.
     "fetch" => PDO::FETCH_OBJ,
 
+    // La base séléctionné par defaut
+    "default" => "first",
+
     // La base de donnée sur laquelle se connectera l'application
     // par défaut
     "connections" =>
@@ -22,7 +25,7 @@ return (object) [
         // dans chaque route.
         // `db("le nom de cle")` or
         // `Bow\Database\Database::connection("le nom de la clé")`
-        "default" => [
+        "first" => [
             // represente sur quel SGDB le site va se connecté.
             "scheme" => "mysql",
 
@@ -46,7 +49,7 @@ return (object) [
         ],
 
         // La definition d'une autre base de donnee.
-        "other" => [
+        "seconds" => [
             "scheme" => "mysql",
             "mysql" =>
             [
