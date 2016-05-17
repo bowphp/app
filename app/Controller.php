@@ -7,24 +7,23 @@ class Controller
 	/**
 	 * @var string
 	 */
-	protected $middleware_base_namespace = "App\\Middleware";
+	protected $middlewareBaseNamespace = "App\\Middleware";
 
 	/**
 	 * Lanceur de middleware
 	 * 
-	 * @param string $name
-	 * @param mixed
+	 * @param string $name Le nom de middelware.
 	 * @return mixed
 	 */
-	public function middleware($name, $data)
+	public function middleware($name)
 	{
-		$middleware = $this->middleware_base_namespace . "\\" . $name;
+		$middleware = $this->middlewareBaseNamespace . "\\" . $name;
 
 		if (class_exists($middleware)) {
 			$class = new $middleware();
-			return call_user_func_array([$class, "hanlder"], !is_array($data) ? [$data] : $data);
+			return call_user_func_array([$class, "hanlder"], array_slice(func_get_args(), 1));
 		}
 
-		return true;
+		return false;
 	}
 }

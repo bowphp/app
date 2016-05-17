@@ -1,7 +1,7 @@
 {
-    "name": "papac/vap",
+    "name": "papac/bow",
     "description": "The vap Framework",
-    "keywords": ["framework", "vap"],
+    "keywords": ["framework", "bow"],
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
@@ -21,7 +21,7 @@
     },
 	"scripts": {
         "post-create-project-cmd": [
-            "php vap generate:key"
+            "php bow generate:key"
         ]
 	},
     "minimum-stability": "dev"
