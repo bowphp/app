@@ -43,7 +43,12 @@ return (object) [
     "template_extension" => ".twig",
 
     // Le chemin vers les fichiers statics
-    "static_files_directory" => dirname(__DIR__) . "/public",
+    "static_files_directory" => "/public",
+
+    // Permet de dire à l'application si vous voulez en
+    // première argumment des CLOSURES ou des methodes des controllers,
+    // une instance de la classe Application, "POUR DES PROBLEMES DE SCOPE"
+    "instance_of_application_in_function" => false,
 
 	// Le repertoire de cache.
 	// quand le cache sera remplit c'est à vous de le vidé
@@ -89,6 +94,6 @@ return (object) [
 
 	// clé de sécurité de l'application
 	// Peut être régenerer par la commande
-	// <code>: `php vap generate key` </code>
+	// <code>: `php bow generate key` </code>
     "app_key" => __DIR__ . "/.key"
 ];

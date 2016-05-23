@@ -129,8 +129,8 @@ class Bow
 <?php
 
 use \Bow\Database\Migration\Schema;
-use \Bow\Database\Migration\Blueprint;
 use \Bow\Database\Migration\Migration;
+use \Bow\Database\Migration\ColumnsMaker;
 
 class Create{$className}Table extends Migration
 {
@@ -139,7 +139,7 @@ class Create{$className}Table extends Migration
      */
     public function up()
     {
-        Schema::create("$table", function(Blueprint \$table) {
+        Schema::create("$table", function(ColumnsMaker \$table) {
             // do something
         });
     }

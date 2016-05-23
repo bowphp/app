@@ -1,7 +1,7 @@
 <?php
 
 // Changement du non du serveur.
-header("Server: Bow test server");
+header("Server: Bow Server (" . PHP_OS . ")");
 
 $uri = urldecode(
 	parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)

@@ -2,7 +2,7 @@
 
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
-use \Bow\Database\Migration\TableColumnsMaker;
+use \Bow\Database\Migration\ColumnsMaker;
 use \Bow\Database\Migration\AlterTable as Alter;
 
 class CreateUsersTable extends Migration
@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create("users", function(TableColumnsMaker $table) {
+        Schema::create("users", function(ColumnsMaker $table) {
             $table->increment("id");
             $table->string("name");
             $table->string("lastname");
@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string("description", 500);
         });
 
-        Schema::fillTable(10);
+        Schema::fillTable(10, "name|i:1;lastname|s:90;email|s:30;description|s:39");
     }
 
     /**
