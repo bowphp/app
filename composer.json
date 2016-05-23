@@ -1,6 +1,6 @@
 {
     "name": "papac/bow",
-    "description": "The vap Framework",
+    "description": "The bow Framework",
     "keywords": ["framework", "bow"],
     "type": "projet",
     "require": {
@@ -11,7 +11,8 @@
     "authors": [
         {
             "name": "Franck Dakia",
-            "email": "dakiafranck@gmail.com"
+            "email": "dakiafranck@gmail.com",
+            "role": "lead developer"
         }
     ],
     "autoload": {
