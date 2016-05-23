@@ -30,30 +30,30 @@ class UserController extends Controller
 
 	/**
 	 * get all information
-	 *
+	 * @param mixed $id [optional]
 	 * @return mixed
 	 */
- 	public function get()
+ 	public function get($id = null)
    	{
 		// do something here.
 	}
 	
 	/**
 	 * Update data
-	 *
+	 * @param mixed $id
 	 * @return mixed
 	 */
-   	public function update()
+   	public function update($id)
 	{
 		// do something here
  	}
 
 	/**
 	 * Delete data
-	 *
+	 * @param mixed $id
 	 * @return mixed
 	 */
-	public function delete()
+	public function delete($id)
 	{
 		// do something here
 	}

@@ -194,7 +194,6 @@ doc;
 
         $middlewareTemplate = <<<CM
 <?php
-
 namespace App\Middleware;
 
 use Bow\Database\Database;
@@ -243,7 +242,6 @@ CM;
 
         $controllerTemplate =<<<CC
 <?php
-
 namespace App\Controller;
 
 use Exception;
@@ -255,17 +253,16 @@ class {$controllerName} extends Controller
 	/**
 	 * Start point
 	 *
+	 * @param mixed \$id [optional] L'identifiant de l'element à récupérer
 	 * @return mixed
 	 */
-   	public function index()
+   	public function index(\$id = null)
    	{
 		// do something here.
    	}
 
 	/**
 	 * Add information
-	 *
-	 * @param Response \$res
 	 */
    	public function add()
    	{
@@ -275,9 +272,10 @@ class {$controllerName} extends Controller
 	/**
 	 * get all information
 	 *
+	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
 	 * @return mixed
 	 */
- 	public function get()
+ 	public function get(\$id = null)
    	{
 		// do something here.
 	}
@@ -285,9 +283,10 @@ class {$controllerName} extends Controller
 	/**
 	 * update method
 	 *
+	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
 	 * @return mixed
 	 */
- 	public function update()
+ 	public function update(\$id)
    	{
 		// do something here.
 	}
@@ -295,16 +294,17 @@ class {$controllerName} extends Controller
 	/**
 	 * Delete data
 	 *
+	 * @param mixed \$id L'identifiant de l'élément à supprimer
 	 * @return mixed
 	 */
-   	public function delete()
+   	public function delete(\$id)
 	{
 		// do something here.
  	}
 }
 CC;
 
-        file_put_contents("app/Controller/$controllerName.php", $controllerTemplate);
+        file_put_contents("app/Controller/${controllerName}.php", $controllerTemplate);
         echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m have been Create.\033[00m\n";
 
         return 0;
@@ -321,7 +321,6 @@ CC;
 
         $model = <<<MODEL
 <?php
-
 namespace App\Model;
 
 use Bow\Exception\TableException;

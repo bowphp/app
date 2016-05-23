@@ -5,6 +5,17 @@ namespace App;
 class Controller
 {
 	/**
+	 * Exemple
+	 *
+	 * @var array
+	 */
+	public $paginate = [
+		'Articles' => [
+			'conditions' => ['published' => 1]
+		]
+	];
+
+	/**
 	 * @var string
 	 */
 	protected $middlewareBaseNamespace = "App\\Middleware";
@@ -25,5 +36,17 @@ class Controller
 		}
 
 		return false;
+	}
+
+	/**
+	 * Permet de faire des redirections sur un autre page ou sur l'action du meme controlleur
+	 * ou d'un autre controlleur et actioner une methode.
+	 *
+	 * @param mixed $mixed
+	 * @return null
+	 */
+	public function redirect($mixed)
+	{
+		return null;
 	}
 }
