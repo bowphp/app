@@ -1,5 +1,4 @@
 <?php
-
 /*-------------------------------------------------------------
 | Configuration de l'application
 |--------------------------------------------------------------
@@ -34,7 +33,7 @@ return (object) [
 	"not_found_file_name" => dirname(__DIR__) . "/app/views/404.php",
 
     // Template par defaut utiliser par Bow. Le systeme implement 3 moteur de template
-    // Valeur possible: twig, mustache, jade, php
+    // Valeur possible (supported): twig, mustache, jade, php
 	// - Le nom du package mustache: mustache/mustache
 	// - Le nom du package jade: kylekatarnls/jade-php
   	"template_engine" => "twig",

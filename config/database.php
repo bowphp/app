@@ -16,8 +16,7 @@ return (object) [
 
     // La base de donnée sur laquelle se connectera l'application
     // par défaut
-    "connections" =>
-    [
+    "connections" => [
         // la base de donnée par defaut, c'est sur cette base de donnée que vap va
         // se connecte automatique. Alors vous ne devez absolument
         // pas modifier la cle 'default'.
@@ -32,9 +31,9 @@ return (object) [
             // la configuration de mysql
             "mysql" =>
             [
-                "hostname" => "localhost",
-                "username" => "user name",
-                "password" => "user password",
+                "hostname" => "hostname",
+                "username" => "username",
+                "password" => "userpassword",
                 "database" => "database name",
                 "charset"  => "utf8",
                 "collation" => "utf8_unicode_ci",
@@ -53,7 +52,7 @@ return (object) [
             "scheme" => "mysql",
             "mysql" =>
             [
-                "hostname" => "hoastname",
+                "hostname" => "hostname",
                 "username" => "username",
                 "password" => "password",
                 "database" => "database name",

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Controller;
@@ -7,6 +6,14 @@ use Bow\Database\Database;
 
 class UserController extends Controller
 {
+	/**
+	 * Créer une nouvelle instance du controller
+	 */
+	public function __construct()
+	{
+		$this->middleware("test");
+	}
+
 	/**
 	 * Start point
 	 *

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fichier de configuration de la classe réssource
  */
@@ -9,8 +8,7 @@ return (object) [
     // Liste des extensions valides en cas d'upload de fichier
     "upload_file_extension" => [ "jpg", "png", "jpeg", "ico", "git", "doc", "pdf" ],
 
-    // Répertoire d'upload de fichier, Deux types sont valides
-    "upload_directory" => dirname(__DIR__) . "/storage/upload",
+    "storage_directory" => dirname(__DIR__)."/storage",
 
     // FTP. configuration
     "ftp" => [

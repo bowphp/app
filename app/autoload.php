@@ -1,8 +1,5 @@
 <?php
-
-
 namespace App;
-
 
 class Autoload
 {

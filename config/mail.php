@@ -1,5 +1,4 @@
 <?php
-
 /*----------------------------------
 | Configuration du service de mail
 |-----------------------------------
@@ -9,7 +8,7 @@
 */
 return (object) [
     // Le type de service utiliser pour l'envoye de mail
-    // mail ou smtp
+    // supporté: mail, smtp
     // Si smtp est définie alors les clés password et username doivent avoir des values.
     "driver" => "smtp",
 
@@ -19,7 +18,7 @@ return (object) [
     // mail authentification
     "smtp" => [
         "hostname" => "smpt.exemple.com",
-        "username" => "johon",
+        "username" => "john",
         "password" => "your password",
         "tls"      => true,
         "timeout"  => 50

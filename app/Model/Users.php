@@ -1,25 +1,24 @@
 <?php
+namespace App;
 
-namespace App\Model;
-
+use Bow\Database\Model;
+use Bow\Database\Database;
 use Bow\Exception\TableException;
 
-class Users
+class Users extends Model
 {
 	/**
-	 * Facade
-	 * @param string $method
-	 * @param array $arg
-	 * @throws TableException
-	 * @return \Bow\Database\Table
+	 * Ajoutez les champs à valider ici
 	 */
-	public static function __callStatic($method, $arg)
-	{
-		$table = table("users");
-		if (method_exists($table, $method)) {
-			return call_user_func_array([$table, $method], $arg);
-		} else {
-			throw new TableException("method $method not found", 1);
-		}
-	}
+	public static $rules = [
+	    // inserer ici vos contrainte sur les champs
+	    // provenant d'un réquête
+	];
+
+	/**
+	 * Le nom de la table.
+	 *
+	 * @var string
+	 */
+	public static $table = "users";
 }

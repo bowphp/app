@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Bow\Support\Resource\Storage;
+
 class Bow
 {
     private final function __construct() {}
@@ -35,6 +37,7 @@ class Bow
 
         switch ($cmd) {
             case 'generate':
+            case 'make'    :
                 $name = null;
                 if ($param !== "key") {
                     if (!isset($argv[1])) {
@@ -49,6 +52,9 @@ class Bow
                     case 'controller':
                         $status = static::createController($name);
                         break;
+                    case 'resource':
+                        $status = static::createController($name, true);
+                        break;
                     case 'middleware':
                         $status = static::createMiddleware($name);
                         break;
@@ -62,30 +68,28 @@ class Bow
                 break;
 
             case 'migrate':
-                $table = null;
-                $date = null;
-                if (!isset($argv[1])) {
-                    return static::usage();
-                } else {
-                    $table = $argv[1];
-                }
-                if (isset($argv[2])) {
-                    if (preg_match("#^[0-9]{4}_[0-9]{2}_[0-9]{2}$#", $argv[2])) {
-                        $date = $argv[2];
-                    }
+                $filename = null;
+                if (isset($argv[1])) {
+                    $filename = $argv[1];
                 }
                 switch($param) {
                     case "make":
-                        static::createMigration($table);
+                        $arg = [];
+
+                        if (isset($argv[2])) {
+                            $arg = explode("=", $argv[2], 2);
+                        }
+
+                        static::createMigration($filename, $arg);
                         break;
                     case "up":
-                        static::migrate($table, $date, "up");
+                        static::migrate($filename, "up");
                         break;
                     case "down":
-                        static::migrate($table, $date, "down");
+                        static::migrate($filename, "down");
                         break;
                     default:
-                        return static::usage();
+                        static::migrate();
                         break;
                 }
 
@@ -120,14 +124,28 @@ class Bow
     }
 
     /**
-     * @param string $table
+     * @param string $filename
+     * @param array $arg
      */
-    private static function createMigration($table)
+    private static function createMigration($filename, $arg = [])
     {
+        $mapMethod = ["create", "drop"];
+
+        if (count($arg) == 2) {
+            $table = $arg[1];
+            if ($arg[0] == "--table") {
+                $mapMethod = ["table", "table"];
+            }
+            if ($arg[0] == "--create") {
+                $mapMethod = ["create", "drop"];
+            }
+        } else {
+            $table = $filename;
+        }
+
         $className = ucfirst($table);
         $migrate = <<<doc
 <?php
-
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
 use \Bow\Database\Migration\ColumnsMaker;
@@ -135,12 +153,27 @@ use \Bow\Database\Migration\ColumnsMaker;
 class Create{$className}Table extends Migration
 {
     /**
-     * create {$table} table
+     * Liste of column to fill
      */
-    public function up()
+    protected static \$fillable = [
+        // "name"     => "s:59",
+        // "lastname" => "s:100",
+        // "date_up"  => "d:now",
+        // "status"   => "i:v=19"
+    ];
+
+    public static \$table = "$table";
+
+    /**
+     * create {$table} table
+     *
+     * @param bool \$fill
+     */
+    public function up(\$fill = false)
     {
-        Schema::create("$table", function(ColumnsMaker \$table) {
-            // do something
+        Schema::{$mapMethod[0]}(static::\$table, function(ColumnsMaker \$table) {
+            \$table->increment("id");
+            \$table->timestamps("create_at");
         });
     }
 
@@ -149,33 +182,68 @@ class Create{$className}Table extends Migration
      */
     public function down()
     {
-        Schema::drop("$table");
+        Schema::{$mapMethod[1]}(static::\$table);
     }
 }
 doc;
-        file_put_contents(__DIR__."/migration/create_{$table}_table_" . date("Y_m_d") . ".php", $migrate);
-        echo "\033[0;32mMigration file for $table created.\033[00m\n";
+        if (preg_match("/^[a-z]+$/", $filename)) {
+            $filename = "create_{$filename}_table";
+        }
+
+        $createAt = date("Y_m_d") . "_" . date("His");
+        $file = __DIR__. "/migration/" . $createAt . "_${filename}.php";
+
+        file_put_contents($file, $migrate);
+
+        Storage::append(__DIR__. "/migration/.registers", "{$createAt}_{$filename}|$table\n");
+
+        echo "\033[0;32mMigration file for $filename created.\033[00m\n";
     }
 
     /**
      * @param string $table le nom de table
-     * @param string $date la date de migration qui represente un cle unique pour la migration
      * @param string $type le type de migration up|down
      * @return int
      * @throws ErrorException
      */
-    private static function migrate($table, $date, $type)
+    private static function migrate($table = null, $type = null)
     {
-        $file = __DIR__.strtolower("/migration/create_{$table}_table_{$date}.php");
-
-        if (file_exists($file)) {
-            require __DIR__ . "/vendor/autoload.php";
-            @include $file;
-            $class = "Create".ucfirst($table)."Table";
-            call_user_func([new $class, "$type"]);
+        if ($table) {
+            $fileParten = __DIR__.strtolower("/migration/*{$table}*.php");
         } else {
-            throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
+            $fileParten = __DIR__.strtolower("/migration/*.php");
         }
+
+        if ($type == null) {
+            $type = "up";
+        }
+
+        $register = ["file" => [], "tables" => []];
+
+        foreach(file(__DIR__."/migration/.registers") as $r) {
+            $tmp = explode("|", $r);
+            $register["file"][] = $tmp[0];
+            $register["tables"][] = $tmp[1];
+        }
+
+        foreach(glob($fileParten) as $file) {
+            if (file_exists($file)) {
+                $filename = preg_replace("@^(" . __DIR__."/migration/)|(\.php)$@", "", $file);
+
+                if (in_array($filename, $register["file"])) {
+                    $num = array_flip($register["file"])[$filename];
+                    $table = rtrim($register["tables"][$num]);
+                }
+
+                require $file;
+
+                $class = "Create".ucfirst($table)."Table";
+                call_user_func([new $class, strtolower("$type")]);
+            } else {
+                throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
+            }
+        }
+
 
         return 0;
     }
@@ -206,9 +274,10 @@ class {$middlewareName}
 	 * @param mixed
 	 * @return boolean
 	 */
-	public function handler()
+	public function handle()
 	{
 		// do something here
+		return true;
 	}
 }
 CM;
@@ -219,10 +288,11 @@ CM;
     }
 
     /**
-     * @param $controllerName
+     * @param string $controllerName
+     * @param bool $rest
      * @return int
      */
-    private static function createController($controllerName)
+    private static function createController($controllerName, $rest = false)
     {
         if (!preg_match("/controller$/i", $controllerName)) {
             $controllerName = ucfirst($controllerName) . "Controller";
@@ -234,6 +304,8 @@ CM;
                 $controllerName = ucfirst($controllerName);
             }
         }
+
+        $path = preg_replace("/controller/", "", strtolower($controllerName));
 
         if (file_exists("app/Controller/$controllerName.php")) {
             echo "\033[0;31mController <\033[0;33m@\033[0;31m$controllerName\033[00m\033[0;31m> already exist.\033[00m\n";
@@ -250,8 +322,16 @@ use Bow\Database\Database;
 
 class {$controllerName} extends Controller
 {
+    /**
+	 * Créer une nouvelle instance du controller
+	 */
+	public function __construct()
+	{
+		\$this->middleware("test");
+	}
+
 	/**
-	 * Start point
+	 * Point d'entré
 	 *
 	 * @param mixed \$id [optional] L'identifiant de l'element à récupérer
 	 * @return mixed
@@ -262,26 +342,45 @@ class {$controllerName} extends Controller
    	}
 
 	/**
-	 * Add information
+	 * Afficher la vue permettant de create une resource.
 	 */
-   	public function add()
+   	public function create()
    	{
 		// do something here.
 	}
 
 	/**
-	 * get all information
+	 * Ajouter une nouvelle resource dans la base d'information
+	 */
+   	public function store()
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Récupérer un information précise avec un identifiant.
 	 *
 	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
 	 * @return mixed
 	 */
- 	public function get(\$id = null)
+ 	public function show(\$id = null)
    	{
 		// do something here.
 	}
 
 	/**
-	 * update method
+	 * Mise à jour d'un resource en utilisant paramètre du GET
+	 *
+	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
+	 * @return mixed
+	 */
+ 	public function edit(\$id)
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Mise à jour d'une resource
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
 	 * @return mixed
@@ -292,19 +391,143 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Delete data
+	 * Supprimer une resource
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à supprimer
 	 * @return mixed
 	 */
-   	public function delete(\$id)
+   	public function destroy(\$id)
 	{
 		// do something here.
  	}
 }
 CC;
+        if ($rest) {
+            $model = ucfirst($path);
 
-        file_put_contents("app/Controller/${controllerName}.php", $controllerTemplate);
+            $res = static::readline("Voulez vous que je crée les vues associés?");
+
+            if ($res) {
+                $model = strtolower($model);
+                @mkdir("app/Views/".$model, 0766);
+                foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
+                    $file = __DIR__ . "/app/Views/$model/$value.twig";
+                    file_put_contents($file, "");
+                    echo "$file\n";
+                }
+            }
+
+            $res = static::readline("Voulez vous que je crée un model?");
+
+            if ($res) {
+                static::createModel($model);
+                $model = "\nuse App\\Model\\$model;";
+            } else {
+                $model = "";
+            }
+            $controllerRestTemplate =<<<CC
+<?php
+namespace App\Controller;
+
+use Exception;
+use App\Controller;$model
+use Bow\Database\Database;
+
+class {$controllerName} extends Controller
+{
+    /**
+	 * Créer une nouvelle instance du controller
+	 */
+	public function __construct()
+	{
+		\$this->middleware("test");
+	}
+
+	/**
+	 * Point d'entré
+	 * GET /$path
+	 *
+	 * @param mixed \$id [optional] L'identifiant de l'element à récupérer
+	 * @return mixed
+	 */
+   	public function index(\$id = null)
+   	{
+		// do something here.
+   	}
+
+	/**
+	 * Afficher la vue permettant de create une resource.
+	 * GET /$path/create
+	 */
+   	public function create()
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Ajouter une nouvelle resource dans la base d'information
+	 * POST /{$path}
+	 */
+   	public function store()
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Récupérer un information précise avec un identifiant.
+	 * GET /$path/:id
+	 *
+	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
+	 * @return mixed
+	 */
+ 	public function show(\$id = null)
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Mise à jour d'un resource en utilisant paramètre du GET
+	 * GET /$path/:id/edit
+	 *
+	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
+	 * @return mixed
+	 */
+ 	public function edit(\$id)
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Mise à jour d'une resource
+	 * PUT /$path/:id
+	 *
+	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
+	 * @return mixed
+	 */
+ 	public function update(\$id)
+   	{
+		// do something here.
+	}
+
+	/**
+	 * Supprimer une resource
+	 * DELETE /$path/:id
+	 *
+	 * @param mixed \$id L'identifiant de l'élément à supprimer
+	 * @return mixed
+	 */
+   	public function destroy(\$id)
+	{
+		// do something here.
+ 	}
+}
+CC;
+            file_put_contents("app/Controller/${controllerName}.php", $controllerRestTemplate);
+
+        } else {
+            file_put_contents("app/Controller/${controllerName}.php", $controllerTemplate);
+        }
+
         echo "\033[0;32mController \033[00m@@{$controllerName}\033[0;32m have been Create.\033[00m\n";
 
         return 0;
@@ -323,32 +546,29 @@ CC;
 <?php
 namespace App\Model;
 
-use Bow\Exception\TableException;
+use Bow\Database\Model;
 
-class ${modelName}
+class ${modelName} extends Model
 {
 	/**
-	 * Facade
-	 * @param string \$method
-	 * @param array \$arg
-	 * @return Table
+	 * Ajoutez les champs à valider ici
 	 */
-	public static function __callStatic(\$method, \$arg)
-	{
-		\$table = table("${tableName}");
-		if (method_exists(\$table, \$method)) {
-			return call_user_func_array([\$table, \$method], \$arg);
-		} else {
-			throw new TableException("method \$method not found", 1);
-		}
+	public static \$rules = [
+	    // inserer ici vos contrainte sur les champs
+	    // provenant d'un réquête
+	];
 
-		return \$table;
-	}
+	/**
+	 * Le nom de la table.
+	 *
+	 * @var string
+	 */
+	public static \$table = "$tableName";
 }
 
 MODEL;
         if (file_exists("app/Model/${modelName}.php")) {
-            echo "\033[0;33mModel <\033[0;33m@\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m";
+            echo "\033[0;33mModel <\033[0;33m@\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m\n";
 
             return 0;
         }
@@ -358,6 +578,22 @@ MODEL;
         echo "\033[0;32mModel \033[00m@@${modelName}\033[0;32m Created.\033[00m\n";
 
         return 0;
+    }
+
+    /**
+     * @param string $message
+     * @return string
+     */
+    private static function readline($message)
+    {
+        $message = "\033[0;32m$message y/n\033[00m ";
+        $input = readline($message);
+
+        if (strtolower($input) == "y") {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -372,18 +608,19 @@ Bow usage: php vap :command :option :stdout-file-name
 
 \033[0;31mcommand\033[00m:
 
- \033[0;32mgenerate\033[00m create a user class
+ \033[0;32mmake|generate\033[00m create a user class
   option:
-   \033[0;33mgenerate:controller\033[00m 	for create controller
-   \033[0;33mgenerate:model\033[00m 	for create model
-   \033[0;33mgenerate:middleware\033[00m  for create middleware
+   \033[0;33mgenerate:resource\033[00m	for create controller
    \033[0;33mgenerate:key\033[00m 	for create new app key
+   \033[0;33mmake:controller\033[00m [--with-model]	for create controller
+   \033[0;33mmake:model\033[00m 	for create model
+   \033[0;33mmake:middleware\033[00m  for create middleware
+   \033[0;33make:migration\033[00m		To create migration
 
- \033[0;32mmigrate\033[00m create migration of user model
+ \033[0;32mmigrate\033[00m apply a migration in user model
   option:
    \033[0;33mmigrate:up\033[00m		Update || create table of the migration
    \033[0;33mmigrate:down\033[00m		To drop migration
-   \033[0;33mmigrate:make\033[00m		To create migration
 
 USAGE;
         echo $usage;
@@ -397,8 +634,10 @@ USAGE;
      * @return integer
      */
     private function generateKey() {
+
         $key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
         file_put_contents("config/.key", $key);
+
         echo "appkey: \033[0;32m$key\033[00m\n";
 
         return 0;
@@ -406,11 +645,12 @@ USAGE;
 }
 
 try {
-    $s = Bow::run($argc, $argv);
+    require __DIR__."/vendor/autoload.php";
+    $status = Bow::run($argc, $argv);
 } catch (Exception $e) {
     echo "\033[0;31m" . $e->getMessage() . "\033[00m\n";
 } finally {
-    $s = 1;
+    $status = 1;
 }
 
-exit($s);
+exit($status);

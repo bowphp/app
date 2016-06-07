@@ -9,7 +9,7 @@ N'ésitez pas commencez maintenant.
 
 Pour participer au project il faut:
 
-+ Cloner le project `git clone https://github.com/papac/vap`
++ Cloner le project `git clone https://github.com/papac/bow`
 + Créer un branche qui aura le nom résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
 + Enfin faire un `pull-request`
