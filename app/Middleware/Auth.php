@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Middleware;
 
 class Auth
@@ -9,7 +8,7 @@ class Auth
 	 *
 	 * @return bool
 	 */
-	public function handler()
+	public function handle()
 	{
 		response("Auth Middleware.");
 		return true;
