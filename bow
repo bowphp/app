@@ -586,8 +586,7 @@ MODEL;
      */
     private static function readline($message)
     {
-        $message = "\033[0;32m$message y/n\033[00m ";
-        $input = readline($message);
+        $input = readline("\033[0;32m$message Y/N\033[00m >>> ");
 
         if (strtolower($input) == "y") {
             return true;
@@ -638,7 +637,7 @@ USAGE;
         $key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
         file_put_contents("config/.key", $key);
 
-        echo "appkey: \033[0;32m$key\033[00m\n";
+        echo "Application Key => \033[0;32m$key\033[00m\n";
 
         return 0;
     }
