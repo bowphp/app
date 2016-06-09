@@ -17,11 +17,13 @@ return (object) [
 
     // mail authentification
     "smtp" => [
-        "hostname" => "smpt.exemple.com",
-        "username" => "john",
-        "password" => "your password",
-        "tls"      => true,
-        "timeout"  => 50
+        "hostname" => "hostname",
+        "username" => "username",
+        "password" => "password",
+        "port"     => 25,
+        "tls"      => false,
+        "ssl"      => false,
+        "timeout"  => 50,
     ],
 
     // mail authentification

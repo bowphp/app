@@ -53,7 +53,7 @@ return (object) [
 	// quand le cache sera remplit c'est à vous de le vidé
 	"template_cache_folder" => dirname(__DIR__) . "/storage/cache",
 
-	// active le systeme suppression de cache.
+	// active le systeme réchargé de cache.
 	// Quand la valeur est à true
 	"template_auto_reload_cache_views" => true,
 
