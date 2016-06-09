@@ -5,18 +5,18 @@
     "type": "projet",
     "require": {
         "php": ">=5.5.9",
-        "papac/framework": ">=0.0.2"
+        "papac/framework": "^0.1"
     },
     "license": "MIT",
     "authors": [
         {
             "name": "Franck Dakia",
             "email": "dakiafranck@gmail.com",
-            "role": "lead developer"
+            "role": "Lead developer"
         }
     ],
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "App\\": "app/"
         }
     },
