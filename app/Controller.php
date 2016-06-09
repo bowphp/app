@@ -40,14 +40,14 @@ class Controller
 	}
 
 	/**
-	 * Permet de faire des redirections sur un autre page ou sur l'action du meme controlleur
+	 * Permet de faire des rédirections sur un autre page ou sur l'action du meme controlleur
 	 * ou d'un autre controlleur et actioner une methode.
 	 *
 	 * @param mixed $url
 	 * @param array $parameters
 	 * @return null
 	 */
-	public function redirect($url, array $parameters)
+	public function redirect($url, array $parameters = [])
 	{
 		response()->redirect(url($url, $parameters));
 	}
