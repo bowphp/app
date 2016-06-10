@@ -11,7 +11,7 @@ class UserController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware("test");
+		$this->middleware("Auth");
 	}
 
 	/**
@@ -19,19 +19,19 @@ class UserController extends Controller
 	 *
 	 * @return mixed
 	 */
-   	public function index()
-   	{
+	public function index()
+	{
 		// do something here
 		return json(["message" => "hello world"]);
-   	}
+	}
 
 	/**
 	 * Add information
 	 *
 	 * @return mixed
 	 */
-   	public function add()
-   	{
+	public function add()
+	{
 		// do something here
 	}
 
@@ -40,20 +40,20 @@ class UserController extends Controller
 	 * @param mixed $id [optional]
 	 * @return mixed
 	 */
- 	public function get($id = null)
-   	{
+	public function get($id = null)
+	{
 		// do something here.
 	}
-	
+
 	/**
 	 * Update data
 	 * @param mixed $id
 	 * @return mixed
 	 */
-   	public function update($id)
+	public function update($id)
 	{
 		// do something here
- 	}
+	}
 
 	/**
 	 * Delete data

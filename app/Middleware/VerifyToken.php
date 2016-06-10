@@ -12,7 +12,7 @@ class VerifyToken
     {
         if (request()->isPost() || request()->isPut()) {
 
-            if (body()->has("csrf_token")) {
+            if (body()->has("_token")) {
                 return true;
             }
 

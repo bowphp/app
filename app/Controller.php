@@ -20,7 +20,7 @@ class Controller
 
 	/**
 	 * Lanceur de middleware
-	 * 
+	 *
 	 * @param string $name Le nom de middelware.
 	 * @return mixed
 	 */

@@ -29,8 +29,7 @@ return (object) [
             "scheme" => "mysql",
 
             // la configuration de mysql
-            "mysql" =>
-            [
+            "mysql" => [
                 "hostname" => "hostname",
                 "username" => "username",
                 "password" => "userpassword",
@@ -51,16 +50,16 @@ return (object) [
         "seconds" => [
             "scheme" => "mysql",
             "mysql" =>
-            [
-                "hostname" => "hostname",
-                "username" => "username",
-                "password" => "password",
-                "database" => "database name",
-                "charset"  => "utf8",
-                "collation" => "utf8_unicode_ci",
-                "port" => null,
-                "socket" => null
-            ],
+                [
+                    "hostname" => "hostname",
+                    "username" => "username",
+                    "password" => "password",
+                    "database" => "database name",
+                    "charset"  => "utf8",
+                    "collation" => "utf8_unicode_ci",
+                    "port" => null,
+                    "socket" => null
+                ],
             "sqlite" => [
                 "driver" => "sqlite",
                 "database" => "database/sqlite",
