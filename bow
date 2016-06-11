@@ -645,11 +645,7 @@ USAGE;
 
 try {
     require __DIR__."/vendor/autoload.php";
-    $status = Bow::run($argc, $argv);
+    Bow::run($argc, $argv);
 } catch (Exception $e) {
     echo "\033[0;31m" . $e->getMessage() . "\033[00m\n";
-} finally {
-    $status = 1;
 }
-
-exit($status);
