@@ -632,7 +632,8 @@ USAGE;
      *
      * @return integer
      */
-    private function generateKey() {
+    private function generateKey()
+    {
 
         $key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
         file_put_contents("config/.key", $key);
