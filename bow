@@ -146,20 +146,20 @@ class Bow
         $className = ucfirst($table);
         $migrate = <<<doc
 <?php
+use \Bow\Database\Migration\Fields;
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
-use \Bow\Database\Migration\ColumnsMaker;
 
 class Create{$className}Table extends Migration
 {
     /**
      * Liste of column to fill
      */
-    protected static \$fillable = [
-        // "name"     => "s:59",
-        // "lastname" => "s:100",
-        // "date_up"  => "d:now",
-        // "status"   => "i:v=19"
+    protected static \$marks = [
+        // "integer"   => "integer:2",
+        // "name"      => "string:59",
+        // "date_up"   => "date:now",
+        // "timestamp" => "time"
     ];
 
     public static \$table = "$table";
