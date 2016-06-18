@@ -1,7 +1,4 @@
 vendor/
-test/**
-.syslog/*
-app/views/test/*
-.idea/*
-config/.key
-public/logo.svg
+.idea/
+
+!.gitignore
