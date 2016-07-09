@@ -1,8 +1,8 @@
 <?php
 /*
 |-------------------------------------------------------
-|	CHARGEMENT DES CONFIGURATIONS
-|	CHARGEMENT DES PRINCIPAUX FICHIERS DE L'APPLICATION BOW
+| CHARGEMENT DES CONFIGURATIONS
+| CHARGEMENT DES PRINCIPAUX FICHIERS DE L'APPLICATION BOW
 */
 require_once __DIR__ . "/../vendor/autoload.php";
 
