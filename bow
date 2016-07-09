@@ -171,7 +171,7 @@ class Create{$className}Table extends Migration
      */
     public function up(\$fill = false)
     {
-        Schema::{$mapMethod[0]}(static::\$table, function(ColumnsMaker \$table) {
+        Schema::{$mapMethod[0]}(static::\$table, function(Fields \$table) {
             \$table->increment("id");
             \$table->timestamps("create_at");
         });
