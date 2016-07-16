@@ -1,10 +1,7 @@
 <?php
-define('BOW_START', microtime(true));
-
 /**
  * Fichier de chargement global de configuration de l'application
  */
-
 
 return [
     "application" => require __DIR__ . "/application.php",
