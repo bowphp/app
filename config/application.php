@@ -42,7 +42,7 @@ return (object) [
     "template_extension" => ".twig",
 
     // Le chemin vers les fichiers statics
-    "static_files_directory" => "/public",
+    "static_files_directory" => "/",
 
     // Permet de dire à l'application si vous voulez en
     // première argumment des CLOSURES ou des methodes des controllers,

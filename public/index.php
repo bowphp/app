@@ -7,7 +7,7 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 // Création de l'application
-$app = Bow\Core\Application::configure(config());
+$app = Bow\Application\Application::make(config(), request(), response());
 
 // Chargement des routeurs.
 require __DIR__ . "/../app/routes.php";

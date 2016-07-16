@@ -2,8 +2,6 @@
 namespace App;
 
 use Bow\Database\Model;
-use Bow\Database\Database;
-use Bow\Exception\TableException;
 
 class Users extends Model
 {

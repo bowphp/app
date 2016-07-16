@@ -8,7 +8,7 @@ class Autoload
 	 */
 	public static function register()
 	{
-		spl_autoload_register([__CLASS__, 'load']);
+		spl_autoload_register([__CLASS__, 'autoload']);
 	}
 
 	/**
@@ -16,7 +16,7 @@ class Autoload
 	 *
 	 * @param $class
 	 */
-	private static function load($class) {
+	private static function autoload($class) {
 		if (preg_match("/^App.+/", $class)) {
 			$class = str_replace("\\", "/", $class);
 			$class = str_replace("App/", "", $class);

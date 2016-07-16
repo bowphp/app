@@ -421,7 +421,7 @@ CC;
 
             if ($res) {
                 static::createModel($model);
-                $model = "\nuse App\\Model\\$model;";
+                $model = "\nuse App\\$model;";
             } else {
                 $model = "";
             }
@@ -544,7 +544,7 @@ CC;
 
         $model = <<<MODEL
 <?php
-namespace App\Model;
+namespace App;
 
 use Bow\Database\Model;
 
@@ -567,13 +567,13 @@ class ${modelName} extends Model
 }
 
 MODEL;
-        if (file_exists("app/Model/${modelName}.php")) {
+        if (file_exists("app/${modelName}.php")) {
             echo "\033[0;33mModel <\033[0;33m@\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m\n";
 
             return 0;
         }
 
-        file_put_contents("app/Model/${modelName}.php", $model);
+        file_put_contents("app/${modelName}.php", $model);
 
         echo "\033[0;32mModel \033[00m@@${modelName}\033[0;32m Created.\033[00m\n";
 
