@@ -20,7 +20,7 @@
             "App\\": "app/"
         },
         "files": [
-            "app/config/helper.php"
+            "config/helper.php"
         ]
     },
 	"scripts": {
