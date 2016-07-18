@@ -72,24 +72,28 @@ class Bow
                 if (isset($argv[1])) {
                     $filename = $argv[1];
                 }
+
+                $arg = [];
+
+                if (isset($argv[2])) {
+                    $arg = explode("=", $argv[2], 2);
+                }
+
                 switch($param) {
                     case "make":
-                        $arg = [];
-
-                        if (isset($argv[2])) {
-                            $arg = explode("=", $argv[2], 2);
-                        }
-
                         static::createMigration($filename, $arg);
                         break;
                     case "up":
-                        static::migrate($filename, "up");
+                        static::migrate($filename, "up", $arg);
                         break;
                     case "down":
-                        static::migrate($filename, "down");
+                        static::migrate($filename, "down", $arg);
                         break;
                     default:
-                        static::migrate();
+                        if (isset($argv[1])) {
+                            $arg = explode("=", $argv[1], 2);
+                        }
+                        static::migrate(null, null, $arg);
                         break;
                 }
 
@@ -203,10 +207,11 @@ doc;
     /**
      * @param string $table le nom de table
      * @param string $type le type de migration up|down
+     * @param string $arg le type de migration up|down
      * @return int
      * @throws ErrorException
      */
-    private static function migrate($table = null, $type = null)
+    private static function migrate($table = null, $type = null, $arg = null)
     {
         if ($table) {
             $fileParten = __DIR__.strtolower("/migration/*{$table}*.php");
@@ -238,7 +243,16 @@ doc;
                 require $file;
 
                 $class = "Create".ucfirst($table)."Table";
-                call_user_func([new $class, strtolower("$type")]);
+                $instance = new $class;
+                call_user_func([$instance, strtolower("$type")]);
+                if (isset($arg[0]) && $arg[0] == "--seed") {
+                    $n = 1;
+                    if (isset($arg[1])) {
+                        $n = $arg[1];
+                    }
+                    call_user_func_array([$instance, 'fill'], [$n]);
+                    echo "\033[0;33m$n\033[00m \033[0;32mseed for $table.\033[00m\n";
+                }
             } else {
                 throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
             }
