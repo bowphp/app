@@ -10,7 +10,7 @@ class Users extends Model
 	 */
 	public static $rules = [
 		// inserer ici vos contrainte sur les champs
-		// provenant d'un réquête
+		// provenant d'une réquête
 	];
 
 	/**
