@@ -44,85 +44,92 @@ class Bow
         switch ($cmd) {
             case 'generate':
             case 'make'    :
+
+                if (isset($argv[1]) && $argv[1] == 'help') {
+                    return static::usage('make');
+                }
+
                 $name = null;
+
                 if ($param !== "key") {
                     if (!isset($argv[1])) {
                         return static::usage();
                     }
                     $name = $argv[1];
                 }
-                switch ($param) {
 
-                    case 'model':
-                        static::createModel($name);
-                        break;
-
-                    case 'controller':
-
-                        // Controlleur simple.
-                        if (empty($arg)) {
-                            return static::createController($name);
-                        }
-
-                        // Controlleur avec model associer.
-                        if ($arg[0] === '--with-model') {
-                            static::createController($name);
-                            if (isset($arg[1])) {
-                                $name = $arg[1];
+                if ($cmd == 'generate') {
+                    switch($param) {
+                        case 'resource':
+                        case 'key':
+                            if (!empty($arg)) {
+                                throw new ErrorException(self::BAD_COMMAND);
                             }
-                            return static::createModel($name);
-                        }
 
-                        // Controlleur vide
-                        if ($arg[0] == '--plain') {
-                            $r = static::createController($name, null);
-                            if (isset($argv[3])) {
-                                $arg = explode('=', $argv[3]);
-                                if ($arg[0] === '--with-model') {
-                                    if (isset($arg[1])) {
-                                        $name = $arg[1];
-                                    }
-                                    return static::createModel($name);
-                                }
+                            if ($param == 'resource') {
+                                return static::createController($name, true);
                             }
-                            return $r;
-                        }
 
-                        throw new ErrorException(self::BAD_COMMAND);
-
-                        break;
-
-                    case 'resource':
-                    case 'middleware':
-                    case 'key':
-                        if (!empty($arg)) {
-                            throw new ErrorException(self::BAD_COMMAND);
-                        }
-
-                        if ($param == 'resource') {
-                            return static::createController($name, true);
-                        }
-
-                        if ($param == 'middleware') {
-                            return static::createMiddleware($name);
-                        }
-
-                        return static::generateKey();
-                        break;
-
-                    default:
-
-                        if (isset($argv[1]) && $argv[1] == 'help') {
-                            return static::usage('make');
-                        }
-
-                        throw new ErrorException(self::BAD_COMMAND);
-                        break;
+                            return static::generateKey();
+                            break;
+                    }
                 }
-                break;
+
+                if ($cmd == 'make') {
+
+                    switch ($param) {
+
+                        case 'model':
+                            return static::createModel($name);
+                            break;
+
+                        case 'middleware':
+                            return static::createMiddleware($name);
+                            break;
+
+                        case 'controller':
+
+                            // Controlleur simple.
+                            if (empty($arg)) {
+                                return static::createController($name);
+                            }
+
+                            // Controlleur avec model associer.
+                            if ($arg[0] === '--with-model') {
+                                static::createController($name);
+                                if (isset($arg[1])) {
+                                    $name = $arg[1];
+                                }
+                                return static::createModel($name);
+                            }
+
+                            // Controlleur vide
+                            if ($arg[0] == '--plain') {
+                                $r = static::createController($name, null);
+                                if (isset($argv[3])) {
+                                    $arg = explode('=', $argv[3]);
+                                    if ($arg[0] === '--with-model') {
+                                        if (isset($arg[1])) {
+                                            $name = $arg[1];
+                                        }
+                                        return static::createModel($name);
+                                    }
+                                }
+                                return $r;
+                            }
+
+                            throw new ErrorException(self::BAD_COMMAND);
+
+                            break;
+                    }
+                }
+
+                throw new ErrorException(self::BAD_COMMAND);
 
             case 'migrate':
+                
                 $filename = null;
+
                 if (isset($argv[1])) {
                     $filename = $argv[1];
                 }
@@ -131,12 +138,15 @@ class Bow
                     case "make":
                         static::createMigration($filename, $arg);
                         break;
+
                     case "up":
                         static::migrate($filename, "up", $arg);
                         break;
+
                     case "down":
                         static::migrate($filename, "down", $arg);
                         break;
+
                     default:
                         if (isset($argv[1])) {
                             $arg = explode("=", $argv[1], 2);
@@ -664,7 +674,7 @@ class ${modelName} extends Model
 
 MODEL;
         if (file_exists("app/${modelName}.php")) {
-            echo "\033[0;33mModel \033[0;33m\033[0;31m${modelName}\033[00m\033[0;31m> already exist.\033[00m\n";
+            echo "\033[0;33mModel \033[0;33m\033[0;31m${modelName}\033[00m\033[0;31m already exist.\033[00m\n";
 
             return 0;
         }
