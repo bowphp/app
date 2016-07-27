@@ -10,15 +10,14 @@ class VerifyToken
      */
     public function handle()
     {
-        if (request()->isPost() || request()->isPut()) {
-
-            if (body()->has("_token")) {
-                return true;
-            }
-
+        if (!(request()->isPost() || request()->isPut())) {
             return false;
         }
 
-        return true;
+        if (body()->has("_token")) {
+            return true;
+        }
+
+        return false;
     }
 }

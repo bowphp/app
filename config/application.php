@@ -79,7 +79,7 @@ return (object) [
         // * il faudra l'enregistré dans ce tableau
         // e.g: ["Auth", "autre nom de middleware"]
         "middlewares" => [
-            "Auth",
+            "VerifyToken",
             // "Autre middleware"
         ],
 
