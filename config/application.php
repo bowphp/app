@@ -69,7 +69,7 @@ return (object) [
 
         // Liste de namespace valide de l'applicareqtion
         "namespace" => [
-            "controller" => "App\\Controller",
+            "controller" => "App\\Controllers",
             "middleware" => "App\\Middleware",
             "app"        => "App\\Autoload",
         ],
@@ -93,6 +93,6 @@ return (object) [
 
     // clé de sécurité de l'application
     // Peut être régenerer par la commande
-    // <code>: `php bow generate key` </code>
+    // <code>: `php bow generate:key` </code>
     "app_key" => __DIR__ . "/.key"
 ];
