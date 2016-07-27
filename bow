@@ -275,7 +275,7 @@ doc;
 
         Storage::append(__DIR__. "/migration/.registers", "{$createAt}_{$filename}|$table\n");
 
-        echo "\033[0;32mMigration file for $filename created.\033[00m\n";
+        echo "\033[0;32mmigration file for $filename created.\033[00m\n";
     }
 
     /**
@@ -306,29 +306,30 @@ doc;
         }
 
         foreach(glob($fileParten) as $file) {
-            if (file_exists($file)) {
-                $filename = preg_replace("@^(" . __DIR__."/migration/)|(\.php)$@", "", $file);
-
-                if (in_array($filename, $register["file"])) {
-                    $num = array_flip($register["file"])[$filename];
-                    $table = rtrim($register["tables"][$num]);
-                }
-
-                require $file;
-
-                $class = "Create".ucfirst($table)."Table";
-                $instance = new $class;
-                call_user_func([$instance, strtolower("$type")]);
-                if (isset($arg[0]) && $arg[0] == "--seed") {
-                    $n = 1;
-                    if (isset($arg[1])) {
-                        $n = $arg[1];
-                    }
-                    call_user_func_array([$instance, 'fill'], [$n]);
-                    echo "\033[0;33m$n\033[00m \033[0;32mseed for $table.\033[00m\n";
-                }
-            } else {
+            if (!file_exists($file)) {
                 throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
+            }
+
+            $filename = preg_replace("@^(" . __DIR__."/migration/)|(\.php)$@", "", $file);
+
+            if (in_array($filename, $register["file"])) {
+                $num = array_flip($register["file"])[$filename];
+                $table = rtrim($register["tables"][$num]);
+            }
+
+            require $file;
+
+            $class = "Create".ucfirst($table)."Table";
+            $instance = new $class;
+            call_user_func([$instance, strtolower("$type")]);
+            if (isset($arg[0]) && $arg[0] == "--seed") {
+                $n = 1;
+                if (isset($arg[1])) {
+                    $n = $arg[1];
+                }
+                call_user_func_array([$instance, 'fill'], [$n]);
+                $s = $n > 1 ? 's' : '';
+                echo "\033[0;33m$n\033[00m \033[0;32mseed$s for $table table.\033[00m\n";
             }
         }
 
@@ -344,7 +345,7 @@ doc;
         $middlewareName = ucfirst($middlewareName);
 
         if (file_exists(__DIR__ . "/app/Middleware/$middlewareName.php")) {
-            echo "\033[0;31mMiddleware \033[0;33m\033[0;31m$middlewareName\033[00m\033[0;31m already exist.\033[00m\n";
+            echo "\033[0;31mmiddleware \033[0;33m\033[0;31m$middlewareName\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
 
@@ -370,7 +371,7 @@ class {$middlewareName}
 }
 CM;
         file_put_contents(__DIR__."/app/Middleware/$middlewareName.php", $middlewareTemplate);
-        echo "\033[0;32mMiddleware \033[00m{$middlewareName}\033[0;32m Created.\033[00m\n";
+        echo "\033[0;32mmiddleware \033[00m{$middlewareName}\033[0;32m created.\033[00m\n";
 
         return 0;
     }
@@ -395,17 +396,16 @@ CM;
 
         $path = preg_replace("/controller/", "", strtolower($controllerName));
 
-        if (file_exists("app/Controller/$controllerName.php")) {
-            echo "\033[0;31mController \033[0;33m\033[0;31m$controllerName\033[00m\033[0;31m already exist.\033[00m\n";
+        if (file_exists("app/Controllers/$controllerName.php")) {
+            echo "\033[0;31mcontroller \033[0;33m\033[0;31m$controllerName\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
 
         $controllerTemplate =<<<CC
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
 use Exception;
-use App\Controller;
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
@@ -415,7 +415,7 @@ class {$controllerName} extends Controller
 	 */
 	public function __construct()
 	{
-		\$this->middleware("test");
+		\$this->middleware("VerifyToken");
 	}
 
 	/**
@@ -494,9 +494,8 @@ CC;
 
             $controllerPlainTemplate =<<<CC
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
-use App\Controller;
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
@@ -506,12 +505,12 @@ class {$controllerName} extends Controller
 
 }
 CC;
-            file_put_contents("app/Controller/${controllerName}.php", $controllerPlainTemplate);
+            file_put_contents("app/Controllers/${controllerName}.php", $controllerPlainTemplate);
 
         } else if ($rest) {
             $model = ucfirst($path);
 
-            $res = static::readline("Voulez vous que je crée les vues associés?");
+            $res = static::readline("voulez vous que je crée les vues associées?");
 
             if ($res) {
                 $model = strtolower($model);
@@ -523,7 +522,7 @@ CC;
                 }
             }
 
-            $res = static::readline("Voulez vous que je crée un model?");
+            $res = static::readline("voulez vous que je crée un model?");
 
             if ($res) {
                 static::createModel($model);
@@ -533,10 +532,9 @@ CC;
             }
             $controllerRestTemplate =<<<CC
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
-use Exception;
-use App\Controller;$model
+use Exception;$model
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
@@ -546,7 +544,7 @@ class {$controllerName} extends Controller
 	 */
 	public function __construct()
 	{
-		\$this->middleware("test");
+		\$this->middleware("VerifyToken");
 	}
 
 	/**
@@ -562,7 +560,7 @@ class {$controllerName} extends Controller
    	}
 
 	/**
-	 * Afficher la vue permettant de create une resource.
+	 * Afficher la vue permettant de créer une résource.
 	 * GET /$path/create
 	 */
    	public function create()
@@ -571,7 +569,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Ajouter une nouvelle resource dans la base d'information
+	 * Ajouter une nouvelle résource dans la base d'information
 	 * POST /{$path}
 	 */
    	public function store()
@@ -592,7 +590,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Mise à jour d'un resource en utilisant paramètre du GET
+	 * Mise à jour d'un résource en utilisant paramètre du GET
 	 * GET /$path/:id/edit
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
@@ -628,13 +626,13 @@ class {$controllerName} extends Controller
  	}
 }
 CC;
-            file_put_contents("app/Controller/${controllerName}.php", $controllerRestTemplate);
+            file_put_contents("app/Controllers/${controllerName}.php", $controllerRestTemplate);
 
         } else {
-            file_put_contents("app/Controller/${controllerName}.php", $controllerTemplate);
+            file_put_contents("app/Controllers/${controllerName}.php", $controllerTemplate);
         }
 
-        echo "\033[0;32mController \033[00m{$controllerName}\033[0;32m have been Create.\033[00m\n";
+        echo "\033[0;32mcontroller \033[00m{$controllerName}\033[0;32m have been create.\033[00m\n";
 
         return 0;
     }
@@ -674,14 +672,14 @@ class ${modelName} extends Model
 
 MODEL;
         if (file_exists("app/${modelName}.php")) {
-            echo "\033[0;33mModel \033[0;33m\033[0;31m${modelName}\033[00m\033[0;31m already exist.\033[00m\n";
+            echo "\033[0;33mmodel \033[0;33m\033[0;31m${modelName}\033[00m\033[0;31m already exist.\033[00m\n";
 
             return 0;
         }
 
         file_put_contents("app/${modelName}.php", $model);
 
-        echo "\033[0;32mModel \033[00m${modelName}\033[0;32m Created.\033[00m\n";
+        echo "\033[0;32mmodel \033[00m${modelName}\033[0;32m created.\033[00m\n";
 
         return 0;
     }
@@ -719,21 +717,21 @@ Bow usage: php bow command:action [name] [help|--with-model|--plain|--create|--t
 
  \033[0;33mhelp\033[00m	display command helper
 
- \033[0;32mmake|generate\033[00m        Create a user class
+ \033[0;32mmake|generate\033[00m        create a user class
   option:
-   \033[0;33mgenerate:resource\033[00m	Create new REST assicate at a controller
-   \033[0;33mmake:middleware\033[00m    Create new middleware
-   \033[0;33mmake:controller\033[00m    Create new controller
-   \033[0;33mmake:model\033[00m 	    Create new model
-   \033[0;33mmake:key\033[00m 	        Create new app key
+   \033[0;33mgenerate:resource\033[00m	create new REST assicate at a controller
+   \033[0;33mmake:middleware\033[00m    create new middleware
+   \033[0;33mmake:controller\033[00m    create new controller
+   \033[0;33mmake:model\033[00m 	    create new model
+   \033[0;33mmake:key\033[00m 	        create new app key
 
  \033[0;32mmigrate\033[00m apply a migration in user model
   option:
-   \033[0;33mmigrate:make\033[00m		Create a new migration
-   \033[0;33mmigrate:down\033[00m		Drop migration
-   \033[0;33mmigrate:up\033[00m		    Update or create table of the migration
+   \033[0;33mmigrate:make\033[00m		create a new migration
+   \033[0;33mmigrate:down\033[00m		drop migration
+   \033[0;33mmigrate:up\033[00m		    update or create table of the migration
 
-  \033[0;32mconsole\033[00m show psysh php REPL
+  \033[0;32mconsole\033[00m show psysh php REPL for debug you code.
 
 USAGE;
             echo $usage;
@@ -754,12 +752,12 @@ USAGE;
 
     * you can use --plain --with-model
 
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:controller name [option]  For create a new controlleur
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:middleware name           For create a new middleware
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:resource name             For create a new REST controller
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:model name                For create a new model
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make help                      For display this
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:key                       For generate a new APP KEY
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:controller name [option]  for create a new controlleur
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:middleware name           for create a new middleware
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:resource name             for create a new REST controller
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:model name                for create a new model
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make help                      for display this
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:key                       for generate a new APP KEY
 
 U;
 
@@ -773,11 +771,11 @@ U;
     --create[=table_name]   Change name of table
     --table[=table_name]    Alter migration table
 
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:make name [option]     Create a new migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:up name [option]       Up the specify migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:down name              Down migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate [option]               Up all defined migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate help                   For display this
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:make name [option]     create a new migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:up name [option]       up the specify migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:down name              down migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate [option]               up all defined migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate help                   for display this
 
 U;
 
@@ -811,6 +809,12 @@ U;
         return 0;
     }
 }
+
+/**
+ *
+ *  Lancement de l'execution de bow générateur.
+ *
+ */
 
 try {
     require __DIR__."/vendor/autoload.php";
