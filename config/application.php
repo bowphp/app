@@ -65,27 +65,7 @@ return (object) [
 
     // Liste des **namespaces** valident de votre application
     // * concernant les middleware
-    "classes" => [
-
-        // Liste de namespace valide de l'applicareqtion
-        "namespace" => [
-            "controller" => "App\\Controllers",
-            "middleware" => "App\\Middleware",
-            "app"        => "App\\Autoload",
-        ],
-
-        // Liste de middleware
-        // * ici quand vous générez un middleware
-        // * il faudra l'enregistré dans ce tableau
-        // e.g: ["Auth", "autre nom de middleware"]
-        "middlewares" => [
-            "VerifyToken",
-            // "Autre middleware"
-        ],
-
-        // autoload de l'application
-        "autoload"    => dirname(__DIR__) . "/app/autoload"
-    ],
+    "classes" => __DIR__.'/namespaces.php',
 
     // Le mode de débogage de l'application
     // development | production
