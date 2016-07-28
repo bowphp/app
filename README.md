@@ -1,11 +1,18 @@
 # Bow
 The Bow Framework [documentation](http://papac.github.com)
 
+[![GitHub version](https://badge.fury.io/gh/papac%2Fbow.svg)](https://badge.fury.io/gh/papac%2Fbow)
 [![Documentation Status](https://papac.github.com/docs)](https://papac.github.com/docs)
 
 N'ésitez pas commencez maintenant.
 
 [![start](http://papac.github.com/public/img/1382900391.gif "start vap framework")](http://papac.github.com)
+
+# Installer
+
+```
+   composer create-project papac/bow App
+```
 
 # Contribution
 
