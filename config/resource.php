@@ -3,10 +3,7 @@
  * Fichier de configuration de la classe réssource
  */
 return (object) [
-
-    // Liste des extensions valides en cas d'upload de fichier
-    "upload_file_extension" => [ "jpg", "png", "jpeg", "ico", "git", "doc", "pdf" ],
-
+    // Store locatin
     "storage_directory" => __DIR__."/../storage/app",
 
     // FTP. configuration
