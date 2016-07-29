@@ -11,7 +11,7 @@ N'ésitez pas commencez maintenant.
 # Installer
 
 ```
-   composer create-project papac/bow App
+  $ php composer.phar create-project --prefer-dist papac/bow
 ```
 
 # Contribution
