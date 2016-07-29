@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use Bow\Http\Input;
 use Bow\Support\Str;
 
 class Controller
@@ -10,8 +11,18 @@ class Controller
 	 *
 	 * @var array
 	 */
-	public $paginate = [
+	protected $paginate = [
 	];
+
+	/**
+	 * @var Input
+	 */
+	protected $input;
+
+	public function __construct()
+	{
+		$this->input = request()->input();
+	}
 
 	/**
 	 * @var string
@@ -23,16 +34,19 @@ class Controller
 	 *
 	 * @param string $name Le nom de middelware.
 	 * @return mixed
+	 *
+	 * @throws \ErrorException
 	 */
 	public function middleware($name)
 	{
 		$middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($name);
-		$next = false;
 
-		if (class_exists($middleware)) {
-			$class = new $middleware();
-			$next =  call_user_func_array([$class, "handle"], array_slice(func_get_args(), 1));
+		if (!class_exists($middleware)) {
+			throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
 		}
+
+		$class = new $middleware();
+		$next =  call_user_func_array([$class, "handle"], array_slice(func_get_args(), 1));
 
 		if (!$next) {
 			die();
