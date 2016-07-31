@@ -365,8 +365,9 @@ class {$middlewareName}
 	 */
 	public function handle()
 	{
+	    \$next = true;
 		// do something here
-		return true;
+		return \$next;
 	}
 }
 CM;
@@ -515,21 +516,32 @@ CC;
             if ($res) {
                 $model = strtolower($model);
                 @mkdir("app/Views/".$model, 0766);
+
+                echo "\033[0;33;7m";
                 foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
                     $file = __DIR__ . "/app/Views/$model/$value.twig";
-                    file_put_contents($file, "");
+                    file_put_contents($file, "{# code here... #}");
                     echo "$file\n";
                 }
+
+                echo "\033[00m";
             }
 
             $res = static::readline("voulez vous que je crée un model?");
 
             if ($res) {
                 static::createModel($model);
+                $tmp = $model;
                 $model = "\nuse App\\$model;";
+                $res = static::readline('voulez vous que je crée une migration pour ce model? ');
+                if ($res) {
+                    static::createMigration($tmp);
+                }
+
             } else {
                 $model = "";
             }
+
             $controllerRestTemplate =<<<CC
 <?php
 namespace App\Controllers;
@@ -570,7 +582,7 @@ class {$controllerName} extends Controller
 
 	/**
 	 * Ajouter une nouvelle résource dans la base d'information
-	 * POST /{$path}
+	 * POST /$path
 	 */
    	public function store()
    	{
@@ -690,13 +702,19 @@ MODEL;
      */
     private static function readline($message)
     {
-        $input = readline("\033[0;32m$message Y/N\033[00m >>> ");
+        $input = readline("\033[0;32m$message y/n\033[00m >>> ");
 
         if (strtolower($input) == "y") {
             return true;
         }
 
-        return false;
+        if ($input == '') {
+            return static::readline($message);
+        }
+
+        if (strtolower($input) == 'n') {
+            return false;
+        }
     }
 
     /**
@@ -820,5 +838,5 @@ try {
     require __DIR__."/vendor/autoload.php";
     Bow::run($argc, $argv);
 } catch (Exception $e) {
-    echo "\033[0;31m" . $e->getMessage() . "\033[00m\n";
+    echo "\033[0;33;7m" . $e->getMessage() . "\033[00m\n";
 }
