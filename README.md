@@ -2,17 +2,20 @@
 The Bow Framework [documentation](http://papac.github.com)
 
 [![GitHub version](https://badge.fury.io/gh/papac%2Fbow.svg)](https://badge.fury.io/gh/papac%2Fbow)
-[![Documentation Status](https://papac.github.com/docs)](https://papac.github.com/docs)
+[![docs](https://papac.github.com/docs)](https://papac.github.com/docs)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/papac/bow/blob/master/LICENSE)
 
 N'ésitez pas commencez maintenant.
 
-[![start](http://papac.github.com/public/img/1382900391.gif "start vap framework")](http://papac.github.com)
+[![start](http://papac.github.com/public/img/1382900391.gif "start bow framework")](http://papac.github.com)
 
 # Installer
 
 ```
   $ php composer.phar create-project --prefer-dist papac/bow
 ```
+
+## NB: SVP s'il y a un bogue sur le projet veillez me contacté.
 
 # Contribution
 
