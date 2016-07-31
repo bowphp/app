@@ -2,7 +2,7 @@
 The Bow Framework [documentation](http://papac.github.com)
 
 [![GitHub version](https://badge.fury.io/gh/papac%2Fbow.svg)](https://badge.fury.io/gh/papac%2Fbow)
-[![docs](https://papac.github.com/docs)](https://papac.github.com/docs)
+[![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg)](https://papac.github.com/docs)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/papac/bow/blob/master/LICENSE)
 
 N'ésitez pas commencez maintenant.
