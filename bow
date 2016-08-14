@@ -596,10 +596,10 @@ class {$controllerName} extends Controller
 	 * Récupérer un information précise avec un identifiant.
 	 * GET /$path/:id
 	 *
-	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
+	 * @param mixed \$id L'identifiant de l'élément à récupérer
 	 * @return mixed
 	 */
- 	public function show(\$id = null)
+ 	public function show(\$id)
    	{
 		// do something here.
 	}
