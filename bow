@@ -535,7 +535,7 @@ CC;
             if ($res) {
                 static::createModel($model);
                 $tmp = $model;
-                $model = "\nuse App\\$model;";
+                $model = "\nuse App\\" . strtoupper($model);
                 $res = static::readline('voulez vous que je crée une migration pour ce model? ');
                 if ($res) {
                     static::createMigration($tmp);
