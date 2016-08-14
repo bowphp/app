@@ -1,9 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use Bow\Http\Input;
-use Bow\Support\Str;
-
 class Controller
 {
 	/**
@@ -13,16 +10,6 @@ class Controller
 	 */
 	protected $paginate = [
 	];
-
-	/**
-	 * @var Input
-	 */
-	protected $input;
-
-	public function __construct()
-	{
-		$this->input = request()->input();
-	}
 
 	/**
 	 * @var string
