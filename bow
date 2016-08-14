@@ -7,7 +7,7 @@ class Bow
 {
     private final function __construct() {}
     private final function __clone() {}
-    const BAD_COMMAND = 'Bad command... Please type "php bow help" for more information.';
+    const BAD_COMMAND = 'Bad command... %s Please type "php bow help" for more information.';
 
     /**
      * @param $argc
@@ -44,11 +44,6 @@ class Bow
         switch ($cmd) {
             case 'generate':
             case 'make'    :
-
-                if (isset($argv[1]) && $argv[1] == 'help') {
-                    return static::usage('make');
-                }
-
                 $name = null;
 
                 if ($param !== "key") {
@@ -59,11 +54,16 @@ class Bow
                 }
 
                 if ($cmd == 'generate') {
+
+                    if (isset($argv[1]) && $argv[1] == 'help') {
+                        return static::usage('generate');
+                    }
+
                     switch($param) {
                         case 'resource':
                         case 'key':
                             if (!empty($arg)) {
-                                throw new ErrorException(self::BAD_COMMAND);
+                                throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
                             }
 
                             if ($param == 'resource') {
@@ -76,6 +76,10 @@ class Bow
                 }
 
                 if ($cmd == 'make') {
+
+                    if (isset($argv[1]) && $argv[1] == 'help') {
+                        return static::usage('make');
+                    }
 
                     switch ($param) {
 
@@ -118,13 +122,12 @@ class Bow
                                 return $r;
                             }
 
-                            throw new ErrorException(self::BAD_COMMAND);
-
+                            throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
                             break;
                     }
                 }
 
-                throw new ErrorException(self::BAD_COMMAND);
+                throw new ErrorException(sprintf(self::BAD_COMMAND, $cmd . ':' . $param));
 
             case 'migrate':
                 
@@ -154,7 +157,7 @@ class Bow
                                 if ($arg[0] == 'help') {
                                     return static::usage('migrate');
                                 }
-                                throw new ErrorException(self::BAD_COMMAND);
+                                throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
                             }
                         }
                         return static::migrate(null, null, $arg);
@@ -250,8 +253,8 @@ class Create{$className}Table extends Migration
     public function up(\$display = false)
     {
         Schema::{$mapMethod[0]}(static::\$table, function(Fields \$table) {
-            \$table->increment("id");
-            \$table->timestamps("create_at");
+            \$table->increment('id');
+            \$table->timestamps('create_at');
         }, \$display);
     }
 
@@ -416,13 +419,13 @@ class {$controllerName} extends Controller
 	 */
 	public function __construct()
 	{
-		\$this->middleware("VerifyToken");
+		\$this->middleware('VerifyToken');
 	}
 
 	/**
 	 * Point d'entré
 	 *
-	 * @param mixed \$id [optional] L'identifiant de l'element à récupérer
+	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
 	 * @return mixed
 	 */
    	public function index(\$id = null)
@@ -431,7 +434,7 @@ class {$controllerName} extends Controller
    	}
 
 	/**
-	 * Afficher la vue permettant de create une resource.
+	 * Afficher la vue permettant de créer une résource.
 	 */
    	public function create()
    	{
@@ -439,7 +442,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Ajouter une nouvelle resource dans la base d'information
+	 * Ajouter une nouvelle résource dans la base d'information
 	 */
    	public function store()
    	{
@@ -458,7 +461,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Mise à jour d'un resource en utilisant paramètre du GET
+	 * Mise à jour d'un résource en utilisant paramètre du GET
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
 	 * @return mixed
@@ -469,7 +472,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Mise à jour d'une resource
+	 * Mise à jour d'une résource
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
 	 * @return mixed
@@ -520,7 +523,7 @@ CC;
                 echo "\033[0;33;7m";
                 foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
                     $file = __DIR__ . "/app/Views/$model/$value.twig";
-                    file_put_contents($file, "{# code here... #}");
+                    file_put_contents($file, '{# code here... #}');
                     echo "$file\n";
                 }
 
@@ -614,7 +617,7 @@ class {$controllerName} extends Controller
 	}
 
 	/**
-	 * Mise à jour d'une resource
+	 * Mise à jour d'une résource
 	 * PUT /$path/:id
 	 *
 	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
@@ -644,7 +647,7 @@ CC;
             file_put_contents("app/Controllers/${controllerName}.php", $controllerTemplate);
         }
 
-        echo "\033[0;32mcontroller \033[00m{$controllerName}\033[0;32m have been create.\033[00m\n";
+        echo "\033[0;32mcontroller created: \033[00m{$controllerName}\033[0;32m.\033[00m\n";
 
         return 0;
     }
@@ -670,7 +673,7 @@ class ${modelName} extends Model
 	 * Ajoutez les champs à valider ici
 	 */
 	public static \$rules = [
-	    // inserer ici vos contrainte sur les champs
+	    // insérer ici vos contrainte sur les champs
 	    // provenant d'un réquête
 	];
 
@@ -691,14 +694,16 @@ MODEL;
 
         file_put_contents("app/${modelName}.php", $model);
 
-        echo "\033[0;32mmodel \033[00m${modelName}\033[0;32m created.\033[00m\n";
+        echo "\033[0;32mmodel created: \033[00m${modelName}\033[0;32m\033[00m\n";
 
         return 0;
     }
 
     /**
+     * Lecture de ligne de commande
+     *
      * @param string $message
-     * @return string
+     * @return bool
      */
     private static function readline($message)
     {
@@ -715,6 +720,8 @@ MODEL;
         if (strtolower($input) == 'n') {
             return false;
         }
+
+        return false;
     }
 
     /**
@@ -735,19 +742,22 @@ Bow usage: php bow command:action [name] [help|--with-model|--plain|--create|--t
 
  \033[0;33mhelp\033[00m	display command helper
 
- \033[0;32mmake|generate\033[00m        create a user class
+ \033[0;32mgenerate\033[00m             Create a new app key and resources
   option:
-   \033[0;33mgenerate:resource\033[00m	create new REST assicate at a controller
-   \033[0;33mmake:middleware\033[00m    create new middleware
-   \033[0;33mmake:controller\033[00m    create new controller
-   \033[0;33mmake:model\033[00m 	    create new model
-   \033[0;33mmake:key\033[00m 	        create new app key
+   \033[0;33mgenerate:resource\033[00m	Create new REST assicate at a controller
+   \033[0;33mgenerate:key\033[00m 	    Create new app key
+
+ \033[0;32mmake\033[00m                 Create a user class
+  option:
+   \033[0;33mmake:middleware\033[00m    Create new middleware
+   \033[0;33mmake:controller\033[00m    Create new controller
+   \033[0;33mmake:model\033[00m 	    Create new model
 
  \033[0;32mmigrate\033[00m apply a migration in user model
   option:
-   \033[0;33mmigrate:make\033[00m		create a new migration
-   \033[0;33mmigrate:down\033[00m		drop migration
-   \033[0;33mmigrate:up\033[00m		    update or create table of the migration
+   \033[0;33mmigrate:make\033[00m		Create a new migration
+   \033[0;33mmigrate:down\033[00m		Drop migration
+   \033[0;33mmigrate:up\033[00m		    Update or create table of the migration
 
   \033[0;32mconsole\033[00m show psysh php REPL for debug you code.
 
@@ -761,39 +771,45 @@ USAGE;
                 echo "\033[0;33mhelp\033[00m display command helper\n";
                 break;
             case 'make':
-            case 'generate':
                 echo <<<U
-\n\033[0;32mmake|generate\033[00m create a user class\n
+\n\033[0;32mmake\033[00m create a user class\n
     [option]
     --with-model[=name]  Create a model associte at controller
     --plain              Create a plain controller
 
     * you can use --plain --with-model
 
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:controller name [option]  for create a new controlleur
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:middleware name           for create a new middleware
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:resource name             for create a new REST controller
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:model name                for create a new model
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make help                      for display this
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:key                       for generate a new APP KEY
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:controller name [option]  For create a new controlleur
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:middleware name           For create a new middleware
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make:model name                For create a new model
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m make help                      For display this
 
 U;
 
                 break;
+            case 'generate':
 
+                echo <<<U
+    \n\033[0;32mgenerate\033[00m create a resource and app keyn
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:resource name             For create a new REST controller
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:key                       For generate a new APP KEY
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate help                      For display this
+
+U;
+                break;
             case 'migrate':
                 echo <<<U
 \n\033[0;32mmigrate\033[00m apply a migration in user model\n
     [option]
-    --seed[--seed=n]        Fill table for n value
-    --create[=table_name]   Change name of table
-    --table[=table_name]    Alter migration table
+    --seed[--seed=n]      Fill table for n value
+    --create=table_name   Change name of table
+    --table=table_name    Alter migration table
 
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:make name [option]     create a new migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:up name [option]       up the specify migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:down name              down migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate [option]               up all defined migration
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate help                   for display this
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:make name [option]     Create a new migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:up name [option]       Up the specify migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:down name              Down migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate [option]               Up all defined migration
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate help                   For display this
 
 U;
 
@@ -803,7 +819,7 @@ U;
                 echo <<<U
 \n\033[0;32mconsole\033[00m show psysh php REPL\n
     php bow console
-    >>> // execute you code here.
+    >>> //test you code here.
 U;
                 break;
         }
@@ -818,11 +834,10 @@ U;
      */
     private function generateKey()
     {
-
         $key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
         file_put_contents("config/.key", $key);
 
-        echo "Application Key => \033[0;32m$key\033[00m\n";
+        echo "Application key => \033[0;32m$key\033[00m\n";
 
         return 0;
     }
