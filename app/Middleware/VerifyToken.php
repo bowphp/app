@@ -14,10 +14,14 @@ class VerifyToken
             return false;
         }
 
-        if (body()->has("_token")) {
-            return true;
+        if (!body()->has("_token")) {
+            return false;
         }
 
-        return false;
+        if (body()->has('_token') !== session('_token')) {
+            return false;
+        }
+
+        return true;
     }
 }

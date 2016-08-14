@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use Bow\Database\Database;
-
 class UserController extends Controller
 {
 	/**

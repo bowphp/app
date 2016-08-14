@@ -4,8 +4,8 @@
  */
 
 return [
-    "application" => require __DIR__ . "/application.php",
-    "database"    => require __DIR__ . "/database.php",
-    "mail"        => require __DIR__ . "/mail.php",
-    "resource"    => require __DIR__ . "/resource.php"
+    'application' => require __DIR__ . '/application.php',
+    'database'    => require __DIR__ . '/database.php',
+    'mail'        => require __DIR__ . '/mail.php',
+    'resource'    => require __DIR__ . '/resource.php'
 ];
