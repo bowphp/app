@@ -5,20 +5,46 @@ use Bow\Support\Resource\Storage;
 
 class Bow
 {
+    private static $rootDirectory;
     private final function __construct() {}
     private final function __clone() {}
-    const BAD_COMMAND = 'Bad command... %s Please type "php bow help" for more information.';
+    const BAD_COMMAND = "Bad command.%sPlease type \033[0;32;7m`php bow help or php bow command help` for more information.";
+    const PARAM = " Please specified parameter. ";
 
     /**
-     * @param $argc
-     * @param array $argv
+     * @param $param
+     * @param $cmd
+     * @param $argv
+     * @return int
+     * @throws ErrorException
+     */
+    private static function verifiedParameter($param, $cmd, $argv)
+    {
+        if ($param == null) {
+            if (!isset($argv[1])) {
+                throw new ErrorException(sprintf(self::PARAM));
+            }
+
+            if ($argv[1] == 'help') {
+                return static::usage($cmd);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @param string $root
      * @return int
      * @throws ErrorException
      * @throws Exception
      */
-    public static function run($argc, array $argv)
+    public static function run($root)
     {
-        $argc -= 1;
+        static::$rootDirectory = $root;
+        $argc = --$GLOBALS['argc'];
+        $argv = $GLOBALS['argv'];
 
         array_shift($argv);
 
@@ -41,198 +67,184 @@ class Bow
             $arg = explode("=", $argv[2], 2);
         }
 
-        switch ($cmd) {
-            case 'generate':
-            case 'make'    :
-                $name = null;
+        // Generate section
+        if ($cmd === 'generate') {
+            static::verifiedParameter($param, $cmd, $argv);
 
-                if ($param !== "key") {
-                    if (!isset($argv[1])) {
-                        return static::usage();
-                    }
-                    $name = $argv[1];
+            if ($param == 'resource') {
+                if (!isset($argv[1])) {
+                    throw new ErrorException(sprintf(self::PARAM));
                 }
+                return static::createController($argv[1], true, $arg);
+            }
 
-                if ($cmd == 'generate') {
-
-                    if (isset($argv[1]) && $argv[1] == 'help') {
-                        return static::usage('generate');
-                    }
-
-                    switch($param) {
-                        case 'resource':
-                        case 'key':
-                            if (!empty($arg)) {
-                                throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
-                            }
-
-                            if ($param == 'resource') {
-                                return static::createController($name, true);
-                            }
-
-                            return static::generateKey();
-                            break;
-                    }
+            if ($param == 'key') {
+                if (!empty($arg)) {
+                    throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
                 }
-
-                if ($cmd == 'make') {
-
-                    if (isset($argv[1]) && $argv[1] == 'help') {
-                        return static::usage('make');
-                    }
-
-                    switch ($param) {
-
-                        case 'model':
-                            return static::createModel($name);
-                            break;
-
-                        case 'middleware':
-                            return static::createMiddleware($name);
-                            break;
-
-                        case 'controller':
-
-                            // Controlleur simple.
-                            if (empty($arg)) {
-                                return static::createController($name, null);
-                            }
-
-                            // Controlleur avec model associer.
-                            if ($arg[0] === '--with-model') {
-                                static::createController($name, null);
-                                if (isset($arg[1])) {
-                                    $name = $arg[1];
-                                }
-                                return static::createModel($name);
-                            }
-
-                            // Controlleur vide
-                            if ($arg[0] == '--no-plain') {
-                                $r = static::createController($name);
-                                if (isset($argv[3])) {
-                                    $arg = explode('=', $argv[3]);
-                                    if ($arg[0] === '--with-model') {
-                                        if (isset($arg[1])) {
-                                            $name = $arg[1];
-                                        }
-                                        return static::createModel($name);
-                                    }
-                                }
-                                return $r;
-                            }
-
-                            throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
-                            break;
-                    }
-                }
-
-                throw new ErrorException(sprintf(self::BAD_COMMAND, $cmd . ':' . $param));
-
-            case 'migrate':
-                
-                $filename = null;
-
-                if (isset($argv[1])) {
-                    $filename = $argv[1];
-                }
-
-                switch($param) {
-                    case "make":
-                        static::createMigration($filename, $arg);
-                        break;
-
-                    case "up":
-                        static::migrate($filename, "up", $arg);
-                        break;
-
-                    case "down":
-                        static::migrate($filename, "down", $arg);
-                        break;
-
-                    default:
-                        if (isset($argv[1])) {
-                            $arg = explode("=", $argv[1], 2);
-                            if ($arg[0] !== '--seed') {
-                                if ($arg[0] == 'help') {
-                                    return static::usage('migrate');
-                                }
-                                throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
-                            }
-                        }
-                        return static::migrate(null, null, $arg);
-                        break;
-                }
-
-                break;
-
-            case 'help':
-                return static::usage();
-                break;
-
-            case 'server':
-
-                if (isset($argv[1])) {
-                    if ($argv[1] == 'help') {
-                        return static::usage('server');
-                    }
-                    $port = (int) $argv[1];
-                } else {
-                    $port = "5000";
-                }
-
-                // resource.
-                $r = fopen("php://stdout", "w");
-                if ($r) {
-                    fwrite($r, sprintf("[%s] web server start at http://localhost:%s \033[0;31;7mctrl-c for shutdown it\033[00m\n", date('F d Y H:i:s a'), $port));
-                }
-                fclose($r);
-                // lancement du serveur.
-                shell_exec("php -S localhost:$port server.php");
-                break;
-
-            case 'console':
-
-                if (isset($argv[1]) && $argv[1] == 'help') {
-                    return static::usage('console');
-                }
-
-                if (!file_exists('./vendor/bin/psysh')) {
-                    echo 'Please type "install psy/psysh:@stable" eg. "composer require psy/psysh:@stable"';
-                    return 0;
-                }
-
-                $shell = new Psy\Shell();
-                $shell->setIncludes(['public/index.php']);
-                $shell->run();
-
-                break;
-
-            default:
-                throw new Exception('Bad command. Please type "php bow help" for more information.');
-                break;
+                return static::generateKey();
+            }
         }
-        return 0;
+
+        // Make section
+        if ($cmd === 'make') {
+            static::verifiedParameter($param, $cmd, $argv);
+
+            if (!isset($argv[1])) {
+                throw new ErrorException(sprintf(self::PARAM));
+            }
+
+            $name = $argv[1];
+
+            if ($param == 'model') {
+                return static::createModel($name);
+            }
+
+            if ($param == 'middleware') {
+                return static::createMiddleware($name);
+            }
+
+            if ($param == 'controller') {
+                // Controlleur simple.
+                if (empty($arg)) {
+                    return static::createController($name, null);
+                }
+                // Controlleur avec model associer.
+                if ($arg[0] == '--with-model') {
+                    static::createController($name, null);
+                    if (isset($arg[1])) {
+                        $name = $arg[1];
+                    }
+                    return static::createModel($name);
+                }
+                // Controlleur vide
+                if ($arg[0] == '--no-plain') {
+                    $r = static::createController($name);
+                    if (isset($argv[3])) {
+                        $arg = explode('=', $argv[3]);
+                        if ($arg[0] === '--with-model') {
+                            if (isset($arg[1])) {
+                                $name = $arg[1];
+                            }
+                            return static::createModel($name);
+                        }
+                    }
+                    return $r;
+                }
+
+                throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
+            }
+
+            throw new ErrorException(sprintf(self::BAD_COMMAND, " [$cmd:$param] "));
+        }
+
+        // Migration section
+        if ($cmd == 'migrate') {
+            static::verifiedParameter($param, $cmd, $argv);
+
+            if (!isset($argv[1])) {
+                throw new ErrorException(sprintf(self::PARAM));
+            }
+
+            $filename = $argv[1];
+
+            if ($param == "make") {
+                return static::createMigration($filename, $arg);
+            }
+
+            if ($param == "up") {
+                return static::migrate($filename, "up", $arg);
+            }
+
+            if ($param == "down") {
+                return static::migrate($filename, "down", $arg);
+            }
+
+            if (isset($argv[1])) {
+                $arg = explode("=", $argv[1], 2);
+                if ($arg[0] !== '--seed') {
+                    if ($arg[0] == 'help') {
+                        return static::usage('migrate');
+                    }
+                    throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
+                }
+            }
+
+            static::migrate(null, null, $arg);
+        }
+
+        // Help section
+        if ($cmd == 'help') {
+            return static::usage();
+        }
+
+        // Server section
+        if ($cmd == 'server') {
+            if (isset($argv[1])) {
+                if ($argv[1] == 'help') {
+                    return static::usage('server');
+                }
+                $port = (int) $argv[1];
+            } else {
+                $port = "5000";
+            }
+
+            // resource.
+            $r = fopen("php://stdout", "w");
+            if ($r) {
+                fwrite($r, sprintf("[%s] web server start at http://localhost:%s \033[0;31;7mctrl-c for shutdown it\033[00m\n", date('F d Y H:i:s a'), $port));
+            }
+            fclose($r);
+            // lancement du serveur.
+            return shell_exec("php -S localhost:$port server.php");
+        }
+
+        // Console section
+        if ($cmd == 'console') {
+            if (isset($argv[1]) && $argv[1] == 'help') {
+                return static::usage('console');
+            }
+            if (!file_exists(static::$rootDirectory . '/vendor/bin/psysh')) {
+                echo 'Please type "install psy/psysh:@stable" eg. "composer require psy/psysh:@stable"';
+                return 0;
+            }
+
+            $shell = new Psy\Shell();
+            $shell->setIncludes(['public/index.php']);
+            return $shell->run();
+        }
+
+        throw new Exception(sprintf(self::BAD_COMMAND, ''));
     }
 
     /**
+     * Create new migrate file
+     *
      * @param string $filename
-     * @param array $arg
+     * @param array $option
+     * @throws ErrorException
+     * @return null
      */
-    private static function createMigration($filename, $arg = [])
+    private static function createMigration($filename, $option = [])
     {
         $mapMethod = ["create", "drop"];
         $table = $filename;
 
-        if (count($arg) == 2) {
-            $table = $arg[1];
-            if ($arg[0] == "--table") {
-                $mapMethod = ["table", "table"];
-            }
-            if ($arg[0] == "--create") {
+        if (count($option) == 1) {
+            throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
+        }
+
+        if (count($option) == 2) {
+            $table = $option[1];
+            if ($option[0] == "--table") {
+                $mapMethod = ["table", "drop"];
+            } elseif ($option[0] == "--create") {
                 $mapMethod = ["create", "drop"];
+            } else {
+                throw new ErrorException(sprintf(self::BAD_COMMAND, ' [' . $option[0] . '] '));
             }
         }
+
 
         $className = ucfirst($table);
         $migrate = <<<doc
@@ -255,7 +267,7 @@ class Create{$className}Table extends Migration
         Schema::{$mapMethod[0]}(static::\$table, function(Fields \$table) {
             \$table->increment('id');
             \$table->timestamps('create_at');
-        }, \$display);
+        });
     }
 
     /**
@@ -272,28 +284,31 @@ doc;
         }
 
         $createAt = date("Y_m_d") . "_" . date("His");
-        $file = __DIR__. "/migration/" . $createAt . "_${filename}.php";
+        $file = static::$rootDirectory."/migration/" . $createAt . "_${filename}.php";
 
         file_put_contents($file, $migrate);
 
-        Storage::append(__DIR__. "/migration/.registers", "{$createAt}_{$filename}|$table\n");
+        Storage::append(static::$rootDirectory."/migration/.registers", "{$createAt}_{$filename}|$table\n");
 
-        echo "\033[0;32mmigration file for $filename created.\033[00m\n";
+        echo "\033[0;32mmigration file [$filename] created.\033[00m\n";
+        return 0;
     }
 
     /**
+     * Make new migrate
+     *
      * @param string $table le nom de table
      * @param string $type le type de migration up|down
-     * @param string $arg le type de migration up|down
+     * @param string $option le type de migration up|down
      * @return int
      * @throws ErrorException
      */
-    private static function migrate($table = null, $type = null, $arg = null)
+    private static function migrate($table = null, $type = null, $option = null)
     {
         if ($table) {
-            $fileParten = __DIR__.strtolower("/migration/*{$table}*.php");
+            $fileParten = static::$rootDirectory.strtolower("/migration/*{$table}*.php");
         } else {
-            $fileParten = __DIR__.strtolower("/migration/*.php");
+            $fileParten = static::$rootDirectory.strtolower("/migration/*.php");
         }
 
         if ($type == null) {
@@ -302,7 +317,7 @@ doc;
 
         $register = ["file" => [], "tables" => []];
 
-        foreach(file(__DIR__."/migration/.registers") as $r) {
+        foreach(file(static::$rootDirectory."/migration/.registers") as $r) {
             $tmp = explode("|", $r);
             $register["file"][] = $tmp[0];
             $register["tables"][] = $tmp[1];
@@ -313,7 +328,7 @@ doc;
                 throw new ErrorException("$file n'existe pas.", E_USER_ERROR);
             }
 
-            $filename = preg_replace("@^(" . __DIR__."/migration/)|(\.php)$@", "", $file);
+            $filename = preg_replace("@^(" . static::$rootDirectory."/migration/)|(\.php)$@", "", $file);
 
             if (in_array($filename, $register["file"])) {
                 $num = array_flip($register["file"])[$filename];
@@ -324,22 +339,24 @@ doc;
 
             $class = "Create".ucfirst($table)."Table";
             $instance = new $class;
-            call_user_func([$instance, strtolower("$type")]);
-            if (isset($arg[0]) && $arg[0] == "--seed") {
+            call_user_func([$instance, strtolower($type)]);
+            if (isset($option[0]) && $option[0] == "--seed") {
                 $n = 1;
-                if (isset($arg[1])) {
-                    $n = $arg[1];
+                if (isset($option[1])) {
+                    $n = $option[1];
                 }
                 call_user_func_array([$instance, 'fill'], [$n]);
                 $s = $n > 1 ? 's' : '';
-                echo "\033[0;33m$n\033[00m \033[0;32mseed$s for $table table.\033[00m\n";
+                echo "\033[0;33m$n\033[00m \033[0;32mseed$s in \033[00m[$table] \033[0;32mmigration\033[00m\n";
             }
         }
 
-
         return 0;
     }
+
     /**
+     * Create new middleware file
+     *
      * @param $middlewareName
      * @return int
      */
@@ -347,8 +364,8 @@ doc;
     {
         $middlewareName = ucfirst($middlewareName);
 
-        if (file_exists(__DIR__ . "/app/Middleware/$middlewareName.php")) {
-            echo "\033[0;31mmiddleware \033[0;33m\033[0;31m$middlewareName\033[00m\033[0;31m already exist.\033[00m\n";
+        if (file_exists(static::$rootDirectory."/app/Middleware/$middlewareName.php")) {
+            echo "\033[0;31mmiddleware \033[0;33m\033[0;31m[$middlewareName]\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
 
@@ -360,32 +377,35 @@ use Bow\Database\Database;
 
 class {$middlewareName}
 {
-	/**
-	 * Fonction de lancement du middleware.
-	 *
-	 * @param mixed
-	 * @return boolean
-	 */
-	public function handle()
-	{
-	    \$next = true;
-		// do something here
-		return \$next;
-	}
+    /**
+     * Fonction de lancement du middleware.
+     *
+     * @param mixed
+     * @return boolean
+     */
+    public function handle()
+    {
+        \$next = true;
+        // do something here
+        return \$next;
+    }
 }
 CM;
-        file_put_contents(__DIR__."/app/Middleware/$middlewareName.php", $middlewareTemplate);
-        echo "\033[0;32mmiddleware \033[00m{$middlewareName}\033[0;32m created.\033[00m\n";
+        file_put_contents(static::$rootDirectory."/app/Middleware/$middlewareName.php", $middlewareTemplate);
+        echo "\033[0;32mmiddleware \033[00m[{$middlewareName}]\033[0;32m created.\033[00m\n";
 
         return 0;
     }
 
     /**
+     * Create new controller file
+     *
      * @param string $controllerName
      * @param bool $rest
+     * @param array $option
      * @return int
      */
-    private static function createController($controllerName, $rest = false)
+    private static function createController($controllerName, $rest = false, $option = [])
     {
         if (!preg_match("/controller$/i", $controllerName)) {
             $controllerName = ucfirst($controllerName) . "Controller";
@@ -400,8 +420,8 @@ CM;
 
         $path = preg_replace("/controller/", "", strtolower($controllerName));
 
-        if (file_exists(__DIR__."/app/Controllers/$controllerName.php")) {
-            echo "\033[0;31mcontroller \033[0;33m\033[0;31m$controllerName\033[00m\033[0;31m already exist.\033[00m\n";
+        if (file_exists(static::$rootDirectory."/app/Controllers/$controllerName.php")) {
+            echo "\033[0;31mcontroller \033[0;33m\033[0;31m[$controllerName]\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
 
@@ -415,83 +435,83 @@ use Bow\Database\Database;
 class {$controllerName} extends Controller
 {
     /**
-	 * Créer une nouvelle instance du controller
-	 */
-	public function __construct()
-	{
-		\$this->middleware('VerifyToken');
-	}
+     * Créer une nouvelle instance du controller
+     */
+    public function __construct()
+    {
+        \$this->middleware('VerifyToken');
+    }
 
-	/**
-	 * Point d'entré
-	 *
-	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
-	 * @return mixed
-	 */
-   	public function index(\$id = null)
-   	{
-		// do something here.
-   	}
+    /**
+     * Point d'entré
+     *
+     * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
+     * @return mixed
+     */
+    public function index(\$id = null)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Afficher la vue permettant de créer une résource.
-	 */
-   	public function create()
-   	{
-		// do something here.
-	}
+    /**
+     * Afficher la vue permettant de créer une résource.
+     */
+    public function create()
+    {
+        // do something here.
+    }
 
-	/**
-	 * Ajouter une nouvelle résource dans la base d'information
-	 */
-   	public function store()
-   	{
-		// do something here.
-	}
+    /**
+     * Ajouter une nouvelle résource dans la base d'information
+     */
+    public function store()
+    {
+        // do something here.
+    }
 
-	/**
-	 * Récupérer un information précise avec un identifiant.
-	 *
-	 * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
-	 * @return mixed
-	 */
- 	public function show(\$id = null)
-   	{
-		// do something here.
-	}
+    /**
+     * Récupérer un information précise avec un identifiant.
+     *
+     * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
+     * @return mixed
+     */
+    public function show(\$id = null)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Mise à jour d'un résource en utilisant paramètre du GET
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
-	 * @return mixed
-	 */
- 	public function edit(\$id)
-   	{
-		// do something here.
-	}
+    /**
+     * Mise à jour d'un résource en utilisant paramètre du GET
+     *
+     * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * @return mixed
+     */
+    public function edit(\$id)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Mise à jour d'une résource
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
-	 * @return mixed
-	 */
- 	public function update(\$id)
-   	{
-		// do something here.
-	}
+    /**
+     * Mise à jour d'une résource
+     *
+     * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * @return mixed
+     */
+    public function update(\$id)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Supprimer une resource
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à supprimer
-	 * @return mixed
-	 */
-   	public function destroy(\$id)
-	{
-		// do something here.
- 	}
+    /**
+     * Supprimer une resource
+     *
+     * @param mixed \$id L'identifiant de l'élément à supprimer
+     * @return mixed
+     */
+    public function destroy(\$id)
+    {
+        // do something here.
+    }
 }
 CC;
         if ($rest === null) {
@@ -509,150 +529,152 @@ class {$controllerName} extends Controller
 
 }
 CC;
-            file_put_contents(__DIR__."/app/Controllers/${controllerName}.php", $controllerPlainTemplate);
+            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerPlainTemplate);
 
         } else if ($rest) {
+
             $model = ucfirst($path);
+            $modelNamespace = '';
 
-            $res = static::readline("voulez vous que je crée les vues associées?");
-
-            if ($res) {
+            if (static::readline("voulez vous que je crée les vues associées?")) {
                 $model = strtolower($model);
-                @mkdir(__DIR__."/app/Views/".$model, 0766);
+                @mkdir(static::$rootDirectory."/app/Views/".$model, 0766);
 
                 echo "\033[0;33;7m";
                 foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
-                    $file = __DIR__ . "/app/Views/$model/$value.twig";
+                    $file = static::$rootDirectory."/app/Views/$model/$value.twig";
                     file_put_contents($file, '{# code here... #}');
                     echo "$file\n";
                 }
-
                 echo "\033[00m";
             }
 
-            $res = static::readline("voulez vous que je crée un model?");
-
-            if ($res) {
-                static::createModel($model);
-                $tmp = $model;
-                $model = "\nuse App\\" . strtoupper($model);
-                $res = static::readline('voulez vous que je crée une migration pour ce model? ');
-                if ($res) {
-                    static::createMigration($tmp);
+            if (static::readline("voulez vous que je crée un model?")) {
+                if (isset($option[0]) && $option[0] == '--model') {
+                    if (isset($option[1])) {
+                        $model = $option[1];
+                    } else {
+                        echo "\033[0;32;7mLe nom du model non spécifié --model=model_name.\033[00m\n";
+                    }
                 }
 
-            } else {
-                $model = "";
+                static::createModel($model);
+                $modelNamespace = "\nuse App\\" . strtoupper($model);
+
+                if (static::readline('voulez vous que je crée une migration pour ce model? ')) {
+                    static::createMigration($model);
+                }
             }
+
 
             $controllerRestTemplate =<<<CC
 <?php
 namespace App\Controllers;
 
-use Exception;$model
+use Exception;$modelNamespace
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
 {
     /**
-	 * Créer une nouvelle instance du controller
-	 */
-	public function __construct()
-	{
-		\$this->middleware("VerifyToken");
-	}
+     * Créer une nouvelle instance du controller
+     */
+    public function __construct()
+    {
+        \$this->middleware("VerifyToken");
+    }
 
-	/**
-	 * Point d'entré
-	 * GET /$path
-	 *
-	 * @param mixed \$id [optional] L'identifiant de l'element à récupérer
-	 * @return mixed
-	 */
-   	public function index(\$id = null)
-   	{
-		// do something here.
-   	}
+    /**
+     * Point d'entré
+     * GET /$path
+     *
+     * @param mixed \$id [optional] L'identifiant de l'element à récupérer
+     * @return mixed
+     */
+    public function index(\$id = null)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Afficher la vue permettant de créer une résource.
-	 * GET /$path/create
-	 */
-   	public function create()
-   	{
-		// do something here.
-	}
+    /**
+     * Afficher la vue permettant de créer une résource.
+     * GET /$path/create
+     */
+    public function create()
+    {
+        // do something here.
+    }
 
-	/**
-	 * Ajouter une nouvelle résource dans la base d'information
-	 * POST /$path
-	 */
-   	public function store()
-   	{
-		// do something here.
-	}
+    /**
+     * Ajouter une nouvelle résource dans la base d'information
+     * POST /$path
+     */
+    public function store()
+    {
+        // do something here.
+    }
 
-	/**
-	 * Récupérer un information précise avec un identifiant.
-	 * GET /$path/:id
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à récupérer
-	 * @return mixed
-	 */
- 	public function show(\$id)
-   	{
-		// do something here.
-	}
+    /**
+     * Récupérer un information précise avec un identifiant.
+     * GET /$path/:id
+     *
+     * @param mixed \$id L'identifiant de l'élément à récupérer
+     * @return mixed
+     */
+    public function show(\$id)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Mise à jour d'un résource en utilisant paramètre du GET
-	 * GET /$path/:id/edit
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
-	 * @return mixed
-	 */
- 	public function edit(\$id)
-   	{
-		// do something here.
-	}
+    /**
+     * Mise à jour d'un résource en utilisant paramètre du GET
+     * GET /$path/:id/edit
+     *
+     * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * @return mixed
+     */
+    public function edit(\$id)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Mise à jour d'une résource
-	 * PUT /$path/:id
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à mettre à jour
-	 * @return mixed
-	 */
- 	public function update(\$id)
-   	{
-		// do something here.
-	}
+    /**
+     * Mise à jour d'une résource
+     * PUT /$path/:id
+     *
+     * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * @return mixed
+     */
+    public function update(\$id)
+    {
+        // do something here.
+    }
 
-	/**
-	 * Supprimer une resource
-	 * DELETE /$path/:id
-	 *
-	 * @param mixed \$id L'identifiant de l'élément à supprimer
-	 * @return mixed
-	 */
-   	public function destroy(\$id)
-	{
-		// do something here.
- 	}
+    /**
+     * Supprimer une resource
+     * DELETE /$path/:id
+     *
+     * @param mixed \$id L'identifiant de l'élément à supprimer
+     * @return mixed
+     */
+    public function destroy(\$id)
+    {
+        // do something here.
+    }
 }
 CC;
-            file_put_contents(__DIR__."/app/Controllers/${controllerName}.php", $controllerRestTemplate);
-
+            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerRestTemplate);
         } else {
-            file_put_contents(__DIR__."/app/Controllers/${controllerName}.php", $controllerTemplate);
+            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerTemplate);
         }
 
-        echo "\033[0;32mcontroller created: \033[00m{$controllerName}\033[0;32m.\033[00m\n";
-
+        echo "\033[0;32mcontroller created \033[00m[{$controllerName}]\033[0;32m\033[00m\n";
         return 0;
     }
 
     /**
+     * Create new model file
+     *
      * @param $modelName
      * @return int
      */
@@ -669,55 +691,50 @@ use Bow\Database\Model;
 
 class ${modelName} extends Model
 {
-	/**
-	 * Ajoutez les champs à valider ici
-	 */
-	public static \$rules = [
-	    // insérer ici vos contrainte sur les champs
-	    // provenant d'un réquête
-	];
+    /**
+     * Ajoutez les champs à valider ici
+     */
+    public static \$rules = [
+        // insérer ici vos contrainte sur les champs
+        // provenant d'un réquête
+    ];
 
-	/**
-	 * Le nom de la table.
-	 *
-	 * @var string
-	 */
-	public static \$table = "$tableName";
+    /**
+     * Le nom de la table.
+     *
+     * @var string
+     */
+    public static \$table = "$tableName";
 }
 
 MODEL;
-        if (file_exists("app/${modelName}.php")) {
-            echo "\033[0;33mmodel \033[0;33m\033[0;31m${modelName}\033[00m\033[0;31m already exist.\033[00m\n";
-
+        if (file_exists(static::$rootDirectory."/app/${modelName}.php")) {
+            echo "\033[0;33mmodel \033[0;33m\033[0;31m[${modelName}]\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
 
-        file_put_contents("app/${modelName}.php", $model);
+        file_put_contents(static::$rootDirectory."/app/${modelName}.php", $model);
 
-        echo "\033[0;32mmodel created: \033[00m${modelName}\033[0;32m\033[00m\n";
-
+        echo "\033[0;32mmodel created \033[00m[${modelName}]\033[0;32m\033[00m\n";
         return 0;
     }
 
     /**
-     * Lecture de ligne de commande
+     * Read ligne
      *
      * @param string $message
      * @return bool
      */
     private static function readline($message)
     {
-        $input = readline("\033[0;32m$message y/n\033[00m >>> ");
+        echo "\033[0;32m$message y/N\033[00m >>> ";
+        $input = readline();
 
         if (strtolower($input) == "y") {
             return true;
         }
 
-        if ($input == '') {
-            return static::readline($message);
-        }
-
-        if (strtolower($input) == 'n') {
+        if (strtolower($input) == 'n' || $input == '') {
             return false;
         }
 
@@ -725,7 +742,7 @@ MODEL;
     }
 
     /**
-     * Affiche l'aide global ou en fonction de chaque command.
+     * Display global help or helper command.
      *
      * @param string|null $command
      * @return int
@@ -733,14 +750,13 @@ MODEL;
     private static function usage($command = null)
     {
         if ($command === null) {
-
             $usage = <<<USAGE
 
-Bow usage: php bow command:action [name] [help|--with-model|--plain|--create|--table|--seed]
+Bow usage: php bow command:action [name] [help|--with-model|--no-plain|--create|--table|--seed]
 
 \033[0;31mcommand\033[00m:
 
- \033[0;33mhelp\033[00m	display command helper
+ \033[0;33mhelp\033[00m display command helper
 
  \033[0;32mgenerate\033[00m create a new app key and resources
   option:
@@ -836,23 +852,21 @@ U;
     private function generateKey()
     {
         $key = base64_encode(openssl_random_pseudo_bytes(5) . date('Y-m-d H:i:s'));
-        file_put_contents("config/.key", $key);
+        file_put_contents(static::$rootDirectory."/config/.key", $key);
 
         echo "Application key => \033[0;32m$key\033[00m\n";
-
         return 0;
     }
 }
 
 /**
  *
- *  Lancement de l'execution de bow générateur.
+ *  Run generator.
  *
  */
-
 try {
     require __DIR__."/vendor/autoload.php";
-    Bow::run($argc, $argv);
+    Bow::run(__DIR__);
 } catch (Exception $e) {
-    echo "\033[0;33;7m" . $e->getMessage() . "\033[00m\n";
+    echo "\033[0;31;7m {$e->getMessage()} \033[00m\n";
 }
