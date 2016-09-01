@@ -28,7 +28,8 @@ return (object) [
 
     // mail authentification
     'mail' => [
-        'concat' => [
+        'default' => 'contact',
+        'contact' => [
             'address' => 'concat@exemple.com',
             'username' => 'Address de contact'
         ],
