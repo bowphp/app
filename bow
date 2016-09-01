@@ -148,12 +148,14 @@ class Bow
 
         // Migration section
         if ($cmd == 'migrate') {
-            static::verifiedParameter($param, $cmd, $argv);
-
-            if (!isset($argv[1])) {
-                throw new ErrorException(sprintf(self::PARAM));
+            if ($param === null) {
+                if (isset($argv[1])) {
+                    $arg = explode('=', $argv[1]);
+                }
+                return static::migrate(null, null, $arg);
             }
 
+            static::verifiedParameter($param, $cmd, $argv);
             $filename = $argv[1];
 
             if ($param == "make") {
@@ -168,6 +170,11 @@ class Bow
                 return static::migrate($filename, "down", $arg);
             }
 
+            if ($param == "rollback") {
+                $arg[0] = '--rollback';
+                return static::migrate($filename, "down", $arg);
+            }
+
             if (isset($argv[1])) {
                 $arg = explode("=", $argv[1], 2);
                 if ($arg[0] !== '--seed') {
@@ -178,7 +185,7 @@ class Bow
                 }
             }
 
-            return static::migrate(null, null, $arg);
+            throw new ErrorException(sprintf(self::BAD_COMMAND, ''));
         }
 
         // Help section
@@ -342,24 +349,19 @@ doc;
                 $num = array_flip($register["file"])[$filename];
                 $table = rtrim($register["tables"][$num]);
             }
-
             require $file;
 
-            try {
-                $class = "Create".ucfirst($table)."Table";
-                $instance = new $class;
-                call_user_func([$instance, strtolower($type)]);
-                if (isset($option[0]) && $option[0] == "--seed") {
-                    $n = 1;
-                    if (isset($option[1])) {
-                        $n = $option[1];
-                    }
-                    call_user_func_array([$instance, 'fill'], [$n]);
-                    $s = $n > 1 ? 's' : '';
-                    echo "\033[0;33m$n\033[00m \033[0;32mseed$s in \033[00m[$table] \033[0;32mmigration\033[00m\n";
+            $class = "Create".ucfirst($table)."Table";
+            $instance = new $class;
+            call_user_func([$instance, strtolower($type)]);
+            if (isset($option[0]) && $option[0] == "--seed") {
+                $n = 1;
+                if (isset($option[1])) {
+                    $n = $option[1];
                 }
-            } catch (Exception $e) {
-                echo "\033[0;31;7m {$e->getMessage()} \033[00m\n";
+                call_user_func_array([$instance, 'fill'], [$n]);
+                $s = $n > 1 ? 's' : '';
+                echo "\033[0;33m$n\033[00m \033[0;32mseed$s in \033[00m[$table] \033[0;32mmigration\033[00m\n";
             }
         }
         return 0;
