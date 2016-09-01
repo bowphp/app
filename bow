@@ -440,7 +440,6 @@ CM;
 <?php
 namespace App\Controllers;
 
-use Exception;
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
@@ -581,8 +580,7 @@ CC;
             $controllerRestTemplate =<<<CC
 <?php
 namespace App\Controllers;
-
-use Exception;$modelNamespace
+$modelNamespace
 use Bow\Database\Database;
 
 class {$controllerName} extends Controller
