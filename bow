@@ -281,7 +281,7 @@ class Create{$className}Table extends Migration
     {
         Schema::{$mapMethod[0]}(static::\$table, function(Fields \$table) {
             \$table->increment('id');
-            \$table->timestamps('create_at');
+            \$table->timestamps();
         });
     }
 
