@@ -10,6 +10,12 @@ class VerifyToken
      */
     public function handle()
     {
+        if (request()->isAjax()) {
+            if (request()->getHeader('X-CSRF')) {
+
+            }
+        }
+
         if (!(request()->isPost() || request()->isPut())) {
             return false;
         }
@@ -18,7 +24,7 @@ class VerifyToken
             return false;
         }
 
-        if (body()->has('_token') !== session('_token')) {
+        if (body()->get('_token') !== session('_token')) {
             return false;
         }
 
