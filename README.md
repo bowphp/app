@@ -1,5 +1,5 @@
-# Bow
-The Bow Framework [documentation](http://papac.github.com)
+# Bow (Application)
+> The Bow Framework
 
 [![GitHub version](https://badge.fury.io/gh/papac%2Fbow.svg)](https://badge.fury.io/gh/papac%2Fbow)
 [![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg)](https://papac.github.com/docs)
