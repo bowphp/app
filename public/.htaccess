@@ -8,7 +8,12 @@ Options -indexes
 
     RewriteEngine On
 
-    # Redirect trailing slashes if not a folder...
+    # Configuration pour les servers mutualisés
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteCond %{REQUEST_FILENAME} !-f
+    # RewriteRule ^(.*)\.(gif|png|js|css|jpg|jpeg|swf|tff|woff|eof|mp3|mp4) /public/$1.$2 [L,NC]
+
+    # rédirige les url avec un slashe a la fin is ce n'est un dossier.
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
