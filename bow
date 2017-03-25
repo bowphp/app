@@ -386,7 +386,7 @@ doc;
 <?php
 namespace App\Middleware;
 
-use Bow\Database\Database;
+use Bow\Database\Database as DB;
 
 class {$middlewareName}
 {
@@ -420,7 +420,7 @@ CM;
      */
     private static function createController($controllerName, $rest = false, $option = [])
     {
-        if (!preg_match("/controller$/i", $controllerName)) {
+        if (! preg_match("/controller$/i", $controllerName)) {
             $controllerName = ucfirst($controllerName) . "Controller";
         } else {
             if (preg_match("/^(.+)(controller)$/", $controllerName, $match)) {
@@ -442,7 +442,7 @@ CM;
 <?php
 namespace App\Controllers;
 
-use Bow\Database\Database;
+use Bow\Database\Database as DB;
 
 class {$controllerName} extends Controller
 {
@@ -451,13 +451,14 @@ class {$controllerName} extends Controller
      */
     public function __construct()
     {
-        \$this->middleware('VerifyToken');
+        \$this->middleware('crsf');
     }
 
     /**
      * Point d'entré
      *
      * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
+     *
      * @return mixed
      */
     public function index(\$id = null)
@@ -532,13 +533,11 @@ CC;
 <?php
 namespace App\Controllers;
 
-use Bow\Database\Database;
+use Bow\Database\Database as DB;
 
 class {$controllerName} extends Controller
 {
-
     // Écrivez votre code ici.
-
 }
 CC;
             file_put_contents(static::$rootDirectory."/app/controllers/${controllerName}.php", $controllerPlainTemplate);
@@ -592,7 +591,7 @@ class {$controllerName} extends Controller
      */
     public function __construct()
     {
-        \$this->middleware("VerifyToken");
+        \$this->middleware("crsf");
     }
 
     /**
@@ -609,6 +608,7 @@ class {$controllerName} extends Controller
 
     /**
      * Afficher la vue permettant de créer une résource.
+     *
      * GET /$path/create
      */
     public function create()
@@ -618,6 +618,7 @@ class {$controllerName} extends Controller
 
     /**
      * Ajouter une nouvelle résource dans la base d'information
+     *
      * POST /$path
      */
     public function store()
@@ -627,6 +628,7 @@ class {$controllerName} extends Controller
 
     /**
      * Récupérer un information précise avec un identifiant.
+     *
      * GET /$path/:id
      *
      * @param mixed \$id L'identifiant de l'élément à récupérer
@@ -639,6 +641,7 @@ class {$controllerName} extends Controller
 
     /**
      * Mise à jour d'un résource en utilisant paramètre du GET
+     *
      * GET /$path/:id/edit
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
@@ -651,6 +654,7 @@ class {$controllerName} extends Controller
 
     /**
      * Mise à jour d'une résource
+     *
      * PUT /$path/:id
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
@@ -663,6 +667,7 @@ class {$controllerName} extends Controller
 
     /**
      * Supprimer une resource
+     *
      * DELETE /$path/:id
      *
      * @param mixed \$id L'identifiant de l'élément à supprimer
@@ -707,14 +712,6 @@ use Bow\Database\Model;
 
 class ${modelName} extends Model
 {
-    /**
-     * Ajoutez les champs à valider ici
-     */
-    public static \$rules = [
-        // insérer ici vos contrainte sur les champs
-        // provenant d'un réquête
-    ];
-
     /**
      * Le nom de la table.
      *
