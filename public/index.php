@@ -16,7 +16,7 @@ $app = Application::make(config(), request(), response());
 
 
 // Chargement des routeurs.
-require __DIR__ . "/../app/routes.php";
+require __DIR__ . "/../app/main.php";
 
 
 

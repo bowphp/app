@@ -26,9 +26,15 @@ class Controller
 	 */
 	public function middleware($name)
 	{
-		$middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($name);
+        $middleware = config()->getNamespace();
 
-		if (!class_exists($middleware)) {
+        if (! array_key_exists($name, $middleware['middleware'])) {
+            throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
+        }
+
+		$middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['middleware'][$name]);
+
+		if (! class_exists($middleware)) {
 			throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
 		}
 
