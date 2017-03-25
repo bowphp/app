@@ -18,10 +18,10 @@ class Autoload
 	 */
 	private static function autoload($class) {
 		if (preg_match("/^App.+/", $class)) {
-			$class = str_replace("\\", "/", $class);
-			$class = str_replace("App/", "", $class);
-			$class = __DIR__ . '/' . $class;
-			require $class . ".php";
-		}
+            $class = str_replace("\\", "/", $class);
+            $class = str_replace("App/", "", $class);
+            $class = __DIR__ . '/' . $class;
+            require $class . ".php";
+        }
 	}
 }

@@ -377,7 +377,7 @@ doc;
     {
         $middlewareName = ucfirst($middlewareName);
 
-        if (file_exists(static::$rootDirectory."/app/Middleware/$middlewareName.php")) {
+        if (file_exists(static::$rootDirectory."/app/middleware/$middlewareName.php")) {
             echo "\033[0;31mmiddleware \033[0;33m\033[0;31m[$middlewareName]\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
@@ -404,7 +404,7 @@ class {$middlewareName}
     }
 }
 CM;
-        file_put_contents(static::$rootDirectory."/app/Middleware/$middlewareName.php", $middlewareTemplate);
+        file_put_contents(static::$rootDirectory."/app/middleware/$middlewareName.php", $middlewareTemplate);
         echo "\033[0;32mmiddleware \033[00m[{$middlewareName}]\033[0;32m created.\033[00m\n";
 
         return 0;
@@ -433,7 +433,7 @@ CM;
 
         $path = preg_replace("/controller/", "", strtolower($controllerName));
 
-        if (file_exists(static::$rootDirectory."/app/Controllers/$controllerName.php")) {
+        if (file_exists(static::$rootDirectory."/app/controllers/$controllerName.php")) {
             echo "\033[0;31mcontroller \033[0;33m\033[0;31m[$controllerName]\033[00m\033[0;31m already exist.\033[00m\n";
             return 0;
         }
@@ -541,7 +541,7 @@ class {$controllerName} extends Controller
 
 }
 CC;
-            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerPlainTemplate);
+            file_put_contents(static::$rootDirectory."/app/controllers/${controllerName}.php", $controllerPlainTemplate);
 
         } else if ($rest) {
 
@@ -550,11 +550,11 @@ CC;
 
             if (static::readline("voulez vous que je crée les vues associées?")) {
                 $model = strtolower($model);
-                @mkdir(static::$rootDirectory."/app/Views/".$model, 0766);
+                @mkdir(static::$rootDirectory."/app/views/".$model, 0766);
 
                 echo "\033[0;33;7m";
                 foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
-                    $file = static::$rootDirectory."/app/Views/$model/$value.twig";
+                    $file = static::$rootDirectory."/app/views/$model/$value.twig";
                     file_put_contents($file, '{# code here... #}');
                     echo "$file\n";
                 }
@@ -674,9 +674,9 @@ class {$controllerName} extends Controller
     }
 }
 CC;
-            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerRestTemplate);
+            file_put_contents(static::$rootDirectory."/app/controllers/${controllerName}.php", $controllerRestTemplate);
         } else {
-            file_put_contents(static::$rootDirectory."/app/Controllers/${controllerName}.php", $controllerTemplate);
+            file_put_contents(static::$rootDirectory."/app/controllers/${controllerName}.php", $controllerTemplate);
         }
 
         echo "\033[0;32mcontroller created \033[00m[{$controllerName}]\033[0;32m\033[00m\n";

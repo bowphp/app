@@ -14,7 +14,7 @@ class Controller
 	/**
 	 * @var string
 	 */
-	protected $middlewareBaseNamespace = "App\\Middleware";
+	protected $middlewareBaseNamespace = "App\\middleware";
 
 	/**
 	 * Lanceur de middleware
@@ -35,9 +35,11 @@ class Controller
 		$class = new $middleware();
 		$next =  call_user_func_array([$class, "handle"], array_slice(func_get_args(), 1));
 
-		if (!$next) {
+		if (! $next) {
 			die();
 		}
+
+		return true;
 	}
 
 	/**
@@ -46,7 +48,6 @@ class Controller
 	 *
 	 * @param mixed $url
 	 * @param array $parameters
-	 * @return null
 	 */
 	public function redirect($url, array $parameters = [])
 	{
