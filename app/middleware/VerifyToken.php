@@ -10,23 +10,19 @@ class VerifyToken
      */
     public function handle()
     {
-        if (!(request()->isPost() || request()->isPut())) {
+        if (! (request()->isPost() || request()->isPut())) {
             return true;
         }
 
         if (request()->isAjax()) {
-            if (request()->getHeader('X-CSRF-TOKEN') == session('_token')) {
+            if (request()->getHeader('X-CSRF-TOKEN') === session('_token')) {
                 return true;
             }
 
             return response('unauthorize.', 401);
         }
 
-        if (!body()->has("_token")) {
-            return false;
-        }
-
-        if (body()->get('_token') !== session('_token')) {
+        if (input('_token', null) !== session('_token')) {
             return false;
         }
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\controllers;
 
 class Controller
 {
@@ -28,11 +28,11 @@ class Controller
 	{
         $middleware = config()->getNamespace();
 
-        if (! array_key_exists($name, $middleware['middleware'])) {
-            throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
+        if (! array_key_exists($name, $middleware['middlewares'])) {
+            throw new \ErrorException('Le middleware ' . $name . ' n\'existe pas');
         }
 
-		$middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['middleware'][$name]);
+		$middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['middlewares'][$name]);
 
 		if (! class_exists($middleware)) {
 			throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');

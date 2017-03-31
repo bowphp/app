@@ -1,7 +1,7 @@
 <?php
-/*----------------------------------
+/**
 | Configuration du service de mail
-|-----------------------------------
+|
 | On retourne la configuration
 | que l'application utilisera pour
 | Gérer l'envoye de mail.

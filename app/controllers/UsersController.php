@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\controllers;
 
 class UserController extends Controller
 {
@@ -8,7 +8,7 @@ class UserController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware("Auth");
+		$this->middleware("auth");
 	}
 
 	/**

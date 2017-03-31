@@ -194,7 +194,7 @@ class Bow
         }
 
         // Server section
-        if ($cmd == 'server') {
+        if ($cmd == 'serve') {
             if (isset($argv[1])) {
                 if ($argv[1] == 'help') {
                     return static::usage('server');

@@ -1,7 +1,7 @@
 <?php
 namespace App\Configuration;
 
-class Autoload
+class Appautoload
 {
 	/**
 	 * Lance l'autoload
@@ -20,8 +20,27 @@ class Autoload
 		if (preg_match("/^App.+/", $class)) {
             $class = str_replace("\\", "/", $class);
             $class = str_replace("App/", "", $class);
-            $class = __DIR__ . '/' . $class;
+            $class = __DIR__ . '/' . ucfirst($class);
             require $class . ".php";
         }
 	}
+
+    /**
+     * Liste des methodes pouvants être appelé de façon static
+     *
+     * @return array
+     */
+	public function map()
+    {
+        return [
+            'DB' => \Bow\Database\Database::class,
+            'Request' => \Bow\Http\Request::class,
+            'Req' => \Bow\Http\Request::class,
+            'Response' => \Bow\Http\Response::class,
+            'Res' => \Bow\Http\Response::class,
+            'Input' => \Bow\Http\Input::class,
+            'Secure' => \Bow\Security\Security::class,
+            'Collection' => \Bow\Support\Collection::class
+        ];
+    }
 }
