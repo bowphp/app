@@ -4,12 +4,11 @@
  | simple et robuste
  */
 
-/**
 use \Bow\Application\Actionner;
 
-$middleware = [
-    'middleware' => ['ip']
-];
-
-Actionner::call($middleware, [], config()->getNamespace());
-*/
+if (request()->isPost() || request()->isPut()) {
+    $middleware = [
+        'middleware' => ['csrf']
+    ];
+    Actionner::call($middleware, request()->getParameters(), config()->getNamespace());
+}

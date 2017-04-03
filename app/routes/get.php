@@ -4,4 +4,4 @@ $app->get("/", function() {
     return view("welcome");
 });
 
-$app->get('/users', 'UsersController@index');
+$app->get('/json', 'UsersController@index');
