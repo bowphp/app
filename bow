@@ -386,21 +386,21 @@ doc;
 <?php
 namespace App\Middleware;
 
-use Bow\Database\Database as DB;
+use \Bow\Http\Request;
 
 class {$middlewareName}
 {
     /**
      * Fonction de lancement du middleware.
-     *
-     * @param mixed
+     * 
+     * @param Request \$request
+     * @param \\Closure \$next
      * @return boolean
      */
-    public function handle()
+    public function handle(Request \$request, \\Closure \$next)
     {
-        \$next = true;
-        // do something here
-        return \$next;
+        // code ici
+        return \$next();
     }
 }
 CM;
@@ -463,7 +463,7 @@ class {$controllerName} extends Controller
      */
     public function index(\$id = null)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -471,7 +471,7 @@ class {$controllerName} extends Controller
      */
     public function create()
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -479,7 +479,7 @@ class {$controllerName} extends Controller
      */
     public function store()
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -490,7 +490,7 @@ class {$controllerName} extends Controller
      */
     public function show(\$id = null)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -501,7 +501,7 @@ class {$controllerName} extends Controller
      */
     public function edit(\$id)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -512,7 +512,7 @@ class {$controllerName} extends Controller
      */
     public function update(\$id)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -523,7 +523,7 @@ class {$controllerName} extends Controller
      */
     public function destroy(\$id)
     {
-        // do something here.
+        // code ici
     }
 }
 CC;
@@ -603,7 +603,7 @@ class {$controllerName} extends Controller
      */
     public function index(\$id = null)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -613,7 +613,7 @@ class {$controllerName} extends Controller
      */
     public function create()
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -623,7 +623,7 @@ class {$controllerName} extends Controller
      */
     public function store()
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -636,7 +636,7 @@ class {$controllerName} extends Controller
      */
     public function show(\$id)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -649,7 +649,7 @@ class {$controllerName} extends Controller
      */
     public function edit(\$id)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -662,7 +662,7 @@ class {$controllerName} extends Controller
      */
     public function update(\$id)
     {
-        // do something here.
+        // code ici
     }
 
     /**
@@ -675,7 +675,7 @@ class {$controllerName} extends Controller
      */
     public function destroy(\$id)
     {
-        // do something here.
+        // code ici
     }
 }
 CC;

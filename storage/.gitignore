@@ -1,5 +1,7 @@
 logs/*
 cache/*
 app/*
+!sqlite/*
+sqlite/data.sqlite
 
 !.gitignore
