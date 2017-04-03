@@ -1,22 +1,26 @@
 <?php
 namespace App\Middleware;
 
+use Bow\Http\Request;
+
 class VerifyToken
 {
     /**
-     * Handler
+     * Fonction de lancement du middleware.
      *
-     * @return bool
+     * @param Request $request
+     * @param \Closure $next
+     * @return boolean
      */
-    public function handle()
+    public function handle(Request $request, \Closure $next)
     {
         if (! (request()->isPost() || request()->isPut())) {
-            return true;
+            return $next();
         }
 
         if (request()->isAjax()) {
             if (request()->getHeader('X-CSRF-TOKEN') === session('_token')) {
-                return true;
+                return $next();
             }
 
             return response('unauthorize.', 401);
@@ -26,6 +30,6 @@ class VerifyToken
             return false;
         }
 
-        return true;
+        return $next();
     }
 }
