@@ -3,9 +3,8 @@ return [
 
     // Liste de namespace valide de l'applicareqtion
     'namespace' => [
-        'controller' => 'App\\controllers',
-        'middleware' => 'App\\middleware',
-        'app'        => 'App\\Autoload',
+        'controller' => 'App\\Controllers',
+        'middleware' => 'App\\Middleware'
     ],
 
     // Liste de middleware

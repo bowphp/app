@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier de configuration de la classe réssource
+ | Fichier de configuration de la classe réssource
  */
 return [
     // Store location

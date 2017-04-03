@@ -40,7 +40,7 @@ class Appautoload
             'Res' => \Bow\Http\Response::class,
             'Input' => \Bow\Http\Input::class,
             'Secure' => \Bow\Security\Security::class,
-            'Collection' => \Bow\Support\Collection::class
+            'Cache' => \Bow\Session\Cache::class
         ];
     }
 }

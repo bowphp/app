@@ -15,7 +15,7 @@ return [
     // encodage
     'charset'  => 'utf8',
 
-    // mail authentification
+    // smtp authentification
     'smtp' => [
         'hostname' => 'hostname',
         'username' => 'username',
