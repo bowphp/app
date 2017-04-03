@@ -12,7 +12,7 @@ return [
     // * il faudra l'enregistré dans ce tableau avec le même de nom de classe
     // e.g: ['VerifyToken', 'autre nom de middleware']
     'middlewares' => [
-        'crsf' => 'VerifyToken'
+        'csrf' => 'VerifyToken'
         // 'Autre middleware'
     ],
 

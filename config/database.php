@@ -43,7 +43,7 @@ return [
     | Tel que sqlite par exemple.
     */
     'seconds' => [
-        'schema' => 'sqlite',
+        'scheme' => 'sqlite',
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => __DIR__.'/../storage/sqlite/data.sqlite',
