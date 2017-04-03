@@ -156,7 +156,7 @@ class Bow
             }
 
             static::verifiedParameter($param, $cmd, $argv);
-            $filename = $argv[1];
+            $filename = isset($argv[1]) ? $argv[1] : null;
 
             if ($param == "make") {
                 return static::createMigration($filename, $arg);
