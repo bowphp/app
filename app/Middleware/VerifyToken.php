@@ -8,18 +8,18 @@ class VerifyToken
     /**
      * Fonction de lancement du middleware.
      *
-     * @param Request $request
+     * @param \Bow\Http\Request $request
      * @param \Closure $next
      * @return boolean
      */
     public function handle(Request $request, \Closure $next)
     {
-        if (! (request()->isPost() || request()->isPut())) {
+        if (! ($request->isPost() || $request->isPut())) {
             return $next();
         }
 
-        if (request()->isAjax()) {
-            if (request()->getHeader('X-CSRF-TOKEN') === session('_token')) {
+        if ($request->isAjax()) {
+            if ($request->getHeader('X-CSRF-TOKEN') === session('_token')) {
                 return $next();
             }
 
@@ -27,7 +27,7 @@ class VerifyToken
         }
 
         if (input('_token', null) !== session('_token')) {
-            return false;
+            return response('Token Mismatch');
         }
 
         return $next();
