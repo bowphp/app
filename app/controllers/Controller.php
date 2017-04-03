@@ -59,4 +59,17 @@ class Controller
 	{
 		response()->redirect(url($url, $parameters));
 	}
+
+    /**
+     * Permet de charge une vue
+     *
+     * @param string $name
+     * @param array $data
+     * @param int $code
+     * @return mixed
+     */
+	public function view($name, array $data = [], $code = 200)
+    {
+        return view($name, $data, $code);
+    }
 }
