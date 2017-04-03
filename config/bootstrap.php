@@ -9,17 +9,37 @@
     'resource'    => require __DIR__ . '/resource.php'
 ]);
 
-// Configuration de la Request et de la Response
+/**
+ * Configuration de la Request et de la Response
+ */
 \Bow\Http\Response::configure(config());
-// Configuration du systeme de cache
-\Bow\Http\Cache::confirgure(config('cache').'/bow');
-// Configuration de la base de donnée
-\Bow\Database\Database::configure(config('db'));
-// Configuration de la resource de l'application.
-\Bow\Resource\Storage::configure(config('ftp'));
-// Configuration de Mail.
+
+/**
+ * Configuration de Mail.
+ */
 \Bow\Mail\Mail::configure(config('mail'));
-// Configuration de la Sécurité
-\Bow\Security\Security::setkey(config('key'));
-// Initialisation du token
+
+/**
+ * Initialisation du token
+ */
 \Bow\Security\Security::createCsrfToken();
+
+/**
+ * Configuration de la Sécurité
+ */
+\Bow\Security\Security::setkey(config('key'));
+
+/**
+ * Configuration de la base de donnée
+ */
+\Bow\Database\Database::configure(config('db'));
+
+/**
+ * Configuration du systeme de cache
+ */
+\Bow\Http\Cache::confirgure(config('cache').'/bow');
+
+/**
+ * Configuration de la resource de l'application
+ */
+\Bow\Resource\Storage::configure(config('resource'));

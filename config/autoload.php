@@ -1,5 +1,4 @@
 <?php
-namespace App\Configuration;
 
 class Appautoload
 {
@@ -20,7 +19,7 @@ class Appautoload
 		if (preg_match("/^App.+/", $class)) {
             $class = str_replace("\\", "/", $class);
             $class = str_replace("App/", "", $class);
-            $class = __DIR__ . '/' . ucfirst($class);
+            $class = __DIR__ . '/../' . ucfirst($class);
             require $class . ".php";
         }
 	}

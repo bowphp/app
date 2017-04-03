@@ -10,7 +10,7 @@ return [
     'fetch' => PDO::FETCH_OBJ,
 
     // La base séléctionné par defaut
-    'default' => 'first',
+    'default' => 'seconds',
 
     /**
      | La base de donnée sur laquelle se connectera l'application
@@ -46,7 +46,7 @@ return [
         'schema' => 'sqlite',
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => __DIR__.'/../storage/sqlite/database.sqlite',
+            'database' => __DIR__.'/../storage/sqlite/data.sqlite',
             'prefix' => ''
         ]
     ]
