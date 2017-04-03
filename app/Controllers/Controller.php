@@ -1,20 +1,12 @@
 <?php
-namespace App\controllers;
+namespace App\Controllers;
 
 class Controller
 {
 	/**
-	 * Exemple
-	 *
-	 * @var array
-	 */
-	protected $paginate = [
-	];
-
-	/**
 	 * @var string
 	 */
-	protected $middlewareBaseNamespace = "App\\middleware";
+	protected $middlewareBaseNamespace = "App\\Middleware";
 
 	/**
 	 * Lanceur de middleware

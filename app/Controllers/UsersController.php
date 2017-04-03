@@ -1,5 +1,5 @@
 <?php
-namespace App\controllers;
+namespace App\Controllers;
 
 class UserController extends Controller
 {
@@ -12,18 +12,18 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Start point
+	 * Action permettant d'afficher la page d'index
 	 *
 	 * @return mixed
 	 */
 	public function index()
 	{
 		// do something here
-		return json(["message" => "hello world"]);
+		return json(["message" => "Merci d'utiliser bow framework"]);
 	}
 
 	/**
-	 * Add information
+	 * Action permettant d'ajouter un utilisateur
 	 *
 	 * @return mixed
 	 */
@@ -33,7 +33,8 @@ class UserController extends Controller
 	}
 
 	/**
-	 * get all information
+	 * Action permettant de récupérer un utilisateur dans la base de donnée
+     *
 	 * @param mixed $id [optional]
 	 * @return mixed
 	 */
@@ -43,7 +44,8 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Update data
+	 * Action permettant de mettre à jour un utilisateur
+     *
 	 * @param mixed $id
 	 * @return mixed
 	 */
@@ -53,7 +55,8 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Delete data
+	 * Action permettant de supprimer un utilisateur
+     *
 	 * @param mixed $id
 	 * @return mixed
 	 */
