@@ -1,6 +1,9 @@
 <?php
 namespace App\Controllers;
 
+use Bow\Application\Actionner;
+use Bow\Http\Request;
+
 class Controller
 {
     /**
@@ -30,14 +33,7 @@ class Controller
             throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
         }
 
-        $class = new $middleware();
-        $next =  call_user_func_array([$class, "handle"], array_slice(func_get_args(), 1));
-
-        if (! $next) {
-            die();
-        }
-
-        return true;
+        return Actionner::call(['middleware' => $name], array_values((array) Request::$params), config()->getNamespace());
     }
 
     /**

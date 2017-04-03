@@ -1,16 +1,8 @@
 <?php
 namespace App\Controllers;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
-    /**
-     * Créer une nouvelle instance du controller
-     */
-    public function __construct()
-    {
-        $this->middleware("auth");
-    }
-
     /**
      * Action permettant d'afficher la page d'index
      *
@@ -19,7 +11,9 @@ class UserController extends Controller
     public function index()
     {
         // do something here
-        return json(["message" => "Merci d'utiliser bow framework"]);
+        return json([
+            "message" => "Merci d'utiliser bow framework"
+        ]);
     }
 
     /**
