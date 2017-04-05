@@ -28,10 +28,10 @@ return [
         'scheme' => 'mysql',
         // la configuration de mysql
         'mysql' => [
-            'hostname' => 'hostname',
-            'username' => 'username',
-            'password' => 'userpassword',
-            'database' => 'database name',
+            'hostname' => 'localhost',
+            'username' => 'test',
+            'password' => 'test',
+            'database' => 'test',
             'charset'  => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'port' => null,
