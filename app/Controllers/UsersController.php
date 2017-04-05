@@ -11,9 +11,7 @@ class UsersController extends Controller
     public function index()
     {
         // do something here
-        return json([
-            "message" => "Merci d'utiliser bow framework"
-        ]);
+        return json(['message' => 'Merci d\'utiliser bow']);
     }
 
     /**
@@ -29,10 +27,10 @@ class UsersController extends Controller
     /**
      * Action permettant de récupérer un utilisateur dans la base de donnée
      *
-     * @param mixed $id [optional]
+     * @param mixed $id
      * @return mixed
      */
-    public function get($id = null)
+    public function get($id)
     {
         // do something here.
     }
