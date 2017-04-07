@@ -10,7 +10,7 @@ return [
     'fetch' => PDO::FETCH_OBJ,
 
     // La base séléctionné par defaut
-    'default' => 'seconds',
+    'default' => 'first',
 
     /**
      | La base de donnée sur laquelle se connectera l'application
