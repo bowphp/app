@@ -3,7 +3,7 @@ return [
 
     // Liste de namespace valide de l'applicareqtion
     'namespace' => [
-        'controller' => 'App\\Controller',
+        'controller' => 'App\\Controllers',
         'middleware' => 'App\\Middleware'
     ],
 

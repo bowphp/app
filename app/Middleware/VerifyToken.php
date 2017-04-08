@@ -1,8 +1,6 @@
 <?php
 namespace App\Middleware;
 
-use Bow\Http\Request;
-
 class VerifyToken
 {
     /**
@@ -12,7 +10,7 @@ class VerifyToken
      * @param \Closure $next
      * @return boolean
      */
-    public function handle(Request $request, \Closure $next)
+    public function handle($request, \Closure $next)
     {
         if (! ($request->isPost() || $request->isPut())) {
             return $next();

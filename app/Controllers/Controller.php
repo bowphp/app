@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controllers;
 
 use Bow\Application\Actionner;
 use Bow\Http\Request;
