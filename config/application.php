@@ -41,20 +41,13 @@ return (object) [
     // Extension des pages de vues
     'template_extension' => '.twig',
 
-    // Le chemin vers les fichiers statics
-    'static_files_directory' => '/',
-
-    // Permet de dire à l'application si vous voulez en
-    // première argumment des CLOSURES ou des methodes des controllers,
-    // une instance de la classe Application, 'POUR DES PROBLEMES DE SCOPE'
-    'instance_of_application_in_function' => false,
-
     // Le repertoire de cache.
     // quand le cache sera remplit c'est à vous de le vidé
     'template_cache_folder' => dirname(__DIR__) . '/storage/cache',
 
     // active le systeme réchargé de cache.
     // Quand la valeur est à true
+    // Disponible seulement pour twig
     'template_auto_reload_cache_views' => true,
 
     // Le repertoire des vues. C'est dans ce repertoire que
@@ -62,6 +55,9 @@ return (object) [
     // Les vues doivent avoir l' instantion que vous avez définir
     // dans 'template_extension' si non erreur sera lancé
     'views_path' => dirname(__DIR__) . '/app/views',
+
+    // Le chemin vers les fichiers statics
+    'static_files_directory' => '/',
 
     // Liste des **namespaces** valident de votre application
     // * concernant les middleware

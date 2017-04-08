@@ -12,7 +12,7 @@
 /**
  * Configuration de la Request et de la Response
  */
-\Bow\Http\Response::configure(config());
+\Bow\Http\Response::configure(config('view path'));
 
 /**
  * Configuration de Mail.
@@ -43,3 +43,8 @@
  * Configuration de la resource de l'application
  */
 \Bow\Resource\Storage::configure(config('resource'));
+
+/**
+ * Configuration du charger de vue
+ */
+\Bow\View\View::configure(config());
