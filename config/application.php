@@ -17,8 +17,14 @@ return (object) [
     // e.g '/app'
     'app_root' => '',
 
-    // La local
+    // La Zone local
     'timezone' => 'Africa/Abidjan',
+
+    // La lang par défaut du site
+    'lang' => 'fr',
+
+    // Spécification du répègittoire des langs
+    'translate_directory' => __DIR__.'/../lang',
 
     // Repertoire de log
     'log_direcotory_name' => dirname(__DIR__) . '/storage/logs',
@@ -32,10 +38,11 @@ return (object) [
     // chargera ce fichier.
     'not_found_file_name' => dirname(__DIR__) . '/app/views/404.php',
 
-    // Template par defaut utiliser par Bow. Le systeme implement 3 moteur de template
-    // Valeur possible (supported): twig, mustache, jade, php
+    // Template par defaut utiliser par Bow.
+    // Le système implement 3 moteur de template
+    // Valeur possible (supported): twig, mustache, pug, php
     // - Le nom du package mustache: mustache/mustache
-    // - Le nom du package jade: kylekatarnls/jade-php
+    // - Le nom du package pug: kylekatarnls/pug-php
     'template_engine' => 'twig',
 
     // Extension des pages de vues
