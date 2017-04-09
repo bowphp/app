@@ -48,3 +48,8 @@
  * Configuration du charger de vue
  */
 \Bow\View\View::configure(config());
+
+/**
+ * Configuration de translator
+ */
+\Bow\Translate\Translator::configure(config()->getDefaultLang(), config()->getTranslateDirectory());

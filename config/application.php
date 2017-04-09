@@ -27,7 +27,7 @@ return (object) [
     'translate_directory' => __DIR__.'/../lang',
 
     // Repertoire de log
-    'log_direcotory_name' => dirname(__DIR__) . '/storage/logs',
+    'log_directory_name' => dirname(__DIR__) . '/storage/logs',
 
     // En cas d'utilisation de token. Ceci est le temps de vie d'un token.
     // il est vivement conseil de programmer avec des tokens.
