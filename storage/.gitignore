@@ -1,7 +1,8 @@
 logs/*
-cache/*
-app/*
-!sqlite/*
-sqlite/data.sqlite
-
+!app/.gitkeep
+cache/view/*
+cache/bow/*
+!cache/view/.gitkeep
+!cache/bow/.gitkeep
+!sqlite/data.sqlite
 !.gitignore
