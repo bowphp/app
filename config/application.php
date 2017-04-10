@@ -42,7 +42,7 @@ return (object) [
     // Le système implement 3 moteur de template
     // Valeur possible (supported): twig, mustache, pug, php
     // - Le nom du package mustache: mustache/mustache
-    // - Le nom du package pug: kylekatarnls/pug-php
+    // - Le nom du package pug: pug-php/pug
     'template_engine' => 'twig',
 
     // Extension des pages de vues
