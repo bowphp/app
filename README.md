@@ -11,11 +11,15 @@ N'ésitez pas commencez maintenant.
 
 # Installer
 
+Pour installer une copie de Bow il vous faut d'abort installer [composer](https://getcomposer.org) ensuite vous lancez la commande suivant:
+> __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour se faire référez vous à la [docummentation](https://getcomposer.org/download) d'installation de composer.
+> Si vous n'etre pas familié à `composer`, nous vous invitons à parcourir un peut la documentation.
+
 ```
   $ php composer.phar create-project --prefer-dist papac/bow
 ```
 
-## NB: SVP s'il y a un bogue sur le projet veillez me contacté.
+## SVP s'il y a un bogue sur le projet veillez me contacté.
 
 # Contribution
 
@@ -25,3 +29,6 @@ Pour participer au project il faut:
 + Créer un branche qui aura le nom résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
 + Enfin faire un `pull-request`
+
+# Author
+> Franck Dakia <dakiafranck@gmail.com> &bull; [@franck_dakia](https://twitter.com/franck_dakia)
