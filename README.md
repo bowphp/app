@@ -5,7 +5,7 @@
 [![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg)](https://papac.github.com/bow)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/papac/bow/blob/master/LICENSE)
 
-Bow est un micro framework écrir pour les débutants qui veulent travail sur un projet un peut plus
+Bow est un micro framework écrire pour les débutants qui veulent travail sur un projet un peut plus
 grand.
 
 N'ésitez pas commencez maintenant.
@@ -13,12 +13,13 @@ N'ésitez pas commencez maintenant.
 # Installer
 
 Pour installer une copie de Bow il vous faut d'abort installer [composer](https://getcomposer.org) ensuite vous lancez la commande suivant:
-> __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
-> Si vous n'être pas familier à `composer`, nous vous invitons à parcourir un peut la documentation.
 
 ```sh
   $ php composer.phar create-project --prefer-dist papac/bow
 ```
+
+> __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
+> Si vous n'être pas familier à `composer`, nous vous invitons à parcourir un peut la documentation.
 
 # Contribution
 
