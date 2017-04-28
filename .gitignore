@@ -2,4 +2,5 @@ vendor/
 .idea/
 !.gitignore
 composer.lock
+node_modules
 

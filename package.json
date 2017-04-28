@@ -1,0 +1,38 @@
+{
+  "name": "bow",
+  "version": "1.0.0",
+  "description": "Build a bow application assets",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-csslint": "^1.0.0",
+    "gulp-uglify": "^2.1.2",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-cssmin": "^0.1.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-csslint": "^1.0.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "./node_modules/.bin/gulp default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/papac/bow.git"
+  },
+  "author": "Franck Dakia <dakiafranck@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/papac/bow/issues"
+  },
+  "homepage": "https://github.com/papac/bow#readme"
+}
