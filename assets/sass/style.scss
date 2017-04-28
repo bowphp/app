@@ -1,0 +1,50 @@
+$color: #bd362f;
+
+div#main {
+  position: relative;
+  margin: 10% auto;
+  width: 550px;
+  text-align: center;
+  font-family: 'Lato', 'console', monospace, serif, 'sans-serif';
+},
+
+span.i {
+  position: absolute;
+  font-style: italic;
+  font-size: 10px;
+  padding: 5px;
+  left: 0;
+  top: 0;
+}
+
+a {
+  font-size: 13px;
+  border-radius: 2px;
+  background-color: $color;
+  color: #fff;
+  font-weight: bold;
+  padding: 4px;
+  text-decoration: none;
+  &:hover {
+    background-color: #555;
+  }
+}
+
+.shell {
+  margin-bottom: 5px;
+  font-family: "Monaco", "Inconsolata", monospace;
+  color: #999;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #eee;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: left;
+}
+
+.f {
+  color: $color;
+  font-weight: bolder;
+  font-size: 80px;
+  width: auto;
+}

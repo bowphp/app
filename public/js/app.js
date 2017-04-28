@@ -1,0 +1,1 @@
+!function(){var o=document.querySelector("body");setTimeout(function(){o.style.backgroundColor="#bd362f",setTimeout(function(){o.style.backgroundColor="#fff"},1e3)},1e3)}();
