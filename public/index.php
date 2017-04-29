@@ -22,3 +22,5 @@ require __DIR__ . "/../app/routes/main.php";
 
 // Lancement de l'application
 $app->run();
+
+return $app;
