@@ -1,38 +1,20 @@
 {
-  "name": "bow",
-  "version": "1.0.0",
-  "description": "Build a bow application assets",
-  "main": "gulpfile.js",
-  "directories": {
-    "test": "tests"
-  },
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-csslint": "^1.0.0",
-    "gulp-uglify": "^2.1.2",
-    "gulp-imagemin": "^3.2.0",
-    "gulp-cssmin": "^0.1.7"
-  },
+  "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-csslint": "^1.0.0",
     "gulp-cssmin": "^0.1.7",
     "gulp-imagemin": "^3.2.0",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.1.2"
+    "gulp-uglify": "^2.1.2",
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "./node_modules/.bin/gulp default"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/papac/bow.git"
-  },
-  "author": "Franck Dakia <dakiafranck@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/papac/bow/issues"
-  },
-  "homepage": "https://github.com/papac/bow#readme"
+    "test": "./vendor/bin/phpunit",
+    "gulp": "./node_modules/.bin/gulp default",
+    "watch": "./node_modules/.bin/gulp watch",
+    "watch-js": "./node_modules/.bin/gulp watch-js",
+    "watch-sass": "./node_modules/.bin/gulp watch-sass"
+  }
 }
