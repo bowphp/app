@@ -26,6 +26,9 @@ return (object) [
     // Spécification du répègittoire des langs
     'translate_directory' => __DIR__.'/../lang',
 
+    // Log configuration
+    'display_html_log' => false,
+
     // Repertoire de log
     'log_directory_name' => dirname(__DIR__) . '/storage/logs',
 
