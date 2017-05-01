@@ -1,11 +1,11 @@
 <?php
 
-class ApplicationTest extends \Bow\Support\Test\BowTestCase
+class ApplicationTest extends \Bow\Support\Testing\BowTestCase
 {
     /**
      * @var string
      */
-    protected $base_url = 'http://localhost:5000/';
+    protected $base_url = 'http://localhost:5000';
 
     /**
      * @return mixed
@@ -23,7 +23,7 @@ class ApplicationTest extends \Bow\Support\Test\BowTestCase
      */
     public function testGetWelcome()
     {
-        $this->visite('GET', '/')
+        $this->visit('GET', '/')
             ->statusCodeMustBe(200)
             ->contentTypeMustBe('text/html');
     }
@@ -31,9 +31,9 @@ class ApplicationTest extends \Bow\Support\Test\BowTestCase
     /**
      * @depends testApplicationInstance
      */
-    public function testGetJsonForIUsersControllerIndexAction()
+    public function testGetWelcomeJson()
     {
-        $this->visite('GET', '/json')
+        $this->visit('GET', '/json')
             ->statusCodeMustBe(200)
             ->contentTypeMustBeJson();
     }
