@@ -2,7 +2,7 @@
     "name": "papac/bow",
     "description": "The bow Framework",
     "keywords": ["framework", "bow"],
-    "type": "projet",
+    "type": "project",
     "require": {
         "php": ">=5.6",
         "papac/framework": "dev-master",
@@ -11,7 +11,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Franck Dakia",
+            "name": "Franck DAKIA",
             "email": "dakiafranck@gmail.com",
             "role": "Lead developer"
         }
@@ -24,10 +24,14 @@
             "config/helper.php"
         ]
     },
-	"scripts": {
+    "scripts": {
         "post-create-project-cmd": [
             "php bow generate:key"
         ]
-	},
-    "minimum-stability": "dev"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    }
 }
