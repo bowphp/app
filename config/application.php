@@ -39,7 +39,7 @@ return (object) [
     // chemin du fichier 404
     // Quand une uri est invalide, alors Bow
     // chargera ce fichier.
-    'not_found_file_name' => dirname(__DIR__) . '/app/views/404.php',
+    'not_found_file_name' => 'errors.404',
 
     // Template par defaut utiliser par Bow.
     // Le système implement 3 moteur de template
