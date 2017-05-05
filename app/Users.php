@@ -10,5 +10,5 @@ class Users extends Model
 	 *
 	 * @var string
 	 */
-	public static $table = "users";
+	protected $table = "users";
 }
