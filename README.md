@@ -25,7 +25,8 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 
 Pour participer au projet il faut:
 
-+ Cloner le projet `git clone https://github.com/papac/bow`
++ Fork le projet afin qu'il soit parmi les repertoires de votre compte github ex :`https://github.com/votre-compte/bow`
++ Cloner le projet depuis votre compte github `git clone https://github.com/votre-crompte/bow`
 + Créer un branche qui aura pour nom le résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
 + Enfin faire un `pull-request`
