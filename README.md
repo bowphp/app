@@ -29,7 +29,7 @@ Pour participer au projet il faut:
 + Cloner le projet depuis votre compte github `git clone https://github.com/votre-crompte/bow`
 + Créer un branche qui aura pour nom le résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
-+ Enfin faire un `pull-request`
++ Enfin faire un [pull-request](https://www.thinkful.com/learn/github-pull-request-tutorial/Keep-Tabs-on-the-Project#Time-to-Submit-Your-First-PR)
 + Ce package dépend fortement du package [framework](https://github.com/papac/bow). Alors il faut bien considérer les modifications de [framework](https://github.com/papac/bow) qui se veut être indépendant.
 
 # Author
