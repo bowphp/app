@@ -45,7 +45,7 @@ class Controller
      */
     public function redirect($url, array $parameters = [])
     {
-        response()->redirect(url($url, $parameters));
+        return response()->redirect(url($url, $parameters));
     }
 
     /**
