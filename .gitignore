@@ -3,4 +3,4 @@ vendor/
 !.gitignore
 composer.lock
 node_modules
-
+migration/.registers
