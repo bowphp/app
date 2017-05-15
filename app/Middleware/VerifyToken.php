@@ -10,7 +10,7 @@ class VerifyToken
      * @param \Closure $next
      * @return boolean
      */
-    public function handle($request, \Closure $next)
+    public function checker($request, \Closure $next)
     {
         if (! ($request->isPost() || $request->isPut())) {
             return $next();
