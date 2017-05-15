@@ -1,12 +1,16 @@
 <?php
+use Bow\Application\Configuration;
+
 /**
  | Fichier de chargement global de configuration de l'application
  */
-\Bow\Application\Configuration::configure([
+Configuration::configure([
     'application' => require __DIR__ . '/application.php',
     'database'    => require __DIR__ . '/database.php',
     'mail'        => require __DIR__ . '/mail.php',
-    'resource'    => require __DIR__ . '/resource.php'
+    'resource'    => require __DIR__ . '/resource.php',
+    'envfile'	  => __DIR__.'/../.envfile.json',
+    'app_base_dirname' => __DIR__.'/../'
 ]);
 
 /**
