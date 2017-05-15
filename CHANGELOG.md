@@ -1,0 +1,1 @@
+## Bow application change log

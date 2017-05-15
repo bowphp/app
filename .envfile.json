@@ -1,0 +1,21 @@
+{
+	"MODE": "development",
+	"BASE_URL": "http://localhost",
+	"DB_DEFAULT": "first",
+
+	// Mysql
+	"MYSQL_HOSTNAME": "localhost",
+	"MYSQL_USERNAME": "test",
+	"MYSQL_PASSWORD": "test",
+	"MYSQL_CHARSET": "utf8",
+	"MYSQL_COLLATE": "utf8_unicode_ci",
+	"MYSQL_PREFIX": "",
+	
+	// Pour sqlite
+	"SQLITE_SCHEME": "sqlite",
+	"SQLITE_DRIVER": "sqlite",
+	"SQLITE_CHARSET": "utf8",
+	"SQLITE_PREFIX": ""
+	
+	// Vous pouvez ajout d'autre champs
+}
