@@ -4,7 +4,7 @@ return [
     // Liste de namespace valide de l'applicareqtion
     'namespace' => [
         'controller' => 'App\\Controllers',
-        'middleware' => 'App\\Middleware'
+        'firewall' => 'App\\Firewall'
     ],
 
     // Liste d'alias vers les principaux classes de Bow
@@ -21,12 +21,12 @@ return [
         'Cache' => \Bow\Http\Cache::class,
     ],
 
-    // Liste de middleware
-    // * ici quand vous générez un middleware
+    // Liste des fierwalls
+    // * ici quand vous générez un fierwall
     // * il faudra l'enregistré dans ce tableau avec le même de nom de classe
-    // e.g: ['csrf' => 'VerifyToken', 'autre nom de middleware']
-    'middlewares' => [
-        'csrf' => \App\Middleware\VerifyToken::class
+    // e.g: ['csrf' => 'VerifyToken', 'autre nom de fierwall']
+    'firewalls' => [
+        'csrf' => \App\Firewall\VerifyToken::class
     ],
 
     // autoload de l'application

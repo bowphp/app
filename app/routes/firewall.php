@@ -8,7 +8,7 @@ use \Bow\Application\Actionner;
 
 if (request()->isPost() || request()->isPut()) {
     $middleware = [
-        'middleware' => ['csrf']
+        'firewall' => ['csrf']
     ];
     Actionner::call($middleware, request()->getParameters(), config()->getNamespace());
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App\Middleware;
+namespace App\Firewall;
 
 class VerifyToken
 {

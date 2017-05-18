@@ -9,7 +9,7 @@ class Controller
     /**
      * @var string
      */
-    protected $middlewareBaseNamespace = "App\\Middleware";
+    protected $middlewareBaseNamespace = "App\\Firewall";
 
     /**
      * Lanceur de middleware
@@ -23,17 +23,17 @@ class Controller
     {
         $middleware = config()->getNamespace();
 
-        if (! array_key_exists($name, $middleware['middlewares'])) {
-            throw new \ErrorException('Le middleware ' . $name . ' n\'existe pas');
+        if (! array_key_exists($name, $middleware['firewalls'])) {
+            throw new \ErrorException('Le firewall ' . $name . ' n\'existe pas');
         }
 
-        $middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['middlewares'][$name]);
+        $middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['firewalls'][$name]);
 
         if (! class_exists($middleware)) {
-            throw new \ErrorException('Le middleware ' . $middleware . ' n\'existe pas');
+            throw new \ErrorException('Le firewall ' . $middleware . ' n\'existe pas');
         }
 
-        return Actionner::call(['middleware' => $name], array_values((array) Request::$params), config()->getNamespace());
+        return Actionner::call(['firewall' => $name], array_values((array) Request::$params), config()->getNamespace());
     }
 
     /**

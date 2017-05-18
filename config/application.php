@@ -69,13 +69,13 @@ return (object) [
     // Le chemin vers les fichiers statics
     'static_files_directory' => '/',
 
-    // Liste des **namespaces** valident de votre application
-    // * concernant les middleware
-    'classes' => require __DIR__.'/namespaces.php',
+    // Liste des **classes**
+    // * concernant les firewall et autre
+    'classes' => require __DIR__.'/classes.php',
 
     // Le mode de débogage de l'application
     // development | production
-    'debug'   => 'development',
+    'debug' => 'development',
 
     // clé de sécurité de l'application
     // Peut être régenerer par la commande
