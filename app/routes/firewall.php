@@ -1,6 +1,6 @@
 <?php
 /**
- | Le code ci-dessous sera un jeu de middleware qui vous permettra de mettre en place un firewall
+ | Le code ci-dessous sera un jeu de firwall
  | simple et robuste
  */
 
