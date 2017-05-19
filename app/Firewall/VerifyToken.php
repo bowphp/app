@@ -4,7 +4,7 @@ namespace App\Firewall;
 class VerifyToken
 {
     /**
-     * Fonction de lancement du middleware.
+     * Fonction de lancement du firewall.
      *
      * @param \Bow\Http\Request $request
      * @param \Closure $next
