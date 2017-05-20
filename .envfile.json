@@ -6,8 +6,11 @@
 	"MYSQL_HOSTNAME": "localhost",
 	"MYSQL_USERNAME": "test",
 	"MYSQL_PASSWORD": "test",
+	"MYSQL_DBMAME": "test",
 	"MYSQL_CHARSET": "utf8",
 	"MYSQL_COLLATE": "utf8_unicode_ci",
+	"MYSQL_PORT": 3306,
+	"MYSQL_SOCKET": null,
 	"MYSQL_PREFIX": "",
 
 	"SQLITE_SCHEME": "sqlite",

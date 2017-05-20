@@ -31,12 +31,12 @@ return [
             'hostname' => app_env('MYSQL_HOSTNAME', 'localhost'),
             'username' => app_env('MYSQL_USERNAME', 'test'),
             'password' => app_env('MYSQL_PASSWORD', 'test'),
-            'database' => app_env('MYSQL_NAME', 'test'),
+            'database' => app_env('MYSQL_DBMAME', 'test'),
             'charset'  => app_env('MYSQL_CHARSET', 'charset'),
             'collation' => app_env('MYSQL_COLLATION', 'utf8_unicode_ci'),
             'prefix' => app_env('MYSQL_PREFIX', ''),
-            'port' => app_env('MYSQL_PORT', ''),
-            'socket' => app_env('MYSQL_SOCKET', '')
+            'port' => app_env('MYSQL_PORT', 3306),
+            'socket' => app_env('MYSQL_SOCKET', null)
         ]
     ],
     /**
