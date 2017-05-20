@@ -12,5 +12,4 @@
 |
 |   Suivez l'exemple suivant, il vous donne un aperçu sur comment ça fonction en général.
 */
-require __DIR__.'/firewall.php';
 require __DIR__.'/get.php';

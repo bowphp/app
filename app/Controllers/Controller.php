@@ -1,39 +1,40 @@
 <?php
 namespace App\Controllers;
 
-use Bow\Application\Actionner;
 use Bow\Http\Request;
+use Bow\Application\Actionner;
 
 class Controller
 {
     /**
-     * @var string
+     * Controller construct.
      */
-    protected $middlewareBaseNamespace = "App\\Firewall";
+    public function __construct()
+    {
+        $this->firewall('csrf');
+    }
 
     /**
-     * Lanceur de middleware
+     * Lanceur de firewall
      *
      * @param string $name Le nom de middelware.
      * @return mixed
      *
      * @throws \ErrorException
      */
-    public function middleware($name)
+    public function firewall($name)
     {
-        $middleware = config()->getNamespace();
+        $firewall = config()->getNamespace();
 
-        if (! array_key_exists($name, $middleware['firewalls'])) {
+        if (! array_key_exists($name, $firewall['firewalls'])) {
             throw new \ErrorException('Le firewall ' . $name . ' n\'existe pas');
         }
 
-        $middleware = $this->middlewareBaseNamespace . "\\" . ucfirst($middleware['firewalls'][$name]);
-
-        if (! class_exists($middleware)) {
-            throw new \ErrorException('Le firewall ' . $middleware . ' n\'existe pas');
-        }
-
-        return Actionner::call(['firewall' => $name], array_values((array) Request::$params), config()->getNamespace());
+        return Actionner::call(
+            ['firewall' => $name], 
+            array_values((array) Request::$params),
+            config()->getNamespace()
+        );
     }
 
     /**
