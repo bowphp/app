@@ -8,7 +8,7 @@
 |
 */
 
-return (object) [
+return [
 
     // Nom de l'Application
     'app_name' => 'The Bow Framework',
@@ -25,9 +25,6 @@ return (object) [
 
     // Spécification du répègittoire des langs
     'translate_directory' => __DIR__.'/../lang',
-
-    // Log configuration
-    'display_html_log' => false,
 
     // Repertoire de log
     'log_directory_name' => dirname(__DIR__) . '/storage/logs',
@@ -80,5 +77,8 @@ return (object) [
     // clé de sécurité de l'application
     // Peut être régenerer par la commande
     // <code> `php bow generate:key` </code>
-    'app_key' => __DIR__ . '/.key'
+    'app_key' => __DIR__ . '/.key',
+
+    // la methode Encrypt
+    'cipher' => 'AES-256-CBC'
 ];

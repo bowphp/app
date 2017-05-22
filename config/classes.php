@@ -12,7 +12,7 @@ return [
     // * il faudra l'enregistré dans ce tableau avec le même de nom de classe
     // e.g: ['csrf' => '\App\Firewall\TestFirewall', 'autre nom de fierwall']
     'firewalls' => [
-        'test' => \App\Firewall\TestFirewall
+        'test' => App\Firewall\TestFirewall::class
     ],
 
     // autoload de l'application

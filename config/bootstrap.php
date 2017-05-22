@@ -35,7 +35,7 @@ $config->setAllConfiguration([
 /**
  * Configuration de la Sécurité
  */
-\Bow\Security\Security::setkey($config->getAppkey());
+\Bow\Security\Security::setkey($config->getAppkey(), $config->getCipher());
 
 /**
  * Configuration de la base de donnée
