@@ -3,7 +3,7 @@ use \Bow\Database\Migration\Fields;
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
 
-class Users extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * create Table
