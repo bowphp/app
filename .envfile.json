@@ -21,5 +21,13 @@
 	"S3_KEY": "",
 	"S3_SECRET": "",
 	"S3_REGION": "",
-	"S3_BUCKET": ""
+	"S3_BUCKET": "",
+
+	"FTP_HOSTNAME": "localhost",
+	"FTP_PASSWORD": "password",
+	"FTP_USERNAME": "username",
+	"FTP_PORT": 21,
+	"FTP_STARTROOT": null,
+	"FTP_TLS": false, 
+	"FTP_TIMEOUT": 50
 }
