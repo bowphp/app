@@ -16,5 +16,10 @@
 	"SQLITE_SCHEME": "sqlite",
 	"SQLITE_DRIVER": "sqlite",
 	"SQLITE_CHARSET": "utf8",
-	"SQLITE_PREFIX": ""
+	"SQLITE_PREFIX": "",
+
+	"S3_KEY": "",
+	"S3_SECRET": "",
+	"S3_REGION": "",
+	"S3_BUCKET": ""
 }
