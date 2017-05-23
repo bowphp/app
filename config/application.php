@@ -1,11 +1,8 @@
 <?php
-/*-------------------------------------------------------------
-| Configuration de l'application
-|--------------------------------------------------------------
-|
-| On retourne la configuration que php utilisera pour
-| lancer la configuration initiale de vap
-|
+/**
+Configuration de l'application
+On retourne la configuration que php utilisera pour
+lancer la configuration initiale de vap
 */
 
 return [
