@@ -30,11 +30,7 @@ class Controller
             throw new \ErrorException('Le firewall ' . $name . ' n\'existe pas');
         }
 
-        return Actionner::call(
-            ['firewall' => $name], 
-            array_values((array) Request::$params),
-            config()->getNamespace()
-        );
+        return Actionner::call(['firewall' => $name], [request()], config()->getNamespace());
     }
 
     /**
@@ -46,7 +42,7 @@ class Controller
      */
     public function redirect($url, array $parameters = [])
     {
-        return response()->redirect(url($url, $parameters));
+        return redirect(url($url, $parameters));
     }
 
     /**
