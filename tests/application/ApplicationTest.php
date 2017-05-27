@@ -27,14 +27,4 @@ class ApplicationTest extends \Bow\Support\Testing\BowTestCase
             ->statusCodeMustBe(200)
             ->contentTypeMustBe('text/html');
     }
-
-    /**
-     * @depends testApplicationInstance
-     */
-    public function testGetWelcomeJson()
-    {
-        $this->visit('GET', '/json')
-            ->statusCodeMustBe(200)
-            ->contentTypeMustBeJson();
-    }
 }
