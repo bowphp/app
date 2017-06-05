@@ -1,27 +1,30 @@
 <?php
 /**
-| Configuration de la base donnée.
-| On retourne la configuration
-| des bases de données utilisées par l'application.
-| support mysql
-*/
+ * Configuration de la base donnée.
+ * On retourne la configuration
+ * des bases de données utilisées par l'application.
+ * support mysql
+ */
 return [
-    // Fetch mode.
+    /**
+     * Fetch mode.
+     */
     'fetch' => PDO::FETCH_OBJ,
 
-    // La base séléctionné par defaut
+    /**
+     * La base séléctionné par defaut
+     */
     'default' => app_env('DB_DEFAULT', 'first'),
 
     /**
-     | La base de donnée sur laquelle se connectera l'application
-     | par défaut
-     | La base de donnée par defaut, c'est sur cette base de donnée que vap va
-     | se connecte automatique. Alors vous ne devez absolument
-     | pas modifier la cle 'default'.
-     | Dans le case contraire vous devez executer le code
-     | dans chaque route.
-     | `db('le nom de cle')` or
-     | `Bow\Database\Database::connection('le nom de la clé')`
+     * La base de donnée sur laquelle se connectera l'application par défaut
+     * La base de donnée par defaut, c'est sur cette base de donnée que vap va
+     * se connecte automatique. Alors vous ne devez absolument pas modifier
+     * la cle 'default'.
+     *
+     * Dans le case contraire vous devez executer le code dans chaque route.
+     * `db('le nom de cle')` or
+     * `Bow\Database\Database::connection('le nom de la clé')`
      */
     'first' => [
         // represente sur quel SGDB le site va se connecté.
@@ -39,10 +42,11 @@ return [
             'socket' => app_env('MYSQL_SOCKET', null)
         ]
     ],
+
     /**
-    | La definition d'une autre base de donnee.
-    | Tel que sqlite par exemple.
-    */
+     * La definition d'une autre base de donnee.
+     * Tel que sqlite par exemple.
+     */
     'seconds' => [
         'scheme' => app_env('SQLITE_SCHEME', 'sqlite'),
         'sqlite' => [
