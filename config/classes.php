@@ -25,6 +25,5 @@ return [
         /**
          * Mettez ici vos service.
          */
-        App\Services\HelloService::class
     ]
 ];
