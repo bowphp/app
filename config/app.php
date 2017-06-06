@@ -29,7 +29,7 @@ return [
     'static' => '/',
 
     /**
-     * Liste des **classes**
+     * Liste des classes
      * concernant les firewall et autre
      */
     'classes' => require __DIR__.'/classes.php',

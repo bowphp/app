@@ -1,21 +1,27 @@
 <?php
 /**
-| Configuration du service de mail
-|
-| On retourne la configuration
-| que l'application utilisera pour
-| Gérer l'envoye de mail.
-*/
+ * Configuration du service de mail
+ *
+ * On retourne la configuration
+ * que l'application utilisera pour
+ * Gérer l'envoye de mail.
+ */
 return [
-    // Le type de service utiliser pour l'envoye de mail
-    // supporté: mail, smtp
-    // Si smtp est définie alors les clés password et username doivent avoir des values.
+    /**
+     * Le type de service utiliser pour l'envoye de mail
+     * supporté: mail, smtp
+     * Si smtp est définie alors les clés password et username doivent avoir des values.
+     */
     'driver' => 'smtp',
 
-    // encodage
+    /**
+     * Encodage
+     */
     'charset'  => 'utf8',
 
-    // smtp authentification
+    /**
+     * smtp authentification
+     */
     'smtp' => [
         'hostname' => 'hostname',
         'username' => 'username',
@@ -26,7 +32,9 @@ return [
         'timeout'  => 50,
     ],
 
-    // mail authentification
+    /**
+     * mail authentification
+     */
     'mail' => [
         'default' => 'contact',
         'contact' => [

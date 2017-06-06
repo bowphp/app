@@ -1,6 +1,7 @@
 <?php
 
-// Vos helpers personnalisé
-event('user.created', function($user) {
-
-});
+if (! function_exists('see_hello')) {
+    function see_hello() {
+        echo 'hello, world.';
+    }
+}

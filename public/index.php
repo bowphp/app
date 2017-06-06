@@ -9,9 +9,8 @@ require_once __DIR__."/../config/bootstrap.php";
 
 use Bow\Application\Application;
 
-
 // Création de l'application
-$app = Application::make(config(), request(), response());
+$app = Application::make($config, request(), response());
 
 
 

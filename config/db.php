@@ -14,7 +14,7 @@ return [
     /**
      * La base séléctionné par defaut
      */
-    'default' => app_env('DB_DEFAULT', 'first'),
+    'default' => env('DB_DEFAULT', 'first'),
 
     /**
      * La base de donnée sur laquelle se connectera l'application par défaut
@@ -31,15 +31,15 @@ return [
         'scheme' => 'mysql',
         // la configuration de mysql
         'mysql' => [
-            'hostname' => app_env('MYSQL_HOSTNAME', 'localhost'),
-            'username' => app_env('MYSQL_USERNAME', 'test'),
-            'password' => app_env('MYSQL_PASSWORD', 'test'),
-            'database' => app_env('MYSQL_DBMAME', 'test'),
-            'charset'  => app_env('MYSQL_CHARSET', 'charset'),
-            'collation' => app_env('MYSQL_COLLATION', 'utf8_unicode_ci'),
-            'prefix' => app_env('MYSQL_PREFIX', ''),
-            'port' => app_env('MYSQL_PORT', 3306),
-            'socket' => app_env('MYSQL_SOCKET', null)
+            'hostname' => env('MYSQL_HOSTNAME', 'localhost'),
+            'username' => env('MYSQL_USERNAME', 'test'),
+            'password' => env('MYSQL_PASSWORD', 'test'),
+            'database' => env('MYSQL_DBMAME', 'test'),
+            'charset'  => env('MYSQL_CHARSET', 'charset'),
+            'collation' => env('MYSQL_COLLATION', 'utf8_unicode_ci'),
+            'prefix' => env('MYSQL_PREFIX', ''),
+            'port' => env('MYSQL_PORT', 3306),
+            'socket' => env('MYSQL_SOCKET', null)
         ]
     ],
 
@@ -48,12 +48,12 @@ return [
      * Tel que sqlite par exemple.
      */
     'seconds' => [
-        'scheme' => app_env('SQLITE_SCHEME', 'sqlite'),
+        'scheme' => env('SQLITE_SCHEME', 'sqlite'),
         'sqlite' => [
-            'driver' => app_env('SQLITE_DRIVER', 'sqlite'),
-            'database' => __DIR__.'/../storage/sqlite/data.sqlite',
-            'charset'  => app_env('SQLITE_CHARSET', 'sqlite'),
-            'prefix' => app_env('SQLITE_PREFIX', '')
+            'driver' => env('SQLITE_DRIVER', 'sqlite'),
+            'database' => dirname(__DIR__).'/storage/sqlite/data.sqlite',
+            'charset'  => env('SQLITE_CHARSET', 'sqlite'),
+            'prefix' => env('SQLITE_PREFIX', '')
         ]
     ]
 ];

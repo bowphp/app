@@ -1,63 +1,57 @@
 <?php
+use \Bow\Mail\Mail;
+use \Bow\View\View;
+use \Bow\Http\Cache;
+use \Bow\Resource\Storage;
+use \Bow\Security\Security;
+use \Bow\Database\Database;
+use \Bow\Translate\Translator;
 use \Bow\Application\Configuration;
 
 /**
- | Fichier de chargement global de configuration de l'application
+ * Fichier de chargement global de configuration de l'application
  */
-
-$config = Configuration::configure([
-	'envfile'	  => __DIR__.'/../.envfile.json',
-	'app_base_dirname' => __DIR__.'/../'
-]);
-
-$config->setAllConfiguration([
-	'application' => require __DIR__.'/application.php',
- 	'database'    => require __DIR__.'/database.php',
-	'mail'        => require __DIR__.'/mail.php',
-	'resource'    => require __DIR__.'/resource.php'
-]);
-
-/**
- * Configuration de la Request et de la Response
- */
-\Bow\Http\Response::configure($config->getViewpath());
+$config = Configuration::configure(__DIR__.'/../');
 
 /**
  * Configuration de Mail.
  */
-\Bow\Mail\Mail::configure($config->getMailConfiguration());
+Mail::configure($config['mail']);
 
 /**
  * Initialisation du token
+ * et Configuration de la Sécurité
  */
-\Bow\Security\Security::createCsrfToken();
-
-/**
- * Configuration de la Sécurité
- */
-\Bow\Security\Security::setkey($config->getAppkey(), $config->getCipher());
+Security::setkey(
+    $config['security.key'],
+    $config['security.cipher']
+);
+Security::createCsrfToken();
 
 /**
  * Configuration de la base de donnée
  */
-\Bow\Database\Database::configure($config->getDatabaseConfiguration());
+Database::configure($config['db']);
 
 /**
  * Configuration du systeme de cache
  */
-\Bow\Http\Cache::confirgure($config->getCachepath().'/bow');
+Cache::confirgure($config['resource.cache'].'/bow');
 
 /**
  * Configuration de la resource de l'application
  */
-\Bow\Resource\Storage::configure($config->getResourceConfiguration());
+Storage::configure($config['resource']);
 
 /**
  * Configuration du charger de vue
  */
-\Bow\View\View::configure($config);
+View::configure($config);
 
 /**
  * Configuration de translator
  */
-\Bow\Translate\Translator::configure($config->getDefaultLang(), $config->getTranslateDirectory());
+Translator::configure(
+    $config['trans.lang'],
+    $config['trans.directory']
+);

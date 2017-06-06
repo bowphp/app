@@ -1,30 +1,46 @@
 <?php
 /**
- | Fichier de configuration de la classe réssource
+ * Fichier de configuration de la classe réssource
  */
 return [
-    // Store location
-    'storage' => __DIR__.'/../storage/app',
+    /**
+     * Store location
+     */
+    'storage' => dirname(__DIR__).'/storage/app',
 
-    // FTP configuration
+    /**
+     * Repertoire de log
+     */
+    'log' => dirname(__DIR__).'/storage/logs',
+
+    /**
+     * Repertoure de cache
+     */
+    'cache' => dirname(__DIR__).'/storage/cache',
+
+    /**
+     * FTP configuration
+     */
     'ftp' => [
-        'hostname' => app_env('FTP_HOSTNAME'),
-        'password' => app_env('FTP_PASSWORD'),
-        'username' => app_env('FTP_USERNAME'),
-        'port'     => app_env('FTP_PORT', 21),
-        'root' => app_env('FTP_STARTROOT', null), // Le dossier de base du serveur
-        'tls' => app_env('FTP_TLS', false), // A `true` pour activer une connection sécurisé.
-        'timeout' => app_env('FTP_TIMEOUT', 50) // Temps d'attente de connection
+        'hostname' => env('FTP_HOSTNAME'),
+        'password' => env('FTP_PASSWORD'),
+        'username' => env('FTP_USERNAME'),
+        'port'     => env('FTP_PORT', 21),
+        'root' => env('FTP_STARTROOT', null), // Le dossier de base du serveur
+        'tls' => env('FTP_TLS', false), // A `true` pour activer une connection sécurisé.
+        'timeout' => env('FTP_TIMEOUT', 50) // Temps d'attente de connection
     ],
 
-    // S3 configuration
+    /**
+     * S3 configuration
+     */
     's3' => [
         'credentials' => [
-            'key'    => app_env('S3_KEY'),
-            'secret' => app_env('S3_SECRET'),
+            'key'    => env('S3_KEY'),
+            'secret' => env('S3_SECRET'),
         ],
-        'bucket' => app_env('S3_BUCKET'),
-        'region' => app_env('S3_REGION'),
+        'bucket' => env('S3_BUCKET'),
+        'region' => env('S3_REGION'),
         'version' => 'latest'
     ]
 ];
