@@ -16,12 +16,12 @@ span.i {
 }
 
 a {
-  font-size: 13px;
-  border-radius: 2px;
+  font-size: 15px;
+  border-radius: 5px;
   background-color: $color;
   color: #fff;
   font-weight: bold;
-  padding: 4px;
+  padding: 10px;
   text-decoration: none;
   &:hover {
     background-color: #555;
@@ -36,8 +36,9 @@ a {
   border-radius: 5px;
   background-color: #eee;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 17px;
   text-align: left;
+  display: inline-block;
 }
 
 .f {
