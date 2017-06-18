@@ -2,8 +2,8 @@
 use \Bow\Mail\Mail;
 use \Bow\View\View;
 use \Bow\Http\Cache;
+use \Bow\Security\Crypto;
 use \Bow\Resource\Storage;
-use \Bow\Security\Security;
 use \Bow\Database\Database;
 use \Bow\Translate\Translator;
 use \Bow\Application\Configuration;
@@ -22,11 +22,10 @@ Mail::configure($config['mail']);
  * Initialisation du token
  * et Configuration de la Sécurité
  */
-Security::setkey(
+Crypto::setkey(
     $config['security.key'],
     $config['security.cipher']
 );
-Security::createCsrfToken();
 
 /**
  * Configuration de la base de donnée
