@@ -1,1 +1,1 @@
-!function(){var o=document.querySelector("body");setTimeout(function(){o.style.backgroundColor="#bd362f",setTimeout(function(){o.style.backgroundColor="#fff"},1e3)},1e3)}();
+!function(){$("body").css("background-color","#bd362f").animate({backgroundColor:"#fff"})}();
