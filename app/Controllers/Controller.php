@@ -7,14 +7,6 @@ use Bow\Application\Actionner;
 class Controller
 {
     /**
-     * Controller construct.
-     */
-    public function __construct()
-    {
-        $this->firewall('csrf');
-    }
-
-    /**
      * Lanceur de firewall
      *
      * @param string $name Le nom de middelware.
@@ -24,13 +16,13 @@ class Controller
      */
     public function firewall($name)
     {
-        $firewall = config()->getNamespace();
+        $firewall = config('app.classes.firewalls');
 
-        if (! array_key_exists($name, $firewall['firewalls'])) {
+        if (! array_key_exists($name, $firewall)) {
             throw new \ErrorException('Le firewall ' . $name . ' n\'existe pas');
         }
 
-        return Actionner::call(['firewall' => $name], [request()], config()->getNamespace());
+        return Actionner::call(['firewall' => $name], [request()], config('app.classes.namespace'));
     }
 
     /**
@@ -39,6 +31,7 @@ class Controller
      *
      * @param mixed $url
      * @param array $parameters
+     * @return mixed
      */
     public function redirect($url, array $parameters = [])
     {
