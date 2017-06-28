@@ -7,6 +7,39 @@ use Bow\Application\Configuration;
 abstract class EngineAbstract
 {
     /**
+     * Liste des helpers
+     */
+    const HELPERS = [
+        'secure' => 'secure',
+        'route' => 'route',
+        'bow_hash' => 'bow_hash',
+        'config' => 'config',
+        'faker' => 'faker',
+        'env' => 'env',
+        'app_mode' => 'app_mode',
+        'app_lang' => 'app_lang',
+        'flash' => 'flash',
+        'cache' => 'cache',
+        'encrypt' => 'encrypt',
+        'decrypt' => 'decrypt',
+        'collect' => 'collect',
+        'url' => 'url',
+        'get_header' => 'get_header',
+        'input' => 'input',
+        'response' => 'response',
+        'request' => 'request',
+        'sanitaze' => 'sanitaze',
+        'slugify' => 'sanitaze',
+        'session' => 'session',
+        'form' => 'form',
+        'csrf_token' => 'csrf_token',
+        'csrf_field' => 'csrf_field',
+        'trans' => 'trans',
+        'escape' => 'e',
+        'e' => 'e'
+    ];
+
+    /**
      * @var string
      */
     protected $name;

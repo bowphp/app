@@ -218,7 +218,11 @@ class Actionner
             $class = trim($match[1]);
 
             if (class_exists($class, true)) {
-                if (!in_array(strtolower($class), ['string', 'array', 'bool', 'int', 'integer', 'double', 'float', 'callable', 'object', 'stdclass', '\closure', 'closure'])) {
+                if (!in_array(strtolower($class), [
+                    'string', 'array', 'bool', 'int',
+                    'integer', 'double', 'float', 'callable',
+                    'object', 'stdclass', '\closure', 'closure'
+                ])) {
                     $params[] = new $class();
                 }
             }
