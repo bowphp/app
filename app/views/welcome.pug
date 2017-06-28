@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        meta(http-equiv="content-type", content="text/html; charset=utf-8")
+        link(rel="stylesheet", href="//fonts.googleapis.com/css?family=Lato:100" type="text/css")
+        link(rel="stylesheet", href="/css/style.css")
+        link(rel="icon", type="image/x-icon" href="/favicon.png")
+        link(rel="shortcut icon", type="image/x-icon" href="/favicon.png)
+        title rBow - worked
+    body
+        #main
+            header
+                h1
+                    span.f Bow.framework
+                span.i=$trans('welcome.message')
+            br
+            br
+            section
+                a(href="https://github.com/papac/bow.git", target="_blank") Fork me
+                a(href="https://papac.github.com/docs", target="_blank") Doc
+            br
+            br
+            .shell.
+                <span style="color: red">$</span> <span style="color: #478">composer</span> <span style="color: #bd362f">create-projet</span> <span style="color: #bd362f">--prefer-dist</span> papac/bow <span style="color: #478">App</span>
+            script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+            script(type="text/javascript", src="/js/app.js")
