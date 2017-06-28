@@ -4,3 +4,5 @@ vendor/
 composer.lock
 node_modules
 migration/.registers
+framework/.travis.yml
+storage
