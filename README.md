@@ -5,10 +5,10 @@
 <h4 align="center">The BOW PHP framework</h4>
 <br/>
 <p align="center">
-[![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square)](https://papac.github.com/bow)
-[![docs](https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square)](https://packagist.org/papac/bow)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/papac/bow/blob/master/LICENSE)
-[![Travis branch](https://img.shields.io/travis/papac/framework/master.svg?style=flat-square)](https://travis-ci.com/papac/framework)
+    <a href="https://papac.github.com/bow" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
+    <a href="https://packagist.org/papac/bow" title="version"><img src="https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square"/></a>
+    <a href="https://github.com/papac/bow/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
+    <a href="https://travis-ci.com/papac/framework" title="Travis branch"><img src="https://img.shields.io/travis/papac/framework/master.svg?style=flat-square"/></a>
 </p>
 
 Bow est un micro framework écrit pour les débutants qui veulent travailler sur un projet un peu plus
