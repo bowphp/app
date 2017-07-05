@@ -38,6 +38,17 @@ $app->get('/hello/:name', function($name) {
 });
 ```
 
+Dans votre navigateur et tapez `http://localhost:5000/hello/bow`. `5000` est le port par defaut quand vous faites `php bow serve`.
+```
+=>// hello world bow
+```
+
+Ou avec `curl`
+```
+$ curl http://localhost:5000/hello/bow
+=>// hello world bow
+```
+
 # Contribution
 
 Pour participer au projet il faut:
