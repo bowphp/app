@@ -3,7 +3,7 @@ namespace App;
 
 use Bow\Database\Model;
 
-class Users extends Model
+class User extends Model
 {
 	/**
 	 * Le nom de la table.

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function welcome()
     {
