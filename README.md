@@ -1,8 +1,9 @@
 <h1 align="center">
     <img src="https://github.com/papac/bow/blob/master/public/img/bow.jpg">
-    Bow
+    <br/>Bow
 </h1>
-<h4 align="center">The PHP framework</h4>
+<h4 align="center">The BOW PHP framework</h4>
+<br/>
 
 [![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square)](https://papac.github.com/bow)
 [![docs](https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square)](https://packagist.org/papac/bow)
