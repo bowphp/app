@@ -9,7 +9,7 @@
 Bow est un micro framework écrit pour les débutants qui veulent travailler sur un projet un peu plus
 grand.
 
-N'ésitez pas à commencez maintenant.
+N'hésitez pas à commencez maintenant.
 
 # Installer
 
@@ -20,7 +20,7 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 ```
 
 > __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
-> Si vous n'être pas familier à `composer`, nous vous invitons à parcourir un peu la documentation.
+> Si vous n'êtes pas familier à `composer`, nous vous invitons à parcourir la documentation.
 
 # Contribution
 
