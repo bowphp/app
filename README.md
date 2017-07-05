@@ -1,5 +1,8 @@
-## Bow The PHP framework
-> __Compile your avanture__
+<h1 align="center">
+    <img src="https://github.com/papac/bow/blob/master/public/img/bow.jpg">
+    Bow
+</h1>
+<h4 align="center">The PHP framework</h4>
 
 [![docs](https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square)](https://papac.github.com/bow)
 [![docs](https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square)](https://packagist.org/papac/bow)
