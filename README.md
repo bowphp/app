@@ -28,6 +28,16 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 > __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
 > Si vous n'êtes pas familier à `composer`, nous vous invitons à parcourir la documentation.
 
+# Test
+
+Dans le dossier `app/routes`, ouvrez le fichier `get.php` et ajoutez:
+
+```php
+$app->get('/hello/:name', function($name) {
+    return 'hello world '.$name;
+});
+```
+
 # Contribution
 
 Pour participer au projet il faut:
