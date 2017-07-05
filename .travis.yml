@@ -1,0 +1,37 @@
+language: php
+
+branches:
+  only:
+    - master
+
+sudo: false
+
+services:
+  - mysql
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 5.6
+  - 7.0
+  - nightly
+
+env:
+  - DB_USER=travis
+
+before_script:
+  - if [ ! -d ./framework/tests/data/cache ]; then mkdir -p ./framework/tests/data/cache; fi;
+  - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
+
+install:
+  - composer install --prefer-dist
+
+matrix:
+  allow_failures:
+    - php: nightly
+  fast_finish: true
+
+script:
+  - ./vendor/bin/phpunit --configuration framework/phpunit.xml --coverage-clover build/logs/clover.xml

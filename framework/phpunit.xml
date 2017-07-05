@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit colors="true" bootstrap="tests/bootstrap.php">
+    <testsuite>
+        <directory suffix=".php">tests/</directory>
+        <exclude>./tests/SessionTest.php</exclude>
+    </testsuite>
+    <php>
+        <env name="DB_PASSWORD" value="test"/>
+        <env name="DB_NAME" value="test"/>
+        <env name="DB_CHARSET" value="utf8"/>
+        <env name="DB_COLLATE" value="utf8_unicode_ci"/>
+    </php>
+</phpunit>

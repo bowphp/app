@@ -9,6 +9,17 @@ return [
     'storage' => dirname(__DIR__).'/storage/app',
 
     /**
+     * Store location utilisant le systeme de disk
+     */
+    'disk' =>[
+        'mount' => 'storage',
+        'path' => [
+            'storage' => dirname(__DIR__).'/storage/app',
+            'public' => dirname(__DIR__).'/public',
+        ]
+    ],
+
+    /**
      * Repertoire de log
      */
     'log' => dirname(__DIR__).'/storage/logs',

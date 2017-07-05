@@ -36,7 +36,7 @@ return [
      * Le repertoire de cache.
      * quand le cache sera remplit c'est à vous de le vidé
      */
-    'cache' => dirname(__DIR__) . '/storage/cache/view',
+    'cache' => dirname(__DIR__) . '/storage/cache',
 
     /**
      * active le systeme réchargé de cache.
