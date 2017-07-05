@@ -11,10 +11,11 @@
     <a href="https://travis-ci.com/papac/framework" title="Travis branch"><img src="https://img.shields.io/travis/papac/framework/master.svg?style=flat-square"/></a>
 </p>
 
-Bow est un micro framework écrit pour les débutants qui veulent travailler sur un projet un peu plus
-grand.
-
-N'hésitez pas à commencez maintenant.
+<p align="center">
+    Bow est un micro framework écrit pour les débutants qui veulent travailler sur un projet un peu plus grand.
+    <br>
+    <strong>N'hésitez pas à commencez maintenant.</strong>
+</p>
 
 # Installer
 
