@@ -1,1 +1,1 @@
-!function(){$("body").css("background-color","#bd362f").animate({backgroundColor:"#fff"})}();
+!function(){console.log("It works")}();
