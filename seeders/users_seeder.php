@@ -4,7 +4,7 @@ $seeds['users'] = [];
 
 foreach (range(1, 5) as $key) {
     $seeds['users'][] = [
-        'id' => faker('autoincrement', 1),
+        'id' => faker('autoincrement'),
         'name' => faker('name'),
         'description' => faker('string'),
         'email' => faker('email'),
