@@ -1,7 +1,7 @@
 <?php
-use \Bow\Database\Migration\Fields;
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
+use \Bow\Database\Migration\TablePrinter as Printer;
 
 class CreateUsersTable extends Migration
 {
@@ -10,7 +10,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create("users", function(Fields $table) {
+        Schema::create("users", function(Printer $table) {
             $table->increment('id');
             $table->string('name');
             $table->string('description');
