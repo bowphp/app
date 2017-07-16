@@ -1,4 +1,3 @@
 <?php
-require __DIR__.'/../src/BowAutoload.php';
+require __DIR__.'/../bow/BowAutoload.php';
 Bow\BowAutoload::register();
-session_start();

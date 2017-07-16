@@ -27,6 +27,7 @@ before_script:
 
 install:
   - composer install --prefer-dist
+  - composer require mustache/mustache pug-php/pug
 
 matrix:
   allow_failures:
