@@ -8,11 +8,11 @@
     <a href="https://papac.github.com/bow" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
     <a href="https://packagist.org/papac/bow" title="version"><img src="https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square"/></a>
     <a href="https://github.com/papac/bow/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
-    <a href="https://travis-ci.com/papac/framework" title="Travis branch"><img src="https://img.shields.io/travis/papac/framework/master.svg?style=flat-square"/></a>
+    <a href="https://travis-ci.com/papac/bow" title="Travis branch"><img src="https://img.shields.io/travis/papac/bow/master.svg?style=flat-square"/></a>
 </p>
 
 <p align="center">
-    Bow est un micro framework écrit Par la communauté __#Ayiyikoh__ pour les débutants qui veulent travailler sur un projet un peu plus grand.
+    Bow est un micro framework écrit Par la communauté <strong><a href="http://ayiyikoh.org">#Ayiyikoh</a></strong> et plusieurs autre contributeurs. Le but c'est de permetter aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer. Afin de comprendre les rouages du developpement collaboratif.
     <br>
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>
@@ -60,8 +60,10 @@ Pour participer au projet il faut:
 + Créer un branche qui aura pour nom le résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
 + Enfin faire un [pull-request](https://www.thinkful.com/learn/github-pull-request-tutorial/Keep-Tabs-on-the-Project#Time-to-Submit-Your-First-PR)
-+ Ce package dépend fortement du package [framework](https://github.com/papac/framework). Alors il faut bien considérer les modifications de [framework](https://github.com/papac/framework) qui se veut être indépendant.
 
-# Author
+# Authors
 > Franck Dakia <dakiafranck@gmail.com> &bull; [@franck_dakia](https://twitter.com/franck_dakia)
+> Ayiyikoh <fablab@ayiyikoh.org> &bull; [@ayiyikoh](https://twitter.com/ayiyikoh) hashtag: __#GoAyiyikoh__
+
+---
 > SVP s'il y a un bogue sur le projet veuillez me contacter.
