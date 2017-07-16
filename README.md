@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-    Bow est un micro framework écrit pour les débutants qui veulent travailler sur un projet un peu plus grand.
+    Bow est un micro framework écrit Par la communauté __#Ayiyikoh__ pour les débutants qui veulent travailler sur un projet un peu plus grand.
     <br>
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>

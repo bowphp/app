@@ -5,26 +5,36 @@
     "type": "project",
     "require": {
         "php": ">=5.6",
-        "papac/framework": "1.*",
+        "twig/twig": "^1.23",
+        "psr/log": "1.0.0",
+        "nesbot/carbon": "^1.21",
         "psy/psysh": "@stable"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8"
+        "phpunit/phpunit": "^4.8",
+        "monolog/monolog": "^1.22"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Franck DAKIA",
+            "name": "Franck Dakia",
             "email": "dakiafranck@gmail.com",
-            "role": "Lead developer"
+            "role": "Lead Developer"
+        },
+        {
+            "name": "Etchien Boa",
+            "email": "geekroot9@gmail.com",
+            "role": "Contributor"
         }
     ],
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Bow\\": "src/"
         },
         "files": [
-            "config/helper.php"
+            "config/helper.php",
+            "src/Support/helper.php"
         ]
     },
     "scripts": {
@@ -36,5 +46,9 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
+    },
+    "suggest": {
+        "mustache/mustache": "Pour le choix du moteur de template 'mustache'",
+        "pug-php/pug": "Pour le choix du moteur de template 'pug'"
     }
 }
