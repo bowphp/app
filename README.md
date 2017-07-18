@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-    Bow est un micro framework écrit Par la communauté <strong><a href="http://ayiyikoh.org">#Ayiyikoh</a></strong> et plusieurs autre contributeurs. Le but c'est de permetter aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer. Afin de comprendre les rouages du developpement collaboratif.
+    Bow est un micro framework écrit Par la communauté <strong><a href="http://ayiyikoh.org">#Ayiyikoh</a></strong> et plusieurs autre contributeurs. Le but c'est de permettre aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer. Afin de comprendre les rouages du developpement collaboratif.
     <br>
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>
