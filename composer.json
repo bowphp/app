@@ -41,7 +41,8 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "php bow generate:key"
+            "php bow generate:key",
+            "php -r 'copy(\".env-exemple.json\", \".env.json\")'"
         ]
     },
     "config": {
