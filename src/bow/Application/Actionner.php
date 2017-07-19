@@ -3,6 +3,8 @@ namespace Bow\Application;
 
 use Bow\Http\Response;
 use Bow\Application\Exception\RouterException;
+use function count;
+use function explode;
 
 class Actionner
 {
@@ -101,6 +103,7 @@ class Actionner
 
         // Collecteur de firewall
         $firewalls_collection = [];
+        $firewalls_guard = [];
 
         foreach ($firewalls as $firewall) {
             if (!is_string($firewall)) {
@@ -121,17 +124,27 @@ class Actionner
                 throw new RouterException($names['firewalls'][$firewall] . ' n\'est pas un class firewall.');
             }
 
+            // Make firewalls collection
             $firewalls_collection[] = $names['firewalls'][$firewall];
+            $parts = explode(':', $firewall, 2);
+
+            // Make guard collection
+            if (count($parts) == 2) {
+                $guard = $parts[1];
+                $firewalls_guard[] = $guard;
+            } else {
+                $firewalls_guard[] = null;
+            }
         }
 
         $next = false;
         // Exécution du firewall
-        foreach ($firewalls_collection as $firewall) {
+        foreach ($firewalls_collection as $key => $firewall) {
             $injections = static::injector($firewall, 'checker');
 
             $firewall_params = array_merge($injections, [function () use (& $next) {
                 return $next = true;
-            }], $param);
+            }, $firewalls_guard[$key]], $param);
 
             $status = call_user_func_array([new $firewall(), 'checker'], $firewall_params);
 
