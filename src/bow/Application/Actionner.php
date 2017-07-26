@@ -3,8 +3,6 @@ namespace Bow\Application;
 
 use Bow\Http\Response;
 use Bow\Application\Exception\RouterException;
-use function count;
-use function explode;
 
 class Actionner
 {
