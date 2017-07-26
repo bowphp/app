@@ -12,7 +12,7 @@ use Bow\Application\Application;
 $app = Application::make($config, request(), response());
 
 // Chargement des routeurs.
-require __DIR__ . "/../app/routes/main.php";
+require __DIR__ . "/../routes/main.php";
 
 // Lancement de l'application
 $app->run();
