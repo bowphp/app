@@ -35,6 +35,8 @@ class Hash
     }
 
     /**
+     * Permet de rehacher une value.
+     *
      * @param $hash
      * @param int $cost
      * @return bool
