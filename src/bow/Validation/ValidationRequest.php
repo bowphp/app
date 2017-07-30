@@ -21,7 +21,7 @@ abstract class ValidationRequest
     /**
      * @var Validate
      */
-    protected $validate;
+    private $validate;
 
     /**
      * @var array
@@ -35,11 +35,13 @@ abstract class ValidationRequest
 
     /**
      * TodoValidation constructor.
+     *
+     * @return void
      */
     public function __construct()
     {
         if (!$this->authorized()) {
-            $this->callAuthorizationFailAction();
+            return $this->authorizationFailAction();
         }
 
         $this->request = new Request();
@@ -51,17 +53,34 @@ abstract class ValidationRequest
         }
 
         $this->validate = Validator::make($this->data, $this->rules);
+
+        if ($this->validate->fails()) {
+            return $this->validationFailAction();
+        }
     }
 
     /**
      * @return bool
      */
-    public function authorized()
+    protected function authorized()
     {
         return true;
     }
 
-    public function callAuthorizationFailAction()
+    /**
+     * Quand l'utilisateur n'a pas l'authorization de lance cette requête
+     * C'est la methode qui est lancer pour bloquer l'utilisateur
+     */
+    protected function authorizationFailAction()
+    {
+        abort(500);
+    }
+
+    /**
+     * Quand l'utilisateur n'a pas l'authorization de lance cette requête
+     * C'est la methode qui est lancer pour bloquer l'utilisateur
+     */
+    protected function validationFailAction()
     {
         abort(500);
     }
@@ -69,7 +88,7 @@ abstract class ValidationRequest
     /**
      * Permet de verifier si la réquete
      */
-    public function fails()
+    protected function fails()
     {
         return $this->validate->fails();
     }
@@ -79,7 +98,7 @@ abstract class ValidationRequest
      *
      * @return Validate
      */
-    public function getValidation()
+    protected function getValidation()
     {
         return $this->validate;
     }
@@ -89,7 +108,7 @@ abstract class ValidationRequest
      *
      * @return string
      */
-    public function getMessage()
+    protected function getMessage()
     {
         return $this->validate->getLastMessage();
     }
@@ -99,7 +118,7 @@ abstract class ValidationRequest
      *
      * @return array
      */
-    public function getMessages()
+    protected function getMessages()
     {
         return $this->validate->getMessages();
     }
@@ -109,7 +128,7 @@ abstract class ValidationRequest
      *
      * @return array
      */
-    public function getValidationData()
+    protected function getValidationData()
     {
         return $this->data;
     }
@@ -119,7 +138,7 @@ abstract class ValidationRequest
      *
      * @throws \Bow\Validation\Exception\ValidationException;
      */
-    public function throwError()
+    protected function throwError()
     {
         $this->validate->throwError();
     }
