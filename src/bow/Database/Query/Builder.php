@@ -439,26 +439,26 @@ class Builder extends Tool implements \JsonSerializable
      * On, Si chainé avec lui même doit ajouter un <<and>> avant, sinon
      * si chainé avec <<orOn>> orOn ajout un <<or>> dévant
      *
-     * @param string $column1
+     * @param string $first
      * @param string $comp
-     * @param string $column2
+     * @param string $second
      *
      * @throws QueryBuilderException
      *
      * @return Builder
      */
-    public function on($column1, $comp = '=', $column2)
+    public function on($first, $comp = '=', $second = null)
     {
         if (is_null($this->join)) {
             throw new QueryBuilderException('La clause inner join est dèja initialisé.', E_ERROR);
         }
 
         if (!$this->isComporaisonOperator($comp)) {
-            $column2 = $comp;
+            $second = $comp;
         }
 
         if (!preg_match('/on/i', $this->join)) {
-            $this->join .= ' on `' . $column1 . '` ' . $comp . ' `' . $column2 . '`';
+            $this->join .= ' on `' . $first . '` ' . $comp . ' `' . $second . '`';
         }
 
         return $this;
@@ -669,7 +669,7 @@ class Builder extends Tool implements \JsonSerializable
         $s->execute();
 
         if ($s->rowCount() > 1) {
-            return $s->fetchAll();
+            return Sanitize::make($s->fetchAll());
         }
 
         return (int) $s->fetchColumn();
@@ -810,19 +810,11 @@ class Builder extends Tool implements \JsonSerializable
      * count
      *
      * @param string $column          La colonne sur laquelle sera faite le `count`
-     * @param callable $cb [optional] La fonction de rappel. Dans ou elle est définie
-     *                                elle récupère en paramètre une instance de DatabaseErrorHanlder
-     *                                et les données récupérés par la réquête.
      *
      * @return int
      */
-    public function count($column = '*', Callable $cb = null)
+    public function count($column = '*')
     {
-        if (is_callable($column)) {
-            $cb = $column;
-            $column = '*';
-        }
-
         if ($column != '*') {
             $column = '`' . $column . '`';
         }
@@ -841,11 +833,6 @@ class Builder extends Tool implements \JsonSerializable
         $stmt->execute();
 
         $r = $stmt->fetchColumn();
-
-        if (is_callable($cb)) {
-            call_user_func_array($cb, [$r]);
-        }
-
         return (int) $r;
     }
 
@@ -1214,7 +1201,7 @@ class Builder extends Tool implements \JsonSerializable
 
         // Ajout de la clause join
         if (!is_null($this->join)) {
-            $sql .= $this->join;
+            $sql .= ' ' . $this->join;
             $this->join = null;
         }
 
