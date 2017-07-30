@@ -8,6 +8,7 @@ use Bow\Database\SqlUnity;
 use Bow\Security\Sanitize;
 use Bow\Database\Collection;
 use Bow\Database\Exception\QueryBuilderException;
+use function explode;
 
 /**
  * Class Builder
@@ -40,12 +41,12 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * @var string
      */
-    private $select = null;
+    private $select;
 
     /**
      * @var string
      */
-    private $where = null;
+    private $where;
 
     /**
      * @var array
@@ -55,27 +56,27 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * @var string
      */
-    private $join = null;
+    private $join;
 
     /**
      * @var string
      */
-    private $limit = null;
+    private $limit;
 
     /**
      * @var string
      */
-    private $group = null;
+    private $group;
 
     /**
      * @var string
      */
-    private $havin = null;
+    private $havin;
 
     /**
      * @var string
      */
-    private $order = null;
+    private $order;
 
     /**
      * @var \PDO
@@ -86,6 +87,11 @@ class Builder extends Tool implements \JsonSerializable
      * @var bool
      */
     private $first = false;
+
+    /**
+     * @var string
+     */
+    private $prefix = '';
 
     /**
      * Contructeur
@@ -362,6 +368,8 @@ class Builder extends Tool implements \JsonSerializable
      */
     public function join($table, callable $callabe = null)
     {
+        $table = $this->getPrefix().$table;
+
         if (is_null($this->join)) {
             $this->join = 'inner join `'.$table.'`';
         } else {
@@ -386,6 +394,8 @@ class Builder extends Tool implements \JsonSerializable
      */
     public function leftJoin($table, callable $callable = null)
     {
+        $table = $this->getPrefix().$table;
+
         if (is_null($this->join)) {
             $this->join = 'left join `'.$table.'`';
             if (is_callable($callable)) {
@@ -416,6 +426,8 @@ class Builder extends Tool implements \JsonSerializable
      */
     public function rightJoin($table, callable $callable)
     {
+        $table = $this->getPrefix().$table;
+
         if (is_null($this->join)) {
             $this->join = 'right join `'.$table.'`';
             if (is_callable($callable)) {
@@ -457,8 +469,17 @@ class Builder extends Tool implements \JsonSerializable
             $second = $comp;
         }
 
+        if (count(explode('.', $first)) == 2) {
+            $first = $this->getPrefix().$first;
+        }
+        if (count(explode('.', $second)) == 2) {
+            $second = $this->getPrefix().$second;
+        }
+
         if (!preg_match('/on/i', $this->join)) {
             $this->join .= ' on `' . $first . '` ' . $comp . ' `' . $second . '`';
+        } else {
+            $this->join .= ' and `' . $first . '` ' . $comp . ' `' . $second . '`';
         }
 
         return $this;
@@ -468,30 +489,39 @@ class Builder extends Tool implements \JsonSerializable
      * clause On, suivie d'une combinaison par un comparateur <<or>>
      * Il faut que l'utilisateur fasse un <<on()>> avant d'utiliser le <<orOn>>
      *
-     * @param string $column
+     * @param string $first
      * @param string $comp
-     * @param string $value
+     * @param string $second
      *
      * @throws QueryBuilderException
      *
      * @return Builder
      */
-    public function orOn($column, $comp = '=', $value)
+    public function orOn($first, $comp = '=', $second)
     {
         if (is_null($this->join)) {
             throw new QueryBuilderException('La clause inner join est dèja initialisé.', E_ERROR);
         }
 
         if (!$this->isComporaisonOperator($comp)) {
-            $value = $comp;
+            $second = $comp;
         }
 
-        if (preg_match('/on/i', $this->join)) {
-            $this->join .= ' or `'.$column.'` '.$comp.' '.$value;
-            return $this;
+        if (!preg_match('/on/i', $this->join)) {
+            throw new QueryBuilderException('La clause <b>on</b> n\'est pas initialisé.', E_ERROR);
         }
 
-        throw new QueryBuilderException('La clause <b>on</b> n\'est pas initialisé.', E_ERROR);
+        if (count(explode('.', $first)) == 2) {
+            $first = $this->getPrefix().$first;
+        }
+
+        if (count(explode('.', $second)) == 2) {
+            $second = $this->getPrefix().$second;
+        }
+
+        $this->join .= ' or `'.$first.'` '.$comp.' '.$second;
+
+        return $this;
     }
 
     /**
@@ -1257,6 +1287,16 @@ class Builder extends Tool implements \JsonSerializable
     }
 
     /**
+     * Permet de retourner le prefixage.
+     *
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
      * Permet de récupérer le nom classe à charger
      *
      * @return null|string
@@ -1294,6 +1334,16 @@ class Builder extends Tool implements \JsonSerializable
     public function setTableName($table)
     {
         $this->table = $table;
+    }
+
+    /**
+     * Permet de modifier le prefix
+     *
+     * @param string $prefix
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
     }
 
     /**

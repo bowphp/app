@@ -298,7 +298,10 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
 
         $table = $prefix.$table;
 
-        return static::$builder = new Builder($table, DB::getPdo(), static::class, $primaryKey);
+        static::$builder = new Builder($table, DB::getPdo(), static::class, $primaryKey);
+        static::$builder->setPrefix($prefix);
+
+        return static::$builder;
     }
 
     /**
