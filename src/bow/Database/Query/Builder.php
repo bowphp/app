@@ -1214,7 +1214,7 @@ class Builder extends Tool implements \JsonSerializable
 
         // Ajout de la clause join
         if (!is_null($this->join)) {
-            $sql .= ' join ' . $this->join;
+            $sql .= $this->join;
             $this->join = null;
         }
 
