@@ -29,7 +29,7 @@ abstract class EngineAbstract
         'response' => 'response',
         'request' => 'request',
         'sanitaze' => 'sanitaze',
-        'slugify' => 'sanitaze',
+        'slugify' => 'slugify',
         'session' => 'session',
         'form' => 'form',
         'csrf_token' => 'csrf_token',
