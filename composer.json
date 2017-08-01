@@ -32,11 +32,11 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Bow\\": "src/"
+            "Bow\\": "src/framework"
         },
         "files": [
             "config/helper.php",
-            "src/bow/Support/helper.php"
+            "src/framework/Support/helper.php"
         ]
     },
     "scripts": {
