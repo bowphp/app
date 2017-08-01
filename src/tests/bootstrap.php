@@ -1,3 +1,3 @@
 <?php
-require __DIR__.'/../bow/BowAutoload.php';
+require __DIR__.'/../framework/BowAutoload.php';
 Bow\BowAutoload::register();
