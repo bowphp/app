@@ -32,7 +32,7 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 
 # Test
 
-Dans le dossier `app/routes`, ouvrez le fichier `get.php` et ajoutez:
+Dans le dossier `routes`, ouvrez le fichier `get.php` et ajoutez:
 
 ```php
 $app->get('/hello/:name', function($name) {
@@ -40,7 +40,7 @@ $app->get('/hello/:name', function($name) {
 });
 ```
 
-Dans votre navigateur et tapez `http://localhost:5000/hello/bow`. `5000` est le port par defaut quand vous faites `php bow serve`.
+Dans votre navigateur et tapez `http://localhost:5000/hello/bow`. `5000` est le port par défaut quand vous faites `php bow serve`.
 ```
 =>// hello world bow
 ```
@@ -55,7 +55,7 @@ $ curl http://localhost:5000/hello/bow
 
 Pour participer au projet il faut:
 
-+ Fork le projet afin qu'il soit parmi les repertoires de votre compte github ex :`https://github.com/votre-compte/bow`
++ Fork le projet afin qu'il soit parmi les répertoires de votre compte github ex :`https://github.com/votre-compte/bow`
 + Cloner le projet depuis votre compte github `git clone https://github.com/votre-crompte/bow`
 + Créer un branche qui aura pour nom le résumé de votre modification `git branch branche-de-vos-traveaux`
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
