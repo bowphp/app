@@ -115,7 +115,7 @@ class Configuration implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->config->offsetGet($offset);
+        return $this->config[$offset];
     }
 
     /**
