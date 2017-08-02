@@ -4,9 +4,6 @@ namespace Bow\View;
 use BadMethodCallException;
 use Bow\Application\Configuration;
 use Bow\View\Exception\ViewException;
-use function call_user_func_array;
-use function class_exists;
-use function method_exists;
 
 class View
 {
@@ -53,7 +50,7 @@ class View
             throw new ViewException('Le moteur de template non défini.', E_USER_ERROR);
         }
 
-        if (!in_array($engine, ['twig', 'mustache', 'pug', 'php'], true)) {
+        if (!array_key_exists($engine, static::$container)) {
             throw new ViewException('Le moteur de template n\'est pas implementé.', E_USER_ERROR);
         }
 
@@ -64,7 +61,7 @@ class View
     /**
      * Permet de configurer la classe
      *
-     * @param array $config
+     * @param Configuration $config
      */
     public static function configure($config)
     {
@@ -79,7 +76,7 @@ class View
     public static function singleton()
     {
         if (!static::$instance instanceof View) {
-            static::$instance = new self(self::$config);
+            static::$instance = new static(static::$config);
         }
 
         return static::$instance;
@@ -150,7 +147,7 @@ class View
      */
     public function pushEngine($name, $engine)
     {
-        if (isset(static::$container[$name])) {
+        if (array_key_exists($name, static::$container)) {
             return true;
         }
 

@@ -62,22 +62,27 @@ abstract class EngineAbstract
      * Permet de verifier le fichier à parser
      *
      * @param string $filename
+     * @param bool $extended
      * @return string
      * @throws ViewException
      */
-    protected function checkParseFile($filename)
+    protected function checkParseFile($filename, $extended = true)
     {
-        $filename = preg_replace('/@|\./', '/', $filename) . $this->config['view.extension'];
+        $tmp_filename = preg_replace('/@|\./', '/', $filename) . $this->config['view.extension'];
 
         // Vérification de l'existance du fichier
         if ($this->config['view.path'] !== null) {
-            if (!file_exists($this->config['view.path'].'/'.$filename)) {
-                throw new ViewException('La vue ['.$filename.'] n\'existe pas. ' . $this->config['view.path'] . '/' . $filename, E_ERROR);
+            if (!file_exists($this->config['view.path'].'/'.$tmp_filename)) {
+                throw new ViewException('La vue ['.$tmp_filename.'] n\'existe pas. ' . $this->config['view.path'] . '/' . $filename, E_ERROR);
             }
         } else {
-            if (!file_exists($filename)) {
-                throw new ViewException('La vue ['.$filename.'] n\'existe pas!.', E_ERROR);
+            if (!file_exists($tmp_filename)) {
+                throw new ViewException('La vue ['.$tmp_filename.'] n\'existe pas!.', E_ERROR);
             }
+        }
+
+        if ($extended) {
+            $filename = $tmp_filename;
         }
 
         return $filename;
