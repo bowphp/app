@@ -781,7 +781,7 @@ VALIDATOR;
 namespace App\Services;
 
 use Bow\Application\Configuration;
-use \Bow\Application\Services as BowService;
+use Bow\Application\Services as BowService;
 
 class {$name} extends BowService
 {
