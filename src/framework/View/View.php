@@ -1,8 +1,12 @@
 <?php
 namespace Bow\View;
 
+use BadMethodCallException;
 use Bow\Application\Configuration;
 use Bow\View\Exception\ViewException;
+use function call_user_func_array;
+use function class_exists;
+use function method_exists;
 
 class View
 {
@@ -134,5 +138,43 @@ class View
         static::$config['view.extension'] = $extension;
 
         return $this;
+    }
+
+    /**
+     * Ajouter un moteur de template
+     *
+     * @param $name
+     * @param $engine
+     * @return bool
+     * @throws ViewException
+     */
+    public function pushEngine($name, $engine)
+    {
+        if (isset(static::$container[$name])) {
+            return true;
+        }
+
+        if (!class_exists($engine)) {
+            throw new ViewException($engine, ' N\'existe pas.');
+        }
+
+        static::$container[$name] = $engine;
+        return true;
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (static::$instance instanceof View) {
+            if (method_exists(static::$instance, $name)) {
+                return call_user_func_array([static::$instance, $name], $arguments);
+            }
+        }
+
+        throw new BadMethodCallException($name . ' impossible de lance cette methode');
     }
 }
