@@ -5,11 +5,9 @@
     "type": "project",
     "require": {
         "php": ">=5.6",
-        "mustache/mustache": "^2.12",
         "nesbot/carbon": "^1.21",
-        "psr/log": "1.0.0",
+        "psr/log": "@stable",
         "psy/psysh": "@stable",
-        "pug-php/pug": "^2.6",
         "twig/twig": "^1.23"
     },
     "require-dev": {
@@ -42,7 +40,7 @@
     "scripts": {
         "post-create-project-cmd": [
             "php bow generate:key",
-            "php -r 'copy(\".env-exemple.json\", \".env.json\")'"
+            "php -r 'copy(\".env-exemple.json\", \".env.json\");'"
         ]
     },
     "config": {
