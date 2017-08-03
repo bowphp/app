@@ -47,12 +47,12 @@ class TablePrinter
     /**
      * @var string
      */
-    private $collate = 'utf8_unicode_ci';
+    private $collate = 'utf8mb4_unicode_ci';
 
     /**
      * @var string
      */
-    private $character = 'UTF8';
+    private $charset = 'utf8mb4';
 
     /**
      * define the auto increment field
@@ -71,14 +71,22 @@ class TablePrinter
     private $dataBind = [];
 
     /**
-     * Constructor
+     * TablePrinter constructor.
      *
-     * @param string $table nom de la table
+     * @param string $table
+     * @param string $charset
+     * @param string $collate
      */
-    public function __construct($table)
+    public function __construct($table, $charset = null, $collate = null)
     {
         $this->fields = new Collection;
         $this->table = $table;
+        if (!is_null($charset)) {
+            $this->charset = $charset;
+        }
+        if (!is_null($collate)) {
+            $this->collate = $collate;
+        }
         return $this;
     }
 
@@ -122,11 +130,11 @@ class TablePrinter
     /**
      * charset, set the model default character name
      *
-     * @param $character
+     * @param $charset
      */
-    public function charset($character)
+    public function charset($charset)
     {
-        $this->character = $character;
+        $this->charset = $charset;
     }
 
     /**
@@ -722,9 +730,17 @@ class TablePrinter
     /**
      * @return string
      */
-    public function getCharacter()
+    public function getCharset()
     {
-        return $this->character;
+        return $this->charset;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCollate()
+    {
+        return $this->collate;
     }
 
     /**
