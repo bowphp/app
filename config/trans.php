@@ -9,5 +9,5 @@ return [
     /**
      * Spécification du répègittoire des langs
      */
-    'directory' => dirname(__DIR__).'/lang',
+    'directory' => __DIR__.'/../lang',
 ];
