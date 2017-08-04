@@ -25,6 +25,8 @@ use Bow\Application\Configuration;
 
 if (!function_exists('app')) {
     /**
+     * Application container
+     * 
      * @param null $key
      * @param array $setting
      * @return \Bow\Support\Capsule|mixed
@@ -47,6 +49,7 @@ if (!function_exists('app')) {
 if (!function_exists('config')) {
     /**
      * Application configuration
+     * 
      * @param string|array $key
      * @param mixed $setting
      * @return Configuration|mixed
