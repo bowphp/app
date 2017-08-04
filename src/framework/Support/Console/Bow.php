@@ -88,7 +88,7 @@ class Bow
     public function migrate()
     {
         $action = $this->_command->getParameter('action');
-        if (!in_array($action, ['up', 'down', null])) {
+        if (!in_array($action, ['up', 'down', 'refresh', null])) {
             throw new \ErrorException('Bad command. Type "php bow help migrate" for more information"');
         }
 

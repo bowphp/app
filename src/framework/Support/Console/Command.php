@@ -132,6 +132,30 @@ class Command
     }
 
     /**
+     * Permet supprimer une migration dans la base de donnée
+     *
+     * @param string $model
+     */
+    public function reflesh()
+    {
+        $register = $this->dirname.'/migration/.registers';
+        file_put_contents($register, '');
+
+        $files = glob($this->dirname.'/migration/*.php');
+
+        foreach ($files as $file) {
+            $parts = preg_split('/([0-9_])+/', basename($file));
+            array_shift($parts);
+            $className = '';
+            foreach ($parts as $part) {
+                $className .= ucfirst(str_replace('.php', '', $part));
+            }
+
+            file_put_contents($register, basename(str_replace('.php', '', $file))."|".$className."\n", FILE_APPEND);
+        }
+    }
+
+    /**
      * @param $model
      * @param $type
      * @throws \ErrorException
