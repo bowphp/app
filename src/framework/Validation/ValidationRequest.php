@@ -77,7 +77,7 @@ abstract class ValidationRequest
      */
     protected function authorizationFailAction()
     {
-        abort(500);
+        abort(401);
     }
 
     /**
@@ -86,7 +86,7 @@ abstract class ValidationRequest
      */
     protected function validationFailAction()
     {
-        abort(500);
+        abort(401);
     }
 
     /**
