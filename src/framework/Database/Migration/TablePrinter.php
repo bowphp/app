@@ -92,49 +92,54 @@ class TablePrinter
 
     /**
      * @param $size
+     * @return TablePrinter
      */
     public function size($size)
     {
         $this->rangs[$this->lastField->field]['data']['size'] = $size;
-    }
-
-    /**
-     * @param $default
-     */
-    public function defautl($default)
-    {
-        $this->rangs[$this->lastField->field]['data']['default'] = $default;
+        return $this;
     }
 
     /**
      * nullable
+     * 
+     * @return TablePrinter
      */
     public function nullable()
     {
         $this->rangs[$this->lastField->field]['data']['null'] = true;
+        return $this;
     }
 
     /**
      * @param $value
+     * @return TablePrinter
      */
     public function default($value)
     {
         $this->rangs[$this->lastField->field]['data']['default'] = $value;
+        return $this;
     }
 
+    /**
+     * @return TablePrinter
+     */
     public function unsigned()
     {
         $this->rangs[$this->lastField->field]['data']['unsigned'] = true;
+        return $this;
     }
 
     /**
      * charset, set the model default character name
      *
      * @param $charset
+     * @return TablePrinter
      */
     public function charset($charset)
     {
         $this->charset = $charset;
+        return $this;
     }
 
     /**
@@ -144,6 +149,7 @@ class TablePrinter
     public function collate($collate)
     {
         $this->collate = $collate;
+        return $this;
     }
 
     /**
@@ -153,6 +159,7 @@ class TablePrinter
     public function engine($engine)
     {
         $this->engine = $engine;
+        return $this;
     }
 
     /**
@@ -275,6 +282,7 @@ class TablePrinter
     public function string($field, $size = 255)
     {
         $type = 'varchar';
+        
         if ($size > 255) {
             $type = 'text';
         }
