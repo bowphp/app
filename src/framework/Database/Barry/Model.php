@@ -37,6 +37,11 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     protected $autoIncrement = true;
 
     /**
+     * @var bool
+     */
+    protected $safeDeleted = false;
+
+    /**
      * @var array
      */
     private $attributes = [];
