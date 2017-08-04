@@ -35,8 +35,8 @@ return [
             'username' => env('MYSQL_USERNAME', 'test'),
             'password' => env('MYSQL_PASSWORD', 'test'),
             'database' => env('MYSQL_DBMAME', 'test'),
-            'charset'  => env('MYSQL_CHARSET', 'charset'),
-            'collation' => env('MYSQL_COLLATION', 'utf8_unicode_ci'),
+            'charset'  => env('MYSQL_CHARSET', 'utf8mb4'),
+            'collation' => env('MYSQL_COLLATION', 'utf8mb4_unicode_ci'),
             'prefix' => env('MYSQL_PREFIX', ''),
             'port' => env('MYSQL_PORT', 3306),
             'socket' => env('MYSQL_SOCKET', null)
