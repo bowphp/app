@@ -55,7 +55,13 @@ if (!function_exists('config')) {
         app()->bind('config', function () {
             return Configuration::singleton();
         });
+
         $config = app('config');
+        
+        if (is_null($key)) {
+            return $config;
+        }
+
         return $config($key, $setting);
     }
 }
