@@ -507,8 +507,8 @@ if (!function_exists('download')) {
      * @param array $headers
      * @param string $disposition
      */
-    function download($file, $name, $headers, $disposition) {
-        response()->download($file, $name, $headers, $disposition);
+    function download($file, $name = null, array $headers = [], $disposition = 'attachment') {
+        return response()->download($file, $name, $headers, $disposition);
     }
 }
 
