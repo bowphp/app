@@ -41,7 +41,11 @@ abstract class ValidationRequest
     public function __construct()
     {
         if (!$this->authorized()) {
-            return $this->authorizationFailAction();
+            $response = $this->authorizationFailAction();
+            if (is_array($response) || is_object($response)) {
+                $response = json_encode($response);
+            }
+            die($response);
         }
 
         $this->request = new Request();
