@@ -147,6 +147,7 @@ class Command
             $parts = preg_split('/([0-9_])+/', basename($file));
             array_shift($parts);
             $className = '';
+            
             foreach ($parts as $part) {
                 $className .= ucfirst(str_replace('.php', '', $part));
             }
