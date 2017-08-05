@@ -36,7 +36,8 @@ abstract class EngineAbstract
         'csrf_field' => 'csrf_field',
         'trans' => 'trans',
         'escape' => 'e',
-        'e' => 'e'
+        'e' => 'e',
+        'old' => 'old'
     ];
 
     /**
