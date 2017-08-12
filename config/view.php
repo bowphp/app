@@ -7,7 +7,7 @@ return [
      * Les vues doivent avoir l' instantion que vous avez définir
      * dans 'template_extension' si non erreur sera lancé
      */
-    'path' => __DIR__ . '/../views',
+    'path' => __DIR__ . '/../components/views',
 
     /**
      * chemin du fichier 404
@@ -36,7 +36,7 @@ return [
      * Le repertoire de cache.
      * quand le cache sera remplit c'est à vous de le vidé
      */
-    'cache' => dirname(__DIR__) . '/storage/cache',
+    'cache' => __DIR__ . '/../storage/cache',
 
     /**
      * active le systeme réchargé de cache.

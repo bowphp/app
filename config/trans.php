@@ -9,5 +9,5 @@ return [
     /**
      * Spécification du répègittoire des langs
      */
-    'directory' => __DIR__.'/../lang',
+    'directory' => __DIR__.'/../components/lang',
 ];
