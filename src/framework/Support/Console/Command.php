@@ -132,16 +132,14 @@ class Command
     }
 
     /**
-     * Permet supprimer une migration dans la base de donnée
-     *
-     * @param string $model
+     * Permet de rafraichir le fichier de registre
      */
     public function reflesh()
     {
-        $register = $this->dirname.'/migration/.registers';
+        $register = $this->dirname.'/db/migration/.registers';
         file_put_contents($register, '');
 
-        $files = glob($this->dirname.'/migration/*.php');
+        $files = glob($this->dirname.'/db/migration/*.php');
 
         foreach ($files as $file) {
             $parts = preg_split('/([0-9_])+/', basename($file));
@@ -181,26 +179,26 @@ class Command
 
         if (!is_null($model)) {
             $model = strtolower($model);
-            $fileParten = $this->dirname.strtolower("/migration/*{$model}*.php");
+            $fileParten = $this->dirname.strtolower("/db/migration/*{$model}*.php");
         } else {
-            $fileParten = $this->dirname.strtolower("/migration/*.php");
+            $fileParten = $this->dirname.strtolower("/db/migration/*.php");
         }
 
         $register = ["file" => [], "tables" => []];
 
-        if (!file_exists($this->dirname."/migration/.registers")) {
+        if (!file_exists($this->dirname."/db/migration/.registers")) {
             echo Color::red('Le fichier de registre de bow est introvable.');
             exit(0);
         }
 
-        $registers = file($this->dirname."/migration/.registers");
+        $registers = file($this->dirname."/db/migration/.registers");
 
         if (count($registers) == 0) {
             echo Color::red('Le fichier de registre de bow est vide.');
             exit(0);
         }
 
-        foreach(file($this->dirname."/migration/.registers") as $r) {
+        foreach(file($this->dirname."/db/migration/.registers") as $r) {
             $tmp = explode("|", $r);
             $register["file"][] = $tmp[0];
             $register["tables"][] = $tmp[1];
@@ -243,7 +241,7 @@ class Command
      */
     public function seeder($name)
     {
-        $seeder_filename = $this->dirname."/seeders/{$name}_seeder.php";
+        $seeder_filename = $this->dirname."/db/seeders/{$name}_seeder.php";
 
         if (file_exists($seeder_filename)) {
             echo "\033[0;31mLe seeder '$name' exists déja.\033[00m";
@@ -291,8 +289,8 @@ SEEDER;
 
         $options = $this->options();
 
-        if (file_exists($this->dirname."/migration/.registers")) {
-            @touch($this->dirname."/migration/.registers");
+        if (file_exists($this->dirname."/db/migration/.registers")) {
+            @touch($this->dirname."/db/migration/.registers");
         }
 
         if ($options->has('--create') && $options->has('--table')) {
@@ -345,8 +343,8 @@ class {$class_name} extends Migration
 }
 doc;
         $create_at = date("Y_m_d") . "_" . date("His");
-        file_put_contents($this->dirname."/migration/${create_at}_${model}.php", $migrate);
-        Storage::append($this->dirname."/migration/.registers", "${create_at}_${model}|$class_name\n");
+        file_put_contents($this->dirname."/db/migration/${create_at}_${model}.php", $migrate);
+        Storage::append($this->dirname."/db/migration/.registers", "${create_at}_${model}|$class_name\n");
 
         echo "\033[0;32mmLe file de migration \033[00m[$model]\033[0;32m a été bien créer.\033[00m\n";
         return;
@@ -372,11 +370,11 @@ doc;
 
         if (static::readline("Voulez vous que je crée les vues associées?")) {
             $model = strtolower($model);
-            @mkdir($this->dirname."/app/views/".$model, 0766);
+            @mkdir($this->dirname."/components/views/".$model, 0766);
 
             echo "\033[0;33;7m";
             foreach(["create", "edit", "show", "index", "update", "delete"] as $value) {
-                $file = $this->dirname."/app/views/$model/$value.twig";
+                $file = $this->dirname."/components/views/$model/$value.twig";
                 file_put_contents($file, "<!-- Vue '$value' du model '$model' -->");
                 echo "$file\n";
             }
@@ -641,10 +639,10 @@ class {$firewall_name}
      * Fonction de lancement du firewall.
      * 
      * @param \\Bow\\Http\\Request \$request
-     * @param \\Closure \$next
+     * @param callable \$next
      * @return boolean
      */
-    public function checker(\$request, \\Closure \$next, \$guard)
+    public function checker(\$request, callable \$next, \$guard)
     {
         // Codez Ici
         return \$next();
@@ -751,7 +749,7 @@ class {$name} extends Validator
      *
      * @return bool
      */
-    public function authorized()
+    public function authorize()
     {
         return true;
     }

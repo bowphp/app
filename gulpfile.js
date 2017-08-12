@@ -6,7 +6,7 @@ var imagemin = require('gulp-imagemin');
 var sass     = require('gulp-sass');
 
 gulp.task('compile-sass', function () {
-    gulp.src('assets/sass/style.scss')
+    gulp.src('components/assets/sass/style.scss')
         .pipe(sass())
         .pipe(csslint())
         .pipe(cssmin())
@@ -14,28 +14,28 @@ gulp.task('compile-sass', function () {
 });
 
 gulp.task('images-min', function() {
-    return gulp.src('assets/img/**')
+    return gulp.src('components/assets/img/**')
         .pipe(imagemin({optimizationLevel: 5}))
         .pipe(gulp.dest('public/img'));
 });
 
 gulp.task('compile-js', function () {
-    return gulp.src('assets/js/**')
+    return gulp.src('components/assets/js/**')
         .pipe(uglify())
         .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('watch-js', function() {
-    gulp.watch('assets/js/**', ['compile-js']);
+    gulp.watch('components/assets/js/**', ['compile-js']);
 });
 
 gulp.task('watch-sass', function() {
-    gulp.watch('assets/sass/**', ['compile-sass']);
+    gulp.watch('components/assets/sass/**', ['compile-sass']);
 });
 
 gulp.task('watch', function() {
-    gulp.watch('assets/js/**', ['compile-js']);
-    gulp.watch('assets/sass/**', ['compile-sass']);
+    gulp.watch('components/assets/js/**', ['compile-js']);
+    gulp.watch('components/assets/sass/**', ['compile-sass']);
 });
 
 gulp.task('default', ['compile-js', 'compile-sass', 'images-min']);

@@ -149,7 +149,7 @@ class Bow
         $seeds_filenames = [];
 
         if ($options->get('--all')) {
-            $seeds_filenames = glob($this->dirname.'/seeders/*_seeder.php');
+            $seeds_filenames = glob($this->dirname.'/db/seeders/*_seeder.php');
             goto seed;
         }
 
@@ -159,7 +159,7 @@ class Bow
                 echo "\033[0;32mLe seeder \033[0;33m$table_name\033[00m\033[0;32m n'existe pas.\n";
                 exit(1);
             }
-            $seeds_filenames = [$this->dirname."/seeders/{$table_name}_seeder.php"];
+            $seeds_filenames = [$this->dirname."/db/seeders/{$table_name}_seeder.php"];
         }
 
         seed:

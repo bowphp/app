@@ -40,7 +40,7 @@ abstract class ValidationRequest
      */
     public function __construct()
     {
-        if (!$this->authorized()) {
+        if (!$this->authorize()) {
             $response = $this->authorizationFailAction();
             if (is_array($response) || is_object($response)) {
                 $response = json_encode($response);
@@ -66,7 +66,7 @@ abstract class ValidationRequest
     /**
      * @return bool
      */
-    protected function authorized()
+    protected function authorize()
     {
         return true;
     }
