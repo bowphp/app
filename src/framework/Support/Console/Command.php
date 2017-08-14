@@ -1,11 +1,9 @@
 <?php
 namespace Bow\Support\Console;
 
-
 use Bow\Resource\Storage;
 use Bow\Support\Collection;
 use Bow\Support\Str;
-use function substr;
 
 class Command
 {
