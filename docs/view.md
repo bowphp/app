@@ -1,6 +1,6 @@
 # Vue
 
-Bow framework implement 3 moteur de template <a href="">Twig</a>, <a href="">Pug-PHP</a>, <a href="">Mustache-PHP</a>.
+Bow framework implement 3 moteur de template <a href="https://twig.symfony.com">Twig</a>, <a href="">Pug-PHP</a>, <a href="">Mustache-PHP</a>.
 La configuration des vues ce trouve dans le fichier `view.php` du dossier `config`.
 
 ## Twig
@@ -19,7 +19,7 @@ Pug-PHP est une réécriture de pour PHP avec les mêmes fonctionnalités.
 
 ## Mustache-PHP
 
-Mustache est un moteur de templates de haute performance fortement influencé par Haml et implémenté principalement avec JavaScript pour Node.js et navigateurs.
+Mustache est un moteur de templates de haute performance fortement influencé par Handlebar et implémenté principalement avec JavaScript pour Node.js et navigateurs.
 Mustache-PHP est une réécriture de pour PHP avec les mêmes fonctionnalités.
 
 [Lien de la documentation](https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags 'Lien de la documentation')
@@ -42,7 +42,7 @@ Cette utilise la methode `make`.
 
 | paramètre | type | description|
 |-----------|------|------------|
-| view      | String| Le chemin de la vue sachant dans le moteur de base sur le dossier des vues|
+| view      | String| Le chemin de la vue sachant dans le moteur se base sur le dossier des vues|
 | data      | Array, Object| Les données a passé à la vue|
 | status    | Integer | Le code http|
 
@@ -58,3 +58,8 @@ echo View::make('nom-de-la-vue-sans-extension', ['name' => 'bow'], 200);
 ```
 
 Vous pouvez utiliser le helper `view` qui s'utilise de la même façon.
+
+### Plugin
+
+Bow implément aussi au travers d'un plugin, le moteur de template `Blade` utilisé par [Laravel](https://laravel.com).
+Voir le plugin [papac/bow-blade](https://github.com/papac/bow-blade).
