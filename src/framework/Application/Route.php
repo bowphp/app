@@ -90,29 +90,32 @@ Class Route
     }
 
     /**
+     * Ajout middleware
+     *
      * @param array|string $middleware
+     * @return Route
      */
     public function middleware($middleware)
     {
-        if (!is_array($middleware)) {
-            $middleware = [$middleware];
-        }
+        $middleware = (array) $middleware;
 
         if (is_array($this->cb)) {
-            if (! isset($this->cb['middleware'])) {
+            if (!isset($this->cb['middleware'])) {
                 $this->cb['middleware'] = $middleware;
             } else {
-                $this->cb['middleware'] = array_merge(
-                    $middleware,
-                    is_array($this->cb['middleware']) ? $this->cb['middleware'] : [$this->cb['middleware']]
-                );
+                $this->cb['middleware'] = array_merge($middleware, is_array($this->cb['middleware']) ? $this->cb['middleware'] : [$this->cb['middleware']]);
             }
-        } else {
-            $this->cb = [
-                'uses' => $this->cb,
-                'middleware' => $middleware
-            ];
+
+            return $this;
         }
+
+
+        $this->cb = [
+            'uses' => $this->cb,
+            'middleware' => $middleware
+        ];
+
+        return $this;
     }
 
     /**
@@ -168,13 +171,13 @@ Class Route
             $path = preg_replace('~:\w+(\?)?~', '([^\s]+)$1', $this->path);
             preg_match_all('~:([a-z-0-9_-]+?)\?~', $this->path, $this->keys);
             $this->keys = end($this->keys);
-            return $this->checkUrl($path, $uri);
+            return $this->checkRequestUri($path, $uri);
         }
 
         // Dans le cas ou le dévéloppeur a ajouté de contrainte sur les variables
         // capturées
         if (!preg_match_all('~:([\w]+)?~', $this->path, $match)) {
-            return $this->checkUrl($path, $uri);
+            return $this->checkRequestUri($path, $uri);
         }
 
         $tmpPath =  $this->path;
@@ -196,7 +199,7 @@ Class Route
         }
 
         // Vérifcation de url et path PARSER
-        return $this->checkUrl($path, $uri);
+        return $this->checkRequestUri($path, $uri);
     }
 
     /**
@@ -204,7 +207,7 @@ Class Route
      * @param $uri
      * @return bool
      */
-    private function checkUrl($path, $uri)
+    private function checkRequestUri($path, $uri)
     {
         if (strstr($path, '?') == '?') {
             $uri = rtrim($uri, '/').'/';
