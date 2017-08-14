@@ -1,5 +1,22 @@
-About
-=============
+<h1 align="center">
+    <h1>About</h1>  
+    <img src="https://github.com/papac/bow/blob/master/public/img/bow.jpg">
+    <br/>Bow
+</h1>
+<h4 align="center">The BOW PHP framework</h4>
+<br/>
+<p align="center">
+    <a href="https://papac.github.com/bow" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
+    <a href="https://packagist.org/papac/bow" title="version"><img src="https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square"/></a>
+    <a href="https://github.com/papac/bow/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
+    <a href="https://travis-ci.com/papac/bow" title="Travis branch"><img src="https://img.shields.io/travis/papac/bow/master.svg?style=flat-square"/></a>
+</p>
+
+<p align="center">
+    Bow est un micro framework écrit Par la communauté <strong><a href="http://ayiyikoh.org">#Ayiyikoh</a></strong> et plusieurs autre contributeurs. Le but c'est de permettre aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer. Afin de comprendre les rouages du developpement collaboratif.
+    <br>
+    <strong>N'hésitez pas à commencez maintenant.</strong>
+</p>
 
 Bow est un micro framework php ivoirien MVC. Ecrit pour les débutants qui veulent travail sur un projet un peut plus
 grand. Cette document ce veut simple avec des exemples et les prototypes des fonctions pour vous emmener

@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use Bow\Http\Request;
 use Bow\Application\Actionner;
 
 class Controller

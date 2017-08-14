@@ -16,3 +16,5 @@ Mais pour lors, presentons les differents fichiers.
 | __mail.php__ | Ce fichier content la configuration de mail |
 | __classes.php__ | Ce fichier contient la configuration de namspaces et des alias de middleware |
 | __resource.php__ | Ce fichier contient la configuration des connections ftp, et dossier de base de stockage de l'application |
+| __view.php__ | Ce fichier contient la configuration des connections ftp, et dossier de base de stockage de l'application |
+| __trans.php__ | Ce fichier contient la configuration des connections ftp, et dossier de base de stockage de l'application |
