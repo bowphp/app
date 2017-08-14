@@ -1,23 +1,13 @@
 <?php
 namespace Bow\Validation;
 
+use AuthorizationException;
 use Bow\Http\Request;
 use BadMethodCallException;
+use Bow\Validation\Exception\ValidationException;
 
 abstract class ValidationRequest
 {
-    /**
-     * Règle
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * @var array
-     */
-    protected $keys = ['*'];
-
     /**
      * @var Validate
      */
@@ -36,7 +26,7 @@ abstract class ValidationRequest
     /**
      * TodoValidation constructor.
      *
-     * @return void
+     * @return mixed
      */
     public function __construct()
     {
@@ -49,18 +39,39 @@ abstract class ValidationRequest
         }
 
         $this->request = new Request();
+        $keys = $this->keys();
 
-        if ((count($this->keys) == 1 && $this->keys[0] === '*') || count($this->keys) == 0) {
+        if ((count($keys) == 1 && $keys[0] === '*') || count($keys) == 0) {
             $this->data = $this->request->input()->all();
         } else {
-            $this->data = $this->request->input()->excepts($this->keys);
+            $this->data = $this->request->input()->excepts($keys);
         }
 
-        $this->validate = Validator::make($this->data, $this->rules);
+        $this->validate = Validator::make($this->data, $this->rules());
 
         if ($this->validate->fails()) {
             return $this->validationFailAction();
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            // Vos régles
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function keys()
+    {
+        return [
+            '*'
+        ];
     }
 
     /**
@@ -77,7 +88,23 @@ abstract class ValidationRequest
      */
     protected function authorizationFailAction()
     {
-        abort(401);
+        //throw new AuthorizationException('Vous n\'avez l\'authorisation pour faire requête');
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    protected function sendFailAuthorization()
+    {
+        throw new AuthorizationException('Vous n\'avez l\'authorisation pour faire requête');
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    protected function sendFailValidation()
+    {
+        throw new ValidationException('Erreur de validation');
     }
 
     /**
@@ -86,7 +113,7 @@ abstract class ValidationRequest
      */
     protected function validationFailAction()
     {
-        abort(401);
+        //
     }
 
     /**
@@ -102,7 +129,7 @@ abstract class ValidationRequest
      *
      * @return Validate
      */
-    protected function getValidation()
+    protected function getValidationInstance()
     {
         return $this->validate;
     }

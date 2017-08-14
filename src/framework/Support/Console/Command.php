@@ -5,6 +5,7 @@ namespace Bow\Support\Console;
 use Bow\Resource\Storage;
 use Bow\Support\Collection;
 use Bow\Support\Str;
+use function substr;
 
 class Command
 {
@@ -664,13 +665,7 @@ CM;
      */
     public function model($model_name, $table_name = null)
     {
-        $model_name = ucfirst($model_name);
-        if (is_string($table_name)) {
-            $table_name = strtolower($table_name);
-        } else {
-            $table_name = strtolower(Str::camel($model_name)).'s';
-        }
-
+        $model_name = ucfirst(Str::camel($model_name));
         $model = <<<MODEL
 <?php
 namespace App;
@@ -679,12 +674,7 @@ use Bow\Database\Barry\Model;
 
 class ${model_name} extends Model
 {
-    /**
-     * Le nom de la table.
-     *
-     * @var string
-     */
-    protected \$table = "$table_name";
+    //
 }
 MODEL;
         if (file_exists($this->dirname."/app/${model_name}.php")) {
@@ -759,16 +749,21 @@ class {$name} extends Validator
 	 * 
 	 * @var array
 	 */
-	protected \$rules = [
-        // code
-    ];
-    
+	protected function rules() {
+	    return [
+            // Vos régles
+        ];
+    }
+        
 	/**
 	 * Liste des clés à valider
 	 * 
 	 * @var array
 	 */
-	protected \$keys = ['*'];
+	protected function keys()
+	{
+	    return ['*']
+	}
 }
 VALIDATOR;
 
