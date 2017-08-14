@@ -35,7 +35,7 @@ class Actionner
             throw new RouterException('Le namespace d\'autoload n\'est pas défini dans le fichier de configuration');
         }
 
-        $firewalls = [];
+        $middlewares = [];
 
         if (is_callable($actions)) {
             return call_user_func_array($actions, $param);
@@ -50,9 +50,9 @@ class Actionner
             throw new \InvalidArgumentException('Le premier parametre doit etre un tableau, une chaine, une closure', E_USER_ERROR);
         }
 
-        if (array_key_exists('firewall', $actions)) {
-            $firewalls = $actions['firewall'];
-            unset($actions['firewall']);
+        if (array_key_exists('middleware', $actions)) {
+            $middlewares = (array) $actions['middleware'];
+            unset($actions['middleware']);
         }
 
         foreach ($actions as $key => $action) {
@@ -76,75 +76,52 @@ class Actionner
                     continue;
                 }
             }
-
-            if (isset($action['with']) && isset($action['call'])) {
-                if (is_string($action['call'])) {
-                    $controller = $action['with'].'@'.$action['call'];
-                    array_push($functions, static::controller($controller));
-                    continue;
-                }
-
-                foreach($action['call'] as $method) {
-                    $controller = $action['with'].'@'.$method;
-                    array_push($functions,  static::controller($controller));
-                }
-                continue;
-            }
         }
 
         // Status permettant de bloquer la suite du programme.
         $status = true;
 
-        if (!is_array($firewalls)) {
-            $firewalls = [$firewalls];
-        }
+        // Collecteur de middleware
+        $middlewares_collection = [];
+        $middlewares_guard = [];
 
-        // Collecteur de firewall
-        $firewalls_collection = [];
-        $firewalls_guard = [];
-
-        foreach ($firewalls as $firewall) {
-            if (!is_string($firewall)) {
+        foreach ($middlewares as $middleware) {
+            if (!array_key_exists($middleware, $names['middlewares'])) {
+                throw new RouterException($middleware . ' n\'est pas un middleware définir.', E_ERROR);
+            }
+            if (class_exists($middleware)) {
+                $middlewares_collection[] = $middleware;
                 continue;
             }
 
-            if (class_exists($firewall)) {
-                $firewalls_collection[] = $firewall;
-                continue;
+            // On vérifie si le middleware définie est une middleware valide.
+            if (!class_exists($names['middlewares'][$middleware])) {
+                throw new RouterException($names['middlewares'][$middleware] . ' n\'est pas un class middleware.');
             }
 
-            if (!array_key_exists($firewall, $names['firewalls'])) {
-                throw new RouterException($firewall . ' n\'est pas un firewall définir.', E_ERROR);
-            }
-
-            // On vérifie si le firewall définie est une firewall valide.
-            if (!class_exists($names['firewalls'][$firewall])) {
-                throw new RouterException($names['firewalls'][$firewall] . ' n\'est pas un class firewall.');
-            }
-
-            // Make firewalls collection
-            $firewalls_collection[] = $names['firewalls'][$firewall];
-            $parts = explode(':', $firewall, 2);
+            // Make middlewares collection
+            $middlewares_collection[] = $names['middlewares'][$middleware];
+            $parts = explode(':', $middleware, 2);
 
             // Make guard collection
             if (count($parts) == 2) {
                 $guard = $parts[1];
-                $firewalls_guard[] = $guard;
+                $middlewares_guard[] = $guard;
             } else {
-                $firewalls_guard[] = null;
+                $middlewares_guard[] = null;
             }
         }
 
         $next = false;
-        // Exécution du firewall
-        foreach ($firewalls_collection as $key => $firewall) {
-            $injections = static::injector($firewall, 'checker');
+        // Exécution du middleware
+        foreach ($middlewares_collection as $key => $middleware) {
+            $injections = static::injector($middleware, 'checker');
 
-            $firewall_params = array_merge($injections, [function () use (& $next) {
+            $middleware_params = array_merge($injections, [function () use (& $next) {
                 return $next = true;
-            }, $firewalls_guard[$key]], $param);
+            }, $middlewares_guard[$key]], $param);
 
-            $status = call_user_func_array([new $firewall(), 'checker'], $firewall_params);
+            $status = call_user_func_array([new $middleware(), 'checker'], $middleware_params);
 
             if ($status === true && $next) {
                 $next = false;
@@ -175,22 +152,22 @@ class Actionner
     }
 
     /**
-     * Permet de lance un firewall
+     * Permet de lance un middleware
      *
-     * @param string $firewall
+     * @param string $middleware
      * @param callable $callback
      * @return bool
      */
-    public static function firewall($firewall, callable $callback = null)
+    public static function middleware($middleware, callable $callback = null)
     {
         $next = false;
         $injections = [];
 
-        if (is_string($firewall) && class_exists($firewall)) {
-            $instance = [new $firewall(), 'checker'];
-            $injections = static::injector($firewall, 'checker');
+        if (is_string($middleware) && class_exists($middleware)) {
+            $instance = [new $middleware(), 'checker'];
+            $injections = static::injector($middleware, 'checker');
         } else {
-            $instance = $firewall;
+            $instance = $middleware;
         }
 
         $status = call_user_func_array($instance, array_merge($injections, [function () use (& $next) {

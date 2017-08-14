@@ -116,7 +116,7 @@ class Bow
     public function add()
     {
         $action = $this->_command->getParameter('action');
-        if (!in_array($action, ['firewall', 'controller', 'model', 'validation', 'seeder', 'migration', 'service'])) {
+        if (!in_array($action, ['middleware', 'controller', 'model', 'validation', 'seeder', 'migration', 'service'])) {
             throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
         }
 
@@ -333,7 +333,7 @@ Bow usage: php bow command:action [name] [help|--with-model|--no-plain|--create|
 
  \033[0;32madd\033[00m                  Create a user class
 
-   \033[0;33madd:firewall\033[00m      Create new firewall
+   \033[0;33madd:middleware\033[00m      Create new middleware
    \033[0;33madd:service\033[00m       Create new service
    \033[0;33madd:controller\033[00m    Create new controller
    \033[0;33madd:model\033[00m         Create new model
@@ -377,7 +377,7 @@ USAGE;
     * you can use --no-plain --with-model
 
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:controller name [option]  For create a new controlleur
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:firewall name             For create a new firewall
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:middleware name             For create a new middleware
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:service name              For create a new service
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:model name                For create a new model
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:validation name           For create a new validator

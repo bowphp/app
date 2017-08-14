@@ -90,27 +90,27 @@ Class Route
     }
 
     /**
-     * @param array|string $firewall
+     * @param array|string $middleware
      */
-    public function firewall($firewall)
+    public function middleware($middleware)
     {
-        if (!is_array($firewall)) {
-            $firewall = [$firewall];
+        if (!is_array($middleware)) {
+            $middleware = [$middleware];
         }
 
         if (is_array($this->cb)) {
-            if (! isset($this->cb['firewall'])) {
-                $this->cb['firewall'] = $firewall;
+            if (! isset($this->cb['middleware'])) {
+                $this->cb['middleware'] = $middleware;
             } else {
-                $this->cb['firewall'] = array_merge(
-                    $firewall,
-                    is_array($this->cb['firewall']) ? $this->cb['firewall'] : [$this->cb['firewall']]
+                $this->cb['middleware'] = array_merge(
+                    $middleware,
+                    is_array($this->cb['middleware']) ? $this->cb['middleware'] : [$this->cb['middleware']]
                 );
             }
         } else {
             $this->cb = [
                 'uses' => $this->cb,
-                'firewall' => $firewall
+                'middleware' => $middleware
             ];
         }
     }

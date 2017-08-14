@@ -1,19 +1,19 @@
 <?php
 
-namespace Bow\Firewall;
+namespace Bow\Middleware;
 
 use Bow\Http\Input;
 
-class ApplicationCsrfFirewall
+class ApplicationCsrfMiddleware
 {
     /**
-     * Fonction de lancement du firewall.
+     * Fonction de lancement du middleware.
      *
      * @param \Bow\Http\Request $request
-     * @param \Closure $next
+     * @param callable $next
      * @return boolean
      */
-    public function checker($request, \Closure $next)
+    public function checker($request, callable $next)
     {
         if (!($request->isPost() || $request->isPut())) {
             return $next();

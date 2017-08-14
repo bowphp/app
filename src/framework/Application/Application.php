@@ -6,7 +6,6 @@ use Bow\Http\Request;
 use Bow\Http\Response;
 use Bow\Support\DateAccess;
 use Bow\Http\Exception\HttpException;
-use Bow\Firewall\ApplicationCsrfFirewall;
 use Bow\Application\Exception\RouterException;
 use Bow\Application\Exception\ApplicationException;
 
@@ -32,7 +31,7 @@ class Application
     /**
      * @var array
      */
-    private $globale_firewall = [];
+    private $globale_middleware = [];
 
     /**
      * Définition de contrainte sur un route.
@@ -197,24 +196,24 @@ class Application
         call_user_func_array($cb, [$this]);
 
         $this->branch = '';
-        $this->globale_firewall = [];
+        $this->globale_middleware = [];
 
         return $this;
     }
 
     /**
-     * Permet d'associer un firewall sur une url
+     * Permet d'associer un middleware sur une url
      *
-     * @param array $firewall
+     * @param array $middleware
      * @param callable $cb
      * @return Application
      */
-    public function firewall($firewall = [], callable $cb)
+    public function middleware($middleware = [], callable $cb)
     {
-        $firewall = is_array($firewall) ? $firewall : [$firewall];
-        $this->globale_firewall = $firewall;
+        $middleware = is_array($middleware) ? $middleware : [$middleware];
+        $this->globale_middleware = $middleware;
         $cb($this);
-        $this->globale_firewall = [];
+        $this->globale_middleware = [];
         return $this;
     }
 
@@ -405,18 +404,18 @@ class Application
 
         // Ajout d'un nouvelle route sur l'en definie.
         switch (true) {
-            case !is_array($cb) && !empty($this->globale_firewall):
+            case !is_array($cb) && !empty($this->globale_middleware):
                 $cb = [
-                    'firewall' => $this->globale_firewall,
+                    'middleware' => $this->globale_middleware,
                     'uses' => $cb
                 ];
                 break;
-            case !is_callable($cb) && isset($cb['firewall']) && !empty($this->globale_firewall):
-                if (!is_array($cb['firewall'])) {
-                    $cb['firewall'] = [$cb['firewall']];
+            case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
+                if (!is_array($cb['middleware'])) {
+                    $cb['middleware'] = [$cb['middleware']];
                 }
-                $cb['firewall'] = array_merge(
-                    $this->globale_firewall, $cb['firewall']
+                $cb['middleware'] = array_merge(
+                    $this->globale_middleware, $cb['middleware']
                 );
                 break;
         }
@@ -499,10 +498,6 @@ class Application
             }
         }
 
-        if ($method == 'PUT' || $method == 'POST') {
-            $this->executeNativeFirewall();
-        }
-
         // drapeaux d'erreur.
         $error = false;
 
@@ -582,7 +577,7 @@ class Application
      * @param $name
      * @return Application
      */
-    public function named($name)
+    public function name($name)
     {
         $this->namedRoute($this->current['path'], $name);
         return $this;
@@ -653,12 +648,12 @@ class Application
         ];
 
         if (is_array($controllerName)) {
-            if (isset($controllerName['firewall'])) {
-                $internalFirewall = $controllerName['firewall'];
-                unset($controllerName['firewall']);
+            if (isset($controllerName['middleware'])) {
+                $internalMiddleware = $controllerName['middleware'];
+                unset($controllerName['middleware']);
 
                 $next = Actionner::call(
-                    ['firewall' => $internalFirewall],
+                    ['middleware' => $internalMiddleware],
                     [$this->request],
                     $this->config['app.classes']
                 );
@@ -758,18 +753,6 @@ class Application
     public function getMethodRoutes($method)
     {
         return $this->routes[$method];
-    }
-
-    /**
-     * Permet de lancer les middlewares par defaut
-     */
-    private function executeNativeFirewall()
-    {
-        $status = Actionner::firewall(ApplicationCsrfFirewall::class);
-
-        if (!$status) {
-            abort(500);
-        }
     }
 
     /**

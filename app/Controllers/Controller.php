@@ -7,22 +7,22 @@ use Bow\Application\Actionner;
 class Controller
 {
     /**
-     * Lanceur de firewall
+     * Lanceur de middleware
      *
      * @param string $name Le nom de middelware.
      * @return mixed
      *
      * @throws \ErrorException
      */
-    public function firewall($name)
+    public function middleware($name)
     {
-        $firewall = config('app.classes.firewalls');
+        $middleware = config('app.classes.middlewares');
 
-        if (! array_key_exists($name, $firewall)) {
-            throw new \ErrorException('Le firewall ' . $name . ' n\'existe pas');
+        if (! array_key_exists($name, $middleware)) {
+            throw new \ErrorException('Le middleware ' . $name . ' n\'existe pas');
         }
 
-        return Actionner::call(['firewall' => $name], [request()], config('app.classes.namespace'));
+        return Actionner::call(['middleware' => $name], [request()], config('app.classes.namespace'));
     }
 
     /**

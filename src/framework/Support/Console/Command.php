@@ -617,26 +617,26 @@ CC;
     }
 
     /**
-     * @param firewall_name
+     * @param middleware_name
      * @return int
      */
-    public function firewall($firewall_name)
+    public function middleware($middleware_name)
     {
-        $firewall_name = ucfirst($firewall_name);
+        $middleware_name = ucfirst($middleware_name);
 
-        if (file_exists($this->dirname."/app/Firewall/$firewall_name.php")) {
-            echo "\033[0;31mLe firewall \033[0;33m\033[0;31m[$firewall_name]\033[00m\033[0;31m existe déja.\033[00m\n";
+        if (file_exists($this->dirname."/app/Middleware/$middleware_name.php")) {
+            echo "\033[0;31mLe middleware \033[0;33m\033[0;31m[$middleware_name]\033[00m\033[0;31m existe déja.\033[00m\n";
             exit(1);
         }
 
-        $firewall_template = <<<CM
+        $middleware_template = <<<CM
 <?php
-namespace App\Firewall;
+namespace App\Middleware;
 
-class {$firewall_name}
+class {$middleware_name}
 {
     /**
-     * Fonction de lancement du firewall.
+     * Fonction de lancement du middleware.
      * 
      * @param \\Bow\\Http\\Request \$request
      * @param callable \$next
@@ -649,8 +649,8 @@ class {$firewall_name}
     }
 }
 CM;
-        file_put_contents($this->dirname."/app/Firewall/$firewall_name.php", $firewall_template);
-        echo "\033[0;32mLe firewall \033[00m[{$firewall_name}]\033[0;32m a été bien créer.\033[00m\n";
+        file_put_contents($this->dirname."/app/Middleware/$middleware_name.php", $middleware_template);
+        echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien créer.\033[00m\n";
 
         exit(0);
     }

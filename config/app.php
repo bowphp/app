@@ -30,7 +30,7 @@ return [
 
     /**
      * Liste des classes
-     * concernant les firewall et autre
+     * concernant les middleware et autre
      */
     'classes' => require __DIR__.'/classes.php',
 
