@@ -22,7 +22,7 @@ env:
   - DB_USER=travis
 
 before_script:
-  - if [ ! -d ./src/tests/data/cache ]; then mkdir -p ./src/tests/data/cache; fi;
+  - if [ ! -d ./framework/tests/data/cache ]; then mkdir -p ./framework/tests/data/cache; fi;
   - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 install:
@@ -35,4 +35,4 @@ matrix:
   fast_finish: true
 
 script:
-  - ./vendor/bin/phpunit --configuration src/phpunit.xml --coverage-clover build/logs/clover.xml
+  - ./vendor/bin/phpunit --configuration ./framework/phpunit.xml --coverage-clover build/logs/clover.xml

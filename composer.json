@@ -30,17 +30,19 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Bow\\": "src/framework"
+            "Bow\\": "framework/src"
         },
         "files": [
             "config/helper.php",
-            "src/framework/Support/helper.php"
+            "framework/src/Support/helper.php"
         ]
     },
     "scripts": {
+        "post-root-package-install":[
+            "php -r 'file_exists('.env.json') || copy(\".env-exemple.json\", \".env.json\");'"
+        ],
         "post-create-project-cmd": [
-            "php bow generate:key",
-            "php -r 'copy(\".env-exemple.json\", \".env.json\");'"
+            "php bow generate:key"
         ]
     },
     "config": {

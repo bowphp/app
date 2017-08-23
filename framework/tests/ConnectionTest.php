@@ -24,7 +24,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     public function testGetMysqlConnection()
     {
         $mysqlAdapter = new \Bow\Database\Connection\Adapter\MysqlAdapter([
-            'hostname' => 'localhost',
+            'hostname' => getenv('DB_HOSTNAME') ? getenv('DB_HOSTNAME') : 'localhost',
             'username' => getenv('DB_USER') == 'travis' ? getenv('DB_USER') : 'test',
             'password' => getenv('DB_USER') == 'travis' ? '' : getenv('DB_PASSWORD'),
             'database' => 'test',
