@@ -51,7 +51,8 @@
         "optimize-autoloader": true
     },
     "suggest": {
-        "mustache/mustache": "Pour le choix du moteur de template 'mustache'",
-        "pug-php/pug": "Pour le choix du moteur de template 'pug'"
+        "mustache/mustache": "Pour le choix d'utilisation du moteur de template 'mustache'",
+        "pug-php/pug": "Pour le choix d'utilisation du moteur de template 'pug'",
+        "papac/bow-blade": "Pour le choix d'utilisation du moteur de template 'blade'"
     }
 }
