@@ -36,4 +36,4 @@ matrix:
   fast_finish: true
 
 script:
-  - ./vendor/bin/phpunit --configuration ./framework/phpunit.xml --coverage-clover build/logs/clover.xml
+  - ./vendor/bin/phpunit --configuration ./framework/phpunit.xml
