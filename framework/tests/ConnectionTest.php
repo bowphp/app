@@ -21,6 +21,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(\PDO::class, $sqliteAdapter->getConnection());
     }
 
+    /**
+     * @return \Bow\Database\Connection\Adapter\MysqlAdapter
+     */
     public function testGetMysqlConnection()
     {
         $mysqlAdapter = new \Bow\Database\Connection\Adapter\MysqlAdapter([
