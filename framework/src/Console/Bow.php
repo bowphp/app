@@ -1,5 +1,5 @@
 <?php
-namespace Bow\Support\Console;
+namespace Bow\Console;
 
 use function dump;
 use Psy\Shell;

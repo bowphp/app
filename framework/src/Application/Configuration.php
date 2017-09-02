@@ -24,12 +24,19 @@ class Configuration implements \ArrayAccess
     private $config;
 
     /**
+     * @var string
+     */
+    protected $base_path;
+
+    /**
      * @param string $base_path
      *
      * @throws \Bow\Exception\UtilException
      */
-    private final function __construct($base_path)
+    public function __construct($base_path)
     {
+        $this->base_path = $base_path;
+
         /**
          * Chargement complet de toute la configuration de Bow
          */
@@ -69,6 +76,52 @@ class Configuration implements \ArrayAccess
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Get app namespace
+     *
+     * @return array
+     */
+    public function namespaces() {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Middleware collection
+     *
+     * @return array
+     */
+    public function middlewares()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Load serivces
+     *
+     * @return array
+     */
+    public function services()
+    {
+        return [
+            //
+        ];
+    }
+
+    /**
+     * Load configuration
+     *
+     * @return Configuration
+     */
+    public function boot()
+    {
+        //
+        return $this;
     }
 
     /**

@@ -1,10 +1,9 @@
 #!/usr/bin/env php
 <?php
 require __DIR__.'/vendor/autoload.php';
-require __DIR__.'/config/bootstrap.php';
 
-use \Bow\Support\Console\Bow;
-use \Bow\Support\Console\Command;
+use \Bow\Console\Bow;
+use \Bow\Console\Command;
 
 $console = new Bow(__DIR__, new Command(__DIR__));
 $console->setBootstrap([__DIR__.'/public/index.php']);

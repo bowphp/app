@@ -1,10 +1,8 @@
 <?php
 namespace Bow\Application;
 
-use Bow\Event\Event;
 use Bow\Http\Request;
 use Bow\Http\Response;
-use Bow\Support\DateAccess;
 use Bow\Http\Exception\HttpException;
 use Bow\Application\Exception\RouterException;
 use Bow\Application\Exception\ApplicationException;
@@ -22,6 +20,11 @@ class Application
      * @var string
      */
     private $version = '0.2.1';
+
+    /**
+     * @var bool
+     */
+    private $booted = false;
 
     /**
      * @var array
@@ -101,52 +104,58 @@ class Application
     /**
      * Private construction
      *
-     * @param Configuration $config
      * @param Request $request
      * @param Response $response
      */
-    private function __construct(Configuration $config, Request $request, Response $response)
+    private function __construct(Request $request, Response $response)
     {
-        $this->config = $config;
         $this->request = $request;
         $this->response = $response;
+    }
 
-        /**
-         * Application de la timezone
-         */
-        DateAccess::setTimezone($this->config['app.timezone']);
+    /**
+     * Set configuration
+     *
+     * @param Configuration $configuration
+     */
+    public function bind(Configuration $configuration)
+    {
+        $this->config = $configuration;
+        $this->boot();
+    }
 
-        /**
-         * Chargement des services
-         */
-        $services = $this->config['app.classes'];
-
-        if (!isset($services['services'])) {
+    /**
+     * Set configuration
+     */
+    private function boot()
+    {
+        if ($this->booted) {
             return;
         }
 
-        foreach ($services['services'] as $service) {
-            if (!class_exists($service)) {
-                continue;
+        if (method_exists($this->config, 'services')) {
+            $services = $this->config->services();
+
+            foreach ($services as $service) {
+                if ($service instanceof Services) {
+                    $class = new $service;
+                    $class->make();
+                }
             }
 
-            $service = new $service($this);
-            $service_called_name = call_user_func([$service, 'getName']);
-            /**
-             * Configuration du service
-             */
-            call_user_func_array([$service, 'make'], [$config]);
-            if (Event::bound($service_called_name.'.services.stared')) {
-                Event::emit($service_called_name.'.services.stared');
-            }
-            /**
-             * Démarrage du service.
-             */
-            call_user_func_array([$service, 'start'], []);
-            if (Event::bound($service_called_name.'.services.maked')) {
-                Event::emit($service_called_name.'.services.maked');
+            foreach ($services as $service) {
+                if ($service instanceof Services) {
+                    $class = new $service;
+                    $class->start();
+                }
             }
         }
+
+        if (method_exists($this->config, 'boot')) {
+            $this->config->boot();
+        }
+
+        $this->booted = true;
     }
 
     /**
@@ -157,15 +166,14 @@ class Application
     /**
      * Pattern Singleton.
      *
-     * @param Configuration $config
      * @param Request $request
      * @param Response $response
      * @return Application
      */
-    public static function make(Configuration $config, Request $request, Response $response)
+    public static function make(Request $request, Response $response)
     {
         if (is_null(static::$instance)) {
-            static::$instance = new static($config, $request, $response);
+            static::$instance = new static($request, $response);
         }
 
         return static::$instance;
@@ -471,7 +479,7 @@ class Application
      * @return mixed
      * @throws RouterException
      */
-    public function run()
+    public function send()
     {
         if (php_sapi_name() == 'cli') {
             return true;

@@ -1,5 +1,5 @@
 <?php
-namespace Bow\Support\Testing;
+namespace Bow\Testing;
 
 use Bow\Http\Client\Parser;
 use Bow\Http\Client\HttpClient;
@@ -18,6 +18,8 @@ class BowTestCase extends TestCase
     protected $base_url = '';
 
     /**
+     * Format url
+     *
      * @param $url
      * @return string
      */
@@ -45,9 +47,11 @@ class BowTestCase extends TestCase
     public function post($url, array $param = [])
     {
         $http = new HttpClient($this->formatUrl($url));
+
         if (!empty($this->_attach)) {
             $http->addAttach($this->_attach);
         }
+
         return $http->post($url, $param);
     }
 
@@ -67,6 +71,7 @@ class BowTestCase extends TestCase
     public function put($url, array $param = [])
     {
         $http = new HttpClient($this->formatUrl($url));
+
         return $http->put($url, $param);
     }
 
@@ -80,6 +85,7 @@ class BowTestCase extends TestCase
         $param = array_merge([
             '_method' => 'DELETE'
         ], $param);
+
         return $this->put($url, $param);
     }
 
@@ -93,6 +99,7 @@ class BowTestCase extends TestCase
         $param = array_merge([
             '_method' => 'PATCH'
         ], $param);
+
         return $this->put($url, $param);
     }
 

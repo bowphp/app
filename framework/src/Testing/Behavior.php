@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Support\Testing;
+namespace Bow\Testing;
 
 use Bow\Http\Client\Parser;
 

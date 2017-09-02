@@ -1278,3 +1278,21 @@ if (!function_exists('old')) {
         return request()->old($key);
     }
 }
+
+if (!function_exists('format_validation_errors')) {
+    /**
+     * Formate validation erreur.
+     *
+     * @param array $errors
+     * @return array
+     */
+    function format_validation_errors(array $errors): array {
+        $validations = [];
+
+        foreach ($errors as $key => $error) {
+            $validations[$key] = $error[0];
+        }
+
+        return $validations;
+    }
+}
