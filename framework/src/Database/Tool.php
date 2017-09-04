@@ -27,7 +27,7 @@ class Tool
         foreach ($data as $key => $value) {
             $param = PDO::PARAM_INT;
 
-            if (preg_match('/[a-zA-Z_-]+|éàèëïùöôîüµ$£!?\.\+,;:/', $value)) {
+            if (preg_match('/[a-z0-9A-Z_-]+|éàèëïùöôîüµ$£!?\.\+,;:/', $value) && !is_numeric($value)) {
                 /**
                  * SÉCURIATION DES DONNÉS
                  * - Injection SQL

@@ -986,7 +986,13 @@ class Builder extends Tool implements \JsonSerializable
      */
     public function distinct($column)
     {
-        return $this->select(['distinct '.$column]);
+        if (!is_null($this->select)) {
+            $this->select .= " distinct `$column`";
+        } else {
+            $this->select = "distinct `$column`";
+        }
+
+        return $this;
     }
 
     /**
