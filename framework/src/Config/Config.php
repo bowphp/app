@@ -40,8 +40,8 @@ class Config implements \ArrayAccess
         /**
          * Chargement complet de toute la configuration de Bow
          */
-        if (file_exists($base_path.'/.env.json')) {
-            Env::load($base_path.'/.env.json');
+        if (file_exists($base_path.'/../.env.json')) {
+            Env::load($base_path.'/../.env.json');
         }
 
         $glob = glob($base_path.'/**.php');
