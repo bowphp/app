@@ -8,7 +8,7 @@ use Bow\Mail\Exception\SocketException;
 /**
  * Class Smtp
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Mail
  */
 class Smtp implements Send
@@ -80,12 +80,14 @@ class Smtp implements Send
         $this->port = $param['port'];
     }
 
-    private function __clone() {}
+    private function __clone() 
+    {
+    }
 
     /**
      * Lance l'envoie de mail
      *
-     * @param Message $message
+     * @param  Message $message
      * @return bool
      */
     public function send(Message $message)
@@ -219,8 +221,8 @@ class Smtp implements Send
      * Lance une commande SMPT
      *
      * @param string $command
-     * @param int $code
-     * @param null $message
+     * @param int    $code
+     * @param null   $message
      *
      * @throws SmtpException
      * @return string

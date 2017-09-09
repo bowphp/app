@@ -8,7 +8,7 @@ use Bow\Exception\LoggerException;
 /**
  * Class Logger
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Support
  */
 class Logger extends AbstractLogger
@@ -48,13 +48,14 @@ class Logger extends AbstractLogger
      *
      * @param string $level
      * @param string $message
-     * @param array $context
+     * @param array  $context
      *
      * @throws LoggerException
      *
      * @return mixed
      */
-    public function log($level, $message, array $context = []) {
+    public function log($level, $message, array $context = []) 
+    {
 
         if (!in_array($this->mode, ['development', 'production'])) {
             throw new LoggerException($this->mode . ' n\'est pas définir');
@@ -96,7 +97,7 @@ class Logger extends AbstractLogger
      *
      * @param string $message
      * @param string $level
-     * @param array $context
+     * @param array  $context
      *
      * @return string
      */
@@ -198,10 +199,10 @@ class Logger extends AbstractLogger
     }
 
     /**
-     * @param int $errno
+     * @param int    $errno
      * @param string $errmsg
      * @param string $filename
-     * @param int $line
+     * @param int    $line
      */
     public function errorHandler($errno, $errmsg, $filename, $line)
     {
@@ -224,11 +225,12 @@ class Logger extends AbstractLogger
     /**
      * Ajout une exception personnalisé
      *
-     * @param int $errno Le numéro d'erreur PHP
-     * @param string $errstr Le message d'erreur.
-     * @param string $file Le fichier dans lequel il y a eu l'erreur
-     * @param int $line La ligne de l'erreur
-     * @param string|array $trace L'information descriptif sur l'erreur
+     * @param int          $errno  Le numéro
+     *                             d'erreur PHP
+     * @param string       $errstr Le message d'erreur.
+     * @param string       $file   Le fichier dans lequel il y a eu l'erreur
+     * @param int          $line   La ligne de l'erreur
+     * @param string|array $trace  L'information descriptif sur l'erreur
      */
     private function addHandler($errno, $errstr, $file, $line, $trace)
     {
@@ -241,23 +243,23 @@ class Logger extends AbstractLogger
 
         // switch sur $errno (le numero de l'erreur)
         switch($errno) {
-            case E_ERROR:
-            case E_USER_ERROR:
-            case E_CORE_ERROR:
-                $this->error($errstr,  $context);
-                break;
-            case E_WARNING:
-            case E_USER_WARNING:
-                $this->warning($errstr,  $context);
-                break;
-            case E_NOTICE:
-            case E_USER_NOTICE:
-                $this->notice($errstr, $context);
-                break;
-            case E_DEPRECATED:
-            case E_USER_DEPRECATED:
-                $this->emergency($errstr, $context);
-                break;
+        case E_ERROR:
+        case E_USER_ERROR:
+        case E_CORE_ERROR:
+            $this->error($errstr,  $context);
+            break;
+        case E_WARNING:
+        case E_USER_WARNING:
+            $this->warning($errstr,  $context);
+            break;
+        case E_NOTICE:
+        case E_USER_NOTICE:
+            $this->notice($errstr, $context);
+            break;
+        case E_DEPRECATED:
+        case E_USER_DEPRECATED:
+            $this->emergency($errstr, $context);
+            break;
         }
     }
 

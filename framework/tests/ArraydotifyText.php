@@ -31,9 +31,11 @@ class ArraydotifyText extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->dot = new \Bow\Support\Arraydotify([
+        $this->dot = new \Bow\Support\Arraydotify(
+            [
             'code' => $this->collection
-        ]);
+            ]
+        );
     }
 
     public function testGetNormal()

@@ -9,8 +9,8 @@ class ApplicationCsrfMiddleware
     /**
      * Fonction de lancement du middleware.
      *
-     * @param \Bow\Http\Request $request
-     * @param callable $next
+     * @param  \Bow\Http\Request $request
+     * @param  callable          $next
      * @return boolean
      */
     public function checker($request, callable $next)

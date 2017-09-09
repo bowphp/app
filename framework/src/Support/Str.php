@@ -4,7 +4,7 @@ namespace Bow\Support;
 /**
  * Class Str
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Support
  */
 class Str
@@ -12,7 +12,7 @@ class Str
     /**
      * upper case
      *
-     * @param string $str
+     * @param  string $str
      * @return array|string
      */
     public static function upper($str)
@@ -27,7 +27,7 @@ class Str
     /**
      * lower case
      *
-     * @param string $str
+     * @param  string $str
      * @return array|string
      */
     public static function lower($str)
@@ -42,7 +42,7 @@ class Str
     /**
      * camel
      *
-     * @param string $str
+     * @param  string $str
      * @return string
      */
     public static function camel($str)
@@ -63,8 +63,8 @@ class Str
     /**
      * Snake case
      *
-     * @param $value
-     * @param string $delimiter
+     * @param  $value
+     * @param  string $delimiter
      * @return mixed
      */
     public static function snake($value, $delimiter = '_')
@@ -80,9 +80,9 @@ class Str
     /**
      * slice
      *
-     * @param string $str
-     * @param $start
-     * @param null $end
+     * @param  string $str
+     * @param  $start
+     * @param  null   $end
      * @return string
      */
     public static function slice($str, $start, $end = null)
@@ -107,7 +107,7 @@ class Str
      *
      * @param string $pattern
      * @param string $str
-     * @param null $limit
+     * @param null   $limit
      *
      * @return array
      */
@@ -121,7 +121,7 @@ class Str
      *
      * @param string $search
      * @param string $string
-     * @param int $offset
+     * @param int    $offset
      *
      * @return int
      */
@@ -225,6 +225,7 @@ class Str
     /**
      * slugify créateur de slug en utilisant un chaine simple.
      * eg: 'je suis un chaine de caractere' => 'je-suis-un-chaine-de-caractere'
+     *
      * @param string $str
      *
      * @return string
@@ -365,7 +366,7 @@ class Str
     /**
      * Vérifie si la chaine est en majiscule
      *
-     * @param string $str
+     * @param  string $str
      * @return bool
      */
     public static function isUpper($str)
@@ -376,7 +377,7 @@ class Str
     /**
      * Vérifie si la chaine est en miniscule
      *
-     * @param string $str
+     * @param  string $str
      * @return bool
      */
     public static function isLower($str)
@@ -401,7 +402,7 @@ class Str
      * Retourne un nombre détermine de mots dans une chaine de caractère.
      *
      * @param string $words
-     * @param int $len
+     * @param int    $len
      *
      * @return string
      */
@@ -458,8 +459,8 @@ class Str
     /**
      * __call
      *
-     * @param string $method
-     * @param array $arguments
+     * @param  string $method
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call($method, $arguments)

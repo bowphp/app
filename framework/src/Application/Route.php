@@ -6,7 +6,7 @@ use Bow\Http\Request;
 /**
  * Bow Router
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Core
  */
 Class Route
@@ -59,7 +59,7 @@ Class Route
     /**
      * Contructeur
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $cb
      */
     public function __construct($path, $cb)
@@ -92,7 +92,7 @@ Class Route
     /**
      * Ajout middleware
      *
-     * @param array|string $middleware
+     * @param  array|string $middleware
      * @return Route
      */
     public function middleware($middleware)
@@ -121,8 +121,8 @@ Class Route
     /**
      * match, vérifie si le url de la REQUEST est conforme à celle définir par le routeur
      *
-     * @param string $uri L'url de la requête
-     * @param array $with Les informations de restriction.
+     * @param  string $uri  L'url de la requête
+     * @param  array  $with Les informations de restriction.
      * @return bool
      */
     public function match($uri, array $with = [])
@@ -229,7 +229,7 @@ Class Route
      * Fonction permettant de lancer les fonctions de rappel.
      *
      * @param Request $request
-     * @param array $namespaces
+     * @param array   $namespaces
      *
      * @return mixed
      */

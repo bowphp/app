@@ -3,23 +3,24 @@
 namespace App\Kernel;
 
 use \Bow\Mail\Mail;
-use Bow\Support\DateAccess;
 use \Bow\View\View;
 use \Bow\Http\Cache;
+use \Bow\Config\Config;
 use \Bow\Security\Crypto;
 use \Bow\Resource\Storage;
+use Bow\Support\DateAccess;
 use \Bow\Database\Database;
 use \Bow\Translate\Translator;
-use \Bow\Application\Configuration;
 
-class Loader extends Configuration
+class Loader extends Config
 {
     /**
      * Get app namespace
      *
      * @return array
      */
-    public function namespaces() {
+    public function namespaces() 
+    {
         return [
             'controller' => 'App\\Controllers',
             'middleware' => 'App\\Middleware'
@@ -27,25 +28,21 @@ class Loader extends Configuration
     }
 
     /**
-     * Loader constructor.
-     * @param string $this_dir
-     */
-    public function __construct($this_dir)
-    {
-        parent::__construct($this_dir);
-    }
-
-    /**
+     * The middleware lists
+     * 
      * @return array
      */
     public function middlewares()
     {
         return [
-            'csrf' => \Bow\Middleware\ApplicationCsrfMiddleware::class
+            'csrf' => \Bow\Middleware\CsrfMiddleware::class,
+            'trim' => \Bow\Middleware\TrimMiddleware::class
         ];
     }
 
     /**
+     * All app services register 
+     * 
      * @return array
      */
     public function services()

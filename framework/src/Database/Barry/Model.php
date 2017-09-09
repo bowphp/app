@@ -11,7 +11,7 @@ use Bow\Database\Exception\NotFoundException;
 /**
  * Class Model
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Database
  */
 abstract class Model implements \ArrayAccess, \JsonSerializable
@@ -101,7 +101,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * Rétourne tout les enregistrements
      *
-     * @param array $columns
+     * @param  array $columns
      * @return \Bow\Database\Collection
      */
     public static function all($columns = [])
@@ -126,8 +126,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * find
      *
-     * @param mixed $id
-     * @param array $select
+     * @param  mixed $id
+     * @param  array $select
      * @return Collection|static|null
      */
     public static function find($id, $select = ['*'])
@@ -170,8 +170,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * Lance une execption en case de donnée non trouvé
      *
-     * @param mixed $id
-     * @param array|callable $select
+     * @param  mixed          $id
+     * @param  array|callable $select
      * @return static
      * @throws NotFoundException
      */
@@ -195,10 +195,12 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         $static = new static();
 
         if ($static->timestamps) {
-            $data = array_merge($data, [
+            $data = array_merge(
+                $data, [
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
-            ]);
+                ]
+            );
         }
 
         if (!array_key_exists($static->primaryKey, $data)) {
@@ -221,9 +223,11 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * paginate
      *
-     * @param integer $n nombre d'element a récupérer
-     * @param integer $current la page courrant
-     * @param integer $chunk le nombre l'élément par groupe que l'on veux faire.
+     * @param  integer $n       nombre d'element a
+     *                          récupérer
+     * @param  integer $current la page courrant
+     * @param  integer $chunk   le nombre l'élément par groupe que l'on veux
+     *                          faire.
      * @return Collection
      */
     public static function paginate($n, $current = 0, $chunk = null)
@@ -456,7 +460,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * Permet de récupérer un attribue
      *
-     * @param string $name
+     * @param  string $name
      * @return mixed|null
      */
     public function getAttribute($name)
@@ -538,7 +542,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * __get
      *
-     * @param string $name
+     * @param  string $name
      * @return mixed|null
      */
     public function __get($name)
@@ -578,8 +582,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * __call
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string $name
+     * @param  array  $arguments
      * @return mixed
      */
     public function __call($name, $arguments)
@@ -595,8 +599,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * __callStatic
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string $name
+     * @param  array  $arguments
      * @return mixed
      */
     public static function __callStatic($name, $arguments)

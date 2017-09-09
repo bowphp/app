@@ -1,8 +1,8 @@
 <?php
 namespace Bow\View;
 
+use Bow\Config\Config;
 use BadMethodCallException;
-use Bow\Application\Configuration;
 use Bow\View\Exception\ViewException;
 
 class View
@@ -39,10 +39,11 @@ class View
 
     /**
      * View constructor.
-     * @param Configuration $config
+     *
+     * @param  Config $config
      * @throws ViewException
      */
-    public function __construct(Configuration $config)
+    public function __construct(Config $config)
     {
         $engine = $config['view.engine'];
 
@@ -85,8 +86,8 @@ class View
     /**
      * Permet de faire le rendu d'une vue
      *
-     * @param string $viewname
-     * @param array $data
+     * @param  string $viewname
+     * @param  array  $data
      * @return string
      * @throws ViewException
      */
@@ -140,8 +141,8 @@ class View
     /**
      * Ajouter un moteur de template
      *
-     * @param $name
-     * @param $engine
+     * @param  $name
+     * @param  $engine
      * @return bool
      * @throws ViewException
      */

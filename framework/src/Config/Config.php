@@ -1,5 +1,5 @@
 <?php
-namespace Bow\Application;
+namespace Bow\Config;
 
 use Bow\Support\Env;
 use Bow\Support\Arraydotify;
@@ -8,10 +8,10 @@ use Bow\Application\Exception\ApplicationException;
 /**
  * Class AppConfiguratio
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Core
  */
-class Configuration implements \ArrayAccess
+class Config implements \ArrayAccess
 {
     /**
      * @var Configuration
@@ -44,7 +44,7 @@ class Configuration implements \ArrayAccess
             Env::load($base_path.'/.env.json');
         }
 
-        $glob = glob($base_path.'/config/**.php');
+        $glob = glob($base_path.'/**.php');
         $config = [];
 
         foreach ($glob as $file) {
@@ -52,7 +52,7 @@ class Configuration implements \ArrayAccess
             if (in_array($key, ['bootstrap', 'helper', 'classes']) || !file_exists($file)) {
                 continue;
             }
-            $config[$key] = require $file;
+            $config[$key] = include $file;
         }
 
         $this->config = Arraydotify::make($config);
@@ -61,12 +61,14 @@ class Configuration implements \ArrayAccess
     /**
      * Ferméture de la fonction magic __clone pour optimizer le singleton
      */
-    private final function __clone() { }
+    private final function __clone() 
+    { 
+    }
 
     /**
      * takeInstance singleton
      *
-     * @param string $base_path
+     * @param  string $base_path
      * @return Configuration
      */
     public static function configure($base_path)
@@ -83,7 +85,8 @@ class Configuration implements \ArrayAccess
      *
      * @return array
      */
-    public function namespaces() {
+    public function namespaces() 
+    {
         return [
             //
         ];
@@ -142,8 +145,8 @@ class Configuration implements \ArrayAccess
     /**
      * __invoke
      *
-     * @param $key
-     * @param null $value
+     * @param  $key
+     * @param  null $value
      * @return mixed
      */
     public function __invoke($key, $value = null)
@@ -176,7 +179,7 @@ class Configuration implements \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-       $this->config->offsetSet($offset, $value);
+        $this->config->offsetSet($offset, $value);
     }
 
     /**

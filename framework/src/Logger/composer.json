@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "filp/whoops": "^2.1",
-        "psr/log": "@stable"
+        "psr/log": "@stable",
+        "monolog/monolog": "^2.0@dev"
     },
     "license": "MIT",
     "authors": [

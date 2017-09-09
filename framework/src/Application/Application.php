@@ -2,6 +2,7 @@
 namespace Bow\Application;
 
 use Bow\Http\Request;
+use Bow\Config\Config;
 use Bow\Http\Response;
 use Bow\Http\Exception\HttpException;
 use Bow\Application\Exception\RouterException;
@@ -10,8 +11,8 @@ use Bow\Application\Exception\ApplicationException;
 /**
  * Create and maintener by diagnostic developpers teams:
  *
- * @author Etchien Boa <geekroot9@gmail.com>
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Etchien Boa <geekroot9@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Core
  */
 class Application
@@ -87,7 +88,7 @@ class Application
     private $response;
 
     /**
-     * @var Configuration|null
+     * @var Config|null
      */
     private $config;
 
@@ -104,28 +105,32 @@ class Application
     /**
      * Private construction
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
      */
     private function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;
+        
+        $whoops = new \Whoops\Run;
+        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+        $whoops->register();
     }
 
     /**
-     * Set configuration
+     * Set Config
      *
-     * @param Configuration $configuration
+     * @param Config $config
      */
-    public function bind(Configuration $configuration)
+    public function bind(Config $config)
     {
-        $this->config = $configuration;
+        $this->config = $config;
         $this->boot();
     }
 
     /**
-     * Set configuration
+     * Set Config
      */
     private function boot()
     {
@@ -161,13 +166,15 @@ class Application
     /**
      * Private __clone
      */
-    private function __clone(){}
+    private function __clone()
+    {
+    }
 
     /**
      * Pattern Singleton.
      *
-     * @param Request $request
-     * @param Response $response
+     * @param  Request  $request
+     * @param  Response $response
      * @return Application
      */
     public static function make(Request $request, Response $response)
@@ -182,8 +189,8 @@ class Application
     /**
      * mount, ajoute un branchement.
      *
-     * @param string $branch
-     * @param callable $cb
+     * @param  string   $branch
+     * @param  callable $cb
      * @throws ApplicationException
      * @return Application
      */
@@ -212,8 +219,8 @@ class Application
     /**
      * Permet d'associer un middleware sur une url
      *
-     * @param array $middleware
-     * @param callable $cb
+     * @param  array    $middleware
+     * @param  callable $cb
      * @return Application
      */
     public function middleware($middleware = [], callable $cb)
@@ -228,8 +235,10 @@ class Application
     /**
      * get, route de type GET ou bien retourne les variable ajoutés dans Bow
      *
-     * @param string $path La route à mapper
-     * @param callable|array $cb  La fonction à lancer
+     * @param string         $path La route à
+     *                             mapper
+     * @param callable|array $cb   La fonction à
+     *                             lancer
      *
      * @return Application|string
      */
@@ -241,8 +250,10 @@ class Application
     /**
      * post, route de type POST
      *
-     * @param string $path La route à mapper
-     * @param callable $cb La fonction à lancer
+     * @param string   $path La route à
+     *                       mapper
+     * @param callable $cb   La fonction à
+     *                       lancer
      *
      * @return Application
      */
@@ -267,8 +278,10 @@ class Application
     /**
      * any, route de tout type GET|POST|DELETE|PUT|OPTIONS|PATCH
      *
-     * @param string $path La route à mapper
-     * @param Callable $cb La fonction à lancer
+     * @param string   $path La route à
+     *                       mapper
+     * @param Callable $cb   La fonction à
+     *                       lancer
      *
      * @return Application
      */
@@ -284,8 +297,10 @@ class Application
     /**
      * delete, route de tout type DELETE
      *
-     * @param string $path La route à mapper
-     * @param callable $cb La fonction à lancer
+     * @param string   $path La route à
+     *                       mapper
+     * @param callable $cb   La fonction à
+     *                       lancer
      *
      * @return Application
      */
@@ -297,8 +312,10 @@ class Application
     /**
      * put, route de tout type PUT
      *
-     * @param string $path La route à mapper
-     * @param callable $cb La fonction à lancer
+     * @param string   $path La route à
+     *                       mapper
+     * @param callable $cb   La fonction à
+     *                       lancer
      *
      * @return Application
      */
@@ -310,8 +327,10 @@ class Application
     /**
      * patch, route de tout type PATCH
      *
-     * @param string $path La route à mapper
-     * @param callable $cb La fonction à lancer
+     * @param string   $path La route à
+     *                       mapper
+     * @param callable $cb   La fonction à
+     *                       lancer
      *
      * @return Application
      */
@@ -323,8 +342,10 @@ class Application
     /**
      * patch, route de tout type PATCH
      *
-     * @param string 				$path   La route à mapper
-     * @param callable 				$cb     La fonction à lancer
+     * @param  string   $path La route
+     *                        à mapper
+     * @param  callable $cb   La fonction
+     *                        à lancer
      * @return Application
      */
     public function options($path, Callable $cb)
@@ -335,8 +356,9 @@ class Application
     /**
      * code, Lance une fonction en fonction du code d'erreur HTTP
      *
-     * @param int $code Le code d'erreur
-     * @param callable $cb La fonction à lancer
+     * @param  int      $code Le code d'erreur
+     * @param  callable $cb   La fonction à
+     *                        lancer
      * @return Application
      */
     public function code($code, callable $cb)
@@ -348,16 +370,17 @@ class Application
     /**
      * match, route de tout type de method
      *
-     * @param array $methods
-     * @param string $path
-     * @param callable $cb La fonction à lancer
+     * @param  array    $methods
+     * @param  string   $path
+     * @param  callable $cb      La fonction à
+     *                           lancer
      * @return Application
      */
     public function match(array $methods, $path, Callable $cb = null)
     {
         foreach($methods as $method) {
             if ($this->request->method() === strtoupper($method)) {
-                $this->routeLoader(strtoupper($method), $path , $cb);
+                $this->routeLoader(strtoupper($method), $path, $cb);
             }
         }
 
@@ -368,9 +391,11 @@ class Application
      * addHttpVerbe, permet d'ajouter les autres verbes http
      * [PUT, DELETE, UPDATE, HEAD, PATCH]
      *
-     * @param string $method La methode HTTP
-     * @param string $path La route à mapper
-     * @param callable|array|string $cb La fonction à lancer
+     * @param string                $method La methode HTTP
+     * @param string                $path   La route
+     *                                      à mapper
+     * @param callable|array|string $cb     La fonction à
+     *                                      lancer
      *
      * @return Application
      */
@@ -390,9 +415,11 @@ class Application
     /**
      * routeLoader, lance le chargement d'une route.
      *
-     * @param string $method La methode HTTP
-     * @param string $path La route à mapper
-     * @param Callable|string|array $cb La fonction à lancer
+     * @param string                $method La methode HTTP
+     * @param string                $path   La route
+     *                                      à mapper
+     * @param Callable|string|array $cb     La fonction à
+     *                                      lancer
      *
      * @return Application
      */
@@ -402,7 +429,7 @@ class Application
             $path = '/' . $path;
         }
 
-        // construction du path original en fonction de la configuration de l'application
+        // construction du path original en fonction de la Config de l'application
         $path = $this->config['app.root'] . $this->branch . $path;
 
         // route courante
@@ -412,20 +439,20 @@ class Application
 
         // Ajout d'un nouvelle route sur l'en definie.
         switch (true) {
-            case !is_array($cb) && !empty($this->globale_middleware):
-                $cb = [
-                    'middleware' => $this->globale_middleware,
-                    'uses' => $cb
-                ];
-                break;
-            case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
-                if (!is_array($cb['middleware'])) {
-                    $cb['middleware'] = [$cb['middleware']];
-                }
-                $cb['middleware'] = array_merge(
-                    $this->globale_middleware, $cb['middleware']
-                );
-                break;
+        case !is_array($cb) && !empty($this->globale_middleware):
+            $cb = [
+                'middleware' => $this->globale_middleware,
+                'uses' => $cb
+            ];
+            break;
+        case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
+            if (!is_array($cb['middleware'])) {
+                $cb['middleware'] = [$cb['middleware']];
+            }
+            $cb['middleware'] = array_merge(
+                $this->globale_middleware, $cb['middleware']
+            );
+            break;
         }
 
         // Ajout de nouvelle route
@@ -438,7 +465,7 @@ class Application
      * Lance une personnalisation de route.
      *
      * @param array|string $var
-     * @param string $regexContrainte
+     * @param string       $regexContrainte
      *
      * @return Application
      */
@@ -582,7 +609,7 @@ class Application
     /**
      * Permet de donner des noms au url.
      *
-     * @param $name
+     * @param  $name
      * @return Application
      */
     public function name($name)
@@ -602,9 +629,9 @@ class Application
     /**
      * REST API Maker.
      *
-     * @param string $url
-     * @param string|array $controllerName
-     * @param array $where
+     * @param  string       $url
+     * @param  string|array $controllerName
+     * @param  array        $where
      * @return $this
      * @throws ApplicationException
      */
@@ -755,7 +782,7 @@ class Application
     /**
      * Retourne les définir pour une methode HTTP
      *
-     * @param string $method
+     * @param  string $method
      * @return Route
      */
     public function getMethodRoutes($method)
@@ -767,7 +794,7 @@ class Application
      * __call fonction magic php
      *
      * @param string $method
-     * @param array $param
+     * @param array  $param
      *
      * @throws ApplicationException
      *
@@ -797,20 +824,25 @@ class Application
     }
 
     /**
-     * @param $code
-     * @param $message
-     * @param array $headers
+     * Abort application
+     * 
+     * @param  $code
+     * @param  $message
+     * @param  array   $headers
      * @throws HttpException
      */
-    public function abort($code, $message = '', array $headers = [])
+    public function abort($code = 500, $message = '', array $headers = [])
     {
         response()->statusCode($code);
+        
         foreach ($headers as $key => $value) {
             response()->addHeader($key, $value);
         }
+        
         if ($message == null) {
             $message = 'Le procéssus a été suspendu.';
         }
+
         throw new HttpException($message);
     }
 

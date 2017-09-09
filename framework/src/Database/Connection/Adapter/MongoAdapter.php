@@ -11,6 +11,7 @@ class MongoAdapter extends AbstractConnection
 
     /**
      * MongoAdapter constructor.
+     *
      * @param $config
      */
     public function __construct($config)

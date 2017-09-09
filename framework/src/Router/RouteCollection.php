@@ -50,8 +50,8 @@ class RouteCollection
     /**
      * mount, ajoute un branchement.
      *
-     * @param string $branch
-     * @param callable $cb
+     * @param  string   $branch
+     * @param  callable $cb
      * @throws \Bow\Router\Exception\RouterException
      * @return Route
      */

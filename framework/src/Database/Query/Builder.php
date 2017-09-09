@@ -13,7 +13,7 @@ use function explode;
 /**
  * Class Builder
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Database
  */
 class Builder extends Tool implements \JsonSerializable
@@ -96,9 +96,9 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * Contructeur
      *
-     * @param string $table
-     * @param string $loadClassName
-     * @param string $primaryKey
+     * @param string     $table
+     * @param string     $loadClassName
+     * @param string     $primaryKey
      * @param $connection
      */
     public function __construct($table, $connection, $loadClassName = null, $primaryKey = 'id')
@@ -145,7 +145,7 @@ class Builder extends Tool implements \JsonSerializable
      *
      * @param $column
      * @param $comp
-     * @param null $value
+     * @param null    $value
      * @param $boolean
      *
      * @throws QueryBuilderException
@@ -189,7 +189,7 @@ class Builder extends Tool implements \JsonSerializable
      *
      * @param string $column
      * @param string $comp
-     * @param null $value
+     * @param null   $value
      *
      * @throws QueryBuilderException
      *
@@ -252,7 +252,7 @@ class Builder extends Tool implements \JsonSerializable
      * WHERE column BETWEEN '' AND ''
      *
      * @param $column
-     * @param array $range
+     * @param array                   $range
      * @param string boolean='and|or'
      *
      * @throws QueryBuilderException
@@ -288,8 +288,8 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * WHERE column NOT BETWEEN '' AND ''
      *
-     * @param $column
-     * @param $range
+     * @param  $column
+     * @param  $range
      * @return Builder
      */
     public function whereNotBetween($column, array $range)
@@ -303,7 +303,7 @@ class Builder extends Tool implements \JsonSerializable
      * clause where avec comparaison en <<in>>
      *
      * @param string $column
-     * @param array $range
+     * @param array  $range
      * @param string $boolean
      *
      * @throws QueryBuilderException
@@ -316,9 +316,11 @@ class Builder extends Tool implements \JsonSerializable
             throw new QueryBuilderException('Le paramètre 2 ne doit pas être un QueryBuilderau vide.', E_ERROR);
         }
 
-        $map = array_map(function() {
-            return '?';
-        }, $range);
+        $map = array_map(
+            function () {
+                return '?';
+            }, $range
+        );
 
         $this->whereDataBinding = array_merge($range, $this->whereDataBinding);
 
@@ -345,7 +347,7 @@ class Builder extends Tool implements \JsonSerializable
      * clause where avec comparaison en <<not in>>
      *
      * @param string $column
-     * @param array $range
+     * @param array  $range
      *
      * @throws QueryBuilderException
      *
@@ -361,7 +363,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * clause join
      *
-     * @param string $table
+     * @param string   $table
      * @param callable $callabe
      *
      * @return Builder
@@ -386,7 +388,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * clause left join
      *
-     * @param string $table
+     * @param string   $table
      * @param callable $callable
      *
      * @throws QueryBuilderException
@@ -418,7 +420,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * clause right join
      *
-     * @param string $table
+     * @param string   $table
      * @param callable $callable
      *
      * @throws QueryBuilderException
@@ -545,7 +547,7 @@ class Builder extends Tool implements \JsonSerializable
      *
      * @param string $column
      * @param string $comp
-     * @param null $value
+     * @param null   $value
      * @param string $boolean
      */
     public function having($column, $comp = '=', $value = null, $boolean = 'and')
@@ -587,7 +589,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * jump = offset
      *
-     * @param int $offset
+     * @param  int $offset
      * @return Builder
      */
     public function jump($offset = 0)
@@ -672,7 +674,7 @@ class Builder extends Tool implements \JsonSerializable
      * Lance en interne les requêtes utilisants les aggregats.
      *
      * @param $aggregat
-     * @param string $column
+     * @param string   $column
      *
      * @return array|int
      */
@@ -689,7 +691,7 @@ class Builder extends Tool implements \JsonSerializable
             $sql .= ' ' . $this->group;
             $this->group = null;
 
-            if (!isNull($this->havin)){
+            if (!isNull($this->havin)) {
                 $sql .= ' having ' . $this->havin;
             }
         }
@@ -707,7 +709,8 @@ class Builder extends Tool implements \JsonSerializable
 
     /**
      * Action get, seulement sur la requete de type select
-     * @param array $columns
+     *
+     * @param  array $columns
      * @return Collection|SqlUnity Si le mode de séléction unitaire n'est pas active
      */
     public function get(array $columns = [])
@@ -822,7 +825,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * Demarrer un transaction dans la base de donnée.
      *
-     * @param callable $cb
+     * @param  callable $cb
      * @return Builder
      */
     public function transition(callable $cb)
@@ -839,7 +842,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * count
      *
-     * @param string $column          La colonne sur laquelle sera faite le `count`
+     * @param string $column La colonne sur laquelle sera faite le `count`
      *
      * @return int
      */
@@ -869,10 +872,12 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * Action update
      *
-     * @param array $data  Les données à mettre à jour
-     * @param callable $cb La fonction de rappel. Dans ou elle est définie
-     *                     elle récupère en paramètre une instance de DatabaseErrorHanlder
-     *                     et les données récupérés par la réquête.
+     * @param array    $data Les données à mettre
+     *                       à jour
+     * @param callable $cb   La fonction de rappel. Dans ou elle est
+     *                       définie elle récupère en paramètre une
+     *                       instance de DatabaseErrorHanlder et les
+     *                       données récupérés par la réquête.
      *
      * @return int
      */
@@ -938,8 +943,9 @@ class Builder extends Tool implements \JsonSerializable
      * remove alise simplifié de delete.
      *
      * @param string $column Le nom du champs de la conditions
-     * @param string $comp Le type de comparaison
-     * @param string $value [optinal] La valeur a comparé
+     * @param string $comp   Le type de comparaison
+     * @param string $value  [optinal] La valeur a
+     *                       comparé
      *
      * @return int
      *
@@ -955,7 +961,7 @@ class Builder extends Tool implements \JsonSerializable
      * Action increment, ajout 1 par défaut sur le champs spécifié
      *
      * @param string $column La colonne sur laquel est faite incrémentation
-     * @param int $step Le part de l'incrementation
+     * @param int    $step   Le part de l'incrementation
      *
      * @return int
      */
@@ -969,7 +975,7 @@ class Builder extends Tool implements \JsonSerializable
      * Action decrement, soustrait 1 par defaut sur le champs spécifié
      *
      * @param string $column
-     * @param int $step
+     * @param int    $step
      *
      * @return int
      */
@@ -981,7 +987,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * Permet de faire une réquete avec la close DISTINCT
      *
-     * @param string $column
+     * @param  string $column
      * @return Builder
      */
     public function distinct($column)
@@ -999,7 +1005,7 @@ class Builder extends Tool implements \JsonSerializable
      * method permettant de customiser les methods increment et decrement
      *
      * @param string $column
-     * @param int $step
+     * @param int    $step
      * @param string $sign
      *
      * @return int
@@ -1119,9 +1125,11 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * paginate
      *
-     * @param integer $n nombre d'element a récupérer
-     * @param integer $current la page courrant
-     * @param integer $chunk le nombre l'élément par groupe que l'on veux faire.
+     * @param  integer $n       nombre d'element a
+     *                          récupérer
+     * @param  integer $current la page courrant
+     * @param  integer $chunk   le nombre l'élément par groupe que l'on veux
+     *                          faire.
      * @return Collection
      */
     public function paginate($n, $current = 0, $chunk = null)
@@ -1171,8 +1179,8 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * vérifie si un valeur existe déjà dans la DB
      *
-     * @param string $column Le nom de la colonne a vérifié
-     * @param mixed $value Le valeur de la colonne
+     * @param  string $column Le nom de la colonne a vérifié
+     * @param  mixed  $value  Le valeur de la colonne
      * @return bool
      * @throws QueryBuilderException
      */
@@ -1193,7 +1201,7 @@ class Builder extends Tool implements \JsonSerializable
     /**
      * rétourne l'id de la dernière insertion
      *
-     * @param string $name [optional]
+     * @param  string $name [optional]
      * @return string
      */
     public function getLastInsertId($name = null)

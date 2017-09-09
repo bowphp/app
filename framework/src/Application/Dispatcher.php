@@ -35,9 +35,6 @@ class Dispatcher
         $middleware = $this->middlewares[$this->index];
         $this->index++;
 
-        return call_user_func_array(
-            [new $middleware, 'checker'],
-            [$request, [$this, 'process']]
-        );
+        return call_user_func_array([new $middleware, 'checker'], [$request, [$this, 'process']]);
     }
 }

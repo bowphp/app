@@ -10,7 +10,7 @@ class Sanitize
      * Permet de nettoyer les données
      *
      * @param mixed $data
-     * @param bool $secure
+     * @param bool  $secure
      *
      * @return mixed
      */
@@ -60,7 +60,7 @@ class Sanitize
     /**
      * Permet de nettoyerune chaine de caractère
      *
-     * @param string $data les données a néttoyé
+     * @param  string $data les données a néttoyé
      * @return string
      */
     public static function data($data)
@@ -72,7 +72,7 @@ class Sanitize
      * Permet de nettoye rune chaine de caractère
      * ',<tag>,&nbsp;
      *
-     * @param string $data les données a sécurisé
+     * @param  string $data les données a sécurisé
      * @return string
      */
     public static function secure($data)

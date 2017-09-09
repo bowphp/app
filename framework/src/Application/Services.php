@@ -10,6 +10,7 @@ abstract class Services
 
     /**
      * Services constructor.
+     *
      * @param $app
      */
     public function __construct($app)

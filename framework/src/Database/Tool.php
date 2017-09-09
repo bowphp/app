@@ -11,7 +11,7 @@ class Tool
      * Éxécute PDOStatement::bindValue sur une instance de PDOStatement passé en paramètre
      *
      * @param PDOStatement $pdoStatement
-     * @param array $data
+     * @param array        $data
      *
      * @return PDOStatement
      */

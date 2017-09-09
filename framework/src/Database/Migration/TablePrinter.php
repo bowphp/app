@@ -56,6 +56,7 @@ class TablePrinter
 
     /**
      * define the auto increment field
+     *
      * @var \stdClass
      */
     private $autoincrement = false;
@@ -133,7 +134,7 @@ class TablePrinter
     /**
      * charset, set the model default character name
      *
-     * @param $charset
+     * @param  $charset
      * @return TablePrinter
      */
     public function charset($charset)
@@ -144,6 +145,7 @@ class TablePrinter
 
     /**
      * setEngine, set the model engine name
+     *
      * @param $collate
      */
     public function collate($collate)
@@ -154,6 +156,7 @@ class TablePrinter
 
     /**
      * setEngine, set the model engine name
+     *
      * @param $engine
      */
     public function engine($engine)
@@ -166,7 +169,7 @@ class TablePrinter
      * int
      *
      * @param string $field
-     * @param int $size
+     * @param int    $size
      *
      * @return TablePrinter
      */
@@ -178,7 +181,7 @@ class TablePrinter
     /**
      * tinyint
      *
-     * @param string $field
+     * @param string  $field
      * @param integer $size
      *
      * @return TablePrinter
@@ -201,7 +204,7 @@ class TablePrinter
      * smallint
      *
      * @param string $field
-     * @param bool $size
+     * @param bool   $size
      *
      * @return TablePrinter
      * @throws \ErrorException
@@ -228,7 +231,7 @@ class TablePrinter
      * bigint
      *
      * @param string $field
-     * @param int $size
+     * @param int    $size
      *
      * @return TablePrinter
      */
@@ -241,8 +244,8 @@ class TablePrinter
      * bigint
      *
      * @param string $field
-     * @param int $size
-     * @param int $left
+     * @param int    $size
+     * @param int    $left
      *
      * @return TablePrinter
      */
@@ -258,8 +261,8 @@ class TablePrinter
      * bigint
      *
      * @param string $field
-     * @param int $size
-     * @param int $left
+     * @param int    $size
+     * @param int    $left
      *
      * @return TablePrinter
      */
@@ -274,8 +277,8 @@ class TablePrinter
     /**
      * varchar
      *
-     * @param string $field
-     * @param int $size
+     * @param  string $field
+     * @param  int    $size
      * @throws \Exception
      * @return TablePrinter
      */
@@ -293,129 +296,147 @@ class TablePrinter
     /**
      * varchar
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function longText($field)
     {
-        return $this->addField('mediumtext', $field, [
+        return $this->addField(
+            'mediumtext', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * varchar
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function mediumText($field)
     {
-        return $this->addField('mediumtext', $field, [
+        return $this->addField(
+            'mediumtext', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * tinytext
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function tinyText($field)
     {
-        return $this->addField('tinytext', $field, [
+        return $this->addField(
+            'tinytext', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * text
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function text($field)
     {
-        return $this->addField('text', $field, [
+        return $this->addField(
+            'text', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * binary
      *
-     * @param string $field
-     * @param int $size
+     * @param  string $field
+     * @param  int    $size
      * @throws \Exception
      * @return TablePrinter
      */
     public function binary($field, $size = 8)
     {
-        return $this->addField('binary', $field, [
+        return $this->addField(
+            'binary', $field, [
             'null' => false,
             'size' => $size
-        ]);
+            ]
+        );
     }
 
     /**
      * blob
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function blob($field)
     {
-        return $this->addField('blob', $field, [
+        return $this->addField(
+            'blob', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * tiny blob
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function tinyBlob($field)
     {
-        return $this->addField('tinyblob', $field, [
+        return $this->addField(
+            'tinyblob', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * long blob
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function longBlob($field)
     {
-        return $this->addField('longblob', $field, [
+        return $this->addField(
+            'longblob', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
      * medium blob
      *
-     * @param string $field
+     * @param  string $field
      * @throws \Exception
      * @return TablePrinter
      */
     public function mediumBlob($field)
     {
-        return $this->addField('mediumblob', $field, [
+        return $this->addField(
+            'mediumblob', $field, [
             'null' => false
-        ]);
+            ]
+        );
     }
 
     /**
@@ -427,9 +448,11 @@ class TablePrinter
      */
     public function date($field)
     {
-        $this->addField('date', $field, [
+        $this->addField(
+            'date', $field, [
             'null' => false
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -443,9 +466,11 @@ class TablePrinter
      */
     public function year($field)
     {
-        $this->addField('year', $field, [
+        $this->addField(
+            'year', $field, [
             'null' => false
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -459,9 +484,11 @@ class TablePrinter
      */
     public function time($field)
     {
-        $this->addField('time', $field, [
+        $this->addField(
+            'time', $field, [
             'null' => false
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -475,9 +502,11 @@ class TablePrinter
      */
     public function dateTime($field)
     {
-        $this->addField('datetime', $field, [
+        $this->addField(
+            'datetime', $field, [
             'null' => false
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -489,15 +518,19 @@ class TablePrinter
      */
     public function timestamps()
     {
-        $this->addField('timestamp', 'created_at', [
+        $this->addField(
+            'timestamp', 'created_at', [
             'null' => true,
             'default' => 'CURRENT_TIMESTAMP'
-        ]);
+            ]
+        );
 
-        $this->addField('timestamp', 'updated_at', [
+        $this->addField(
+            'timestamp', 'updated_at', [
             'null' => true,
             'default' => 'CURRENT_TIMESTAMP'
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -506,7 +539,7 @@ class TablePrinter
      * longint
      *
      * @param string $field
-     * @param int $size
+     * @param int    $size
      *
      * @return TablePrinter
      */
@@ -517,7 +550,7 @@ class TablePrinter
 
     /**
      * @param string $field
-     * @param int $size
+     * @param int    $size
      * @return TablePrinter
      * @throws ModelException
      */
@@ -532,20 +565,22 @@ class TablePrinter
 
     /**
      * @param string $field
-     * @param array $enums
+     * @param array  $enums
      * @return TablePrinter
      */
     public function enumerate($field, array $enums)
     {
-        return $this->addField('enum', $field, [
+        return $this->addField(
+            'enum', $field, [
             'value' => $enums
-        ]);
+            ]
+        );
     }
 
     /**
      * autoincrement
      *
-     * @param string $field
+     * @param  string $field
      * @throws ModelException
      * @return TablePrinter
      */
@@ -580,7 +615,7 @@ class TablePrinter
     /**
      * primary
      *
-     * @param string|array $field
+     * @param  string|array $field
      * @throws ModelException
      * @return TablePrinter
      */
@@ -591,10 +626,12 @@ class TablePrinter
         }
 
         if (!is_null($field)) {
-            return $this->addField('int', $field, [
+            return $this->addField(
+                'int', $field, [
                 'null' => false,
                 'auto' => true
-            ]);
+                ]
+            );
         }
 
         return $this->addIndexes('primary');
@@ -623,7 +660,7 @@ class TablePrinter
     /**
      * addIndexes crée un clause index sur le champs spécifié.
      *
-     * @param string $indexType
+     * @param  string $indexType
      * @throws ModelException
      * @return TablePrinter
      */
@@ -641,9 +678,9 @@ class TablePrinter
     /**
      * addField
      *
-     * @param string $method
-     * @param string $field
-     * @param array $data
+     * @param  string $method
+     * @param  string $field
+     * @param  array  $data
      * @throws ModelException
      * @return TablePrinter
      */
@@ -687,18 +724,20 @@ class TablePrinter
     /**
      * loadWhole
      *
-     * @param string      $method
-     * @param string      $field
-     * @param int         $size
+     * @param string $method
+     * @param string $field
+     * @param int    $size
      *
      * @return TablePrinter
      */
     private function loadWhole($method, $field, $size = 20)
     {
-        $this->addField($method, $field, [
+        $this->addField(
+            $method, $field, [
             'size' => $size,
             'null' => false,
-        ]);
+            ]
+        );
 
         return $this;
     }
@@ -780,8 +819,8 @@ class TablePrinter
     /**
      * __call
      *
-     * @param string $method
-     * @param array $args
+     * @param  string $method
+     * @param  array  $args
      * @throws \ErrorException
      */
     public function __call($method, $args)

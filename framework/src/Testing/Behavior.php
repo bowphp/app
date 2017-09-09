@@ -13,6 +13,7 @@ class Behavior
 
     /**
      * Behovior constructor.
+     *
      * @param Parser $parser
      */
     public function __construct(Parser $parser)

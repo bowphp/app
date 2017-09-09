@@ -24,6 +24,7 @@ class Command
 
     /**
      * Command constructor.
+     *
      * @param string $dirname
      */
     public function __construct($dirname)
@@ -82,8 +83,8 @@ class Command
     /**
      * Permet de récupérer un parametre
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string $key
+     * @param  mixed  $default
      * @return mixed|Collection|null
      */
     public function getParameter($key, $default = null)
@@ -94,8 +95,8 @@ class Command
     /**
      * Permet de récupérer les options de la commande
      *
-     * @param string $key
-     * @param string $default
+     * @param  string $key
+     * @param  string $default
      * @return Collection|mixed|null
      */
     public function options($key = null, $default = null)
@@ -217,7 +218,7 @@ class Command
                 $model = rtrim($register["tables"][$num]);
             }
 
-            require $file;
+            include $file;
 
             // Formatage de la classe et Execution de la methode up ou down
             $class = ucfirst(Str::camel($model));
@@ -278,7 +279,7 @@ SEEDER;
     /**
      * Permet de create une migration
      *
-     * @param $model
+     * @param  $model
      * @throws \ErrorException
      */
     public function make($model)
@@ -351,6 +352,7 @@ doc;
 
     /**
      * Permet de mettre en place le systeme de resource.
+     *
      * @param string $controller_name
      */
     public function resource($controller_name)
@@ -657,8 +659,8 @@ CM;
     /**
      * Create new model file
      *
-     * @param string $model_name
-     * @param string|null $table_name
+     * @param  string      $model_name
+     * @param  string|null $table_name
      * @return int
      */
     public function model($model_name, $table_name = null)
@@ -705,7 +707,7 @@ MODEL;
     /**
      * Permet de créer un validator
      *
-     * @param string $name
+     * @param  string $name
      * @return int
      */
     public function validation($name)
@@ -773,7 +775,7 @@ VALIDATOR;
     /**
      * Permet de créer un validator
      *
-     * @param string $name
+     * @param  string $name
      * @return int
      */
     public function service($name)
@@ -827,7 +829,7 @@ VALIDATOR;
     /**
      * Read ligne
      *
-     * @param string $message
+     * @param  string $message
      * @return bool
      */
     private function readline($message)

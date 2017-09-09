@@ -14,9 +14,9 @@ class Actionner
     /**
      * Lanceur de callback
      *
-     * @param callable|string|array $actions
-     * @param mixed $param
-     * @param array $names
+     * @param  callable|string|array $actions
+     * @param  mixed                 $param
+     * @param  array                 $names
      * @throws RouterException
      * @return mixed
      */
@@ -117,9 +117,11 @@ class Actionner
         foreach ($middlewares_collection as $key => $middleware) {
             $injections = static::injector($middleware, 'checker');
 
-            $middleware_params = array_merge($injections, [function () use (& $next) {
-                return $next = true;
-            }, $middlewares_guard[$key]], $param);
+            $middleware_params = array_merge(
+                $injections, [function () use (& $next) {
+                    return $next = true;
+                }, $middlewares_guard[$key]], $param
+            );
 
             $status = call_user_func_array([new $middleware(), 'checker'], $middleware_params);
 
@@ -154,8 +156,8 @@ class Actionner
     /**
      * Permet de lance un middleware
      *
-     * @param string $middleware
-     * @param callable $callback
+     * @param  string   $middleware
+     * @param  callable $callback
      * @return bool
      */
     public static function middleware($middleware, callable $callback = null)
@@ -170,9 +172,13 @@ class Actionner
             $instance = $middleware;
         }
 
-        $status = call_user_func_array($instance, array_merge($injections, [function () use (& $next) {
-            return $next = true;
-        }]));
+        $status = call_user_func_array(
+            $instance, array_merge(
+                $injections, [function () use (& $next) {
+                    return $next = true;
+                }]
+            )
+        );
 
         if (is_callable($callback)) {
             $callback();
@@ -184,8 +190,8 @@ class Actionner
     /**
      * Permet de faire un injection
      *
-     * @param string $classname
-     * @param string $method
+     * @param  string $classname
+     * @param  string $method
      * @return array
      */
     public static function injector($classname, $method)
@@ -206,11 +212,14 @@ class Actionner
             $class = trim($match[1]);
 
             if (class_exists($class, true)) {
-                if (!in_array(strtolower($class), [
+                if (!in_array(
+                    strtolower($class), [
                     'string', 'array', 'bool', 'int',
                     'integer', 'double', 'float', 'callable',
                     'object', 'stdclass', '\closure', 'closure'
-                ])) {
+                    ]
+                )
+                ) {
                     $params[] = new $class();
                 }
             }
@@ -222,8 +231,8 @@ class Actionner
     /**
      * Next, lance successivement une liste de fonction.
      *
-     * @param array|callable $arr
-     * @param array|callable $arg
+     * @param  array|callable $arr
+     * @param  array|callable $arg
      * @return mixed
      */
     private static function exec($arr, $arg)

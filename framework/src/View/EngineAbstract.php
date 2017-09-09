@@ -53,8 +53,8 @@ abstract class EngineAbstract
     /**
      * Permet de transforme le code du temple en code html
      *
-     * @param string $filename
-     * @param array $data
+     * @param  string $filename
+     * @param  array  $data
      * @return mixed
      */
     public abstract function render($filename, array $data = []);
@@ -62,8 +62,8 @@ abstract class EngineAbstract
     /**
      * Permet de verifier le fichier à parser
      *
-     * @param string $filename
-     * @param bool $extended
+     * @param  string $filename
+     * @param  bool   $extended
      * @return string
      * @throws ViewException
      */

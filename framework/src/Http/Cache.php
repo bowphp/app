@@ -9,7 +9,7 @@ use function stat;
 /**
  * Class Cache
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Http
  */
 class Cache
@@ -26,6 +26,7 @@ class Cache
 
     /**
      * Cache constructor.
+     *
      * @param $base_directory
      */
     public function __construct($base_directory)
@@ -51,9 +52,9 @@ class Cache
     /**
      * Add new enter in the cache system
      *
-     * @param string $key The cache key
-     * @param mixed $data
-     * @param int $time
+     * @param  string $key  The cache key
+     * @param  mixed  $data
+     * @param  int    $time
      * @return bool
      */
     public static function add($key, $data, $time = null)
@@ -73,8 +74,8 @@ class Cache
     /**
      * Permet d'ajouter un cache qui persistera
      *
-     * @param string $key The cache key
-     * @param mixed $data
+     * @param  string $key  The cache key
+     * @param  mixed  $data
      * @return bool
      */
     public static function forever($key, $data)
@@ -93,8 +94,8 @@ class Cache
     /**
      * Add new enter in the cache system
      *
-     * @param string $key The cache key
-     * @param mixed $data
+     * @param  string $key  The cache key
+     * @param  mixed  $data
      * @return bool
      */
     public static function push($key, $data)
@@ -121,8 +122,8 @@ class Cache
     /**
      * Récupérer une entrée dans le cache
      *
-     * @param string $key
-     * @param mixed $default
+     * @param  string $key
+     * @param  mixed  $default
      * @return mixed
      */
     public static function get($key, $default = null)
@@ -145,8 +146,8 @@ class Cache
     /**
      * Permet d'augmenter le temps d'expiration du cache
      *
-     * @param string $key
-     * @param int $time
+     * @param  string $key
+     * @param  int    $time
      * @return bool
      */
     public static function addTime($key, $time)
@@ -172,7 +173,7 @@ class Cache
     /**
      * Permet de récuperer le temps d'expiration du cache
      *
-     * @param string $key
+     * @param  string $key
      * @return bool|string|int
      */
     public static function timeOf($key)
@@ -191,7 +192,7 @@ class Cache
     /**
      * Permet de supprimer une entrer dans le cache
      *
-     * @param string $key
+     * @param  string $key
      * @return bool
      */
     public static function forget($key)
@@ -216,7 +217,7 @@ class Cache
     /**
      * Vérifier l'existance d'un entrée dans la cache.
      *
-     * @param string $key
+     * @param  string $key
      * @return bool
      */
     public static function has($key)
@@ -228,7 +229,7 @@ class Cache
     /**
      * Permet de vérifier si le cache a expiré
      *
-     * @param string $key
+     * @param  string $key
      * @return bool
      */
     public static function expired($key)
@@ -247,8 +248,9 @@ class Cache
 
     /**
      * Permet de formater le fichier
-     * @param string $key
-     * @param bool $make_group_directory
+     *
+     * @param  string $key
+     * @param  bool   $make_group_directory
      * @return string
      */
     private static function makeHashFilename($key, $make_group_directory = false)

@@ -18,7 +18,7 @@ class AlterTable
     /**
      * Contructeur.
      *
-     * @param string $tableName
+     * @param string     $tableName
      * @param bool|false $displaySql
      */
     public function __construct($tableName, $displaySql = false)

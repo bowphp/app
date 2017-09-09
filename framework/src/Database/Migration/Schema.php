@@ -40,9 +40,9 @@ class Schema
     /**
      * Fonction de creation d'une nouvelle table dans la base de donnée.
      *
-     * @param string $table
+     * @param string   $table
      * @param callable $cb
-     * @param bool $displaySql
+     * @param bool     $displaySql
      */
     public static function create($table, Callable $cb, $displaySql = false)
     {
@@ -79,8 +79,8 @@ class Schema
     /**
      * Manipule les informations de la table.
      *
-     * @param string $table
-     * @param bool $displaySql
+     * @param string   $table
+     * @param bool     $displaySql
      * @param Callable $cb
      */
     public static function table($table, Callable $cb, $displaySql = false)

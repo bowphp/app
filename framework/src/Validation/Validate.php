@@ -5,7 +5,7 @@ use Bow\Validation\Exception\ValidationException;
 /**
  * Class Validate
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Support\Validate
  */
 class Validate
@@ -39,9 +39,9 @@ class Validate
     /**
      * Validate constructor.
      *
-     * @param bool $fails
+     * @param bool   $fails
      * @param string $message
-     * @param array $corruptesFields
+     * @param array  $corruptesFields
      */
     public function __construct($fails, $message, array $corruptesFields)
     {

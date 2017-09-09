@@ -1,3 +1,5 @@
 <?php
 
-class AuthorizationException extends \Exception {}
+class AuthorizationException extends \Exception
+{
+}

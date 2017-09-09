@@ -91,11 +91,12 @@ class Statement
          */
         $fields = $this->columns->getFieldsRangs();
 
-        $fields->each(function ($value, $field) {
-            $info = $value['data'];
-            $type = $value['type'];
+        $fields->each(
+            function ($value, $field) {
+                $info = $value['data'];
+                $type = $value['type'];
 
-            switch ($type) {
+                switch ($type) {
                 case 'char' :
                 case 'tinytext' :
                 case 'varchar' :
@@ -133,7 +134,7 @@ class Statement
                     if (isset($info["unsigned"])) {
                         $this->sql .= " UNSIGNED";
                     }
-                    break;
+break;
 
                 case "date" :
                 case "datetime" :
@@ -148,7 +149,7 @@ class Statement
                         $this->sql .= " DEFAULT " . $info["default"];
                     }
 
-                    break;
+break;
                 case "enum" :
                     foreach ($info["value"] as $key => $value) {
                         $info["value"][$key] = "'" . $value . "'";
@@ -167,9 +168,10 @@ class Statement
                         $this->sql .= " DEFAULT '" . $info["default"] . "'";
                     }
 
-                    break;
+break;
+                }
             }
-        });
+        );
 
         return $this->sql;
     }
@@ -177,7 +179,7 @@ class Statement
     /**
      * getNullType retourne les valeurs "null" ou "not null"
      *
-     * @param bool $null
+     * @param  bool $null
      * @return string
      */
     private function getNullType($null)
@@ -199,8 +201,8 @@ class Statement
      * Ajout les types de donnée au champ définir
      *
      * @param \StdClass $info
-     * @param string $field
-     * @param string $type
+     * @param string    $field
+     * @param string    $type
      */
     private function addFieldType($info, $field, $type)
     {

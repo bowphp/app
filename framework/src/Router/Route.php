@@ -41,7 +41,7 @@ class Route
     /**
      * Permet de donner des noms au url.
      *
-     * @param $name
+     * @param  $name
      * @return Route
      */
     public function name($name)
@@ -53,7 +53,7 @@ class Route
     /**
      * Permet d'associer un middleware sur une url
      *
-     * @param array $middleware
+     * @param  array $middleware
      * @return Route
      */
     public function middleware($middleware = [])
@@ -66,7 +66,7 @@ class Route
      * Lance une personnalisation de route.
      *
      * @param array|string $var
-     * @param string $regexContrainte
+     * @param string       $regexContrainte
      *
      * @return Route
      */
@@ -84,7 +84,7 @@ class Route
     /**
      * get, route de type GET ou bien retourne les variable ajoutés dans Bow
      *
-     * @param string $path
+     * @param string         $path
      * @param callable|array $cb 
      *
      * @return Route
@@ -97,7 +97,7 @@ class Route
     /**
      * post, route de type POST
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $cb
      *
      * @return Route
@@ -110,7 +110,7 @@ class Route
     /**
      * any, route de tout type GET|POST|DELETE|PUT|OPTIONS|PATCH
      *
-     * @param string $path
+     * @param string   $path
      * @param Callable $cb
      *
      * @return Route
@@ -127,7 +127,7 @@ class Route
     /**
      * delete, route de tout type DELETE
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $cb
      *
      * @return Route
@@ -140,7 +140,7 @@ class Route
     /**
      * put, route de tout type PUT
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $cb
      *
      * @return Route
@@ -153,7 +153,7 @@ class Route
     /**
      * patch, route de tout type PATCH
      *
-     * @param string $path
+     * @param string   $path
      * @param callable $cb
      *
      * @return Route
@@ -166,8 +166,8 @@ class Route
     /**
      * patch, route de tout type PATCH
      *
-     * @param string $path
-     * @param callable $cb
+     * @param  string   $path
+     * @param  callable $cb
      * @return Route
      */
     public function options($path, Callable $cb)
@@ -178,8 +178,8 @@ class Route
     /**
      * code, Lance une fonction en fonction du code d'erreur HTTP
      *
-     * @param int $code
-     * @param callable $cb
+     * @param  int      $code
+     * @param  callable $cb
      * @return Route
      */
     public function code($code, callable $cb)
@@ -191,15 +191,15 @@ class Route
     /**
      * match, route de tout type de method
      *
-     * @param array $methods
-     * @param string $path
-     * @param callable $cb
+     * @param  array    $methods
+     * @param  string   $path
+     * @param  callable $cb
      * @return Route
      */
     public function match(array $methods, $path, callable $cb = null)
     {
         foreach($methods as $method) {
-            $this->routeLoader(strtoupper($method), $path , $cb);
+            $this->routeLoader(strtoupper($method), $path, $cb);
         }
 
         return $this;
@@ -209,8 +209,8 @@ class Route
      * addHttpVerbe, permet d'ajouter les autres verbes http
      * [PUT, DELETE, UPDATE, HEAD, PATCH]
      *
-     * @param string $method
-     * @param string $path
+     * @param string         $method
+     * @param string         $path
      * @param callable|array $cb
      *
      * @return Route
@@ -223,8 +223,8 @@ class Route
     /**
      * routeLoader, lance le chargement d'une route.
      *
-     * @param string $method La methode HTTP
-     * @param string $path
+     * @param string         $method La methode HTTP
+     * @param string         $path
      * @param Callable|array $cb
      *
      * @return Route

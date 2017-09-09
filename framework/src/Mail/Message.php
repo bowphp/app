@@ -7,7 +7,7 @@ use Bow\Mail\Exception\MailException;
 /**
  * Class Message
  *
- * @author Franck Dakia <dakiafranck@gmail.com>
+ * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Mail
  */
 class Message
@@ -16,18 +16,21 @@ class Message
 
     /**
      * Liste des entêtes
+     *
      * @var array
      */
     private $headers = [];
 
     /**
      * définir le destinataire
+     *
      * @var array
      */
     private $to = [];
 
     /**
      * définir l'object du mail
+     *
      * @var string
      */
     private $subject = null;
@@ -44,6 +47,7 @@ class Message
 
     /**
      * Définir le message
+     *
      * @var string
      */
     private $message = null;
@@ -74,6 +78,7 @@ class Message
 
     /**
      * Construction d'une instance de SimpleMail
+     *
      * @param bool $boundary
      */
     public function __construct($boundary = true)
@@ -144,8 +149,8 @@ class Message
     /**
      * Formaté l'email récu.
      *
-     * @param  string $email
-     * @param  string $name
+     * @param string $email
+     * @param string $name
      *
      * @return array
      */
@@ -242,7 +247,7 @@ class Message
     /**
      * toHtml, définir le type de contenu en text/html
      *
-     * @param string $html=null
+     * @param  string $html=null
      * @return Message
      */
     public function html($html)
@@ -356,7 +361,7 @@ class Message
     /**
      * Sets email priority.
      *
-     * @param  int $priority
+     * @param int $priority
      *
      * @return Message
      */
