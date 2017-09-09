@@ -7,6 +7,9 @@ class EnvTest extends \PHPUnit\Framework\TestCase
 {
 	public static function setUpBeforeClass()
 	{
+		if (! file_exists(__DIR__.'/data/.env.json')) {
+			file_put_contents(__DIR__.'/data/.env.json', json_encode(['NAME' => 'papac']));
+		}
 		Env::load(__DIR__.'/data/.env.json');
 	}
 
