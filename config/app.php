@@ -29,12 +29,6 @@ return [
     'static' => '/',
 
     /**
-     * Liste des classes
-     * concernant les middleware et autre
-     */
-    'classes' => require __DIR__.'/classes.php',
-
-    /**
      * Le mode de débogage de l'application
      * development | production
      */
