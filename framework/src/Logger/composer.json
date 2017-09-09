@@ -1,0 +1,17 @@
+{
+    "name": "papac/bow-logger",
+    "description": "The part of bow framework package",
+    "type": "library",
+    "require": {
+        "filp/whoops": "^2.1",
+        "psr/log": "@stable"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Franck Dakia",
+            "email": "dakiafranck@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
