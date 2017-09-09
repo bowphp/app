@@ -1,7 +1,7 @@
 <?php
 use Bow\Support\Str;
 
-class TestStr extends \PHPUnit\Framework\TestCase
+class StrText extends \PHPUnit\Framework\TestCase
 {
     public function testUpper()
     {

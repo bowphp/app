@@ -1,5 +1,13 @@
 {
   "private": true,
+  "scripts": {
+    "test": "./vendor/bin/phpunit",
+    "test-framework": "./vendor/bin/phpunit --configuration framework/phpunit.xml framework/tests",
+    "gulp": "./node_modules/.bin/gulp default",
+    "watch": "./node_modules/.bin/gulp watch",
+    "watch-js": "./node_modules/.bin/gulp watch-js",
+    "watch-sass": "./node_modules/.bin/gulp watch-sass"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-csslint": "^1.0.0",
@@ -9,12 +17,5 @@
     "gulp-uglify": "^2.1.2",
     "bootstrap-sass": "^3.3.7",
     "jquery": "^3.1.1"
-  },
-  "scripts": {
-    "test": "./vendor/bin/phpunit",
-    "gulp": "./node_modules/.bin/gulp default",
-    "watch": "./node_modules/.bin/gulp watch",
-    "watch-js": "./node_modules/.bin/gulp watch-js",
-    "watch-sass": "./node_modules/.bin/gulp watch-sass"
   }
 }

@@ -7,3 +7,4 @@ vendor/
 src/tests/data/*
 !src/tests/data/
 .env.json
+npm-debug.log
