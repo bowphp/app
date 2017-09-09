@@ -40,7 +40,7 @@
     },
     "scripts": {
         "post-root-package-install":[
-            "php -r 'file_exists('.env.json') || copy(\".env.exemple.json\", \".env.json\");'"
+            "php -r 'file_exists(\".env.json\") || copy(\".env.exemple.json\", \".env.json\");'"
         ],
         "post-create-project-cmd": [
             "php bow generate:key"
