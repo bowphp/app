@@ -69,12 +69,13 @@ class Str
      */
     public static function snake($value, $delimiter = '_')
     {
-        if (!ctype_lower($value)) {
-            $value = preg_replace('/\s+/u', '', $value);
-            $value = static::lower(preg_replace('/(.)(?=[A-Z])/u', '$1'.$delimiter, $value));
-        }
+        $value = preg_replace('/\s+/u', $delimiter, $value);
 
-        return $value;
+        $value = static::lower(preg_replace_callback('/([A-Z])/u', function($math) use ($delimiter) {
+            return $delimiter.static::lower($math[1]);
+        }, $value));
+
+        return preg_replace('/'.$delimiter.'{2,}/', $delimiter, $value);
     }
 
     /**

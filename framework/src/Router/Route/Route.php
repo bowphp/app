@@ -1,5 +1,6 @@
 <?php
 
+namespace Bow\Router\Route;
 
 class Route
 {

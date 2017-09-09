@@ -572,7 +572,7 @@ class Application
             $this->current['path'] = $route->getPath();
 
             // Appel de l'action associer à la route
-            $response = $route->call($this->request, $this->config['app']['classes']);
+            $response = $route->call($this->request, $this->config->namespaces());
 
             if (is_string($response)) {
                 $this->response->send($response);

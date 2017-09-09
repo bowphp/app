@@ -1,6 +1,8 @@
 <?php
 
-class RouteCollection
+namespace Bow\Router\Route;
+
+class Collection
 {
     /**
      * @var array

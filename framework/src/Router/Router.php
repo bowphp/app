@@ -2,7 +2,7 @@
 
 namespace Bow\Router;
 
-use RouteCollection;
+use Bow\Router\Route\Collection as RouteCollection;
 
 class Router
 {
@@ -17,6 +17,11 @@ class Router
     private $collection;
 
     /**
+     * @var string
+     */
+    private $namespace;
+
+    /**
      * Router constructor.
      *
      * @param $config
@@ -25,6 +30,7 @@ class Router
     public function __construct($config, RouteCollection $collection)
     {
         $this->config = $config;
+        $this->namespace = $config->namespaces();
         $this->collection = $collection;
     }
 
