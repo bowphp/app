@@ -1366,7 +1366,7 @@ if (!function_exists('format_validation_errors')) {
      * @param  array $errors
      * @return array
      */
-    function format_validation_errors(array $errors): array 
+    function format_validation_errors(array $errors)
     {
         $validations = [];
 
