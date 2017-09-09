@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 {modelNamespace}
 use Bow\Database\Database;
@@ -20,7 +21,7 @@ class {controllerName} extends Controller
     /**
      * Permet d'afficher la vue permettant de créer une résource.
      *
-     * GET /{path}/create
+     * GET /{path}create
      */
     public function create()
     {
@@ -40,7 +41,7 @@ class {controllerName} extends Controller
     /**
      * Permet de récupérer un information précise avec un identifiant.
      *
-     * GET /{path}/:id
+     * GET /{path}:id
      *
      * @param mixed $id L'identifiant de l'élément à récupérer
      * @return mixed
@@ -53,7 +54,7 @@ class {controllerName} extends Controller
     /**
      * Mise à jour d'un résource en utilisant paramètre du GET
      *
-     * GET /{path}/:id/edit
+     * GET /{path}:id/edit
      *
      * @param mixed $id L'identifiant de l'élément à mettre à jour
      * @return mixed
@@ -66,7 +67,7 @@ class {controllerName} extends Controller
     /**
      * Mise à jour d'une résource
      *
-     * PUT /{path}/:id
+     * PUT /{path}:id
      *
      * @param mixed $id L'identifiant de l'élément à mettre à jour
      * @return mixed
@@ -79,7 +80,7 @@ class {controllerName} extends Controller
     /**
      * Permet de supprimer une resource
      *
-     * DELETE /{path}/:id
+     * DELETE /{path}:id
      *
      * @param mixed $id L'identifiant de l'élément à supprimer
      * @return mixed
