@@ -12,4 +12,18 @@
     - Implementation de barry ORM
     - Refonte de vue
     - Refonte du model user
-- Ajout de vue
+- Ajout
+	- vue
+
+## [2.5.0]
+- Changement
+	- Changement de l'architecture de l'application
+
+- Ajout
+	- Ajout du framework directememt dans la zone applicative.
+	- Ajout de la classe `Kernel` permettant de charger l'application
+
+- Correction
+	- Correction de bug dans le lanceur de tache `bow`
+	- Correction de bug de régération de réquête `SQL`
+	- More.
