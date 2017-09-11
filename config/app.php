@@ -29,6 +29,11 @@ return [
     'static' => '/',
 
     /**
+     * Chemin vers le dossier des fichiers statics
+     */
+    'assets' => __DIR__.'/../public',
+
+    /**
      * Le mode de débogage de l'application
      * development | production
      */

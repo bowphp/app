@@ -31,7 +31,7 @@ if (!function_exists('app')) {
      * @param  array $setting
      * @return \Bow\Support\Capsule|mixed
      */
-    function app($key = null, $setting = []) 
+    function app($key = null, $setting = [])
     {
         $capsule = Capsule::getInstance();
 
@@ -1087,21 +1087,37 @@ if (!function_exists('bow_date')) {
 
 if (!function_exists('public_path')) {
     /**
+     * Dossier des publics
+     * 
      * @return string
      */
-    function public_path() 
+    function public_path($path = '') 
     {
-        return config('app.static');
+        return trim(rtrim(config('app.static'), '/').'/'.ltrim($path, '/'), '/');
     }
 }
 
 if (!function_exists('storage_path')) {
     /**
+     * Dossier des storages
+     * 
      * @return string
      */
-    function storage_path() 
+    function storage_path($path = '') 
     {
-        return config('resource.storage');
+        return trim(rtrim(config('resource.storage'), '/').'/'.ltrim($path, '/'), '/');
+    }
+}
+
+if (!function_exists('assets')) {
+    /**
+     * Dossier des assets
+     * 
+     * @return string
+     */
+    function assets($path = '')
+    {
+        return trim(rtrim(config('app.assets'), '/').'/'.ltrim($path, '/'), '/');
     }
 }
 
@@ -1138,7 +1154,7 @@ if (!function_exists('route')) {
             $url = str_replace(':'. $key, $value, $url);
         }
 
-        return rtrim(env('BASE_URL'), '/').'/'.ltrim($url, '/');
+        return rtrim(env('APP_URL'), '/').'/'.ltrim($url, '/');
     }
 }
 
@@ -1302,7 +1318,7 @@ if (!function_exists('abort')) {
      * @param string $message
      * @param array  $headers
      */
-    function abort($code, $message = '', array $headers = [])
+    function abort($code = 500, $message = '', array $headers = [])
     {
         response()->statusCode($code);
 

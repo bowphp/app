@@ -4,6 +4,11 @@
  */
 return [
     /**
+     * Le dossier principal de storage
+     */
+    "root" => __DIR__.'/../storage',
+
+    /**
      * Store location utilisant le systeme de disk
      */
     'disk' =>[
