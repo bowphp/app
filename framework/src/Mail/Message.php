@@ -274,12 +274,13 @@ class Message
      * @param string $type
      * @return Message
      */
-    private function type($data, $type)
+    private function type($data, $type = 'text/html')
     {
         if (!$this->message) {
-            $this->type = $type;
             $this->message = $data;
         }
+        
+        $this->type = $type;
 
         return $this;
     }

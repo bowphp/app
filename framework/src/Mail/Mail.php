@@ -78,11 +78,12 @@ class Mail
         }
 
         $message = new Message();
-        call_user_func_array($cb, [$message]);
-
         $data = View::make($view, $bind);
 
-        $message->setMessage($data);
+        $message->html($data);
+
+        call_user_func_array($cb, [$message]);
+
         return self::$instance->send($message);
     }
 
@@ -98,16 +99,15 @@ class Mail
      */
     public static function raw($to, $subject, $data, array $headers = [])
     {
-        if (!is_array($to)) {
-            $to = [$to];
-        }
+        $to = (array) $to;
 
         $message = new Message();
-        $message->toList($to)->subject($subject)->setMessage($data);
+        $message->toList($to)->subject($subject)->html($data);
 
         foreach($headers as $key => $value) {
             $message->addHeader($key, $value);
         }
+
         return static::$instance->send($message);
     }
 
