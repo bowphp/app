@@ -12,7 +12,7 @@ return [
      * supporté: mail, smtp
      * Si smtp est définie alors les clés password et username doivent avoir des values.
      */
-    'driver' => 'smtp',
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /**
      * Encodage
