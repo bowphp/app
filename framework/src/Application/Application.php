@@ -20,7 +20,7 @@ class Application
     /**
      * @var string
      */
-    private $version = '0.2.1';
+    private $version = '2.5.1';
 
     /**
      * @var bool
