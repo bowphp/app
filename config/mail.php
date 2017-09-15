@@ -23,13 +23,13 @@ return [
      * smtp authentification
      */
     'smtp' => [
-        'hostname' => 'hostname',
-        'username' => 'username',
-        'password' => 'password',
-        'port'     => 25,
-        'tls'      => false,
-        'ssl'      => false,
-        'timeout'  => 50,
+        'hostname' => env('SMTP_HOSTNAME'),
+        'username' => env('SMTP_USERNAME'),
+        'password' => env('SMTP_PASSWORD'),
+        'port'     => env('SMTP_PORT'),
+        'tls'      => env('SMTP_TLS'),
+        'ssl'      => env('SMTP_SSL'),
+        'timeout'  => env('SMTP_TIMEOUT')
     ],
 
     /**
@@ -38,8 +38,8 @@ return [
     'mail' => [
         'default' => 'contact',
         'contact' => [
-            'address' => 'concat@exemple.com',
-            'username' => 'Address de contact'
+            'address' => env('CONTACT_EMAIL'),
+            'username' => env('CONTACT_NAME')
         ],
         'info' => [
             'address' => 'info@exemple.com',
