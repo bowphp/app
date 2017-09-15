@@ -345,11 +345,27 @@ if (!function_exists('slugify')) {
      * eg. la chaine '58 comprendre bow framework' -> '58-comprendre-bow-framework'
      *
      * @param  string $str
+     * @param  string $sperator
      * @return string
      */
-    function slugify($str) 
+    function slugify($str, $sperator = '-') 
     {
-        return \Bow\Support\Str::slugify($str);
+        return \Bow\Support\Str::slugify($str, $sperator);
+    }
+}
+
+if (!function_exists('str_slug')) {
+    /**
+     * slugify, transforme un chaine de caractère en slug
+     * eg. la chaine '58 comprendre bow framework' -> '58-comprendre-bow-framework'
+     *
+     * @param  string $str
+     * @param  string $sperator
+     * @return string
+     */
+    function str_slug($str, $sperator = '-') 
+    {
+        return slugify($str, $sperator);
     }
 }
 
@@ -1293,6 +1309,21 @@ if (!function_exists('trans')) {
         );
 
         return \Bow\Translate\Translator::make($key, $data, $choose);
+    }
+}
+
+if (!function_exists('__')) {
+    /**
+     * Alise de trans
+     * 
+     * @param  $key
+     * @param  $data
+     * @param  bool $choose
+     * @return string
+     */
+    function __($key, $data = [], $choose = null)
+    {
+        return trans($key, $data, $choose);
     }
 }
 
