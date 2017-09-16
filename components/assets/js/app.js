@@ -1,2 +1,3 @@
-let name = "je suis un message";
-console.log(`Bonjour ${name}`);
+let name = "Franck DAKIA";
+
+console.log(`Hello ${name}`);
