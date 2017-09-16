@@ -57,7 +57,12 @@ class SimpleMail implements Send
             }
         }
 
-        $status = @mb_send_mail($to, $message->getSubject(), $message->getMessage(), $message->compileHeaders());
+        $status = @mb_send_mail(
+            $to,
+            $message->getSubject(),
+            $message->getMessage(),
+            $message->compileHeaders()
+        );
 
         return (bool) $status;
     }
