@@ -1,1 +1,1 @@
-!function(){console.log("It works")}();
+"use strict";var name="je suis un message";console.log("Bonjour "+name);
