@@ -9,13 +9,17 @@
     "watch-sass": "./node_modules/.bin/gulp watch-sass"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
     "gulp-csslint": "^1.0.0",
     "gulp-cssmin": "^0.1.7",
     "gulp-imagemin": "^3.2.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.1.2",
-    "bootstrap-sass": "^3.3.7",
     "jquery": "^3.1.1"
   }
 }

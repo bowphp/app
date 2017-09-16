@@ -4,9 +4,10 @@ var cssmin   = require('gulp-cssmin');
 var uglify   = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var sass     = require('gulp-sass');
+var babel    = require('gulp-babel');
 
 gulp.task('compile-sass', function () {
-    gulp.src('components/assets/sass/style.scss')
+    gulp.src('components/assets/sass/app.scss')
         .pipe(sass())
         .pipe(csslint())
         .pipe(cssmin())
@@ -21,6 +22,9 @@ gulp.task('images-min', function() {
 
 gulp.task('compile-js', function () {
     return gulp.src('components/assets/js/**')
+        .pipe(babel({
+            presets: ['env']
+        }))
         .pipe(uglify())
         .pipe(gulp.dest('public/js'));
 });
