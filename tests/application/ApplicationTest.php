@@ -1,6 +1,6 @@
 <?php
 
-class ApplicationTest extends \Bow\Support\Testing\BowTestCase
+class ApplicationTest extends \Bow\Testing\BowTestCase
 {
     /**
      * @var string
