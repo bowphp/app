@@ -20,7 +20,7 @@ class Application
     /**
      * @var string
      */
-    private $version = '2.5.1';
+    private $version = '2.0.35';
 
     /**
      * @var bool
@@ -142,14 +142,14 @@ class Application
             $services = $this->config->services();
 
             foreach ($services as $service) {
-                if ($service instanceof Services) {
+                if (class_exists($service, true)) {
                     $class = new $service;
-                    $class->make();
+                    $class->make($this->config);
                 }
             }
 
             foreach ($services as $service) {
-                if ($service instanceof Services) {
+                if (class_exists($service, true)) {
                     $class = new $service;
                     $class->start();
                 }
