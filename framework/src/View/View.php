@@ -146,7 +146,7 @@ class View
      * @return bool
      * @throws ViewException
      */
-    public function pushEngine($name, $engine)
+    public static function pushEngine($name, $engine)
     {
         if (array_key_exists($name, static::$container)) {
             return true;
@@ -174,5 +174,21 @@ class View
         }
 
         throw new BadMethodCallException($name . ' impossible de lance cette methode');
+    }
+
+    /**
+     * __call
+     * 
+     * @param string $method
+     * @param array $arguments
+     */
+    public function __call($method, $arguments)
+    {
+        if (method_exists(static::$instance, $method)) {
+            return call_user_func_array([static::$instance, $method], $arguments);
+        }
+
+        throw new BadMethodCallException("La methode $method n'existe pas");
+        
     }
 }
