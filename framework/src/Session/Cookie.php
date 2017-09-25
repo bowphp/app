@@ -19,7 +19,7 @@ class Cookie
     /**
      * @access private
      */
-    private final function __clone() 
+    final private function __clone()
     {
     }
 
@@ -82,7 +82,7 @@ class Cookie
      */
     public static function all()
     {
-        foreach($_COOKIE as $key => $value) {
+        foreach ($_COOKIE as $key => $value) {
             $_COOKIE[$key] = Crypto::decrypt($value);
         }
 

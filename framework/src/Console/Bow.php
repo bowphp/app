@@ -77,7 +77,8 @@ class Bow
         try {
             call_user_func_array([$this, $command], [$this->_command->getParameter('target')]);
         } catch (\Exception $e) {
-            echo "{$e->getMessage()}"; exit(1);
+            echo "{$e->getMessage()}";
+            exit(1);
         }
     }
 
@@ -177,7 +178,7 @@ class Bow
                 $n = Database::table($table)->insert($seeds);
                 echo "\033[0;33m'$n' seed".($n > 1 ? 's' : '')." sur la table '$table'\n\033[00m";
             }
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             echo Color::red($e->getMessage());
             exit(1);
         }
@@ -282,7 +283,7 @@ class Bow
     /**
      * @param string $dirname
      */
-    private function unlinks($dirname) 
+    private function unlinks($dirname)
     {
         $glob = glob($dirname);
 
@@ -365,12 +366,12 @@ USAGE;
             return 0;
         }
 
-        switch($command) {
-        case 'help':
-            echo "\033[0;33mhelp\033[00m display command helper\n";
-            break;
-        case 'add':
-            echo <<<U
+        switch ($command) {
+            case 'help':
+                echo "\033[0;33mhelp\033[00m display command helper\n";
+                break;
+            case 'add':
+                echo <<<U
 \n\033[0;32mcreate\033[00m create a user class\n
     [option]
     --with-model[=name]     Create a model associte at controller
@@ -389,19 +390,18 @@ USAGE;
 
 U;
 
-            break;
-        case 'generate':
-
-            echo <<<U
+                break;
+            case 'generate':
+                echo <<<U
     \n\033[0;32mgenerate\033[00m create a resource and app keyn
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:resource name             For create a new REST controller
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:key                       For generate a new APP KEY
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate help                      For display this
 
 U;
-            break;
-        case 'migrate':
-            echo <<<U
+                break;
+            case 'migrate':
+                echo <<<U
 \n\033[0;32mmigrate\033[00m apply a migration in user model\n
     [option]
     --create=table_name   Change name of table
@@ -415,34 +415,34 @@ U;
 
 U;
 
-            break;
+                break;
 
-        case 'console':
-            echo <<<U
+            case 'console':
+                echo <<<U
 \n\033[0;32mconsole\033[00m show psysh php REPL\n
     php bow console
     >>> //test you code here.
 U;
-            break;
+                break;
 
-        case 'clear':
-            echo <<<U
+            case 'clear':
+                echo <<<U
 \n\033[0;32mclear\033[00m for clear cache information\n
 
    \033[0;33mclear:view\033[00m        Clear view cached information
    \033[0;33mclear:cache\033[00m       Clear cache information
    \033[0;33mclear:all\033[00m         Clear all cache information
 U;
-            break;
+                break;
 
-        case 'seed':
-            echo <<<U
+            case 'seed':
+                echo <<<U
 \n\033[0;32mseed\033[00m table\n
    option: [name]
    
    \033[0;33mseed \033[00m [option]    Make seeding for all or one table
 U;
-            break;
+                break;
         }
 
         exit(0);

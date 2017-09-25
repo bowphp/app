@@ -13,14 +13,14 @@ interface Loader
 
     /**
      * The middleware collection
-     * 
+     *
      * @return array
      */
     public function middlewares();
 
     /**
      * The services collection
-     * 
+     *
      * @return array
      */
     public function services();

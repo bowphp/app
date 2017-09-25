@@ -86,7 +86,7 @@ class Route
      * get, route de type GET ou bien retourne les variable ajoutés dans Bow
      *
      * @param string         $path
-     * @param callable|array $cb 
+     * @param callable|array $cb
      *
      * @return Route
      */
@@ -116,9 +116,9 @@ class Route
      *
      * @return Route
      */
-    public function any($path, Callable $cb)
+    public function any($path, callable $cb)
     {
-        foreach(['options', 'patch', 'post', 'delete', 'put', 'get'] as $method) {
+        foreach (['options', 'patch', 'post', 'delete', 'put', 'get'] as $method) {
             $this->$method($path, $cb);
         }
 
@@ -171,7 +171,7 @@ class Route
      * @param  callable $cb
      * @return Route
      */
-    public function options($path, Callable $cb)
+    public function options($path, callable $cb)
     {
         return $this->addHttpVerbe('OPTIONS', $path, $cb);
     }
@@ -199,7 +199,7 @@ class Route
      */
     public function match(array $methods, $path, callable $cb = null)
     {
-        foreach($methods as $method) {
+        foreach ($methods as $method) {
             $this->routeLoader(strtoupper($method), $path, $cb);
         }
 

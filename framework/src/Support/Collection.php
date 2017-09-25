@@ -123,7 +123,7 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
     {
         $r = [];
 
-        foreach($this->storage as $value) {
+        foreach ($this->storage as $value) {
             array_push($r, $value);
         }
 
@@ -139,7 +139,7 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
     {
         $r = [];
 
-        foreach($this->storage as $key => $value) {
+        foreach ($this->storage as $key => $value) {
             array_push($r, $key);
         }
 
@@ -217,7 +217,7 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
      *
      * @return Collection
      */
-    public function each(Callable $cb)
+    public function each(callable $cb)
     {
         foreach ($this->storage as $key => $value) {
             call_user_func_array($cb, [$value, $key]);
@@ -235,12 +235,12 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
      *
      * @return Collection
      */
-    public function merge($array) 
+    public function merge($array)
     {
 
         if (is_array($array)) {
             $this->storage = array_merge($this->storage, $array);
-        } else if ($array instanceof Collection) {
+        } elseif ($array instanceof Collection) {
             $this->storage = array_merge($this->storage, $array->toArray());
         } else {
             throw new \ErrorException(__METHOD__ . '(), must be take 1 parameter to be array or Collection, ' . gettype($array) . ' given', E_ERROR);
@@ -299,7 +299,7 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $old = $this->storage;
         $len = count($old);
 
-        for($i = $len, $len += $offset; $i < $len; $i++) {
+        for ($i = $len, $len += $offset; $i < $len; $i++) {
             $this->storage[$i] = $data;
         }
 
@@ -346,7 +346,8 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $sum = 0;
 
         $this->recursive(
-            $this->storage, function ($value) use (& $sum) {
+            $this->storage,
+            function ($value) use (& $sum) {
                 if (is_numeric($value)) {
                     $sum += $value;
                 }
@@ -397,7 +398,8 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $data = [];
 
         $this->recursive(
-            $this->storage, function ($value) use (& $data) {
+            $this->storage,
+            function ($value) use (& $data) {
                 if (is_numeric($value)) {
                     $data[] = $value;
                 }
@@ -425,7 +427,8 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $data = [];
 
         $this->recursive(
-            $this->storage, function ($value, $key) use (& $data, $except) {
+            $this->storage,
+            function ($value, $key) use (& $data, $except) {
                 if (in_array($key, $except)) {
                     $data[$key] = $value;
                 }
@@ -447,7 +450,8 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $data = [];
 
         $this->recursive(
-            $this->storage, function ($value, $key) use (& $data, $ignores) {
+            $this->storage,
+            function ($value, $key) use (& $data, $ignores) {
                 if (!in_array($key, $ignores)) {
                     $data[$key] = $value;
                 }
@@ -560,7 +564,8 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
         $collection = [];
 
         $this->recursive(
-            $this->storage, function ($value, $key) use (& $collection) {
+            $this->storage,
+            function ($value, $key) use (& $collection) {
                 if (is_object($value)) {
                     $collection[$key] = (array) $value;
                 } else {
@@ -606,9 +611,9 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
      * @param array    $data
      * @param callable $cb
      */
-    private function recursive(array $data, Callable $cb) 
+    private function recursive(array $data, callable $cb)
     {
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             if (is_array($value) || is_object($value)) {
                 $this->recursive((array) $value, $cb);
             } else {

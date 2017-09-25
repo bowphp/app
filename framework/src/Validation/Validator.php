@@ -125,12 +125,12 @@ class Validator
     {
         $this->inputs = $inputs;
 
-        foreach($rules as $key => $rule) {
+        foreach ($rules as $key => $rule) {
             /**
              * Formatage et validation de chaque règle
              * eg. name => "required|max:100|alpha"
              */
-            foreach(explode("|", $rule) as $masque) {
+            foreach (explode("|", $rule) as $masque) {
                 // Dans le case il y a un | superflux.
                 if (is_int($masque) || Str::len($masque) == "") {
                     continue;
@@ -201,7 +201,8 @@ class Validator
             $length = (int) end($match);
             if (Str::len($this->inputs[$key]) < $length) {
                 $this->lastMessage = $this->lexique(
-                    'min', [
+                    'min',
+                    [
                     'attribute' => $key,
                     'length' => $length
                     ]
@@ -224,7 +225,8 @@ class Validator
             $length = (int) end($match);
             if (Str::len($this->inputs[$key]) > $length) {
                 $this->lastMessage = $this->lexique(
-                    'max', [
+                    'max',
+                    [
                     'attribute' => $key,
                     'length' => $length
                     ]
@@ -247,7 +249,8 @@ class Validator
             $value = (string) end($match);
             if ($this->inputs[$key] != $value) {
                 $this->lastMessage = $this->lexique(
-                    'same', [
+                    'same',
+                    [
                     'attribute' => $key,
                     'value' => $value
                     ]
@@ -354,13 +357,14 @@ class Validator
         if (preg_match("/^in:(.+)$/", $masque, $match)) {
             $values = explode(",", end($match));
 
-            foreach($values as $index => $value) {
+            foreach ($values as $index => $value) {
                 $values[$index] = trim($value);
             }
 
             if (!in_array($this->inputs[$key], $values)) {
                 $this->lastMessage = $this->lexique(
-                    'in', [
+                    'in',
+                    [
                     'attribute' => $key,
                     'value' => implode(", ", $values)
                     ]
@@ -383,7 +387,8 @@ class Validator
             $length = (int) end($match);
             if (Str::len($this->inputs[$key]) != $length) {
                 $this->lastMessage = $this->lexique(
-                    'size', [
+                    'size',
+                    [
                     'attribute' => $key,
                     'length' => $length
                     ]

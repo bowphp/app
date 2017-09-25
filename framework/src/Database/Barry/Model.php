@@ -196,7 +196,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
 
         if ($static->timestamps) {
             $data = array_merge(
-                $data, [
+                $data,
+                [
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
                 ]
@@ -343,7 +344,6 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
 
         if ($primary_key_value != null) {
             if ($builder->exists($this->primaryKey, $primary_key_value)) {
-
                 $this->original[$this->primaryKey] = $primary_key_value;
                 $r = $builder->where($this->primaryKey, $primary_key_value)->update($this->attributes);
 
@@ -476,7 +476,8 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     private function mutableDateAttributes()
     {
         return array_merge(
-            $this->dates, [
+            $this->dates,
+            [
                 'created_at', 'updated_at', 'expired_at', 'logged_at', 'sigined_at'
             ]
         );

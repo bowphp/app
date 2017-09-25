@@ -67,5 +67,4 @@ interface CollectionAccessStatic
      * @return array
      */
     public static function toArray();
-
 }

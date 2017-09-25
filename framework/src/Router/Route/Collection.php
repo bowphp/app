@@ -127,7 +127,7 @@ class Collection
 
             if (is_string($response)) {
                 $this->response->send($response);
-            } else if (is_array($response) || is_object($response)) {
+            } elseif (is_array($response) || is_object($response)) {
                 $this->response->json($response);
             }
 

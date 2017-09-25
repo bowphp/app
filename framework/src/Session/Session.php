@@ -82,7 +82,7 @@ class Session implements CollectionAccessStatic
         $arr = [];
         static::start();
 
-        foreach($_SESSION as $key => $value) {
+        foreach ($_SESSION as $key => $value) {
             if (!array_key_exists($key, static::SESSION_CORE_KEY)) {
                 $arr[$key] = $value;
             }
@@ -295,7 +295,7 @@ class Session implements CollectionAccessStatic
     {
         static::start();
 
-        foreach(static::filter() as $key => $value){
+        foreach (static::filter() as $key => $value) {
             unset($_SESSION[static::SESSION_CORE_KEY['cache']][$key]);
             unset($_SESSION[$key]);
         }

@@ -61,8 +61,8 @@ class Config implements \ArrayAccess
     /**
      * Ferméture de la fonction magic __clone pour optimizer le singleton
      */
-    private final function __clone() 
-    { 
+    final private function __clone()
+    {
     }
 
     /**
@@ -85,7 +85,7 @@ class Config implements \ArrayAccess
      *
      * @return array
      */
-    public function namespaces() 
+    public function namespaces()
     {
         return [
             //

@@ -21,7 +21,7 @@ abstract class Services
 
     /**
      * Permet de créer le service
-     * 
+     *
      * @param Config $config
      * @param Config $config
      */
@@ -29,14 +29,14 @@ abstract class Services
 
     /**
      * Permet de lancer le service
-     * 
+     *
      * @return mixed
      */
     abstract public function start();
 
     /**
      * Start listener
-     * 
+     *
      * @param callable $cb
      */
     public function stared($cb)
@@ -46,7 +46,7 @@ abstract class Services
 
     /**
      * Make listener
-     * 
+     *
      * @param callable $cb
      */
     public function maked($cb)
@@ -56,7 +56,7 @@ abstract class Services
 
     /**
      * Get la service class name
-     * 
+     *
      * @return string
      */
     public function getName()

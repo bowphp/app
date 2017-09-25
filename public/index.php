@@ -14,8 +14,8 @@ $kernel = new \App\Kernel\Loader(
 
 // Création de l'application
 $app = Bow\Application\Application::make(
-	new Request, 
-	new Response
+    new Request,
+    new Response
 );
 
 $app->bind($kernel);

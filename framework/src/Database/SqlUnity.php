@@ -47,7 +47,7 @@ class SqlUnity implements \IteratorAggregate, \JsonSerializable, Simple
      * @param  null|\stdClass $data
      * @throws QueryBuilderException
      */
-    public function __construct(Builder $table, $id, $data = null) 
+    public function __construct(Builder $table, $id, $data = null)
     {
         if ($data === null) {
             $data = $table->first();
@@ -197,7 +197,7 @@ class SqlUnity implements \IteratorAggregate, \JsonSerializable, Simple
             $data = $this->data;
         }
 
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             if ($value instanceof Carbon) {
                 $data->$key = (string) $value;
             }

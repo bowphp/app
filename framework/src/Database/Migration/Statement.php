@@ -61,7 +61,6 @@ class Statement
     public function makeAlterTableStatement()
     {
         if (($statement = $this->makeSqlStatement()) !== null) {
-
             $sqlArray = explode(", ", $statement);
             $sql = '';
 
@@ -97,78 +96,77 @@ class Statement
                 $type = $value['type'];
 
                 switch ($type) {
-                case 'char' :
-                case 'tinytext' :
-                case 'varchar' :
-                case 'text' :
-                case 'mediumtext' :
-                case 'longtext' :
-                case "int" :
-                case "tinyint" :
-                case "smallint" :
-                case "mediumint" :
-                case "longint" :
-                case "bigint" :
-                case "float" :
-                case "double precision" :
-                case "tinyblob" :
-                case "blob" :
-                case "mediumblob" :
-                case "longblob" :
-                    $this->addFieldType($info, $field, $type);
-                    if (in_array($type, ["int", "longint", "bigint", "mediumint", "smallint", "tinyint"], true)) {
-                        if ($this->columns->getAutoincrement() instanceof \stdClass) {
-                            if ($this->columns->getAutoincrement()->method == $type && $this->columns->getAutoincrement()->field == $field) {
-                                $this->sql .= " AUTO_INCREMENT";
+                    case 'char':
+                    case 'tinytext':
+                    case 'varchar':
+                    case 'text':
+                    case 'mediumtext':
+                    case 'longtext':
+                    case "int":
+                    case "tinyint":
+                    case "smallint":
+                    case "mediumint":
+                    case "longint":
+                    case "bigint":
+                    case "float":
+                    case "double precision":
+                    case "tinyblob":
+                    case "blob":
+                    case "mediumblob":
+                    case "longblob":
+                        $this->addFieldType($info, $field, $type);
+                        if (in_array($type, ["int", "longint", "bigint", "mediumint", "smallint", "tinyint"], true)) {
+                            if ($this->columns->getAutoincrement() instanceof \stdClass) {
+                                if ($this->columns->getAutoincrement()->method == $type && $this->columns->getAutoincrement()->field == $field) {
+                                    $this->sql .= " AUTO_INCREMENT";
+                                }
+                                $this->columns->setAutoincrement(false);
                             }
-                            $this->columns->setAutoincrement(false);
                         }
-                    }
 
-                    $this->addIndexOrPrimaryKey($info, $field);
+                        $this->addIndexOrPrimaryKey($info, $field);
 
-                    if (isset($info["default"])) {
-                        $this->sql .= " DEFAULT " . $info["default"];
-                    }
+                        if (isset($info["default"])) {
+                            $this->sql .= " DEFAULT " . $info["default"];
+                        }
 
-                    if (isset($info["unsigned"])) {
-                        $this->sql .= " UNSIGNED";
-                    }
-break;
+                        if (isset($info["unsigned"])) {
+                            $this->sql .= " UNSIGNED";
+                        }
+                        break;
 
-                case "date" :
-                case "datetime" :
-                case "timestamp" :
-                case "time" :
-                case "year" :
+                    case "date":
+                    case "datetime":
+                    case "timestamp":
+                    case "time":
+                    case "year":
+                        $this->addFieldType($info, $field, $type);
+                        $this->addIndexOrPrimaryKey($info, $field);
 
-                    $this->addFieldType($info, $field, $type);
-                    $this->addIndexOrPrimaryKey($info, $field);
+                        if (isset($info["default"]) && $info["default"] != null) {
+                            $this->sql .= " DEFAULT " . $info["default"];
+                        }
 
-                    if (isset($info["default"]) && $info["default"] != null) {
-                        $this->sql .= " DEFAULT " . $info["default"];
-                    }
+                        break;
+                    case "enum":
+                        foreach ($info["value"] as $key => $value) {
+                            $info["value"][$key] = "'" . $value . "'";
+                        }
 
-break;
-                case "enum" :
-                    foreach ($info["value"] as $key => $value) {
-                        $info["value"][$key] = "'" . $value . "'";
-                    }
+                        if (isset($info["null"]) && $info["null"] === true) {
+                            $null = $this->getNullType($info["null"]);
+                        } else {
+                            $null = '';
+                        }
 
-                    if (isset($info["null"]) && $info["null"] === true) {
-                        $null = $this->getNullType($info["null"]);
-                    } else {
-                        $null = '';
-                    }
+                        $enum = implode(", ", $info["value"]);
+                        $this->sql .= ", `$field` ENUM($enum) $null";
 
-                    $enum = implode(", ", $info["value"]);
-                    $this->sql .= ", `$field` ENUM($enum) $null";
+                        if (isset($info["default"]) && $info['default'] !== null) {
+                            $this->sql .= " DEFAULT '" . $info["default"] . "'";
+                        }
 
-                    if (isset($info["default"]) && $info['default'] !== null) {
-                        $this->sql .= " DEFAULT '" . $info["default"] . "'";
-                    }
-
-break;
+                        break;
                 }
             }
         );

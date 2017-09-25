@@ -140,7 +140,8 @@ class MountFilesystem
         $directoryContents = glob($dirname."/*");
 
         return array_filter(
-            $directoryContents, function ($file) {
+            $directoryContents,
+            function ($file) {
                 return filetype($file) == "file";
             }
         );
@@ -157,7 +158,8 @@ class MountFilesystem
         $directoryContents = glob($this->resolvePath($dirname)."/*");
 
         return array_filter(
-            $directoryContents, function ($file) {
+            $directoryContents,
+            function ($file) {
                 return filetype($file) == "dir";
             }
         );

@@ -178,7 +178,7 @@ class View
 
     /**
      * __call
-     * 
+     *
      * @param string $method
      * @param array $arguments
      */
@@ -189,6 +189,5 @@ class View
         }
 
         throw new BadMethodCallException("La methode $method n'existe pas");
-        
     }
 }

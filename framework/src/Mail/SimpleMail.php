@@ -32,7 +32,6 @@ class SimpleMail implements Send
         }
 
         if (isset($this->config['mail'])) {
-
             $section = $this->config['mail']['default'];
 
             if (!$message->fromIsDefined()) {
@@ -49,7 +48,7 @@ class SimpleMail implements Send
         $to = '';
         $message->setDefaultHeader();
 
-        foreach($message->getTo() as $value) {
+        foreach ($message->getTo() as $value) {
             if ($value[0] !== null) {
                 $to .= $value[0] . ' <' . $value[1] . '>';
             } else {
@@ -70,8 +69,8 @@ class SimpleMail implements Send
     /**
      * Mise en privé des fonctions magic __clone
      */
-    private function __clone() 
-    { 
+    private function __clone()
+    {
     }
 
     /**

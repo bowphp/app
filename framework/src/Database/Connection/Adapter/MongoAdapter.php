@@ -1,5 +1,6 @@
 <?php
 namespace Bow\Database\Connection\Adapter;
+
 use Bow\Database\Connection\AbstractConnection;
 
 class MongoAdapter extends AbstractConnection

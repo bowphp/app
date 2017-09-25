@@ -1,5 +1,6 @@
 <?php
 namespace Bow\Http;
+
 use BadMethodCallException;
 use Bow\Support\Str;
 use function call_user_func_array;

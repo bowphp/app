@@ -57,8 +57,10 @@ class Arraydotify implements \ArrayAccess
             if (is_array($value) || is_object($value)) {
                 $value = (array) $value;
                 $dot = array_merge(
-                    $dot, $this->dotify(
-                        $value, $prepend.$key.'.'
+                    $dot,
+                    $this->dotify(
+                        $value,
+                        $prepend.$key.'.'
                     )
                 );
                 continue;

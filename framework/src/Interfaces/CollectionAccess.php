@@ -74,5 +74,4 @@ interface CollectionAccess
      * @return array
      */
     public function toObject();
-
 }

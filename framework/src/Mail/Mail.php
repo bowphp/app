@@ -25,7 +25,7 @@ class Mail
     /**
      * Maxi singleton
      */
-    private function __clone() 
+    private function __clone()
     {
     }
 
@@ -104,7 +104,7 @@ class Mail
         $message = new Message();
         $message->toList($to)->subject($subject)->html($data);
 
-        foreach($headers as $key => $value) {
+        foreach ($headers as $key => $value) {
             $message->addHeader($key, $value);
         }
 

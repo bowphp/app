@@ -15,7 +15,7 @@ class TrimMiddleware
     {
         $input = array_merge($_GET, $_POST);
 
-        foreach($input as $key => $value) {
+        foreach ($input as $key => $value) {
             $input[$key] = trim($value);
         }
 

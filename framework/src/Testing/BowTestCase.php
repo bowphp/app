@@ -85,7 +85,8 @@ class BowTestCase extends TestCase
         $param = array_merge(
             [
             '_method' => 'DELETE'
-            ], $param
+            ],
+            $param
         );
 
         return $this->put($url, $param);
@@ -101,7 +102,8 @@ class BowTestCase extends TestCase
         $param = array_merge(
             [
             '_method' => 'PATCH'
-            ], $param
+            ],
+            $param
         );
 
         return $this->put($url, $param);

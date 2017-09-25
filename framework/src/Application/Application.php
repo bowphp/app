@@ -285,9 +285,9 @@ class Application
      *
      * @return Application
      */
-    public function any($path, Callable $cb)
+    public function any($path, callable $cb)
     {
-        foreach(['options', 'patch', 'post', 'delete', 'put', 'get'] as $method) {
+        foreach (['options', 'patch', 'post', 'delete', 'put', 'get'] as $method) {
             $this->$method($path, $cb);
         }
 
@@ -348,7 +348,7 @@ class Application
      *                        à lancer
      * @return Application
      */
-    public function options($path, Callable $cb)
+    public function options($path, callable $cb)
     {
         return $this->addHttpVerbe('OPTIONS', $path, $cb);
     }
@@ -376,9 +376,9 @@ class Application
      *                           lancer
      * @return Application
      */
-    public function match(array $methods, $path, Callable $cb = null)
+    public function match(array $methods, $path, callable $cb = null)
     {
-        foreach($methods as $method) {
+        foreach ($methods as $method) {
             if ($this->request->method() === strtoupper($method)) {
                 $this->routeLoader(strtoupper($method), $path, $cb);
             }
@@ -439,20 +439,21 @@ class Application
 
         // Ajout d'un nouvelle route sur l'en definie.
         switch (true) {
-        case !is_array($cb) && !empty($this->globale_middleware):
-            $cb = [
+            case !is_array($cb) && !empty($this->globale_middleware):
+                $cb = [
                 'middleware' => $this->globale_middleware,
                 'uses' => $cb
-            ];
-            break;
-        case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
-            if (!is_array($cb['middleware'])) {
-                $cb['middleware'] = [$cb['middleware']];
-            }
-            $cb['middleware'] = array_merge(
-                $this->globale_middleware, $cb['middleware']
-            );
-            break;
+                ];
+                break;
+            case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
+                if (!is_array($cb['middleware'])) {
+                    $cb['middleware'] = [$cb['middleware']];
+                }
+                $cb['middleware'] = array_merge(
+                    $this->globale_middleware,
+                    $cb['middleware']
+                );
+                break;
         }
 
         // Ajout de nouvelle route
@@ -576,7 +577,7 @@ class Application
 
             if (is_string($response)) {
                 $this->response->send($response);
-            } else if (is_array($response) || is_object($response)) {
+            } elseif (is_array($response) || is_object($response)) {
                 $this->response->json($response);
             }
 
@@ -707,7 +708,7 @@ class Application
                 $ignoreMethod = $controllerName['ignores'];
                 unset($controllerName['ignores']);
             }
-        } else  {
+        } else {
             $controller = $controllerName;
         }
 
@@ -825,7 +826,7 @@ class Application
 
     /**
      * Abort application
-     * 
+     *
      * @param  $code
      * @param  $message
      * @param  array   $headers

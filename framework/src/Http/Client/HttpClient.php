@@ -123,7 +123,7 @@ class HttpClient
     /**
      * @param array $data
      */
-    private function addFields(array $data) 
+    private function addFields(array $data)
     {
         if (!empty($data)) {
             curl_setopt($this->ch, CURLOPT_POSTFIELDS, http_build_query($data));

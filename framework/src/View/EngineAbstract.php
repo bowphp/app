@@ -57,7 +57,7 @@ abstract class EngineAbstract
      * @param  array  $data
      * @return mixed
      */
-    public abstract function render($filename, array $data = []);
+    abstract public function render($filename, array $data = []);
 
     /**
      * Permet de verifier le fichier à parser

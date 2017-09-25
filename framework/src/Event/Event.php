@@ -66,7 +66,8 @@ class Event
         self::$events[$event][] = new Listener($fn, $priority);
 
         uasort(
-            self::$events[$event], function (Listener $a, Listener $b) {
+            self::$events[$event],
+            function (Listener $a, Listener $b) {
                 return $a->getPriority() < $b->getPriority();
             }
         );
@@ -140,7 +141,9 @@ class Event
                 }
 
                 return Actionner::call(
-                    $callable, [$data], [
+                    $callable,
+                    [$data],
+                    [
                     'namespace' => [ 'controller' => self::$namespace ]
                     ]
                 );

@@ -6,7 +6,7 @@ class Auth
 {
     /**
      * Configure Auth system
-     * 
+     *
      * @param array $config
      */
     public static function configure(array $config)
@@ -56,7 +56,7 @@ class Auth
 
     /**
      * __call
-     * 
+     *
      * @param string $method
      * @param array $parameters
      * @return mixed

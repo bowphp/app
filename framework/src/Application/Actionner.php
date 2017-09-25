@@ -118,9 +118,11 @@ class Actionner
             $injections = static::injector($middleware, 'checker');
 
             $middleware_params = array_merge(
-                $injections, [function () use (& $next) {
+                $injections,
+                [function () use (& $next) {
                     return $next = true;
-                }, $middlewares_guard[$key]], $param
+                }, $middlewares_guard[$key]],
+                $param
             );
 
             $status = call_user_func_array([new $middleware(), 'checker'], $middleware_params);
@@ -142,7 +144,7 @@ class Actionner
         // Lancement de l'éxècution de la liste des actions definir
         // Fonction a éxècuté suivant un ordre
         if (!empty($functions)) {
-            foreach($functions as $function) {
+            foreach ($functions as $function) {
                 $status = call_user_func_array(
                     $function['controller'],
                     array_merge($function['injections'], $param)
@@ -173,8 +175,10 @@ class Actionner
         }
 
         $status = call_user_func_array(
-            $instance, array_merge(
-                $injections, [function () use (& $next) {
+            $instance,
+            array_merge(
+                $injections,
+                [function () use (& $next) {
                     return $next = true;
                 }]
             )
@@ -213,7 +217,8 @@ class Actionner
 
             if (class_exists($class, true)) {
                 if (!in_array(
-                    strtolower($class), [
+                    strtolower($class),
+                    [
                     'string', 'array', 'bool', 'int',
                     'integer', 'double', 'float', 'callable',
                     'object', 'stdclass', '\closure', 'closure'

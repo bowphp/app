@@ -41,7 +41,7 @@ class Redirect
      *                           // des données a
      *                           récupéré dans la
      *                           page de rédirection
-     *                           ];                                                                                
+     *                           ];
      */
     public function to($path, $status = 302)
     {
@@ -53,7 +53,7 @@ class Redirect
 
         if (isset($path['?'])) {
             $url .= '?';
-            foreach($path['?'] as $key => $value) {
+            foreach ($path['?'] as $key => $value) {
                 if ($key > 0) {
                     $url .= '&';
                 }

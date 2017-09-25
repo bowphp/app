@@ -83,7 +83,8 @@ class Faker
         $passwords = array_map(
             function ($name) {
                 return str_replace(' ', '', strtolower($name));
-            }, self::NAMES
+            },
+            self::NAMES
         );
 
         return static::gen($passwords, 'password');

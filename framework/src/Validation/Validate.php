@@ -2,6 +2,7 @@
 namespace Bow\Validation;
 
 use Bow\Validation\Exception\ValidationException;
+
 /**
  * Class Validate
  *
@@ -51,8 +52,8 @@ class Validate
         $this->corruptesRules = [];
         $this->messages = [];
 
-        foreach($corruptesFields as $key => $corruptes) {
-            foreach($corruptes as $fields) {
+        foreach ($corruptesFields as $key => $corruptes) {
+            foreach ($corruptes as $fields) {
                 $this->messages[$key] = $fields["message"];
                 $this->corruptesRules[$key] = $fields["masque"];
             }

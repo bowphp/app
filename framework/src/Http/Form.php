@@ -180,7 +180,7 @@ class Form
      *
      * @return void
      */
-    public static function checkbox($name, $checked = false,  $value = "")
+    public static function checkbox($name, $checked = false, $value = "")
     {
         $value = static::getAssociateValue($name, $value);
         self::$form .= "<input type=\"checkbox\" name=\"{$name}\" value=\"{$value}\" ". ($checked == true ? 'cheched' : '')."/>";
@@ -217,8 +217,7 @@ class Form
         self::$form .= "<select name=\"$name\" ".$attributes.">";
         $oldValue = static::getAssociateValue($name);
 
-        foreach($options as $key => $value) {
-
+        foreach ($options as $key => $value) {
             if ($oldValue !== "") {
                 $key = $oldValue;
             }

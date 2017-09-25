@@ -110,7 +110,7 @@ class Response
         $this->addHeader('Content-Length', filesize($file));
         $this->addHeader('Content-Encoding', 'base64');
 
-        foreach($headers as $key => $value) {
+        foreach ($headers as $key => $value) {
             $this->addHeader($key, $value);
         }
 

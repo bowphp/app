@@ -1,15 +1,15 @@
 <?php
 
 return [
-	"default" => "web",
+    "default" => "web",
 
-	"web" => [
-		"type" => "model",
-		'model' => App\User::class
-	],
+    "web" => [
+        "type" => "model",
+        'model' => App\User::class
+    ],
 
-	"api" => [
-		'tyoe' => "jwt",
-		"model" => App\User::class
-	]
+    "api" => [
+        'tyoe' => "jwt",
+        "model" => App\User::class
+    ]
 ];

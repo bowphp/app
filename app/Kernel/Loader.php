@@ -19,7 +19,7 @@ class Loader extends Config
      *
      * @return array
      */
-    public function namespaces() 
+    public function namespaces()
     {
         return [
             'controller' => 'App\\Controllers',
@@ -29,7 +29,7 @@ class Loader extends Config
 
     /**
      * The middleware lists
-     * 
+     *
      * @return array
      */
     public function middlewares()
@@ -41,8 +41,8 @@ class Loader extends Config
     }
 
     /**
-     * All app services register 
-     * 
+     * All app services register
+     *
      * @return array
      */
     public function services()

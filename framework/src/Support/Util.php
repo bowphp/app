@@ -53,7 +53,7 @@ class Util
             if (!is_array($vars)) {
                 $vars = [$vars];
             }
-            foreach($vars as $var) {
+            foreach ($vars as $var) {
                 $dumper->dump($cloner->cloneVar($var));
             }
         };

@@ -319,7 +319,8 @@ class Builder extends Tool implements \JsonSerializable
         $map = array_map(
             function () {
                 return '?';
-            }, $range
+            },
+            $range
         );
 
         $this->whereDataBinding = array_merge($range, $this->whereDataBinding);
@@ -881,7 +882,7 @@ class Builder extends Tool implements \JsonSerializable
      *
      * @return int
      */
-    public function update(array $data = [], Callable $cb = null)
+    public function update(array $data = [], callable $cb = null)
     {
         $sql = 'update `' . $this->table . '` set ';
         $sql .= Util::rangeField(Util::add2points(array_keys($data)));
@@ -915,7 +916,7 @@ class Builder extends Tool implements \JsonSerializable
      *
      * @return int
      */
-    public function delete(Callable $cb = null)
+    public function delete(callable $cb = null)
     {
         $sql = 'delete from `' . $this->table . '`';
 

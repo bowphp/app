@@ -49,7 +49,7 @@ class Str
     {
         $parts = preg_split('/(_|-|\s)+/', $str);
         $camel = "";
-        foreach($parts as $key => $value) {
+        foreach ($parts as $key => $value) {
             if ($key == 0) {
                 $camel .= $value;
                 continue;
@@ -71,7 +71,7 @@ class Str
     {
         $value = preg_replace('/\s+/u', $delimiter, $value);
 
-        $value = static::lower(preg_replace_callback('/([A-Z])/u', function($math) use ($delimiter) {
+        $value = static::lower(preg_replace_callback('/([A-Z])/u', function ($math) use ($delimiter) {
             return $delimiter.static::lower($math[1]);
         }, $value));
 
@@ -412,7 +412,7 @@ class Str
         $wordParts = explode(' ', $words);
         $sentence = '';
 
-        for($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             $sentence .= ' ' . $wordParts[$i];
         }
 
@@ -437,11 +437,11 @@ class Str
             if (!in_array($r, $rand)) {
                 $rand[] = $r;
             }
-        } while(count($rand) != $wordPartsLen);
+        } while (count($rand) != $wordPartsLen);
 
         $sentence = '';
 
-        foreach($rand as $word) {
+        foreach ($rand as $word) {
             $sentence .= $wordParts[$word] . ' ';
         }
 

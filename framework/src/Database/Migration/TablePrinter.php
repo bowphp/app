@@ -103,7 +103,7 @@ class TablePrinter
 
     /**
      * nullable
-     * 
+     *
      * @return TablePrinter
      */
     public function nullable()
@@ -303,7 +303,9 @@ class TablePrinter
     public function longText($field)
     {
         return $this->addField(
-            'mediumtext', $field, [
+            'mediumtext',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -319,7 +321,9 @@ class TablePrinter
     public function mediumText($field)
     {
         return $this->addField(
-            'mediumtext', $field, [
+            'mediumtext',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -335,7 +339,9 @@ class TablePrinter
     public function tinyText($field)
     {
         return $this->addField(
-            'tinytext', $field, [
+            'tinytext',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -351,7 +357,9 @@ class TablePrinter
     public function text($field)
     {
         return $this->addField(
-            'text', $field, [
+            'text',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -368,7 +376,9 @@ class TablePrinter
     public function binary($field, $size = 8)
     {
         return $this->addField(
-            'binary', $field, [
+            'binary',
+            $field,
+            [
             'null' => false,
             'size' => $size
             ]
@@ -385,7 +395,9 @@ class TablePrinter
     public function blob($field)
     {
         return $this->addField(
-            'blob', $field, [
+            'blob',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -401,7 +413,9 @@ class TablePrinter
     public function tinyBlob($field)
     {
         return $this->addField(
-            'tinyblob', $field, [
+            'tinyblob',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -417,7 +431,9 @@ class TablePrinter
     public function longBlob($field)
     {
         return $this->addField(
-            'longblob', $field, [
+            'longblob',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -433,7 +449,9 @@ class TablePrinter
     public function mediumBlob($field)
     {
         return $this->addField(
-            'mediumblob', $field, [
+            'mediumblob',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -449,7 +467,9 @@ class TablePrinter
     public function date($field)
     {
         $this->addField(
-            'date', $field, [
+            'date',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -467,7 +487,9 @@ class TablePrinter
     public function year($field)
     {
         $this->addField(
-            'year', $field, [
+            'year',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -485,7 +507,9 @@ class TablePrinter
     public function time($field)
     {
         $this->addField(
-            'time', $field, [
+            'time',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -503,7 +527,9 @@ class TablePrinter
     public function dateTime($field)
     {
         $this->addField(
-            'datetime', $field, [
+            'datetime',
+            $field,
+            [
             'null' => false
             ]
         );
@@ -519,14 +545,18 @@ class TablePrinter
     public function timestamps()
     {
         $this->addField(
-            'timestamp', 'created_at', [
+            'timestamp',
+            'created_at',
+            [
             'null' => true,
             'default' => 'CURRENT_TIMESTAMP'
             ]
         );
 
         $this->addField(
-            'timestamp', 'updated_at', [
+            'timestamp',
+            'updated_at',
+            [
             'null' => true,
             'default' => 'CURRENT_TIMESTAMP'
             ]
@@ -571,7 +601,9 @@ class TablePrinter
     public function enumerate($field, array $enums)
     {
         return $this->addField(
-            'enum', $field, [
+            'enum',
+            $field,
+            [
             'value' => $enums
             ]
         );
@@ -627,7 +659,9 @@ class TablePrinter
 
         if (!is_null($field)) {
             return $this->addField(
-                'int', $field, [
+                'int',
+                $field,
+                [
                 'null' => false,
                 'auto' => true
                 ]
@@ -733,7 +767,9 @@ class TablePrinter
     private function loadWhole($method, $field, $size = 20)
     {
         $this->addField(
-            $method, $field, [
+            $method,
+            $field,
+            [
             'size' => $size,
             'null' => false,
             ]

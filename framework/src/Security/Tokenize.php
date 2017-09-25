@@ -31,7 +31,8 @@ class Tokenize
         $token = static::make();
 
         Session::add(
-            '__bow.csrf', [
+            '__bow.csrf',
+            [
             'token' => $token,
             'expirate' => time() + static::$expirate_at,
             'field' => '<input type="hidden" name="_token" value="' . $token .'"/>'

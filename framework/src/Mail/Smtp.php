@@ -80,7 +80,7 @@ class Smtp implements Send
         $this->port = $param['port'];
     }
 
-    private function __clone() 
+    private function __clone()
     {
     }
 
@@ -103,8 +103,7 @@ class Smtp implements Send
             }
         }
 
-        foreach($message->getTo() as $value) {
-
+        foreach ($message->getTo() as $value) {
             if ($value[0] !== null) {
                 $to = $value[0] . '<' . $value[1] . '>';
             } else {
@@ -124,7 +123,7 @@ class Smtp implements Send
 
         try {
             $this->write('.', 250);
-        } catch(SmtpException $e) {
+        } catch (SmtpException $e) {
             echo $e->getMessage();
         }
 
@@ -205,7 +204,7 @@ class Smtp implements Send
     {
         $s = null;
 
-        for (; !feof($this->sock); ) {
+        for (; !feof($this->sock);) {
             if (($line = fgets($this->sock, 1e3)) != null) {
                 $s = explode(' ', $line)[0];
                 if (preg_match('#^[0-9]+$#', $s)) {

@@ -34,7 +34,8 @@ class PugEngine extends EngineAbstract
         ];
 
         $this->template = new Pug(
-            $pug_config, [
+            $pug_config,
+            [
             'expressionLanguage' => 'php'
             ]
         );

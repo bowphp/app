@@ -41,14 +41,14 @@ class Sanitize
         }
 
         if (is_array($data)) {
-            foreach($data as $key => $value) {
+            foreach ($data as $key => $value) {
                 $data[$key] = static::make($value, $secure);
             }
             return $data;
         }
 
         if (is_object($data)) {
-            foreach($data as $key => $value) {
+            foreach ($data as $key => $value) {
                 $data->$key = static::make($value, $secure);
             }
             return $data;

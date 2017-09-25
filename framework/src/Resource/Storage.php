@@ -148,7 +148,8 @@ class Storage
         $directoryContents = glob($dirname."/*");
 
         return array_filter(
-            $directoryContents, function ($file) {
+            $directoryContents,
+            function ($file) {
                 return filetype($file) == "file";
             }
         );
@@ -165,7 +166,8 @@ class Storage
         $directoryContents = glob(static::resolvePath($dirname)."/*");
 
         return array_filter(
-            $directoryContents, function ($file) {
+            $directoryContents,
+            function ($file) {
                 return filetype($file) == "dir";
             }
         );

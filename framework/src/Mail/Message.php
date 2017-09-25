@@ -139,7 +139,7 @@ class Message
      */
     public function toList(array $list_desc)
     {
-        foreach($list_desc as $name => $to) {
+        foreach ($list_desc as $name => $to) {
             $this->to[] = $this->formatEmail($to, !is_int($name) ? $name : null);
         }
 
@@ -199,7 +199,7 @@ class Message
     {
         if (count($this->attachement) > 0) {
             $this->headers[] = "Content-type: multipart/mixed; boundary=\"{$this->boundary}\"" . self::END;
-            foreach($this->attachement as $file) {
+            foreach ($this->attachement as $file) {
                 $filename = basename($file);
                 $this->headers[] = "--" . $this->boundary;
                 $this->headers[] = "Content-Type: application/octet-stream; name=\"{$filename}\"";

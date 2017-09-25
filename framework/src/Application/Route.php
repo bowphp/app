@@ -9,7 +9,7 @@ use Bow\Http\Request;
  * @author  Franck Dakia <dakiafranck@gmail.com>
  * @package Bow\Core
  */
-Class Route
+class Route
 {
     /**
      * Le callaback a lance si le url de la requête à matché.
