@@ -6,25 +6,6 @@ use Bow\Application\Actionner;
 class Controller
 {
     /**
-     * Lanceur de middleware
-     *
-     * @param  string $name Le nom de middelware.
-     * @return mixed
-     *
-     * @throws \ErrorException
-     */
-    public function middleware($name)
-    {
-        $middleware = config('app.classes.middlewares');
-
-        if (! array_key_exists($name, $middleware)) {
-            throw new \ErrorException('Le middleware ' . $name . ' n\'existe pas');
-        }
-
-        return Actionner::call(['middleware' => $name], [request()], config('app.classes.namespace'));
-    }
-
-    /**
      * Permet de faire des rédirections sur un autre page ou sur l'action du meme controlleur
      * ou d'un autre controlleur et actioner une methode.
      *
