@@ -56,6 +56,10 @@ class Config implements \ArrayAccess
         }
 
         $this->config = Arraydotify::make($config);
+
+        // Load singleton
+        self::$instance = $this;
+
     }
 
     /**
@@ -69,12 +73,12 @@ class Config implements \ArrayAccess
      * takeInstance singleton
      *
      * @param  string $base_path
-     * @return Configuration
+     * @return Config
      */
     public static function configure($base_path)
     {
-        if (!self::$instance instanceof Configuration) {
-            self::$instance = new self($base_path);
+        if (!self::$instance instanceof Config) {
+            new self($base_path);
         }
 
         return self::$instance;
@@ -130,12 +134,12 @@ class Config implements \ArrayAccess
     /**
      * takeInstance singleton
      *
-     * @return Configuration
+     * @return Config
      * @throws ApplicationException
      */
     public static function singleton()
     {
-        if (!self::$instance instanceof Configuration) {
+        if (!self::$instance instanceof Config) {
             throw new ApplicationException('L\'application n\'a pas chargé les confirgurations');
         }
 

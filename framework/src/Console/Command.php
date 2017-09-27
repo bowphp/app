@@ -650,6 +650,7 @@ class {$middleware_name}
     }
 }
 CM;
+        @mkdir($this->dirname."/app/Middleware");
         file_put_contents($this->dirname."/app/Middleware/$middleware_name.php", $middleware_template);
         echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien créer.\033[00m\n";
 
