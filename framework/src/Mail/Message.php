@@ -96,11 +96,7 @@ class Message
     {
         $this->headers[] = "Mime-Version: 1.0";
         $this->headers[] = "Date: " . date("r");
-        $this->headers[] = "X-Mailer: Bow Framework";
-
-        if ($this->fromIsDefined()) {
-            $this->headers[] = "From: " . $this->from;
-        }
+        $this->headers[] = "X-Mailer: PHP/".phpversion();
 
         if ($this->subject) {
             $this->headers[] = "Subject: " . $this->subject;
@@ -210,7 +206,7 @@ class Message
             $this->headers[] = "--" . $this->boundary;
         }
 
-        return implode(self::END, $this->headers). self::END;
+        return implode(self::END, $this->headers).self::END;
     }
 
     /**
@@ -236,10 +232,7 @@ class Message
      */
     public function from($from, $name = null)
     {
-        if (!$this->fromDefined) {
-            $this->from = ($name !== null) ? (ucwords($name) . " <{$from}>") : $from;
-            $this->fromDefined = true;
-        }
+        $this->from = ($name !== null) ? (ucwords($name) . " <{$from}>") : $from;
 
         return $this;
     }
@@ -270,17 +263,14 @@ class Message
     }
 
     /**
-     * @param string $data
+     * @param string $message
      * @param string $type
      * @return Message
      */
-    private function type($data, $type = 'text/html')
+    private function type($message, $type)
     {
-        if (!$this->message) {
-            $this->message = $data;
-        }
-        
         $this->type = $type;
+        $this->message = $message;
 
         return $this;
     }
@@ -378,8 +368,9 @@ class Message
      *
      * @param $message
      */
-    public function setMessage($message)
+    public function setMessage($message, $type = 'text/html')
     {
+        $this->type = $type;
         $this->message = $message;
     }
 

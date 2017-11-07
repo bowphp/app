@@ -56,12 +56,12 @@ class SimpleMail implements Send
             }
         }
 
-        $status = @mb_send_mail(
-            $to,
-            $message->getSubject(),
-            $message->getMessage(),
-            $message->compileHeaders()
-        );
+        $headers .= $message->compileHeaders();
+        $headers .= 'Content-Type: ' . $message->getType() . '; charset=' . $message->getCharset() . Message::END;
+        $headers .= 'Content-Transfer-Encoding: 8bit' . Message::END;
+
+        // Send email use the php native function
+        $status = @mail($to, $message->getSubject(), $message->getMessage(), $headers);
 
         return (bool) $status;
     }

@@ -156,7 +156,7 @@ class Smtp implements Send
             throw new SocketException('Impossible de se connected à ' . $this->url . ':' . $this->port, E_USER_ERROR);
         }
 
-        stream_set_timeout($this->sock, 20, 0);
+        stream_set_timeout($this->sock, $this->timeout, 0);
         $code = $this->read();
 
         $host = isset($_SERVER['HTTP_HOST']) && preg_match('/^[\w.-]+\z/', $_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
@@ -170,7 +170,7 @@ class Smtp implements Send
 
         if ($this->tls === true) {
             $this->write('STARTTLS', 220);
-            $secured = stream_socket_enable_crypto($this->sock, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+            $secured = @stream_socket_enable_crypto($this->sock, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if (!$secured) {
                 throw new ErrorException('Impossible de sécuriser votre connection avec tls', E_ERROR);
             }
