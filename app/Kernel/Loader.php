@@ -48,7 +48,7 @@ class Loader extends Config
     public function services()
     {
         return [
-            //
+            \Bow\Logger\LoggerService::class
         ];
     }
 

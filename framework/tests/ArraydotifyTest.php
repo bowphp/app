@@ -1,6 +1,6 @@
 <?php
 
-class ArraydotifyText extends \PHPUnit\Framework\TestCase
+class ArraydotifyTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var
