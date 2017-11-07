@@ -20,21 +20,11 @@ class Actionner
      * @throws RouterException
      * @return mixed
      */
-    public static function call($actions, $param = null, array $names = [])
+    public static function call($actions, $param = null, array $names = [], array $define_middlewares = [])
     {
         $param = is_array($param) ? $param : [$param];
-        $functions = [];
-
-        if (!isset($names['namespace'])) {
-            return static::exec($actions, $param);
-        }
-
         static::$names = $names;
-
-        if (!isset($names['namespace'])) {
-            throw new RouterException('Le namespace d\'autoload n\'est pas défini dans le fichier de configuration');
-        }
-
+        $functions = [];
         $middlewares = [];
 
         if (is_callable($actions)) {
@@ -85,34 +75,37 @@ class Actionner
         $middlewares_collection = [];
         $middlewares_guard = [];
 
-        foreach ($middlewares as $middleware) {
-            if (!array_key_exists($middleware, $names['middlewares'])) {
-                throw new RouterException($middleware . ' n\'est pas un middleware définir.', E_ERROR);
-            }
-            if (class_exists($middleware)) {
-                $middlewares_collection[] = $middleware;
+        foreach ($middlewares as $middleware_alias) {
+
+            if (class_exists($middleware_alias)) {
+                $middlewares_collection[] = $middleware_alias;
                 continue;
             }
 
+            if (!array_key_exists($middleware_alias, $define_middlewares)) {
+                throw new RouterException($middleware_alias . ' n\'est pas un middleware définir.', E_ERROR);
+            }
+
             // On vérifie si le middleware définie est une middleware valide.
-            if (!class_exists($names['middlewares'][$middleware])) {
-                throw new RouterException($names['middlewares'][$middleware] . ' n\'est pas un class middleware.');
+            if (!class_exists($define_middlewares[$middleware_alias])) {
+                throw new RouterException($define_middlewares[$middleware_alias] . ' n\'est pas un class middleware.');
             }
 
             // Make middlewares collection
-            $middlewares_collection[] = $names['middlewares'][$middleware];
-            $parts = explode(':', $middleware, 2);
+            $middlewares_collection[] = $define_middlewares[$middleware_alias];
+            $parts = explode(':', $middleware_alias, 2);
 
             // Make guard collection
             if (count($parts) == 2) {
                 $guard = $parts[1];
-                $middlewares_guard[] = $guard;
+                $middlewares_guard[] = explode(',', $guard);
             } else {
                 $middlewares_guard[] = null;
             }
         }
 
         $next = false;
+
         // Exécution du middleware
         foreach ($middlewares_collection as $key => $middleware) {
             $injections = static::injector($middleware, 'checker');
@@ -216,14 +209,10 @@ class Actionner
             $class = trim($match[1]);
 
             if (class_exists($class, true)) {
-                if (!in_array(
-                    strtolower($class),
-                    [
+                if (!in_array( strtolower($class), [
                     'string', 'array', 'bool', 'int',
                     'integer', 'double', 'float', 'callable',
-                    'object', 'stdclass', '\closure', 'closure'
-                    ]
-                )
+                    'object', 'stdclass', '\closure', 'closure'])
                 ) {
                     $params[] = new $class();
                 }
@@ -278,7 +267,7 @@ class Actionner
         }
 
         list($class, $method) = preg_split('/\.|@|::|->/', $controllerName);
-        $class = static::$names['namespace']['controller'] . '\\' . ucfirst($class);
+        $class = static::$names['controller'] . '\\' . ucfirst($class);
 
         $injections = static::injector($class, $method);
 

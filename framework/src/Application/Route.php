@@ -230,10 +230,11 @@ class Route
      *
      * @param Request $request
      * @param array   $namespaces
+     * @param array   $middlewares
      *
      * @return mixed
      */
-    public function call(Request $request, array $namespaces)
+    public function call(Request $request, array $namespaces, array $middlewares)
     {
         // Association des parmatres à la request
         foreach ($this->keys as $key => $value) {
@@ -253,7 +254,7 @@ class Route
         // Ajout des paramètres capturer à la requete
         $request->_setUrlParameters($this->params);
 
-        return Actionner::call($this->cb, $this->match, $namespaces);
+        return Actionner::call($this->cb, $this->match, $namespaces, $middlewares);
     }
 
     /**
