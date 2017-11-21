@@ -1,7 +1,5 @@
 <?php
 
-namespace Bow;
-
 use \Bow\Validation\Validator;
 
 class ValidationTest extends \PHPUnit\Framework\TestCase

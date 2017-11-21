@@ -1,7 +1,5 @@
 <?php
 
-namespace Bow;
-
 use \Bow\Database\Database;
 
 class Pets extends \Bow\Database\Barry\Model

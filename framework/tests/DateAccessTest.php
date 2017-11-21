@@ -1,6 +1,5 @@
 <?php
 
-namespace Bow;
 use \Bow\Support\DateAccess;
 
 class DateAccessTest extends \PHPUnit\Framework\TestCase

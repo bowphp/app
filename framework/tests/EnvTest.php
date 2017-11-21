@@ -1,6 +1,5 @@
 <?php
 
-namespace Bow;
 use \Bow\View\View;
 use \Bow\Support\Env;
 

@@ -1,7 +1,5 @@
 <?php
 
-namespace Bow;
-
 use \Bow\View\View;
 
 class ViewTest extends \PHPUnit\Framework\TestCase
