@@ -1,8 +1,8 @@
 <?php
 
-use \Bow\Http\Cache;
+namespace Bow\Test;
 
-namespace Bow;
+use \Bow\Http\Cache;
 
 class CacheTest extends \PHPUnit\Framework\TestCase
 {

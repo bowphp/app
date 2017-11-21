@@ -1,5 +1,4 @@
 <?php
-namespace Bow;
 
 use Bow\Support\Capsule;
 
