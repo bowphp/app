@@ -1,3 +1,4 @@
 <?php
+require __DIR__."/../src/BowAutoload.php";
 
-require __DIR__."/../../vendor/autoload.php";
+Bow\BowAutoload::register(true);
