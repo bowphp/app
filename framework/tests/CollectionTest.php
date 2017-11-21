@@ -1,7 +1,5 @@
 <?php
 
-namespace Bow\Test;
-
 use \Bow\Support\Collection;
 
 class CollectionTest extends \PHPUnit\Framework\TestCase
