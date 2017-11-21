@@ -345,7 +345,16 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         if ($primary_key_value != null) {
             if ($builder->exists($this->primaryKey, $primary_key_value)) {
                 $this->original[$this->primaryKey] = $primary_key_value;
-                $r = $builder->where($this->primaryKey, $primary_key_value)->update($this->attributes);
+                $update_data = [];
+                
+                foreach ($this->attributes as $key => $value) {
+                    if ($this->original[$key] == $value) {
+                        continue;
+                    }
+                    $update_data[$key] = $value;
+                }
+
+                $r = $builder->where($this->primaryKey, $primary_key_value)->update($update_data);
 
                 $env = str_replace('\\', '.', strtolower(static::class));
 

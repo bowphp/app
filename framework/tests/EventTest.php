@@ -1,5 +1,6 @@
 <?php
 
+namespace Bow;
 use Bow\Event\Event;
 
 class EventTable extends \Bow\Database\Barry\Model

@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 use Bow\Support\Collection;
 use Bow\Database\Database;
 

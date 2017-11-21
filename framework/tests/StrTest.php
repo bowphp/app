@@ -1,4 +1,7 @@
 <?php
+
+namespace Bow;
+
 use Bow\Support\Str;
 
 class StrText extends \PHPUnit\Framework\TestCase

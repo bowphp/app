@@ -5,4 +5,4 @@ use ErrorException;
 
 class RouterException extends ErrorException
 {
-};
+}

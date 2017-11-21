@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetSqliteConnection()

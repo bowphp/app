@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 use Bow\Translate\Translator;
 
 class TranslationTest extends \PHPUnit\Framework\TestCase

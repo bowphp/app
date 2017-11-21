@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 use Bow\Http\Request;
 use Bow\Application\Route;
 

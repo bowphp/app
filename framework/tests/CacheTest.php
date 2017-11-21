@@ -2,6 +2,8 @@
 
 use \Bow\Http\Cache;
 
+namespace Bow;
+
 class CacheTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateCache()

@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 use Bow\Security\Hash;
 use Bow\Security\Crypto;
 

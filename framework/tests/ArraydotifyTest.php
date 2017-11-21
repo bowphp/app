@@ -1,5 +1,7 @@
 <?php
 
+namespace Bow;
+
 class ArraydotifyTest extends \PHPUnit\Framework\TestCase
 {
     /**
