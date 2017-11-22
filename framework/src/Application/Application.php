@@ -20,7 +20,7 @@ class Application
     /**
      * @var string
      */
-    private $version = '2.0.35';
+    private $version = '2.5.1';
 
     /**
      * @var bool
@@ -569,7 +569,7 @@ class Application
             $this->current['path'] = $route->getPath();
 
             // Appel de l'action associer à la route
-            $response = $route->call($this->request, $this->config->namespaces());
+            $response = $route->call($this->request, $this->config->namespaces(), $this->config->middlewares());
 
             if (is_string($response)) {
                 $this->response->send($response);
