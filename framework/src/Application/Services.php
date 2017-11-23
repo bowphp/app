@@ -25,7 +25,7 @@ abstract class Services
      * @param Config $config
      * @param Config $config
      */
-    abstract public function make(Config $config = null);
+    abstract public function make(Config $config);
 
     /**
      * Permet de lancer le service

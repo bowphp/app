@@ -136,19 +136,20 @@ class Application
 
         if (method_exists($this->config, 'services')) {
             $services = $this->config->services();
+            $service_collection = [];
 
             foreach ($services as $service) {
                 if (class_exists($service, true)) {
                     $class = new $service;
                     $class->make($this->config);
+                    $service_collection[] = $class;
                 }
             }
 
-            foreach ($services as $service) {
-                if (class_exists($service, true)) {
-                    $class = new $service;
-                    $class->start();
-                }
+            dd($service_collection);
+
+            foreach ($service_collection as $service) {
+                $service->start();
             }
         }
 
@@ -594,7 +595,7 @@ class Application
             return $this->response->send($r, true);
         }
 
-        if ($this->config['view.404'] != false) {
+        if (is_string($this->config['view.404'])) {
             return $this->response->send(
                 $this->response->view($this->config['view.404'])
             );

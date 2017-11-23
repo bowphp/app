@@ -1,8 +1,9 @@
 <?php
 
-namespace \Bow\Logger;
+namespace Bow\Services;
 
 use Monolog\Logger;
+use Bow\Config\Config;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Bow\Application\Services as BowService;
@@ -20,6 +21,11 @@ class LoggerService extends BowService
     private $monolog;
 
     /**
+     * @var Config
+     */
+    private $config;
+
+    /**
      * Permet de créer le service
      *
      * @param Config $config
@@ -28,8 +34,10 @@ class LoggerService extends BowService
     public function make(Config $config = null)
     {
         $this->whoops = new \Whoops\Run;
-        // Create the logger
+
         $this->logger = new Logger('BOW');
+
+        $this->config = $config;
     }
 
     /**
@@ -42,7 +50,7 @@ class LoggerService extends BowService
         $this->whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
         $this->whoops->register();
         
-        $this->logger->pushHandler(new StreamHandler($config['resource.log'], Logger::DEBUG));
+        $this->logger->pushHandler(new StreamHandler($this->config['resource.log'].'/bow.log', Logger::DEBUG));
         $this->logger->pushHandler(new FirePHPHandler());
     }
 }
