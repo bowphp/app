@@ -9,7 +9,7 @@ return [
     ],
 
     "api" => [
-        'tyoe' => "jwt",
+        'type' => "jwt",
         "model" => App\User::class
     ]
 ];
