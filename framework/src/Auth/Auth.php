@@ -5,6 +5,26 @@ namespace Bow\Auth;
 class Auth
 {
     /**
+     * @var Auth
+     */
+    private $instance;
+
+    /**
+     * @var array
+     */
+    private $config;
+
+    /**
+     * Auth constructor.
+     * 
+     * @param array $provider
+     */
+    public function __construct(array $provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
      * Configure Auth system
      *
      * @param array $config
@@ -12,6 +32,28 @@ class Auth
     public static function configure(array $config)
     {
         static::$config = $config;
+        static::$instance = new Auth($config['default']);
+    }
+
+    /**
+     * Check if user is authenticate
+     *
+     * @param string $guard
+     * @return Auth|null
+     */
+    public static function guard($guard = null)
+    {
+        if (is_null($guard)) {
+            if (static::$instance instanceof Auth) {
+                return static::$instance;
+            }
+
+            return null;
+        }
+
+        $provider = static::$config[$guard];
+
+        return new Auth($provider);
     }
 
     /**
@@ -45,11 +87,11 @@ class Auth
     }
 
     /**
-     * Check if user is authenticate
+     * Get the user id
      *
      * @return bool
      */
-    public static function attempts(array $credentials)
+    public static function id()
     {
         return true;
     }
@@ -61,12 +103,12 @@ class Auth
      * @param array $parameters
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call($method, array $parameters)
     {
         if (method_exists(static::class, $method)) {
-            return call_user_func_array([static, $method], $parameters);
+            return call_user_func_array([static::class, $method], $parameters);
         }
 
-        throw new BadMethodCallException("la methode $methode n'existe pas", 1);
+        throw new BadMethodCallException("La methode $methode n'existe pas", 1);
     }
 }
