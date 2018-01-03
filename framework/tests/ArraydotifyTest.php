@@ -3,7 +3,7 @@
 class ArraydotifyTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var
+     * @var \Bow\Support\Arraydotify
      */
     protected $dot;
 
