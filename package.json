@@ -7,7 +7,8 @@
     "watch": "./node_modules/.bin/gulp watch",
     "watch-js": "./node_modules/.bin/gulp watch-js",
     "watch-sass": "./node_modules/.bin/gulp watch-sass",
-    "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
+    "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes",
+    "phplint-framework": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 framework/src"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
