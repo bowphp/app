@@ -32,16 +32,17 @@ class Controller
     }
 
     /**
+     * Get the current user request
      *
      * @return \Bow\Http\Request
      */
     public function request()
     {
-        return  request();
+        return request();
     }
 
     /**
-     * __
+     * Get the response instance
      *
      * @return \Bow\Http\Response
      */
@@ -66,10 +67,10 @@ class Controller
      * permet de se connecter sur une autre base de donnée
      * et retourne l'instance de la DB
      *
-     * @param string   $name le nom de la configuration de la db
-     * @param callable $cb   la fonction de rappel
+     * @param string   $name
+     * @param callable $cb
      *
-     * @return DB, the DB reference
+     * @return DB
      */
     public function db($name = null, callable $cb = null)
     {
