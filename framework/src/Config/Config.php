@@ -59,7 +59,6 @@ class Config implements \ArrayAccess
 
         // Load singleton
         self::$instance = $this;
-
     }
 
     /**

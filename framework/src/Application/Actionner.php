@@ -76,7 +76,6 @@ class Actionner
         $middlewares_guard = [];
 
         foreach ($middlewares as $middleware_alias) {
-
             if (class_exists($middleware_alias)) {
                 $middlewares_collection[] = $middleware_alias;
                 continue;
@@ -209,7 +208,7 @@ class Actionner
             $class = trim($match[1]);
 
             if (class_exists($class, true)) {
-                if (!in_array( strtolower($class), [
+                if (!in_array(strtolower($class), [
                     'string', 'array', 'bool', 'int',
                     'integer', 'double', 'float', 'callable',
                     'object', 'stdclass', '\closure', 'closure'])

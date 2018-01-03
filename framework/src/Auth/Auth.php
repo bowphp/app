@@ -16,7 +16,7 @@ class Auth
 
     /**
      * Auth constructor.
-     * 
+     *
      * @param array $provider
      */
     public function __construct(array $provider)
@@ -43,7 +43,7 @@ class Auth
      * @param string $guard
      * @return Auth|null
      */
-    public static function guard($guard = null)
+    public function guard($guard = null)
     {
         if (is_null($guard)) {
             if (static::$instance instanceof Auth) {
@@ -63,7 +63,7 @@ class Auth
      *
      * @return bool
      */
-    public static function check()
+    public function check()
     {
         return true;
     }
@@ -73,7 +73,7 @@ class Auth
      *
      * @return bool
      */
-    public static function user()
+    public function user()
     {
         return true;
     }
@@ -83,7 +83,7 @@ class Auth
      *
      * @return bool
      */
-    public static function attempts(array $credentials)
+    public function attempts(array $credentials)
     {
         return true;
     }
@@ -93,7 +93,7 @@ class Auth
      *
      * @return bool
      */
-    public static function id()
+    public function id()
     {
         return true;
     }

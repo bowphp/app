@@ -2,10 +2,10 @@
 
 class Job
 {
-	protected $queue = 'default';
+    protected $queue = 'default';
 
-	public function handler()
-	{
-		//
-	}
+    public function handler()
+    {
+        //
+    }
 }
