@@ -1,5 +1,5 @@
 <?php
 
-$app->get("/", function() {
+$app->get("/", function () {
     return view("welcome");
 });
