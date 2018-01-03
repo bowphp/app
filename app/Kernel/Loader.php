@@ -2,15 +2,16 @@
 
 namespace App\Kernel;
 
-use \Bow\Mail\Mail;
-use \Bow\View\View;
-use \Bow\Http\Cache;
-use \Bow\Config\Config;
-use \Bow\Security\Crypto;
-use \Bow\Resource\Storage;
+use Bow\Auth\Auth;
+use Bow\Mail\Mail;
+use Bow\View\View;
+use Bow\Http\Cache;
+use Bow\Config\Config;
+use Bow\Security\Crypto;
+use Bow\Resource\Storage;
 use Bow\Support\DateAccess;
-use \Bow\Database\Database;
-use \Bow\Translate\Translator;
+use Bow\Database\Database;
+use Bow\Translate\Translator;
 
 class Loader extends Config
 {

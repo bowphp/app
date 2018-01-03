@@ -7,12 +7,12 @@ class Auth
     /**
      * @var Auth
      */
-    private $instance;
+    private static $instance;
 
     /**
      * @var array
      */
-    private $config;
+    private static $config;
 
     /**
      * Auth constructor.
@@ -32,7 +32,9 @@ class Auth
     public static function configure(array $config)
     {
         static::$config = $config;
-        static::$instance = new Auth($config['default']);
+        $provider = $config['default'];
+
+        static::$instance = new Auth($config[$provider]);
     }
 
     /**

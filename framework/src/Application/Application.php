@@ -146,8 +146,6 @@ class Application
                 }
             }
 
-            dd($service_collection);
-
             foreach ($service_collection as $service) {
                 $service->start();
             }
