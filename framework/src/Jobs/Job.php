@@ -19,6 +19,5 @@ class Job
     
     public function dispatch()
     {
-
     }
 }

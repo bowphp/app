@@ -35,7 +35,7 @@ class Command
 
     /**
      * Permet de formater les options
-     * 
+     *
      * @return mixed
      */
     public function formatParameters()
