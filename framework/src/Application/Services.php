@@ -41,7 +41,7 @@ abstract class Services
      */
     public function stared($cb)
     {
-        Event::once(static::class.'.service.started', $cb);
+        Event::once(static::class.'\Service\Started', $cb);
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class Services
      */
     public function maked($cb)
     {
-        Event::once(static::class.'.service.maked', $cb);
+        Event::once(static::class.'\Service\Maked', $cb);
     }
 
     /**

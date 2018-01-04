@@ -10,7 +10,7 @@ class Command
     /**
      * @var string
      */
-    const BAD_COMMAND = "Mauvaise commande.%sS'il vous plait tapez la commande \033[0;32;7m`php bow help` ou `php bow command help` pour plus d'information.";
+    const BAD_COMMAND = "Bad command.%sPlease type this command \033[0;32;7m`php bow help` or `php bow command help` for more information.";
 
     /**
      * @var string
@@ -35,6 +35,8 @@ class Command
 
     /**
      * Permet de formater les options
+     * 
+     * @return mixed
      */
     public function formatParameters()
     {
@@ -272,7 +274,7 @@ foreach (range(1, $num) as \$key) {
 return ['$name' => \$seeds];
 SEEDER;
         file_put_contents($seeder_filename, $content);
-        echo "\033[0;32mLe seeder \033[00m[$name]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe seeder \033[00m[$name]\033[0;32m a été bien crée.\033[00m\n";
         exit(0);
     }
 
@@ -346,7 +348,7 @@ doc;
         file_put_contents($this->dirname."/db/migration/${create_at}_${model}.php", $migrate);
         Storage::append($this->dirname."/db/migration/.registers", "${create_at}_${model}|$class_name\n");
 
-        echo "\033[0;32mmLe file de migration \033[00m[$model]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mmLe file de migration \033[00m[$model]\033[0;32m a été bien crée.\033[00m\n";
         return;
     }
 
@@ -496,7 +498,7 @@ class {$controller_name} extends Controller
 }
 CC;
         file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controllerRestTemplate);
-        echo "\033[0;32mLe controlleur \033[00m[{$controller_name}]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe controlleur \033[00m[{$controller_name}]\033[0;32m a été bien crée.\033[00m\n";
         exit(0);
     }
 
@@ -613,12 +615,12 @@ class {$controller_name} extends Controller
 }
 CC;
         file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controller_template);
-        echo "\033[0;32mLe controlleur \033[00m\033[1;33m[$controller_name]\033[00m\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe controlleur \033[00m\033[1;33m[$controller_name]\033[00m\033[0;32m a été bien crée.\033[00m\n";
         exit(0);
     }
 
     /**
-     * @param middleware_name
+     * @param $middleware_name
      * @return int
      */
     public function middleware($middleware_name)
@@ -652,7 +654,7 @@ class {$middleware_name}
 CM;
         @mkdir($this->dirname."/app/Middleware");
         file_put_contents($this->dirname."/app/Middleware/$middleware_name.php", $middleware_template);
-        echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien crée.\033[00m\n";
 
         exit(0);
     }
@@ -684,7 +686,7 @@ MODEL;
         }
 
         file_put_contents($this->dirname."/app/${model_name}.php", $model);
-        echo "\033[0;32mLe model \033[00m[${model_name}]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe model \033[00m[${model_name}]\033[0;32m a été bien crée.\033[00m\n";
 
         if ($this->options('-m')) {
             $this->make('create_'.strtolower($model_name).'_table');
@@ -769,7 +771,7 @@ class {$name} extends Validator
 VALIDATOR;
 
         file_put_contents($this->dirname.'/app/Validation/'.$name.'.php', $validation);
-        echo "\033[0;32mLe validateur \033[00m[${name}]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe validateur \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
         return 0;
     }
 
@@ -799,7 +801,7 @@ VALIDATOR;
 
 namespace App\Services;
 
-use Bow\Application\Configuration;
+use Bow\Config\Config;
 use Bow\Application\Services as BowService;
 
 class {$name} extends BowService
@@ -813,9 +815,9 @@ class {$name} extends BowService
     }
 
     /**
-     * @param Configuration \$config
+     * @param Config \$config
      */
-    public function make(\$config)
+    public function make(Config \$config)
     {
         //
     }
@@ -823,7 +825,7 @@ class {$name} extends BowService
 VALIDATOR;
 
         file_put_contents($this->dirname.'/app/Services/'.$name.'.php', $validation);
-        echo "\033[0;32mLe service \033[00m[${name}]\033[0;32m a été bien créer.\033[00m\n";
+        echo "\033[0;32mLe service \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
         return 0;
     }
 

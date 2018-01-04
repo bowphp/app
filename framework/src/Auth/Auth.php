@@ -38,6 +38,16 @@ class Auth
     }
 
     /**
+     * Get Auth instance
+     *
+     * @return Auth
+     */
+    public static function getInstance()
+    {
+        return static::$instance;
+    }
+
+    /**
      * Check if user is authenticate
      *
      * @param string $guard

@@ -7,6 +7,7 @@
  */
 
 use Bow\Mail\Mail;
+use Bow\Auth\Auth;
 use Bow\Http\Cache;
 use Bow\Http\Input;
 use Bow\Event\Event;
@@ -1427,5 +1428,18 @@ if (!function_exists('format_validation_errors')) {
         }
 
         return $validations;
+    }
+}
+
+if (!function_exists('auth')) {
+    /**
+     * Formate validation erreur.
+     *
+     * @param  array $errors
+     * @return array
+     */
+    function auth()
+    {
+        return Auth::getInstance();
     }
 }

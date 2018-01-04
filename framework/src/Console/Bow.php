@@ -229,7 +229,7 @@ class Bow
         }
 
         if (!class_exists('\Psy\Shell')) {
-            echo 'SVP installez psy/psysh:@stable avec la commande "composer require --dev psy/psysh @stable"';
+            echo 'Please, insall psy/psysh:@stable with this command "composer require --dev psy/psysh @stable"';
             return;
         }
 
