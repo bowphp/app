@@ -6,22 +6,18 @@ var imagemin = require('gulp-imagemin');
 var sass     = require('gulp-sass');
 var babel    = require('gulp-babel');
 
-gulp.task('compile-sass', function () {
+gulp.task('prod', () => {
     gulp.src('components/assets/sass/app.scss')
         .pipe(sass())
         .pipe(csslint())
         .pipe(cssmin())
         .pipe(gulp.dest('public/css/'));
-});
 
-gulp.task('images-min', function() {
-    return gulp.src('components/assets/img/**')
+    gulp.src('components/assets/img/**')
         .pipe(imagemin({optimizationLevel: 5}))
         .pipe(gulp.dest('public/img'));
-});
 
-gulp.task('compile-js', function () {
-    return gulp.src('components/assets/js/**')
+    gulp.src('components/assets/js/**')
         .pipe(babel({
             presets: ['env']
         }))
@@ -29,12 +25,22 @@ gulp.task('compile-js', function () {
         .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('watch-js', function() {
-    gulp.watch('components/assets/js/**', ['compile-js']);
-});
+gulp.task('dev', () => {
+    gulp.src('components/assets/sass/app.scss')
+        .pipe(sass())
+        .pipe(csslint())
+        .pipe(cssmin())
+        .pipe(gulp.dest('public/css/'));
 
-gulp.task('watch-sass', function() {
-    gulp.watch('components/assets/sass/**', ['compile-sass']);
+    gulp.src('components/assets/img/**')
+        .pipe(imagemin({optimizationLevel: 5}))
+        .pipe(gulp.dest('public/img'));
+
+    gulp.src('components/assets/js/**')
+        .pipe(babel({
+            presets: ['env']
+        }))
+        .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('watch', function() {
@@ -42,4 +48,4 @@ gulp.task('watch', function() {
     gulp.watch('components/assets/sass/**', ['compile-sass']);
 });
 
-gulp.task('default', ['compile-js', 'compile-sass', 'images-min']);
+gulp.task('default', ['prod', 'dev', 'watch']);

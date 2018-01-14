@@ -5,24 +5,27 @@
     "test-framework": "./vendor/bin/phpunit --configuration framework/phpunit.xml framework/tests",
     "gulp": "./node_modules/.bin/gulp default",
     "watch": "./node_modules/.bin/gulp watch",
-    "watch-js": "./node_modules/.bin/gulp watch-js",
-    "watch-sass": "./node_modules/.bin/gulp watch-sass",
-    "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes",
+    "prod": "./node_modules/.bin/gulp prod",
+    "dev": "./node_modules/.bin/gulp dev",
+    "phplint": "./node_modules/.bin/phplint '**/*.php' '!framework/**' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes",
     "phplint-framework": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 framework/src"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-csslint": "^1.0.0",
     "gulp-cssmin": "^0.1.7",
-    "gulp-imagemin": "^3.2.0",
+    "gulp-imagemin": "^3.4.0",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^2.1.2",
     "jquery": "^3.1.1",
     "phplint": "^1.7.4"
+  },
+  "dependencies": {
+    "gulplog": "^1.0.0"
   }
 }
