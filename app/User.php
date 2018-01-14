@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Bow\Database\Barry\Model;
+use Bow\Auth\Authentication as Model;
 
 class User extends Model
 {

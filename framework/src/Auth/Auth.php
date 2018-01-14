@@ -2,6 +2,9 @@
 
 namespace Bow\Auth;
 
+use Bow\Security\Hash;
+use Bow\Session\Session;
+
 class Auth
 {
     /**
@@ -15,13 +18,22 @@ class Auth
     private static $config;
 
     /**
+     * @var array
+     */
+    private $credentials = [
+        'email' => 'email',
+        'password' => 'password'
+    ];
+
+    /**
      * Auth constructor.
      *
      * @param array $provider
      */
-    public function __construct(array $provider)
+    public function __construct(array $provider, $credentials = [])
     {
         $this->provider = $provider;
+        $this->credentials = array_merge($credentials, $this->credentials); 
     }
 
     /**
@@ -75,7 +87,7 @@ class Auth
      */
     public function check()
     {
-        return true;
+        return Session::has('_auth');
     }
 
     /**
@@ -85,7 +97,7 @@ class Auth
      */
     public function user()
     {
-        return true;
+        return \Session::get('_auth');
     }
 
     /**
@@ -95,7 +107,27 @@ class Auth
      */
     public function attempts(array $credentials)
     {
-        return true;
+        $model = $this->provider['model'];
+        $user  = $model::where('email', $this->credentials['email'])->first();
+
+        if (is_null($user)) {
+            return false;
+        }
+
+        if (Hash::check($user->password, $this->credentials['password'])) {
+            Session::add('_auth', $user);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 
+     */
+    public function login($user)
+    {
+        Session::add('_auth', $user);
     }
 
     /**

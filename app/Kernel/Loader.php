@@ -37,7 +37,9 @@ class Loader extends Config
     {
         return [
             'csrf' => \Bow\Middleware\CsrfMiddleware::class,
-            'trim' => \Bow\Middleware\TrimMiddleware::class
+            'trim' => \Bow\Middleware\TrimMiddleware::class,
+            'auth' => \App\Middleware\Authenticate::class,
+            'guest' => \App\Middleware\Guest::class,
         ];
     }
 

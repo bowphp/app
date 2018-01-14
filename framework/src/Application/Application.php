@@ -220,7 +220,7 @@ class Application
      */
     public function middleware($middleware = [], callable $cb)
     {
-        $middleware = is_array($middleware) ? $middleware : [$middleware];
+        $middleware = (array) $middleware;
         $this->globale_middleware = $middleware;
         $cb($this);
         $this->globale_middleware = [];
@@ -420,6 +420,23 @@ class Application
      */
     private function routeLoader($method, $path, $cb)
     {
+        // Ajout d'un nouvelle route sur l'en definie.
+        switch (true) {
+            case !is_array($cb) && !empty($this->globale_middleware):
+                $cb = [
+                    'middleware' => (array) $this->globale_middleware,
+                    'uses' => $cb
+                ];
+                break;
+            case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
+                $cb['middleware'] = (array) $cb['middleware'];
+                $cb['middleware'] = array_merge(
+                    $this->globale_middleware,
+                    $cb['middleware']
+                );
+                break;
+        }
+
         if (!preg_match('@^/@', $path)) {
             $path = '/' . $path;
         }
@@ -431,26 +448,7 @@ class Application
         // methode courante
         $this->current['path'] = $path;
         $this->current['method'] = $method;
-
-        // Ajout d'un nouvelle route sur l'en definie.
-        switch (true) {
-            case !is_array($cb) && !empty($this->globale_middleware):
-                $cb = [
-                'middleware' => $this->globale_middleware,
-                'uses' => $cb
-                ];
-                break;
-            case !is_callable($cb) && isset($cb['middleware']) && !empty($this->globale_middleware):
-                if (!is_array($cb['middleware'])) {
-                    $cb['middleware'] = [$cb['middleware']];
-                }
-                $cb['middleware'] = array_merge(
-                    $this->globale_middleware,
-                    $cb['middleware']
-                );
-                break;
-        }
-
+        
         // Ajout de nouvelle route
         $this->routes[$method][] = new Route($path, $cb);
 

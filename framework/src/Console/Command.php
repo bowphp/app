@@ -114,7 +114,7 @@ class Command
 
 
     /**
-     * Permet de monter un migration
+     * Permet de monter une migration
      *
      * @param string $model
      */
@@ -134,7 +134,7 @@ class Command
     }
 
     /**
-     * Permet de rafraichir le fichier de registre
+     * Permet de rafraichir le fichier de régistre
      */
     public function reflesh()
     {
@@ -157,8 +157,11 @@ class Command
     }
 
     /**
+     * Permet de créer une migration dans les deux directions
+     * 
      * @param $model
      * @param $type
+     * 
      * @throws \ErrorException
      */
     private function makeMigration($model, $type)
@@ -222,7 +225,7 @@ class Command
 
             include $file;
 
-            // Formatage de la classe et Execution de la methode up ou down
+            // Formatage de la classe et Exécution de la méthode up ou down
             $class = ucfirst(Str::camel($model));
 
             if (!class_exists($class)) {
@@ -239,6 +242,8 @@ class Command
     }
 
     /**
+     * Permet de créer un seeder
+     * 
      * @param $name
      */
     public function seeder($name)
@@ -265,7 +270,6 @@ class Command
 foreach (range(1, $num) as \$key) {
     \$seeds[] = [
         'id' => faker('autoincrement'),
-        'name' => faker('name'),
         'created_at' => faker('date'),
         'update_at' => faker('date')
     ];
@@ -279,7 +283,7 @@ SEEDER;
     }
 
     /**
-     * Permet de create une migration
+     * Permet de crée une migration
      *
      * @param  $model
      * @throws \ErrorException
@@ -353,7 +357,7 @@ doc;
     }
 
     /**
-     * Permet de mettre en place le systeme de resource.
+     * Permet de mettre en place le système de réssource.
      *
      * @param string $controller_name
      */
@@ -378,7 +382,6 @@ doc;
             echo "\033[0;33;7m";
             foreach (["create", "edit", "show", "index", "update", "delete"] as $value) {
                 $file = $this->dirname."/components/views/$model/$value.twig";
-                file_put_contents($file, "<!-- Vue '$value' du model '$model' -->");
                 echo "$file\n";
             }
             echo "\033[00m";
@@ -531,10 +534,9 @@ CC;
     /**
      * Point d'entré de l'application
      *
-     * @param mixed \$id [optional] L'identifiant de l'élément à récupérer
      * @return mixed
      */
-    public function index(\$id = null)
+    public function index()
     {
         // Codez Ici
     }
@@ -558,7 +560,8 @@ CC;
     /**
      * Permet de récupérer un information précise avec un identifiant.
      *
-     * @param mixed \$id L'identifiant de l'élément à récupérer
+     * @param  mixed \$id L'identifiant de l'élément à récupérer
+     * 
      * @return mixed
      */
     public function show(\$id)
@@ -570,6 +573,7 @@ CC;
      * Mise à jour d'un résource en utilisant paramètre du GET
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * 
      * @return mixed
      */
     public function edit(\$id)
@@ -581,6 +585,7 @@ CC;
      * Mise à jour d'une résource
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
+     * 
      * @return mixed
      */
     public function update(\$id)
@@ -592,6 +597,7 @@ CC;
      * Permet de supprimer une resource
      *
      * @param mixed \$id L'identifiant de l'élément à supprimer
+     * 
      * @return mixed
      */
     public function destroy(\$id)
