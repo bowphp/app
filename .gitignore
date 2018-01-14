@@ -9,3 +9,6 @@ src/tests/data/*
 .env.json
 npm-debug.log
 package-lock.json
+public/**
+!public/**/.gitkeep
+yarn.lock
