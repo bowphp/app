@@ -147,10 +147,10 @@ class Auth
      * @param array $parameters
      * @return mixed
      */
-    public function __call($method, array $parameters)
+    public static function __callStatic($method, array $parameters)
     {
-        if (method_exists(static::class, $method)) {
-            return call_user_func_array([static::class, $method], $parameters);
+        if (method_exists(static::$instance, $method)) {
+            return call_user_func_array([static::$instance, $method], $parameters);
         }
 
         throw new BadMethodCallException("La methode $methode n'existe pas", 1);

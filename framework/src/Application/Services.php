@@ -23,7 +23,6 @@ abstract class Services
      * Permet de créer le service
      *
      * @param Config $config
-     * @param Config $config
      */
     abstract public function make(Config $config);
 
