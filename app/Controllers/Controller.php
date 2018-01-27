@@ -6,7 +6,7 @@ use Bow\Application\Actionner;
 class Controller
 {
     /**
-     * Permet de faire des rédirections sur un autre page ou sur l'action du meme controlleur
+     * Permet de faire des rédirections sur une autre page ou sur l'action du même controlleur
      * ou d'un autre controlleur et actioner une methode.
      *
      * @param  mixed $url
@@ -48,7 +48,7 @@ class Controller
      */
     public function response()
     {
-        return  response();
+        return response();
     }
 
     /**
@@ -60,7 +60,7 @@ class Controller
      */
     public function config($key = null, $setting = null)
     {
-        return  config($key, $setting);
+        return config($key, $setting);
     }
 
     /**

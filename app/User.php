@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Bow\Auth\Authentication as Model;
