@@ -461,7 +461,7 @@ class {$controller_name} extends Controller
     }
 
     /**
-     * Mise à jour d'un résource en utilisant paramètre du GET
+     * Mise à jour d'un ressource en utilisant paramètre du GET
      *
      * GET /$path/:id/edit
      *
@@ -570,7 +570,7 @@ CC;
     }
 
     /**
-     * Mise à jour d'un résource en utilisant paramètre du GET
+     * Mise à jour d'un ressource en utilisant paramètre du GET
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
      * 
@@ -582,7 +582,7 @@ CC;
     }
 
     /**
-     * Mise à jour d'une résource
+     * Mise à jour d'une ressource
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
      * 
@@ -594,7 +594,7 @@ CC;
     }
 
     /**
-     * Permet de supprimer une resource
+     * Permet de supprimer une ressource
      *
      * @param mixed \$id L'identifiant de l'élément à supprimer
      * 
