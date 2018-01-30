@@ -158,10 +158,10 @@ class Command
 
     /**
      * Permet de créer une migration dans les deux directions
-     * 
+     *
      * @param $model
      * @param $type
-     * 
+     *
      * @throws \ErrorException
      */
     private function makeMigration($model, $type)
@@ -243,7 +243,7 @@ class Command
 
     /**
      * Permet de créer un seeder
-     * 
+     *
      * @param $name
      */
     public function seeder($name)

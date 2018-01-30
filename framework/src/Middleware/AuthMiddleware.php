@@ -24,7 +24,7 @@ class AuthMiddleware
 
     /**
      * Redirect to
-     * 
+     *
      * @return string
      */
     public function redirectTo()

@@ -6,5 +6,13 @@ use Bow\Database\Barry\Model;
 
 class Authentication extends Model
 {
-
+    /**
+     * Get User id
+     *
+     * @return mixed
+     */
+    private function getAuthenticateUserId()
+    {
+        return $this->attributes[$this->primaryKey];
+    }
 }

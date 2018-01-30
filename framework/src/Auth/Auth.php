@@ -4,6 +4,7 @@ namespace Bow\Auth;
 
 use Bow\Security\Hash;
 use Bow\Session\Session;
+use Bow\Auth\Exception\AuthenticateException;
 
 class Auth
 {
@@ -33,7 +34,7 @@ class Auth
     public function __construct(array $provider, $credentials = [])
     {
         $this->provider = $provider;
-        $this->credentials = array_merge($credentials, $this->credentials); 
+        $this->credentials = array_merge($credentials, $this->credentials);
     }
 
     /**
@@ -71,8 +72,11 @@ class Auth
             if (static::$instance instanceof Auth) {
                 return static::$instance;
             }
-
             return null;
+        }
+
+        if (! isset(static::$config[$guard])) {
+            throw new AuthenticateException("Aucune configuration trouvé", E_ERROR);
         }
 
         $provider = static::$config[$guard];
@@ -123,11 +127,14 @@ class Auth
     }
 
     /**
-     * 
+     * Make direct login
+     *
+     * @param mixed $user
      */
-    public function login($user)
+    public function login(Authentication $user)
     {
         Session::add('_auth', $user);
+        return true;
     }
 
     /**
@@ -137,7 +144,7 @@ class Auth
      */
     public function id()
     {
-        return true;
+        return Session::get('_auth')->getAuthenticateUserId();
     }
 
     /**
