@@ -101,7 +101,7 @@ class Auth
      */
     public function user()
     {
-        return \Session::get('_auth');
+        return Session::get('_auth');
     }
 
     /**
