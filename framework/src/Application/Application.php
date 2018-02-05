@@ -62,7 +62,7 @@ class Application
      *
      * @var array
      */
-    private $current;
+    private $current = [];
 
     /**
      * Patter Singleton
@@ -89,7 +89,7 @@ class Application
     private $response;
 
     /**
-     * @var Config|null
+     * @var Config
      */
     private $config;
 
@@ -108,6 +108,7 @@ class Application
      *
      * @param Request $request
      * @param Response $response
+     * @return void
      */
     private function __construct(Request $request, Response $response)
     {
@@ -116,9 +117,10 @@ class Application
     }
 
     /**
-     * Set Config
+     * Association de la configuration
      *
      * @param Config $config
+     * @return void
      */
     public function bind(Config $config)
     {
@@ -127,7 +129,9 @@ class Application
     }
 
     /**
-     * Set Config
+     * Démarrage de l'application
+     *
+     * @return void
      */
     private function boot()
     {
@@ -161,13 +165,14 @@ class Application
 
     /**
      * Private __clone
+     * @return void
      */
     private function __clone()
     {
     }
 
     /**
-     * Pattern Singleton.
+     * Construction de l'application
      *
      * @param Request $request
      * @param Response $response
@@ -183,10 +188,10 @@ class Application
     }
 
     /**
-     * mount, ajoute un branchement.
+     * Ajout un prefixe sur les routes
      *
      * @param string $branch
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Application
      *
      * @throws ApplicationException
@@ -214,27 +219,31 @@ class Application
     }
 
     /**
-     * Permet d'associer un middleware sur une url
+     * Permet d'associer un middleware global sur une url
      *
      * @param array $middleware
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Application
      */
-    public function middleware($middleware = [], callable $cb)
+    public function middleware($middleware = [], callable $cb = null)
     {
         $middleware = (array) $middleware;
         $this->globale_middleware = $middleware;
-        $cb($this);
-        $this->globale_middleware = [];
+
+        if (is_callable($cb)) {
+            $cb($this);
+            $this->globale_middleware = [];
+        }
+        
         return $this;
     }
 
     /**
-     * get, route de type GET ou bien retourne les variable ajoutés dans Bow
+     * Ajout une route de type GET
      *
      * @param string $path
-     * @param callable|array $cb
-     * @return Application|string
+     * @param callable|string|array $cb
+     * @return Route
      */
     public function get($path, $cb)
     {
@@ -242,10 +251,10 @@ class Application
     }
 
     /**
-     * post, route de type POST
+     * Ajout une route de type POST
      *
      * @param string $path
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Route
      */
     public function post($path, $cb)
@@ -267,13 +276,13 @@ class Application
     }
 
     /**
-     * any, route de tout type GET|POST|DELETE|PUT|OPTIONS|PATCH
+     * Ajout une route pour chacun des types GET|POST|DELETE|PUT|OPTIONS|PATCH
      *
      * @param string $path
-     * @param Callable $cb
+     * @param callable|string|array $cb
      * @return Application
      */
-    public function any($path, callable $cb)
+    public function any($path, $cb)
     {
         foreach (['options', 'patch', 'post', 'delete', 'put', 'get'] as $method) {
             $this->$method($path, $cb);
@@ -283,10 +292,10 @@ class Application
     }
 
     /**
-     * delete, route de tout type DELETE
+     * Ajout une route de type DELETE
      *
      * @param string $path
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Route
      */
     public function delete($path, $cb)
@@ -295,10 +304,10 @@ class Application
     }
 
     /**
-     * put, route de tout type PUT
+     * Ajout une route de type PUT
      *
      * @param string $path
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Route
      */
     public function put($path, $cb)
@@ -307,10 +316,10 @@ class Application
     }
 
     /**
-     * patch, route de tout type PATCH
+     * Ajout une route de type PATCH
      *
      * @param string $path
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Route
      */
     public function patch($path, $cb)
@@ -319,7 +328,7 @@ class Application
     }
 
     /**
-     * patch, route de tout type PATCH
+     * Ajout une route de type PATCH
      *
      * @param string $path
      * @param callable $cb
@@ -331,7 +340,7 @@ class Application
     }
 
     /**
-     * Code, Lance une fonction en fonction du code d'erreur HTTP
+     * Lance une fonction de rappel pour chaque code d'erreur HTTP
      *
      * @param int $code
      * @param callable $cb
@@ -344,14 +353,14 @@ class Application
     }
 
     /**
-     * match, route de tout type de method
+     * Match route de tout type de method
      *
      * @param array $methods
      * @param string $path
-     * @param callable $cb
+     * @param callable|string|array $cb
      * @return Application
      */
-    public function match(array $methods, $path, callable $cb = null)
+    public function match(array $methods, $path, $cb)
     {
         foreach ($methods as $method) {
             if ($this->request->method() === strtoupper($method)) {
@@ -363,12 +372,12 @@ class Application
     }
 
     /**
-     * addHttpVerbe, permet d'ajouter les autres verbes http [PUT, DELETE, UPDATE, HEAD, PATCH]
+     * Permet d'ajouter les autres verbes http [PUT, DELETE, UPDATE, HEAD, PATCH]
      *
      * @param string $method
      * @param string $path
      * @param callable|array|string $cb
-     * @return Application
+     * @return Route
      */
     private function addHttpVerbe($method, $path, $cb)
     {
@@ -403,6 +412,7 @@ class Application
         
         // Ajout de la nouvelle route
         $route = new Route($path, $cb);
+        $route->middleware($this->globale_middleware);
 
         $this->routes[$method][] = $route;
 
@@ -508,7 +518,8 @@ class Application
     }
 
     /**
-     * d'active l'ecriture le l'entête X-Powered-By
+     * D'active l'écriture le l'entête X-Powered-By
+     * dans la réponse de la réquête.
      */
     public function disableXpoweredBy()
     {
@@ -521,7 +532,7 @@ class Application
      * @param string $url
      * @param string|array $controllerName
      * @param array $where
-     * @return $this
+     * @return Application
      *
      * @throws ApplicationException
      */
@@ -629,10 +640,9 @@ class Application
      *
      * @param string $method
      * @param array  $param
+     * @return mixed
      *
      * @throws ApplicationException
-     *
-     * @return mixed
      */
     public function __call($method, array $param)
     {
@@ -663,6 +673,7 @@ class Application
      * @param $code
      * @param $message
      * @param array $headers
+     * @return void
      *
      * @throws HttpException
      */
@@ -683,6 +694,8 @@ class Application
 
     /**
      * __destruct
+     *
+     * @return void
      */
     public function __destruct()
     {
