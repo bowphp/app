@@ -12,6 +12,7 @@ use Bow\Resource\Storage;
 use Bow\Support\DateAccess;
 use Bow\Database\Database;
 use Bow\Translate\Translator;
+use Bow\Application\Actionner;
 
 class Loader extends Config
 {
@@ -113,6 +114,11 @@ class Loader extends Config
          * Configuration de l'auth
          */
         Auth::configure($this['auth']);
+
+        /**
+         * Configuration du lanceur de controleur
+         */
+        Actionner::configure($this->namespaces(), $this->middlewares());
 
         return $this;
     }

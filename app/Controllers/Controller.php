@@ -84,7 +84,7 @@ class Controller
      */
     public function table($name, $class = null, $primary_key = null, $connexion = null)
     {
-        return  table($name, $class, $primary_key, $connexion);
+        return table($name, $class, $primary_key, $connexion);
     }
 
     /**

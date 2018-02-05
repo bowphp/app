@@ -7,23 +7,100 @@ use Bow\Application\Exception\RouterException;
 class Actionner
 {
     /**
-     * @var array All define namesapce
+     * La liste des namespaces défini dans l'application
+     *
+     * @var array
      */
-    private static $names;
+    private $namespaces;
+
+    /**
+     * La liste de middleware charge dans l'application
+     *
+     * @var array
+     */
+    private $middlewares;
+
+    /**
+     * @var Actionner
+     */
+    private static $instance;
+
+    /**
+     * Configuration de l'actionneur
+     *
+     * @param array $namespaces
+     * @param array $middlewares
+     */
+    public function configure(array $namespaces, array $middlewares)
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static($namespaces, $middlewares);
+        }
+    }
+
+    /**
+     * Récupère une instance de l'actonneur
+     *
+     * @return Actionner
+     */
+    public function getInstance()
+    {
+        return static::$instance;
+    }
+
+    /**
+     * Actionner constructor
+     */
+    public function __construct(array $namespaces, array $middlewares)
+    {
+        $this->namespaces = $namespaces;
+        $this->middlewares = $middlewares;
+    }
+
+    /**
+     * Ajout un middleware à la liste
+     *
+     * @param array|callable $middleware
+     */
+    public function pushMiddleware($middlewares, $end = false)
+    {
+        if (!is_callable($middleware) || !is_array($middleware)) {
+            // throw error
+        }
+
+        $middlewares = (array) $middlewares;
+
+        if ($end) {
+            array_merge($this->middlewares, $middlewares);
+        } else {
+            array_merge($middlewares, $this->middlewares);
+        }
+    }
+
+    /**
+     * Ajout un namespace à la liste
+     *
+     * @param array|string $namespace
+     */
+    public function pushNamespace($namespace)
+    {
+        $namespace = (array) $namespace;
+        $this->namespaces = array_merge($this->namespaces, $namespace);
+    }
 
     /**
      * Lanceur de callback
      *
      * @param  callable|string|array $actions
      * @param  mixed                 $param
-     * @param  array                 $names
-     * @throws RouterException
+     * @param  array                 $name
      * @return mixed
+     *
+     * @throws RouterException
      */
-    public static function call($actions, $param = null, array $names = [], array $define_middlewares = [])
+    public function call($actions, $param = null)
     {
-        $param = is_array($param) ? $param : [$param];
-        static::$names = $names;
+        $param = (array) $param;
         $functions = [];
         $middlewares = [];
 
@@ -32,12 +109,12 @@ class Actionner
         }
 
         if (is_string($actions)) {
-            $function = static::controller($actions);
+            $function = $this->controller($actions);
             return call_user_func_array($function['controller'], array_merge($function['injections'], $param));
         }
 
         if (!is_array($actions)) {
-            throw new \InvalidArgumentException('Le premier parametre doit etre un tableau, une chaine, une closure', E_USER_ERROR);
+            throw new \InvalidArgumentException('Le premier paramètre doit être un tableau, une chaine ou une closure', E_USER_ERROR);
         }
 
         if (array_key_exists('middleware', $actions)) {
@@ -51,7 +128,7 @@ class Actionner
             }
 
             if (is_string($action)) {
-                array_push($functions, static::controller($action));
+                array_push($functions, $this->controller($action));
                 continue;
             }
 
@@ -62,7 +139,7 @@ class Actionner
                 }
 
                 if (is_string($action)) {
-                    array_push($functions, static::controller($action));
+                    array_push($functions, $this->controller($action));
                     continue;
                 }
             }
@@ -73,33 +150,33 @@ class Actionner
 
         // Collecteur de middleware
         $middlewares_collection = [];
-        $middlewares_guard = [];
+        $guards = [];
 
-        foreach ($middlewares as $middleware_alias) {
-            if (class_exists($middleware_alias)) {
-                $middlewares_collection[] = $middleware_alias;
+        foreach ($middlewares as $middleware) {
+            if (class_exists($$middleware)) {
+                $middlewares_collection[] = $middleware;
                 continue;
             }
 
-            if (!array_key_exists($middleware_alias, $define_middlewares)) {
-                throw new RouterException($middleware_alias . ' n\'est pas un middleware définir.', E_ERROR);
+            if (!array_key_exists($middleware, $this->middlewares)) {
+                throw new RouterException(sprint('%s n\'est pas un middleware définir.', $middleware), E_ERROR);
             }
 
             // On vérifie si le middleware définie est une middleware valide.
-            if (!class_exists($define_middlewares[$middleware_alias])) {
-                throw new RouterException($define_middlewares[$middleware_alias] . ' n\'est pas un class middleware.');
+            if (!class_exists($this->middlewares[$middleware])) {
+                throw new RouterException(sprintf('%s n\'est pas un class middleware.', $middleware));
             }
 
             // Make middlewares collection
-            $middlewares_collection[] = $define_middlewares[$middleware_alias];
-            $parts = explode(':', $middleware_alias, 2);
+            $middlewares_collection[] = $this->middlewares[$middleware];
+            $parts = explode(':', $middleware, 2);
 
             // Make guard collection
             if (count($parts) == 2) {
-                $guard = $parts[1];
-                $middlewares_guard[] = explode(',', $guard);
+                $guard = end($parts);
+                $guards[] = explode(',', $guard);
             } else {
-                $middlewares_guard[] = null;
+                $guards[] = null;
             }
         }
 
@@ -113,7 +190,7 @@ class Actionner
                 $injections,
                 [function () use (& $next) {
                     return $next = true;
-                }, $middlewares_guard[$key]],
+                }, $guards[$key]],
                 $param
             );
 
@@ -124,6 +201,7 @@ class Actionner
                 continue;
             }
 
+            // Envoi de réponse en json
             if (($status instanceof \StdClass) || is_array($status) || (!($status instanceof Response))) {
                 if (!empty($status)) {
                     die(json_encode($status));
@@ -154,26 +232,21 @@ class Actionner
      * @param  callable $callback
      * @return bool
      */
-    public static function middleware($middleware, callable $callback = null)
+    public function middleware($middleware, callable $callback = null)
     {
         $next = false;
         $injections = [];
 
         if (is_string($middleware) && class_exists($middleware)) {
             $instance = [new $middleware(), 'checker'];
-            $injections = static::injector($middleware, 'checker');
+            $injections = $this->injector($middleware, 'checker');
         } else {
             $instance = $middleware;
         }
 
         $status = call_user_func_array(
             $instance,
-            array_merge(
-                $injections,
-                [function () use (& $next) {
-                    return $next = true;
-                }]
-            )
+            array_merge($injections, [$this->next($next)])
         );
 
         if (is_callable($callback)) {
@@ -184,13 +257,26 @@ class Actionner
     }
 
     /**
+     * Lancement de middleware suivant
+     *
+     * @param mixed $next
+     * @return callable
+     */
+    private function next($next)
+    {
+        return function () use (& $next) {
+            return $next = true;
+        };
+    }
+
+    /**
      * Permet de faire un injection
      *
      * @param  string $classname
      * @param  string $method
      * @return array
      */
-    public static function injector($classname, $method)
+    public function injector($classname, $method)
     {
         $params = [];
         $reflection = new \ReflectionClass($classname);
@@ -205,16 +291,18 @@ class Actionner
                 continue;
             }
 
-            $class = trim($match[1]);
+            $class = trim(end($match));
 
-            if (class_exists($class, true)) {
-                if (!in_array(strtolower($class), [
-                    'string', 'array', 'bool', 'int',
-                    'integer', 'double', 'float', 'callable',
-                    'object', 'stdclass', '\closure', 'closure'])
-                ) {
-                    $params[] = new $class();
-                }
+            if (! class_exists($class, true)) {
+                continue;
+            }
+
+            if (!in_array(strtolower($class), [
+                'string', 'array', 'bool', 'int',
+                'integer', 'double', 'float', 'callable',
+                'object', 'stdclass', '\closure', 'closure'])
+            ) {
+                $params[] = new $class();
             }
         }
 
@@ -228,7 +316,7 @@ class Actionner
      * @param  array|callable $arg
      * @return mixed
      */
-    private static function exec($arr, $arg)
+    private function exec($arr, $arg)
     {
         if (is_callable($arr)) {
             return call_user_func_array($arr, $arg);
@@ -239,7 +327,11 @@ class Actionner
         }
 
         // On lance la loader de controller si $cb est un String
-        $controller = static::controller($arr);
+        $controller = $this->controller($arr);
+
+        if ($controller['controller'][1] == null) {
+            array_splice($controller['controller'], 1, 1);
+        }
 
         if (is_array($controller)) {
             return call_user_func_array(
@@ -252,23 +344,29 @@ class Actionner
     }
 
     /**
-     * Charge les controlleurs
+     * Charge les controleurs definie comme chaine de caractère
      *
-     * @param string $controllerName. Le nom du controlleur a utilisé
+     * @param string $controller_Name
      *
      * @return array
      */
-    private static function controller($controllerName)
+    public function controller($controller_name)
     {
         // Récupération de la classe et de la methode à lancer.
-        if (is_null($controllerName)) {
+        if (is_null($controller_name)) {
             return null;
         }
 
-        list($class, $method) = preg_split('/\.|@|::|->/', $controllerName);
-        $class = static::$names['controller'] . '\\' . ucfirst($class);
+        $parts = preg_split('/\.|@|::|->/', $controller_name);
 
-        $injections = static::injector($class, $method);
+        if (count($parts) == 1) {
+            $parts[1] = null;
+        }
+
+        list($class, $method) = $parts;
+        $class = sprintf('%s\\%s', $this->namespaces['controller'], ucfirst($class));
+
+        $injections = $this->injector($class, $method);
 
         return [
             'controller' => [new $class(), $method],
