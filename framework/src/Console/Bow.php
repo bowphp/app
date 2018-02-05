@@ -375,14 +375,17 @@ USAGE;
 \n\033[0;32mcreate\033[00m create a user class\n
     [option]
     --with-model[=name]     Create a model associte at controller
-    --no-plain              Create a plain controller
+    --no-plain              Create a plain controller [available in add:controller]
+    -m                      Create a migration [available in add:model]
+    --create                Create a migration for create table [available in add:migration]
+    --table                 Create a migration for alter table [available in add:migration]
 
-    * you can use --no-plain --with-model
+    * you can use --no-plain --with-model in same command
 
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:controller name [option]  For create a new controlleur
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:middleware name             For create a new middleware
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:middleware name           For create a new middleware
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:service name              For create a new service
-    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:model name                For create a new model
+    \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:model name [option]       For create a new model
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:validation name           For create a new validator
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:seeder name [--n-seed=n]  For create a new table seeder
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m add:migration name            For create a new table migration
@@ -393,7 +396,9 @@ U;
                 break;
             case 'generate':
                 echo <<<U
-    \n\033[0;32mgenerate\033[00m create a resource and app keyn
+    \n\033[0;32mgenerate\033[00m create a resource and app key
+    [option]
+    --model   Define the usable model
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:resource name             For create a new REST controller
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate:key                       For generate a new APP KEY
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m generate help                      For display this
@@ -407,6 +412,7 @@ U;
     --create=table_name   Change name of table
     --table=table_name    Alter migration table
     --all                 Optionnel
+    --display-sql         Display rendered sql code
 
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:up name [option]       Up the specify migration
     \033[0;33m$\033[00m php \033[0;34mbow\033[00m migrate:down name [--all]      Down migration

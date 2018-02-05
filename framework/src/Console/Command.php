@@ -192,14 +192,14 @@ class Command
         $register = ["file" => [], "tables" => []];
 
         if (!file_exists($this->dirname."/db/migration/.registers")) {
-            echo Color::red('Le fichier de registre de bow est introvable.');
+            echo Color::red('Le fichier de régistre de bow est introvable.');
             exit(0);
         }
 
         $registers = file($this->dirname."/db/migration/.registers");
 
         if (count($registers) == 0) {
-            echo Color::red('Le fichier de registre de bow est vide.');
+            echo Color::red('Le fichier de régistre de bow est vide.');
             exit(0);
         }
 
@@ -322,6 +322,7 @@ SEEDER;
         $class_name = ucfirst(Str::camel($model));
         $migrate = <<<doc
 <?php
+
 use \Bow\Database\Migration\Schema;
 use \Bow\Database\Migration\Migration;
 use \Bow\Database\Migration\TablePrinter as Printer;
@@ -329,7 +330,7 @@ use \Bow\Database\Migration\TablePrinter as Printer;
 class {$class_name} extends Migration
 {
     /**
-     * create Table
+     * Create Table
      */
     public function up()
     {
@@ -409,6 +410,7 @@ doc;
 
         $controllerRestTemplate =<<<CC
 <?php
+
 namespace App\Controllers;
 $modelNamespace
 use Bow\Database\Database;
@@ -419,10 +421,9 @@ class {$controller_name} extends Controller
      * Point d'entré
      * GET /$path
      *
-     * @param mixed \$id [optional] L'identifiant de l'element à récupérer
-     * @return mixed
+     * @return void
      */
-    public function index(\$id = null)
+    public function index()
     {
         // Codez Ici
     }
@@ -431,6 +432,8 @@ class {$controller_name} extends Controller
      * Permet d'afficher la vue permettant de créer une résource.
      *
      * GET /$path/create
+     * 
+     * @return void
      */
     public function create()
     {
@@ -441,6 +444,8 @@ class {$controller_name} extends Controller
      * Permet d'ajouter une nouvelle résource dans la base d'information
      *
      * POST /$path
+     * 
+     * @return void
      */
     public function store()
     {
@@ -452,8 +457,8 @@ class {$controller_name} extends Controller
      *
      * GET /$path/:id
      *
-     * @param mixed \$id L'identifiant de l'élément à récupérer
-     * @return mixed
+     * @param mixed \$id
+     * @return void
      */
     public function show(\$id)
     {
@@ -465,8 +470,8 @@ class {$controller_name} extends Controller
      *
      * GET /$path/:id/edit
      *
-     * @param mixed \$id L'identifiant de l'élément à mettre à jour
-     * @return mixed
+     * @param mixed \$id
+     * @return void
      */
     public function edit(\$id)
     {
@@ -478,8 +483,8 @@ class {$controller_name} extends Controller
      *
      * PUT /$path/:id
      *
-     * @param mixed \$id L'identifiant de l'élément à mettre à jour
-     * @return mixed
+     * @param mixed \$id
+     * @return void
      */
     public function update(\$id)
     {
@@ -491,8 +496,8 @@ class {$controller_name} extends Controller
      *
      * DELETE /$path/:id
      *
-     * @param mixed \$id L'identifiant de l'élément à supprimer
-     * @return mixed
+     * @param mixed \$id
+     * @return void
      */
     public function destroy(\$id)
     {
@@ -534,7 +539,7 @@ CC;
     /**
      * Point d'entré de l'application
      *
-     * @return mixed
+     * @return void
      */
     public function index()
     {
@@ -543,6 +548,8 @@ CC;
 
     /**
      * Permet d'afficher la vue permettant de créer une résource.
+     * 
+     * @return void
      */
     public function create()
     {
@@ -551,6 +558,8 @@ CC;
 
     /**
      * Permet d 'ajouter une nouvelle résource dans la base d'information
+     * 
+     * @return void
      */
     public function store()
     {
@@ -560,9 +569,8 @@ CC;
     /**
      * Permet de récupérer un information précise avec un identifiant.
      *
-     * @param  mixed \$id L'identifiant de l'élément à récupérer
-     * 
-     * @return mixed
+     * @param mixed \$id L'identifiant de l'élément à récupérer
+     * @return void
      */
     public function show(\$id)
     {
@@ -573,8 +581,7 @@ CC;
      * Mise à jour d'un ressource en utilisant paramètre du GET
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
-     * 
-     * @return mixed
+     * @return void
      */
     public function edit(\$id)
     {
@@ -585,8 +592,7 @@ CC;
      * Mise à jour d'une ressource
      *
      * @param mixed \$id L'identifiant de l'élément à mettre à jour
-     * 
-     * @return mixed
+     * @return void
      */
     public function update(\$id)
     {
@@ -597,8 +603,7 @@ CC;
      * Permet de supprimer une ressource
      *
      * @param mixed \$id L'identifiant de l'élément à supprimer
-     * 
-     * @return mixed
+     * @return void
      */
     public function destroy(\$id)
     {
@@ -613,6 +618,7 @@ CONTENT;
 
         $controller_template =<<<CC
 <?php
+
 namespace App\Controllers;
 
 class {$controller_name} extends Controller
@@ -640,6 +646,7 @@ CC;
 
         $middleware_template = <<<CM
 <?php
+
 namespace App\Middleware;
 
 class {$middleware_name}
@@ -744,7 +751,7 @@ use Bow\Validation\ValidationRequest as Validator;
 class {$name} extends Validator
 {
     /**
-     * Permet de verifier la permission d'un utilisateur 
+     * Permet de vérifier la permission d'un utilisateur 
      *
      * @return bool
      */
@@ -758,7 +765,8 @@ class {$name} extends Validator
 	 * 
 	 * @var array
 	 */
-	protected function rules() {
+    protected function rules()
+    {
 	    return [
             // Vos régles
         ];
@@ -771,7 +779,9 @@ class {$name} extends Validator
 	 */
 	protected function keys()
 	{
-	    return ['*']
+        return [
+            '*'
+        ];
 	}
 }
 VALIDATOR;
@@ -813,7 +823,7 @@ use Bow\Application\Services as BowService;
 class {$name} extends BowService
 {
     /**
-     * Démarre le serivce
+     * Permet de démarrer le serivce
      */
     public function start()
     {
@@ -821,6 +831,8 @@ class {$name} extends BowService
     }
 
     /**
+     * Permet de lancement de configuration du service
+     * 
      * @param Config \$config
      */
     public function make(Config \$config)
@@ -843,21 +855,21 @@ VALIDATOR;
      */
     private function readline($message)
     {
-        echo "\033[0;32m$message y/N\033[00m >>> ";
+        echo Color::green("$message y/N >>> ");
 
         $input = strtolower(trim(readline()));
+        
+        if (is_null($input) || strlen($input) == 0) {
+            $input = 'n';
+        }
 
-        if (in_array($input, ['y', 'n'])) {
-            echo Color::red('Choix invalide');
-            return false;
+        if (!in_array($input, ['y', 'n'])) {
+            echo Color::red('Choix invalide')."\n";
+            return $this->readline($message);
         }
 
         if (strtolower($input) == "y") {
             return true;
-        }
-
-        if (strtolower($input) == 'n' || strlen($input) == 0) {
-            return false;
         }
 
         return false;
