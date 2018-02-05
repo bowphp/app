@@ -823,19 +823,19 @@ use Bow\Application\Services as BowService;
 class {$name} extends BowService
 {
     /**
-     * Permet de démarrer le serivce
-     */
-    public function start()
-    {
-        //
-    }
-
-    /**
      * Permet de lancement de configuration du service
      * 
      * @param Config \$config
      */
     public function make(Config \$config)
+    {
+        //
+    }
+
+    /**
+     * Permet de démarrer le serivce
+     */
+    public function start()
     {
         //
     }
