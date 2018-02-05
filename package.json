@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "test": "./vendor/bin/phpunit",
-    "test-framework": "./vendor/bin/phpunit --configuration framework/phpunit.xml framework/tests",
+    "test-framework": "cd framework && ../vendor/bin/phpunit --configuration phpunit.xml",
     "gulp": "./node_modules/.bin/gulp default",
     "watch": "./node_modules/.bin/gulp watch",
     "prod": "./node_modules/.bin/gulp prod",
