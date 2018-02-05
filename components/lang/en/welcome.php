@@ -1,4 +1,4 @@
 <?php
 return [
-    'message' => 'The Bow.Framework, simplify your webdev'
+    'message' => '<b>bow framework</b>, simplify your webdev'
 ];

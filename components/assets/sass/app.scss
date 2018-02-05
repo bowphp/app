@@ -15,6 +15,16 @@ span.i {
 	margin-top: -18px;
 }
 
+.f {
+	text-shadow: 3px 2px 1px #999;
+	&::before {
+		content: "|";
+		color: #999;
+		position: relative;
+		top: -5px;
+	}
+}
+
 a {
 	font-size: 15px;
 	border-radius: 5px;
