@@ -17,7 +17,10 @@
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>
 
-# Installer
+
+<p align="conter"><b>Compile your avanture</b></p>
+
+# Instalation
 
 Pour installer une copie de Bow il vous faut d'abord installer [composer](https://getcomposer.org) ensuite vous lancez la commande suivante:
 
@@ -30,7 +33,7 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 > __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
 > Si vous n'êtes pas familier à `composer`, nous vous invitons à parcourir la documentation.
 
-# Test
+# Test rapide
 
 Dans le dossier `routes`, ouvrez le fichier `get.php` et ajoutez:
 
@@ -61,7 +64,7 @@ Pour participer au projet il faut:
 + Faire une publication sur votre dépot `git push origin branche-de-vos-traveaux`
 + Enfin faire un [pull-request](https://www.thinkful.com/learn/github-pull-request-tutorial/Keep-Tabs-on-the-Project#Time-to-Submit-Your-First-PR)
 
-# Authors
+# Autheurs
 > Franck Dakia <dakiafranck@gmail.com> &bull; [@franck_dakia](https://twitter.com/franck_dakia)
 > Ayiyikoh <fablab@ayiyikoh.org> &bull; [@ayiyikoh](https://twitter.com/ayiyikoh) hashtag: __#GoAyiyikoh__
 
