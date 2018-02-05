@@ -184,7 +184,7 @@ class Route
         $tmp_path = $this->path;
         $this->keys = end($match);
 
-        // Assication des critrères personnalisé.
+        // Association des critrères personnalisé.
         foreach ($this->keys as $key => $value) {
             if (array_key_exists($value, $this->with)) {
                 $tmp_path = preg_replace('~:' . $value . '~', '(' . $this->with[$value] . ')', $tmp_path);
