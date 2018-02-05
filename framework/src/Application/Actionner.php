@@ -218,10 +218,10 @@ class Actionner
     }
 
     /**
-     * Permet de lance un middleware
+     * Permet de lancer un middleware
      *
-     * @param  string   $middleware
-     * @param  callable $callback
+     * @param string $middleware
+     * @param callable $callback
      * @return bool
      */
     public function middleware($middleware, callable $callback = null)
@@ -264,8 +264,8 @@ class Actionner
     /**
      * Permet de faire un injection
      *
-     * @param  string $classname
-     * @param  string $method
+     * @param string $classname
+     * @param string $method
      * @return array
      */
     public function injector($classname, $method)
@@ -311,6 +311,11 @@ class Actionner
 
         foreach ($parameters as $parameter) {
             $type = $parameter->getType();
+            
+            if (is_null($type)) {
+                continue;
+            }
+
             $class = trim($type->getName());
 
             if (! class_exists($class, true)) {
@@ -342,8 +347,8 @@ class Actionner
     /**
      * Next, lance successivement une liste de fonction.
      *
-     * @param  array|callable $arr
-     * @param  array|callable $arg
+     * @param array|callable $arr
+     * @param array|callable $arg
      * @return mixed
      */
     public function execute($arr, $arg)
