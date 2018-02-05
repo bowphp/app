@@ -31,11 +31,7 @@ class ArraydotifyTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->dot = new \Bow\Support\Arraydotify(
-            [
-            'code' => $this->collection
-            ]
-        );
+        $this->dot = new \Bow\Support\Arraydotify(['code' => $this->collection]);
     }
 
     public function testGetNormal()
