@@ -289,7 +289,7 @@ class Actionner
                 continue;
             }
 
-            if (!in_array(strtolower($class), $this->injectorWithoutType())) {
+            if (!in_array(strtolower($class), $this->getInjectorExceptedType())) {
                 $params[] = new $class();
             }
         }
@@ -322,7 +322,7 @@ class Actionner
                 continue;
             }
 
-            if (!in_array(strtolower($class), $this->injectorWithoutType())) {
+            if (!in_array(strtolower($class), $this->getInjectorExceptedType())) {
                 $params[] = new $class();
             }
         }
@@ -335,7 +335,7 @@ class Actionner
      *
      * @return array
      */
-    private function injectorWithoutType()
+    private function getInjectorExceptedType()
     {
         return [
             'string', 'array', 'bool', 'int',

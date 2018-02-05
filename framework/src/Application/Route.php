@@ -73,7 +73,7 @@ class Route
     }
 
     /**
-     * Retourne le chemin de la route currente
+     * Récupère le chemin de la route courante
      *
      * @return string
      */
@@ -83,7 +83,7 @@ class Route
     }
 
     /**
-     * Retourne l'action a executé sur la route currente
+     * Récupère l'action a executé sur la route courante
      *
      * @return mixed
      */
@@ -122,7 +122,8 @@ class Route
     }
 
     /**
-     * match, vérifie si le url de la REQUEST est conforme à celle définir par le routeur
+     * Permet de vérifier si l'url de la réquête est
+     * conforme à celle définir par le routeur
      *
      * @param  string $uri
      * @return bool
@@ -134,7 +135,7 @@ class Route
             $uri = end($match);
         }
 
-        // Normalisation du path définir par le programmeur.
+        // Normalisation du path défini par le programmeur.
         if (preg_match('~(.*)/$~', $this->path, $match)) {
             $this->path = end($match);
         }
@@ -145,8 +146,8 @@ class Route
             return true;
         }
 
-        // On vérifie la longeur du path définie par le programmeur
-        // avec celle de l'url courant dans le navigateur de l'utilisateur.
+        // On vérifie la longeur du path défini par le programmeur
+        // avec celle de l'url courante dans le navigateur de l'utilisateur.
         // Pour éviter d'aller plus loin.
         $path = implode(
             '',
@@ -162,11 +163,11 @@ class Route
             }
         }
 
-        // Copie de l'url courant pour éviter de la détruie
+        // Copie de l'url
         $path = $uri;
 
-        // Dans le case ou le dévéloppeur n'a pas ajouté de contrainte sur
-        // les variables capturées
+        // Dans le case ou le dévéloppeur n'a pas ajouté
+        // de contrainte sur les variables capturées
         if (empty($this->with)) {
             $path = preg_replace('~:\w+(\?)?~', '([^\s]+)$1', $this->path);
             preg_match_all('~:([a-z-0-9_-]+?)\?~', $this->path, $this->keys);
@@ -174,8 +175,8 @@ class Route
             return $this->checkRequestUri($path, $uri);
         }
 
-        // Dans le cas ou le dévéloppeur a ajouté de contrainte sur les variables
-        // capturées
+        // Dans le cas ou le dévéloppeur a ajouté des contraintes
+        // sur les variables capturées
         if (!preg_match_all('~:([\w]+)?~', $this->path, $match)) {
             return $this->checkRequestUri($path, $uri);
         }
@@ -264,8 +265,9 @@ class Route
             if (!isset($this->match[$key])) {
                 continue;
             }
+
             if (!is_int($this->match[$key])) {
-                $this->params[$value] = $this->match[$key];
+                $this->params[$value] = urldecode($this->match[$key]);
                 continue;
             }
 

@@ -18,7 +18,7 @@ class Dispatcher
 
     /**
      * Ajout un middleware à la collection d'execution
-     * 
+     *
      * @param string $middleware
      * @return $this
      */
@@ -30,7 +30,7 @@ class Dispatcher
 
     /**
      * Lance le procéssus d'execution de middleware
-     * 
+     *
      * @param Request $request
      * @return mixed
      */
