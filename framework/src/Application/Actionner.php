@@ -31,7 +31,7 @@ class Actionner
      * @param array $namespaces
      * @param array $middlewares
      */
-    public function configure(array $namespaces, array $middlewares)
+    public static function configure(array $namespaces, array $middlewares)
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($namespaces, $middlewares);
@@ -122,26 +122,19 @@ class Actionner
             unset($actions['middleware']);
         }
 
-        foreach ($actions as $key => $action) {
-            if ($key != 'uses' && !is_int($key)) {
-                continue;
-            }
+        if (isset($actions['uses'])) {
+            $actions = (array) $actions['uses'];
+        }
 
+        foreach ($actions as $key => $action) {
             if (is_string($action)) {
                 array_push($functions, $this->controller($action));
                 continue;
             }
 
-            if (is_int($key)) {
-                if (is_callable($action)) {
-                    array_push($functions, $action);
-                    continue;
-                }
-
-                if (is_string($action)) {
-                    array_push($functions, $this->controller($action));
-                    continue;
-                }
+            if (is_callable($action)) {
+                $injections = $this->injectorForClosure($action);
+                array_push($functions, ['controller' => $action, 'injections' => $injections]);
             }
         }
 
@@ -184,7 +177,7 @@ class Actionner
 
         // Exécution du middleware
         foreach ($middlewares_collection as $key => $middleware) {
-            $injections = static::injector($middleware, 'checker');
+            $injections = $this->injector($middleware, 'checker');
 
             $middleware_params = array_merge(
                 $injections,
@@ -211,15 +204,14 @@ class Actionner
             exit;
         }
 
+        
         // Lancement de l'éxècution de la liste des actions definir
         // Fonction a éxècuté suivant un ordre
-        if (!empty($functions)) {
-            foreach ($functions as $function) {
-                $status = call_user_func_array(
-                    $function['controller'],
-                    array_merge($function['injections'], $param)
-                );
-            }
+        foreach ($functions as $function) {
+            $status = call_user_func_array(
+                $function['controller'],
+                array_merge($function['injections'], $param)
+            );
         }
 
         return $status;
@@ -297,16 +289,54 @@ class Actionner
                 continue;
             }
 
-            if (!in_array(strtolower($class), [
-                'string', 'array', 'bool', 'int',
-                'integer', 'double', 'float', 'callable',
-                'object', 'stdclass', '\closure', 'closure'])
-            ) {
+            if (!in_array(strtolower($class), $this->injectorWithoutType())) {
                 $params[] = new $class();
             }
         }
 
         return $params;
+    }
+
+    /**
+     * Injection de type pour closure
+     *
+     * @param callable $closure
+     * @return array
+     */
+    public function injectorForClosure(callable $closure)
+    {
+        $reflection = new \ReflectionFunction($closure);
+        $parameters = $reflection->getParameters();
+        $params = [];
+
+        foreach ($parameters as $parameter) {
+            $type = $parameter->getType();
+            $class = trim($type->getName());
+
+            if (! class_exists($class, true)) {
+                continue;
+            }
+
+            if (!in_array(strtolower($class), $this->injectorWithoutType())) {
+                $params[] = new $class();
+            }
+        }
+
+        return $params;
+    }
+
+    /**
+     * La liste de type non permis
+     *
+     * @return array
+     */
+    private function injectorWithoutType()
+    {
+        return [
+            'string', 'array', 'bool', 'int',
+            'integer', 'double', 'float', 'callable',
+            'object', 'stdclass', '\closure', 'closure'
+        ];
     }
 
     /**
@@ -316,7 +346,7 @@ class Actionner
      * @param  array|callable $arg
      * @return mixed
      */
-    private function exec($arr, $arg)
+    public function execute($arr, $arg)
     {
         if (is_callable($arr)) {
             return call_user_func_array($arr, $arg);

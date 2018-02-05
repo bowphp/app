@@ -403,12 +403,11 @@ class Application
     private function routeLoader($method, $path, $cb)
     {
         // construction du path original en fonction de la Config de l'application
-        $path = $this->config['app.root'] . $this->branch . $path;
+        $path = $this->config['app.root'].$this->branch.$path;
 
         // route courante
         // methode courante
-        $this->current['path'] = $path;
-        $this->current['method'] = $method;
+        $this->current = ['path' => $path, 'method' => $method];
         
         // Ajout de la nouvelle route
         $route = new Route($path, $cb);
