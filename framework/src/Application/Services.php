@@ -23,13 +23,14 @@ abstract class Services
      * Permet de créer le service
      *
      * @param Config $config
+     * @return void
      */
     abstract public function make(Config $config);
 
     /**
      * Permet de lancer le service
      *
-     * @return mixed
+     * @return void
      */
     abstract public function start();
 
@@ -37,6 +38,7 @@ abstract class Services
      * Start listener
      *
      * @param callable $cb
+     * @return void
      */
     public function stared($cb)
     {
@@ -47,6 +49,7 @@ abstract class Services
      * Make listener
      *
      * @param callable $cb
+     * @return void
      */
     public function maked($cb)
     {

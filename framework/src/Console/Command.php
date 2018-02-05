@@ -826,6 +826,7 @@ class {$name} extends BowService
      * Permet de lancement de configuration du service
      * 
      * @param Config \$config
+     * @return void
      */
     public function make(Config \$config)
     {
@@ -834,6 +835,8 @@ class {$name} extends BowService
 
     /**
      * Permet de démarrer le serivce
+     * 
+     * @return void
      */
     public function start()
     {
