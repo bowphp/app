@@ -17,7 +17,7 @@
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>
 
-# Instalation
+# Installation
 
 Pour installer une copie de Bow il vous faut d'abord installer [composer](https://getcomposer.org) ensuite vous lancez la commande suivante:
 
