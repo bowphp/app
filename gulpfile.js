@@ -44,8 +44,8 @@ gulp.task('dev', () => {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('components/assets/js/**', ['compile-js']);
-    gulp.watch('components/assets/sass/**', ['compile-sass']);
+    gulp.watch('components/assets/js/**', ['dev']);
+    gulp.watch('components/assets/sass/**', ['dev']);
 });
 
 gulp.task('default', ['prod', 'dev', 'watch']);
