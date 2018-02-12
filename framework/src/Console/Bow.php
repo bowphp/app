@@ -1,7 +1,7 @@
 <?php
+
 namespace Bow\Console;
 
-use function dump;
 use Psy\Shell;
 use Psy\Configuration;
 use Bow\Support\Faker;
@@ -118,6 +118,7 @@ class Bow
     public function add()
     {
         $action = $this->_command->getParameter('action');
+        
         if (!in_array($action, ['middleware', 'controller', 'model', 'validation', 'seeder', 'migration', 'service'])) {
             throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
         }
