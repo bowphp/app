@@ -13,3 +13,16 @@ if (! function_exists('gen_slix')) {
         return substr(str_shuffle(uniqid()), 0, $len);
     }
 }
+
+if (! function_exists('base_path')) {
+    /**
+     * Retourne le chemin du dossier racine de
+     * l'application bow framework
+     * 
+     * @return string
+     */
+    function base_path()
+    {
+        return __DIR__.'/..';
+    }
+}
