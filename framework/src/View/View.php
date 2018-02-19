@@ -8,7 +8,7 @@ use Bow\View\Exception\ViewException;
 class View
 {
     /**
-     * @var Configuration
+     * @var Config
      */
     private static $config;
 

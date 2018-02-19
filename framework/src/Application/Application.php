@@ -4,6 +4,7 @@ namespace Bow\Application;
 use Bow\Http\Request;
 use Bow\Config\Config;
 use Bow\Http\Response;
+use Bow\Support\Capsule;
 use Bow\Http\Exception\HttpException;
 use Bow\Application\Resource\Resource;
 use Bow\Application\Exception\RouterException;
@@ -22,6 +23,11 @@ class Application
      * @var string
      */
     private $version = '2.5.1';
+
+    /**
+     * @var Capsule
+     */
+    private $capsule;
 
     /**
      * @var bool
@@ -114,6 +120,7 @@ class Application
     {
         $this->request = $request;
         $this->response = $response;
+        $this->capsule = Capsule::getInstance();
     }
 
     /**
@@ -143,14 +150,16 @@ class Application
             $services = $this->config->services();
             $service_collection = [];
 
+            // Configuration des services
             foreach ($services as $service) {
                 if (class_exists($service, true)) {
-                    $class = new $service;
+                    $class = new $service($this);
                     $class->make($this->config);
                     $service_collection[] = $class;
                 }
             }
 
+            // Démarage des services ou code d'initial
             foreach ($service_collection as $service) {
                 $service->start();
             }
@@ -161,14 +170,6 @@ class Application
         }
 
         $this->booted = true;
-    }
-
-    /**
-     * Private __clone
-     * @return void
-     */
-    private function __clone()
-    {
     }
 
     /**
@@ -188,7 +189,7 @@ class Application
     }
 
     /**
-     * Ajout un prefixe sur les routes
+     * Ajout un préfixe sur les routes
      *
      * @param string $branch
      * @param callable|string|array $cb
@@ -269,14 +270,16 @@ class Application
 
         if (in_array($method, ['DELETE', 'PUT'])) {
             $this->special_method = $method;
-            $this->addHttpVerbe($method, $path, $cb);
+            $this->pushHttpVerbe($method, $path, $cb);
         }
 
         return $this;
     }
 
     /**
-     * Ajout une route pour chacun des types GET|POST|DELETE|PUT|OPTIONS|PATCH
+     * Ajout une route de tout type
+     * 
+     * GET, POST, DELETE, PUT, OPTIONS, PATCH
      *
      * @param string $path
      * @param callable|string|array $cb
@@ -300,7 +303,7 @@ class Application
      */
     public function delete($path, $cb)
     {
-        return $this->addHttpVerbe('DELETE', $path, $cb);
+        return $this->pushHttpVerbe('DELETE', $path, $cb);
     }
 
     /**
@@ -312,7 +315,7 @@ class Application
      */
     public function put($path, $cb)
     {
-        return $this->addHttpVerbe('PUT', $path, $cb);
+        return $this->pushHttpVerbe('PUT', $path, $cb);
     }
 
     /**
@@ -324,7 +327,7 @@ class Application
      */
     public function patch($path, $cb)
     {
-        return $this->addHttpVerbe('PATCH', $path, $cb);
+        return $this->pushHttpVerbe('PATCH', $path, $cb);
     }
 
     /**
@@ -336,7 +339,7 @@ class Application
      */
     public function options($path, callable $cb)
     {
-        return $this->addHttpVerbe('OPTIONS', $path, $cb);
+        return $this->pushHttpVerbe('OPTIONS', $path, $cb);
     }
 
     /**
@@ -379,7 +382,7 @@ class Application
      * @param callable|array|string $cb
      * @return Route
      */
-    private function addHttpVerbe($method, $path, $cb)
+    private function pushHttpVerbe($method, $path, $cb)
     {
         $input = $this->request->input();
 
@@ -461,7 +464,9 @@ class Application
             $this->response->statusCode(404);
 
             if (empty($this->error_code)) {
-                $this->response->send('Cannot ' . $method . ' ' . $this->request->uri() . ' 404');
+                $this->response->send(
+                    sprintf('Cannot %s %s 404', $method, $this->request->uri())
+                );
             }
 
             return false;
@@ -499,6 +504,7 @@ class Application
             return true;
         }
 
+        // Application du code d'erreur 404
         $this->response->statusCode(404);
 
         if (in_array(404, array_keys($this->error_code))) {
@@ -513,12 +519,17 @@ class Application
             );
         }
 
-        throw new RouterException('La route "'.$this->request->uri().'" n\'existe pas', E_ERROR);
+        throw new RouterException(
+            sprintf('La route "%s" n\'existe pas', $this->request->uri()), 
+            E_ERROR
+        );
     }
 
     /**
-     * D'active l'écriture le l'entête X-Powered-By
+     * Permet d'active l'écriture le l'entête X-Powered-By
      * dans la réponse de la réquête.
+     * 
+     * @return void
      */
     public function disableXpoweredBy()
     {
@@ -678,10 +689,10 @@ class Application
      */
     public function abort($code = 500, $message = '', array $headers = [])
     {
-        response()->statusCode($code);
+        $this->response->statusCode($code);
         
         foreach ($headers as $key => $value) {
-            response()->addHeader($key, $value);
+            $this->response->addHeader($key, $value);
         }
         
         if ($message == null) {
@@ -689,6 +700,53 @@ class Application
         }
 
         throw new HttpException($message);
+    }
+
+    /**
+     * __get
+     * 
+     * @param string $name
+     * @param callable $callable
+     */
+    public function capsule($name = null, callable $callable = null)
+    {
+        if (is_null($name)) {
+            return $this->capsule;
+        }
+
+        if (is_null($callable)) {
+            return $this->capsule->make($name);
+        }
+
+        if (!is_callable($callable)) {
+            throw new ApplicationException('le deuxième paramètre doit être un callable.');
+        }
+
+        return $this->capsule->bind($name, $callable);
+    }
+
+    /**
+     * __invoke
+     * 
+     * @param array $params
+     * @return mixed
+     */
+    public function __invoke(...$params)
+    {
+        if (count($params)) {
+            return $this->capsule;
+        }
+
+        if (count($params) > 2) {
+            throw new ApplicationException('Deuxième paramètre doit être passer.');
+        }
+
+        switch(true) {
+            case count($params) == 1:
+                return $this->capsule($params[0]);
+            case count($params) == 2:
+                return $this->capsule($params[0], $params[1]);
+        }
     }
 
     /**
@@ -700,13 +758,11 @@ class Application
     {
         $code = http_response_code();
 
-        if ($code == 404 || !isset($this->error_code[$code])) {
-            return;
-        }
-
         $this->response->statusCode($code);
-        $r = call_user_func($this->error_code[$code]);
 
-        $this->response->send($r);
+        if (isset($this->error_code[$code])) {
+            $r = call_user_func($this->error_code[$code]);
+            $this->response->send($r);
+        }
     }
 }

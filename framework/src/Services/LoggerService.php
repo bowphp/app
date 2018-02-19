@@ -29,9 +29,9 @@ class LoggerService extends BowService
      * Permet de créer le service
      *
      * @param Config $config
-     * @param Config $config
+     * @return void
      */
-    public function make(Config $config = null)
+    public function make(Config $config)
     {
         $this->whoops = new \Whoops\Run;
 
@@ -43,7 +43,7 @@ class LoggerService extends BowService
     /**
      * Permet de lancer le service
      *
-     * @return mixed
+     * @return void
      */
     public function start()
     {

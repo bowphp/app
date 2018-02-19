@@ -27,18 +27,14 @@ class MustacheEngine extends EngineAbstract
 
         $partial_loader = is_dir($config['view.path'].'/partials') ?
             new \Mustache_Loader_FilesystemLoader(
-                $config['view.path'].'/partials',
-                [
-                'extension' => $this->config['view.extension']
+                $config['view.path'].'/partials', [
+                    'extension' => $this->config['view.extension']
                 ]
             ) : null;
 
-        $loader = new \Mustache_Loader_FilesystemLoader(
-            $config['view.path'],
-            [
-            'extension' => $this->config['view.extension']
-            ]
-        );
+        $loader = new \Mustache_Loader_FilesystemLoader($config['view.path'], [
+                'extension' => $this->config['view.extension']
+            ]);
 
         $helpers = array_merge(
             ['_public', $config['app.static'], '_root', $config['app.root']],

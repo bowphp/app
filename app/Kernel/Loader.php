@@ -106,11 +106,6 @@ class Loader extends Config
         );
 
         /**
-         * Application de la timezone
-         */
-        DateAccess::setTimezone($this['app.timezone']);
-
-        /**
          * Configuration de l'auth
          */
         Auth::configure($this['auth']);
