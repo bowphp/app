@@ -278,7 +278,7 @@ class Application
 
     /**
      * Ajout une route de tout type
-     * 
+     *
      * GET, POST, DELETE, PUT, OPTIONS, PATCH
      *
      * @param string $path
@@ -520,7 +520,7 @@ class Application
         }
 
         throw new RouterException(
-            sprintf('La route "%s" n\'existe pas', $this->request->uri()), 
+            sprintf('La route "%s" n\'existe pas', $this->request->uri()),
             E_ERROR
         );
     }
@@ -528,7 +528,7 @@ class Application
     /**
      * Permet d'active l'écriture le l'entête X-Powered-By
      * dans la réponse de la réquête.
-     * 
+     *
      * @return void
      */
     public function disableXpoweredBy()
@@ -704,7 +704,7 @@ class Application
 
     /**
      * __get
-     * 
+     *
      * @param string $name
      * @param callable $callable
      */
@@ -727,7 +727,7 @@ class Application
 
     /**
      * __invoke
-     * 
+     *
      * @param array $params
      * @return mixed
      */
@@ -741,7 +741,7 @@ class Application
             throw new ApplicationException('Deuxième paramètre doit être passer.');
         }
 
-        switch(true) {
+        switch (true) {
             case count($params) == 1:
                 return $this->capsule($params[0]);
             case count($params) == 2:

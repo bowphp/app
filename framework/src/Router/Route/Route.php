@@ -135,7 +135,7 @@ class Route
      */
     public function delete($path, $cb)
     {
-        return $this->addHttpVerbe('DELETE', $path, $cb);
+        return $this->pushHttpVerbe('DELETE', $path, $cb);
     }
 
     /**
@@ -148,7 +148,7 @@ class Route
      */
     public function put($path, $cb)
     {
-        return $this->addHttpVerbe('PUT', $path, $cb);
+        return $this->pushHttpVerbe('PUT', $path, $cb);
     }
 
     /**
@@ -161,7 +161,7 @@ class Route
      */
     public function patch($path, $cb)
     {
-        return $this->addHttpVerbe('PATCH', $path, $cb);
+        return $this->pushHttpVerbe('PATCH', $path, $cb);
     }
 
     /**
@@ -173,7 +173,7 @@ class Route
      */
     public function options($path, callable $cb)
     {
-        return $this->addHttpVerbe('OPTIONS', $path, $cb);
+        return $this->pushHttpVerbe('OPTIONS', $path, $cb);
     }
 
     /**
@@ -207,7 +207,7 @@ class Route
     }
 
     /**
-     * addHttpVerbe, permet d'ajouter les autres verbes http
+     * pushHttpVerbe, permet d'ajouter les autres verbes http
      * [PUT, DELETE, UPDATE, HEAD, PATCH]
      *
      * @param string         $method
@@ -216,7 +216,7 @@ class Route
      *
      * @return Route
      */
-    private function addHttpVerbe($method, $path, $cb)
+    private function pushHttpVerbe($method, $path, $cb)
     {
         return $this->routeLoader($method, $path, $cb);
     }

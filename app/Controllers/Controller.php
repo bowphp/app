@@ -123,7 +123,7 @@ class Controller
     /**
      * Faire la validation des données de la requête
      * en fonction des règles passées en paramètre
-     * 
+     *
      * @param Request $request
      * @param array $rule
      * @return Validate

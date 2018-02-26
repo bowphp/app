@@ -37,7 +37,7 @@ class Bow
      * @param  string  $dirname
      * @param  Command $command
      * @return void
-     * 
+     *
      * @throws \ErrorException
      */
     public function __construct($dirname, Command $command)
@@ -53,7 +53,7 @@ class Bow
 
     /**
      * Permet de lancer Bow task runner
-     * 
+     *
      * @return void
      */
     public function run()
@@ -93,7 +93,7 @@ class Bow
      * Permet de lancer un migration
      *
      * @return void
-     * 
+     *
      * @throws \ErrorException
      */
     public function migrate()
@@ -121,9 +121,9 @@ class Bow
 
     /**
      * Permet de créer des fichiers
-     * 
+     *
      * @return void
-     * 
+     *
      * @throws \ErrorException
      */
     public function add()
@@ -143,7 +143,7 @@ class Bow
 
     /**
      * Permet de lancer le seeding
-     * 
+     *
      * @return void
      */
     public function seed()
@@ -202,7 +202,7 @@ class Bow
 
     /**
      * Permet de lancer le serveur local
-     * 
+     *
      * @return void
      */
     public function serve()
@@ -234,7 +234,7 @@ class Bow
 
     /**
      * Permet de lancer le repl
-     * 
+     *
      * @return void
      */
     public function console()
@@ -262,7 +262,7 @@ class Bow
 
     /**
      * Permet de generate un resource sur un controller
-     * 
+     *
      * @return void
      */
     public function generate()
@@ -278,9 +278,9 @@ class Bow
 
     /**
      * Permet de supprimer les caches
-     * 
+     *
      * @return void
-     * 
+     *
      * @throws \ErrorException
      */
     public function clear()
@@ -307,7 +307,7 @@ class Bow
 
     /**
      * Supprimession de fichier
-     * 
+     *
      * @param string $dirname
      * @return void
      */
