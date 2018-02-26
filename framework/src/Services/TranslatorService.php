@@ -10,7 +10,7 @@ class TranslatorService extends BowService
 {
     /**
      * __
-     * 
+     *
      * @param Config $config
      * @return void
      */
@@ -19,7 +19,7 @@ class TranslatorService extends BowService
         /**
          * Configuration de translator
          */
-        $this->app(Translator::class, function() use ($config) {
+        $this->app(Translator::class, function () use ($config) {
             return Translator::configure(
                 $config['trans.lang'],
                 $config['trans.directory']
@@ -29,7 +29,7 @@ class TranslatorService extends BowService
 
     /**
      * Démarrage du service
-     * 
+     *
      * @return void
      */
     public function start()
