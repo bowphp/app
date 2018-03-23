@@ -100,5 +100,4 @@ class ValidationTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($v->fails());
         $this->assertTrue($v2->fails());
     }
-
 }
