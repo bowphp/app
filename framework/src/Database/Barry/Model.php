@@ -44,7 +44,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     /**
      * @var array
      */
-    private $attributes = [];
+    protected $attributes = [];
 
     /**
      * @var array
