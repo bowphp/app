@@ -21,7 +21,12 @@ class Auth
     /**
      * @var array
      */
-    private $credentials = [
+    private $provider;
+
+    /**
+     * @var array
+     */
+    protected $credentials = [
         'email' => 'email',
         'password' => 'password'
     ];
@@ -30,6 +35,7 @@ class Auth
      * Auth constructor.
      *
      * @param array $provider
+     * @param array $credentials
      */
     public function __construct(array $provider, $credentials = [])
     {
@@ -64,8 +70,10 @@ class Auth
     /**
      * Check if user is authenticate
      *
-     * @param string $guard
+     * @param null|string $guard
      * @return Auth|null
+     *
+     * @throws AuthenticateException
      */
     public function guard($guard = null)
     {
@@ -108,19 +116,21 @@ class Auth
     /**
      * Check if user is authenticate
      *
+     * @param array $credentials
      * @return bool
      */
     public function attempts(array $credentials)
     {
         $model = $this->provider['model'];
-        $user  = $model::where('email', $this->credentials['email'])->first();
+        $user  = $model::where('email', $credentials[$this->credentials['email']])->first();
 
         if (is_null($user)) {
             return false;
         }
 
-        if (Hash::check($user->password, $this->credentials['password'])) {
+        if (Hash::check($user->password, $credentials[$this->credentials['password']])) {
             Session::add('_auth', $user);
+
             return true;
         }
 
@@ -131,10 +141,12 @@ class Auth
      * Make direct login
      *
      * @param mixed $user
+     * @return bool
      */
     public function login(Authentication $user)
     {
         Session::add('_auth', $user);
+
         return true;
     }
 
@@ -154,6 +166,8 @@ class Auth
      * @param string $method
      * @param array $parameters
      * @return mixed
+     *
+     * @throws \BadMethodCallException
      */
     public static function __callStatic($method, array $parameters)
     {
@@ -161,6 +175,6 @@ class Auth
             return call_user_func_array([static::$instance, $method], $parameters);
         }
 
-        throw new BadMethodCallException("La methode $methode n'existe pas", 1);
+        throw new \BadMethodCallException(sprintf("La methode %s n'existe pas", $method), 1);
     }
 }
