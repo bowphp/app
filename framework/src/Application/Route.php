@@ -67,7 +67,7 @@ class Route
      */
     public function __construct($path, $cb)
     {
-        $this->config = config();
+        $this->config = Config::getInstance();
         $this->cb = $cb;
         $this->path = str_replace('.', '\.', $path);
         $this->match = [];
@@ -254,8 +254,6 @@ class Route
      * Fonction permettant de lancer les fonctions de rappel.
      *
      * @param Request $request
-     * @param array   $namespaces
-     * @param array   $middlewares
      *
      * @return mixed
      */

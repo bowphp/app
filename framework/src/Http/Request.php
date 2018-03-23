@@ -36,7 +36,7 @@ class Request
     {
         static::$input = new Input();
         $this->param = new UrlParameter([]);
-        Session::add('__bow.old', static::$input->all());
+        @Session::add('__bow.old', static::$input->all());
     }
 
     /**

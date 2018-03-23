@@ -1,10 +1,4 @@
 <?php
-/**
- * BOW HELPER
- * ==========
- * Définir des liens symbolique de l'ensemble de
- * fonctions de Bow
- */
 
 use Bow\Mail\Mail;
 use Bow\Auth\Auth;
@@ -58,15 +52,12 @@ if (!function_exists('config')) {
      */
     function config($key = null, $setting = null)
     {
-        app()->bind(
-            'config',
-            function () {
-                return Config::singleton();
-            }
-        );
+        app('config', function () {
+            return Config::getInstance();
+        });
 
         $config = app('config');
-        
+
         if (is_null($key)) {
             return $config;
         }

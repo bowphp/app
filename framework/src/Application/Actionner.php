@@ -56,7 +56,7 @@ class Actionner
      *
      * @return Actionner
      */
-    public function getInstance()
+    public static function getInstance()
     {
         return static::$instance;
     }

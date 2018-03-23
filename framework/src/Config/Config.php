@@ -14,7 +14,7 @@ use Bow\Application\Exception\ApplicationException;
 class Config implements \ArrayAccess
 {
     /**
-     * @var Configuration
+     * @var Config
      */
     private static $instance;
 
@@ -77,7 +77,7 @@ class Config implements \ArrayAccess
     public static function configure($base_path)
     {
         if (!self::$instance instanceof Config) {
-            new self($base_path);
+            self::$instance = new self($base_path);
         }
 
         return self::$instance;
@@ -122,7 +122,7 @@ class Config implements \ArrayAccess
     /**
      * Load configuration
      *
-     * @return Configuration
+     * @return Config
      */
     public function boot()
     {
@@ -143,6 +143,16 @@ class Config implements \ArrayAccess
         }
 
         return self::$instance;
+    }
+
+    /**
+     * Alias de singleton
+     *
+     * @return Config
+     */
+    public static function getInstance()
+    {
+        return static::singleton();
     }
 
     /**

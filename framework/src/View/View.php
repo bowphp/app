@@ -93,7 +93,9 @@ class View
      */
     public static function make($viewname, array $data = [])
     {
-        return static::getInstance()->getTemplate()->render($viewname, $data);
+        $data = static::getInstance()->getTemplate()->render($viewname, $data);
+
+        return trim($data);
     }
 
     /**
