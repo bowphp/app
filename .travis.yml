@@ -15,7 +15,6 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 5.6
   - 7.0
   - nightly
 
@@ -25,8 +24,7 @@ env:
 before_script:
   - if [ ! -d ./framework/tests/data/cache ]; then mkdir -p ./framework/tests/data/cache; fi;
   - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
-
-install:
+git stinstall:
   - composer install --prefer-dist
   - composer require mustache/mustache pug-php/pug
 
