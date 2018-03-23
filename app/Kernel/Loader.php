@@ -52,69 +52,19 @@ class Loader extends Config
     public function services()
     {
         return [
-            \Bow\Logger\LoggerService::class
+            // Service interne
+            \Bow\Services\LoggerService::class,
+            \Bow\Mail\MailService::class,
+            \Bow\Security\CryptoService::class,
+            \Bow\Database\DatabaseService::class,
+            \Bow\Services\CacheService::class,
+            \Bow\Resource\StorageService::class,
+            \Bow\View\ViewService::class,
+            \Bow\Translate\TranslatorService::class,
+            \Bow\Auth\AuthenticateService::class,
+            \Bow\Services\ActionnerService::class
+
+            // Vos service
         ];
-    }
-
-    /**
-     * Load configuration
-     *
-     * @return Configuration
-     */
-    public function boot()
-    {
-        /**
-         * Configuration de Mail.
-         */
-        Mail::configure($this['mail']);
-
-        /**
-         * Initialisation du token
-         * et Configuration de la Sécurité
-         */
-        Crypto::setkey(
-            $this['security.key'],
-            $this['security.cipher']
-        );
-
-        /**
-         * Configuration de la base de donnée
-         */
-        Database::configure($this['db']);
-
-        /**
-         * Configuration du systeme de cache
-         */
-        Cache::confirgure($this['resource.cache'].'/bow');
-
-        /**
-         * Configuration de la resource de l'application
-         */
-        Storage::configure($this['resource']);
-
-        /**
-         * Configuration du charger de vue
-         */
-        View::configure($this);
-
-        /**
-         * Configuration de translator
-         */
-        Translator::configure(
-            $this['trans.lang'],
-            $this['trans.directory']
-        );
-
-        /**
-         * Configuration de l'auth
-         */
-        Auth::configure($this['auth']);
-
-        /**
-         * Configuration du lanceur de controleur
-         */
-        Actionner::configure($this->namespaces(), $this->middlewares());
-
-        return $this;
     }
 }

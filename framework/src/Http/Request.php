@@ -1,16 +1,12 @@
 <?php
+
 namespace Bow\Http;
 
 use Bow\Support\Str;
 use Bow\Session\Session;
 use Bow\Support\Collection;
 
-/**
- * Class Request
- *
- * @author  Franck Dakia <dakiafranck@gmail.com>
- * @package Bow\Http
- */
+
 class Request
 {
     /**

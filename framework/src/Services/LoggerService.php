@@ -6,7 +6,7 @@ use Monolog\Logger;
 use Bow\Config\Config;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class LoggerService extends BowService
 {
@@ -35,7 +35,7 @@ class LoggerService extends BowService
     {
         $this->whoops = new \Whoops\Run;
 
-        $this->logger = new Logger('BOW');
+        $this->monolog = new Logger('BOW');
 
         $this->config = $config;
     }
@@ -50,7 +50,7 @@ class LoggerService extends BowService
         $this->whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
         $this->whoops->register();
         
-        $this->logger->pushHandler(new StreamHandler($this->config['resource.log'].'/bow.log', Logger::DEBUG));
-        $this->logger->pushHandler(new FirePHPHandler());
+        $this->monolog->pushHandler(new StreamHandler($this->config['resource.log'].'/bow.log', Logger::DEBUG));
+        $this->monolog->pushHandler(new FirePHPHandler());
     }
 }

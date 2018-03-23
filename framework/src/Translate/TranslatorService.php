@@ -1,10 +1,9 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\Translate;
 
 use Bow\Config\Config;
-use Bow\Support\Translator;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class TranslatorService extends BowService
 {

@@ -62,7 +62,7 @@ class View
     /**
      * Permet de configurer la classe
      *
-     * @param Configuration $config
+     * @param Config $config
      */
     public static function configure($config)
     {
@@ -74,7 +74,7 @@ class View
      *
      * @return View
      */
-    public static function singleton()
+    public static function getInstance()
     {
         if (!static::$instance instanceof View) {
             static::$instance = new static(static::$config);

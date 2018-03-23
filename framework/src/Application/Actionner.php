@@ -1,4 +1,5 @@
 <?php
+
 namespace Bow\Application;
 
 use Bow\Http\Response;
@@ -26,16 +27,28 @@ class Actionner
     private static $instance;
 
     /**
+     * Actionner constructor
+     */
+    public function __construct(array $namespaces, array $middlewares)
+    {
+        $this->namespaces = $namespaces;
+        $this->middlewares = $middlewares;
+    }
+
+    /**
      * Configuration de l'actionneur
      *
      * @param array $namespaces
      * @param array $middlewares
+     * @return static
      */
     public static function configure(array $namespaces, array $middlewares)
     {
         if (is_null(static::$instance)) {
             static::$instance = new static($namespaces, $middlewares);
         }
+
+        return static::$instance;
     }
 
     /**
@@ -49,25 +62,13 @@ class Actionner
     }
 
     /**
-     * Actionner constructor
-     */
-    public function __construct(array $namespaces, array $middlewares)
-    {
-        $this->namespaces = $namespaces;
-        $this->middlewares = $middlewares;
-    }
-
-    /**
      * Ajout un middleware à la liste
      *
-     * @param array|callable $middleware
+     * @param array|callable $middlewares
+     * @param bool $end
      */
     public function pushMiddleware($middlewares, $end = false)
     {
-        if (!is_callable($middleware) || !is_array($middleware)) {
-            // throw error
-        }
-
         $middlewares = (array) $middlewares;
 
         if ($end) {

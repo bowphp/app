@@ -1,12 +1,11 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\Database;
 
 use Bow\Config\Config;
-use Bow\Database\Database;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
-class DatabaseServer extends BowService
+class DatabaseService extends BowService
 {
     /**
      * Configuration du service

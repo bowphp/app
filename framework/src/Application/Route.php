@@ -1,4 +1,5 @@
 <?php
+
 namespace Bow\Application;
 
 use Bow\Http\Request;

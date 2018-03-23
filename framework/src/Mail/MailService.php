@@ -1,13 +1,11 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\Mail;
 
 use Bow\Config\Config;
-use Bow\Support\Capsule;
-use Bow\Resource\Storage;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
-class StorageService extends BowService
+class MailService extends BowService
 {
     /**
      * Configuration du service
@@ -17,8 +15,8 @@ class StorageService extends BowService
      */
     public function make(Config $config)
     {
-        $this->app(Storage::class, function () use ($config) {
-            return Storage::configure($config['resource']);
+        $this->app(Mail::class, function () use ($config) {
+            return Mail::configure($config['mail']);
         });
     }
 
@@ -29,6 +27,6 @@ class StorageService extends BowService
      */
     public function start()
     {
-        $this->app(Storage::class);
+        $this->app(Mail::class);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\Auth;
 
 use Bow\Auth\Auth;
 use Bow\Config\Config;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class AuthenticateService extends BowService
 {
@@ -17,7 +17,7 @@ class AuthenticateService extends BowService
     public function make(Config $config)
     {
         $this->app(Auth::class, function () use ($config) {
-            return Auth::configure($config->namespaces(), $config->middlewares());
+            return Auth::configure($config['auth']);
         });
     }
 

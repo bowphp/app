@@ -1,4 +1,5 @@
 <?php
+
 namespace Bow\Http\Client;
 
 class Parser

@@ -799,15 +799,15 @@ VALIDATOR;
      */
     public function service($name)
     {
-        if (!is_dir($this->dirname.'/app/Services')) {
-            mkdir($this->dirname.'/app/Services');
+        if (!is_dir($this->dirname.'/app/Service')) {
+            mkdir($this->dirname.'/app/Service');
         }
 
         if (!preg_match('/service/i', $name)) {
             $name = ucfirst($name).'Service';
         }
 
-        if (file_exists($this->dirname.'/app/Services/'.$name.'.php')) {
+        if (file_exists($this->dirname.'/app/Service/'.$name.'.php')) {
             echo "\033[0;33mLe service \033[0;33m\033[0;31m[${name}]\033[00m\033[0;31m existe déja.\033[00m\n";
             return 0;
         }
@@ -845,7 +845,7 @@ class {$name} extends BowService
 }
 VALIDATOR;
 
-        file_put_contents($this->dirname.'/app/Services/'.$name.'.php', $validation);
+        file_put_contents($this->dirname.'/app/Service/'.$name.'.php', $validation);
         echo "\033[0;32mLe service \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
         return 0;
     }

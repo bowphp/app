@@ -1,10 +1,10 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\View;
 
 use Bow\View\View;
 use Bow\Config\Config;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class ViewService extends BowService
 {
@@ -19,8 +19,9 @@ class ViewService extends BowService
         /**
          * Configuration de translator
          */
-        $this->app(Translator::class, function () use ($config) {
+        $this->app(View::class, function () use ($config) {
             View::configure($config);
+            return View::getInstance();
         });
     }
 

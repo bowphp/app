@@ -5,12 +5,12 @@ namespace Bow\Application;
 use Bow\Event\Event;
 use Bow\Config\Config;
 
-abstract class Services
+abstract class Service
 {
     protected $app;
 
     /**
-     * Services constructor.
+     * Service constructor.
      *
      * @param $app
      */

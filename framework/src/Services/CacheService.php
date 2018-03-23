@@ -4,8 +4,7 @@ namespace Bow\Services;
 
 use Bow\Http\Cache;
 use Bow\Config\Config;
-use Bow\Support\Capsule;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class CacheService extends BowService
 {
@@ -18,7 +17,8 @@ class CacheService extends BowService
     public function make(Config $config)
     {
         $this->app(Cache::class, function () use ($config) {
-            return Cache::confirgure($config['resource.cache'].'/bow');
+            Cache::confirgure($config['resource.cache'].'/bow');
+            return Cache::class;
         });
     }
 

@@ -6,17 +6,9 @@ use Bow\Config\Config;
 use Bow\Http\Response;
 use Bow\Support\Capsule;
 use Bow\Http\Exception\HttpException;
-use Bow\Application\Resource\Resource;
 use Bow\Application\Exception\RouterException;
 use Bow\Application\Exception\ApplicationException;
 
-/**
- * Create and maintener by diagnostic developpers teams:
- *
- * @author  Etchien Boa <geekroot9@gmail.com>
- * @author  Franck Dakia <dakiafranck@gmail.com>
- * @package Bow\Core
- */
 class Application
 {
     /**
@@ -540,7 +532,7 @@ class Application
      * REST API Maker.
      *
      * @param string $url
-     * @param string|array $controllerName
+     * @param string|array $controller_name
      * @param array $where
      * @return Application
      *
@@ -548,7 +540,7 @@ class Application
      */
     public function resources($url, $controller_name, array $where = [])
     {
-        if (!is_string($controllerName) && !is_array($controllerName)) {
+        if (!is_string($controller_name) && !is_array($controller_name)) {
             throw new ApplicationException('Le premier paramètre doit être un array ou une chaine de caractère', 1);
         }
 

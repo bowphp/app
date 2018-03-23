@@ -1,10 +1,10 @@
 <?php
 
-namespace Bow\Services;
+namespace Bow\Security;
 
 use Bow\Config\Config;
 use Bow\Security\Crypto;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class CryptoService extends BowService
 {
@@ -17,10 +17,12 @@ class CryptoService extends BowService
     public function make(Config $config)
     {
         $this->app(Crypto::class, function () use ($config) {
-            return Crypto::setkey(
+            Crypto::setkey(
                 $config['security.key'],
                 $config['security.cipher']
             );
+
+            return Crypto::class;
         });
     }
 

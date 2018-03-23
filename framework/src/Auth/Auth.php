@@ -41,13 +41,14 @@ class Auth
      * Configure Auth system
      *
      * @param array $config
+     * @return Auth
      */
     public static function configure(array $config)
     {
         static::$config = $config;
         $provider = $config['default'];
 
-        static::$instance = new Auth($config[$provider]);
+        return static::$instance = new Auth($config[$provider]);
     }
 
     /**

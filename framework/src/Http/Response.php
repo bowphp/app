@@ -1,16 +1,9 @@
 <?php
 namespace Bow\Http;
 
-use Bow\Support\Str;
 use Bow\View\View;
 use Bow\Exception\ResponseException;
 
-/**
- * Class Response
- *
- * @author  Franck Dakia <dakiafranck@gmail.com>
- * @package Bow\Http
- */
 class Response
 {
     /**

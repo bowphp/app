@@ -3,9 +3,8 @@
 namespace Bow\Services;
 
 use Bow\Config\Config;
-use Bow\Support\Capsule;
 use Bow\Application\Actionner;
-use Bow\Application\Services as BowService;
+use Bow\Application\Service as BowService;
 
 class ActionnerService extends BowService
 {
