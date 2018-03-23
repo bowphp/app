@@ -6,6 +6,7 @@ use Bow\Config\Config;
 use Bow\Http\Response;
 use Bow\Support\Capsule;
 use Bow\Http\Exception\HttpException;
+use Bow\Application\Resource\ResourceMethod;
 use Bow\Application\Exception\RouterException;
 use Bow\Application\Exception\ApplicationException;
 
@@ -262,10 +263,9 @@ class Application
 
         if (in_array($method, ['DELETE', 'PUT'])) {
             $this->special_method = $method;
-            $this->pushHttpVerbe($method, $path, $cb);
         }
 
-        return $this;
+        return $this->pushHttpVerbe($method, $path, $cb);
     }
 
     /**
@@ -327,7 +327,7 @@ class Application
      *
      * @param string $path
      * @param callable $cb
-     * @return Application
+     * @return Route
      */
     public function options($path, callable $cb)
     {
@@ -553,7 +553,7 @@ class Application
             $internal_middleware = $controller_name['middleware'];
             unset($controller_name['middleware']);
 
-            $next = Actionner::getInstance()->call([
+            $next = $this->capsule(Actionner::class)->call([
                 'middleware' => $internal_middleware
             ], $this->request);
 
@@ -699,7 +699,7 @@ class Application
      *
      * @param null $name
      * @param callable|null $callable
-     * @return Capsule
+     * @return Capsule|mixed
      * @throws ApplicationException
      */
     public function capsule($name = null, callable $callable = null)
