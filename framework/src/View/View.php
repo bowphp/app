@@ -93,7 +93,7 @@ class View
      */
     public static function make($viewname, array $data = [])
     {
-        return static::singleton()->getTemplate()->render($viewname, $data);
+        return static::getInstance()->getTemplate()->render($viewname, $data);
     }
 
     /**
@@ -181,8 +181,9 @@ class View
      *
      * @param string $method
      * @param array $arguments
+     * @return mixed
      */
-    public function __call($method, $arguments)
+    public function __call(string $method, array $arguments)
     {
         if (method_exists(static::$instance, $method)) {
             return call_user_func_array([static::$instance, $method], $arguments);

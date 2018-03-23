@@ -16,7 +16,7 @@ class AuthenticateService extends BowService
      */
     public function make(Config $config)
     {
-        $this->app(Auth::class, function () use ($config) {
+        $this->app->capsule(Auth::class, function () use ($config) {
             return Auth::configure($config['auth']);
         });
     }
@@ -28,6 +28,6 @@ class AuthenticateService extends BowService
      */
     public function start()
     {
-        $this->app(Auth::class);
+        $this->app->capsule(Auth::class);
     }
 }

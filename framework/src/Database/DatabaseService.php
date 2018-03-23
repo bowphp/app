@@ -15,7 +15,7 @@ class DatabaseService extends BowService
      */
     public function make(Config $config)
     {
-        $this->app(Database::class, function () use ($config) {
+        $this->app->capsule(Database::class, function () use ($config) {
             return Database::configure($config['db']);
         });
     }
@@ -27,6 +27,6 @@ class DatabaseService extends BowService
      */
     public function start()
     {
-        $this->app(Database::class);
+        $this->app->capsule(Database::class);
     }
 }

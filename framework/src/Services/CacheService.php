@@ -16,7 +16,7 @@ class CacheService extends BowService
      */
     public function make(Config $config)
     {
-        $this->app(Cache::class, function () use ($config) {
+        $this->app->capsule(Cache::class, function () use ($config) {
             Cache::confirgure($config['resource.cache'].'/bow');
             return Cache::class;
         });
@@ -29,6 +29,6 @@ class CacheService extends BowService
      */
     public function start()
     {
-        $this->app(Cache::class);
+        $this->app->capsule(Cache::class);
     }
 }

@@ -19,7 +19,7 @@ class ViewService extends BowService
         /**
          * Configuration de translator
          */
-        $this->app(View::class, function () use ($config) {
+        $this->app->capsule(View::class, function () use ($config) {
             View::configure($config);
             return View::getInstance();
         });
@@ -32,6 +32,6 @@ class ViewService extends BowService
      */
     public function start()
     {
-        $this->app(View::class);
+        $this->app->capsule(View::class);
     }
 }

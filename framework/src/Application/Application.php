@@ -695,10 +695,12 @@ class Application
     }
 
     /**
-     * __get
+     * Build dependance
      *
-     * @param string $name
-     * @param callable $callable
+     * @param null $name
+     * @param callable|null $callable
+     * @return Capsule
+     * @throws ApplicationException
      */
     public function capsule($name = null, callable $callable = null)
     {
@@ -720,8 +722,9 @@ class Application
     /**
      * __invoke
      *
-     * @param array $params
-     * @return mixed
+     * @param array ...$params
+     * @return Capsule
+     * @throws ApplicationException
      */
     public function __invoke(...$params)
     {

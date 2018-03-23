@@ -3,7 +3,6 @@
 namespace Bow\Resource;
 
 use Bow\Config\Config;
-use Bow\Resource\Storage;
 use Bow\Application\Service as BowService;
 
 class StorageService extends BowService
@@ -16,7 +15,7 @@ class StorageService extends BowService
      */
     public function make(Config $config)
     {
-        $this->app(Storage::class, function () use ($config) {
+        $this->app->capsule(Storage::class, function () use ($config) {
             return Storage::configure($config['resource']);
         });
     }
@@ -28,6 +27,6 @@ class StorageService extends BowService
      */
     public function start()
     {
-        $this->app(Storage::class);
+        $this->app->capsule(Storage::class);
     }
 }
