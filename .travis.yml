@@ -24,6 +24,7 @@ env:
 before_script:
   - if [ ! -d ./framework/tests/data/cache ]; then mkdir -p ./framework/tests/data/cache; fi;
   - mysql -u root -e 'CREATE DATABASE IF NOT EXISTS test;'
+  
 install:
   - composer install --prefer-dist
   - composer require mustache/mustache pug-php/pug
