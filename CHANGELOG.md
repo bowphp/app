@@ -27,3 +27,14 @@
 	- Correction de bug dans le lanceur de tache `bow`
 	- Correction de bug de régération de réquête `SQL`
 	- More.
+
+## [3.0]
+- Changement
+	- Changement de l'architecture de l'application
+	- Implementation des services loader pour les configurations
+
+- Ajout
+	- N/A
+
+- Correction
+	- Correction sur l'execution des tests unitaires

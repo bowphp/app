@@ -23,8 +23,9 @@ class ApplicationTest extends \Bow\Testing\BowTestCase
      */
     public function testGetWelcome()
     {
-        $this->visit('GET', '/')
-            ->statusCodeMustBe(200)
+        $response = $this->visit('GET', '/');
+
+        $response->statusCodeMustBe(200)
             ->contentTypeMustBe('text/html');
     }
 }
