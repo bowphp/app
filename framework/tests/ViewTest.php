@@ -31,7 +31,7 @@ class ViewTest extends \PHPUnit\Framework\TestCase
         View::getInstance()->setEngine('pug')->setExtension('.pug')->cachable(false);
 
         $resultat = View::make('pug', ['name' => 'bow', 'engine' => 'pug']);
-        $this->assertEquals(trim($resultat), '<p>bow see hello world by pug</p>');
+        $this->assertEquals(trim($resultat), 'bow see hello world by pug');
     }
 
     public function testPHPCompilation()
