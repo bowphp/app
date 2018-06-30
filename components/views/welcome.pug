@@ -10,9 +10,7 @@ html
     body
         #main
             header
-                h1
-                    span.f bow
-                span.i=$trans('welcome.message')
+                exemple({":title": "bow", ":message": $trans('welcome.message')})
             br
             br
             section
@@ -20,7 +18,6 @@ html
                 a(href="https://papac.github.com/docs", target="_blank") doc
             br
             br
-            .shell.
-                <span style="color: red">$</span> <span style="color: #478">composer</span> <span style="color: #bd362f">create-projet</span> <span style="color: #bd362f">--prefer-dist</span> papac/bow <span style="color: #478">App</span>
+            shell
             script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
             script(type="text/javascript", src="/js/app.js")

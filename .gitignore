@@ -2,13 +2,8 @@
 !.gitignore
 composer.lock
 node_modules
-migration/.registers
+db/migration/.registers
 vendor/
-src/tests/data/*
-!src/tests/data/
-.env.json
-npm-debug.log
 package-lock.json
-public/**
+public
 !public/**/.gitkeep
-yarn.lock

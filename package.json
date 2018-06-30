@@ -1,31 +1,29 @@
 {
-  "private": true,
   "scripts": {
-    "test": "./vendor/bin/phpunit",
-    "test-framework": "cd framework && ../vendor/bin/phpunit --configuration phpunit.xml",
-    "gulp": "./node_modules/.bin/gulp default",
-    "watch": "./node_modules/.bin/gulp watch",
-    "prod": "./node_modules/.bin/gulp prod",
-    "dev": "./node_modules/.bin/gulp dev",
-    "phplint": "./node_modules/.bin/phplint '**/*.php' '!framework/**' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes",
-    "phplint-framework": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 framework/src"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "bootstrap-sass": "^3.3.7",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-csslint": "^1.0.0",
-    "gulp-cssmin": "^0.1.7",
-    "gulp-imagemin": "^3.4.0",
-    "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^2.1.2",
-    "jquery": "^3.1.1",
-    "phplint": "^1.7.4"
+    "dev": "cross-env NODE_ENV=development ./node_modules/.bin/webpack ",
+    "prod": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --progress --hide-modules"
   },
   "dependencies": {
-    "gulplog": "^1.0.0"
+    "vue": "^2.5.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "vue-loader": "^13.0.5",
+    "vue-router": "^2.1.1",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0"
   }
 }

@@ -11,8 +11,7 @@
 <body>
 <div id="main">
 	<header>
-		<h1><span class="f">bow</span></h1>
-		<span class="i">{{ trans('welcome.message')|raw }}</span>
+		<exemple :title="bow" :message="{{ trans('welcome.message')|raw }}"></exemple>
 	</header>
 	<br>
 	<br>
@@ -22,9 +21,7 @@
 	</section>
 	<br>
 	<br>
-	<div class="shell">
-		<span style="color: red">$</span> <span style="color: #478">composer</span> <span style="color: #bd362f">create-projet</span> <span style="color: #bd362f">--prefer-dist</span> papac/bow <span style="color: #478">App</span>
-	</div>
+	<shell></shell>
 </div>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>

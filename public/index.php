@@ -21,7 +21,7 @@ $app = Bow\Application\Application::make(
 $app->bind($kernel);
 
 // Chargement des routeurs.
-require __DIR__ . "/../routes/main.php";
+require __DIR__ . "/../routes/app.php";
 
 // Lancement de l'application
 $app->send();
