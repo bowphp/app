@@ -52,24 +52,29 @@ class Command
                     $this->options['action'] = $part[1];
                     continue;
                 }
+
                 $this->options['command'] = $param;
+
                 continue;
             }
 
             if ($key == 2) {
                 if (preg_match('/^[a-z_]+$/i', $param)) {
                     $this->options['target'] = $param;
+
                     continue;
                 }
             }
 
             if (preg_match('/^--[a-z-]+$/', $param)) {
                 $this->options['options'][$param] = true;
+
                 continue;
             }
 
             if (count($part = explode('=', $param)) == 2) {
                 $this->options['options'][$part[0]] = $part[1];
+
                 continue;
             }
 
@@ -117,6 +122,7 @@ class Command
      * Permet de monter une migration
      *
      * @param string $model
+     * @throws mixed
      */
     public function up($model)
     {
@@ -127,6 +133,7 @@ class Command
      * Permet supprimer une migration dans la base de donnée
      *
      * @param string $model
+     * @throws mixed
      */
     public function down($model)
     {
@@ -139,13 +146,16 @@ class Command
     public function reflesh()
     {
         $register = $this->dirname.'/db/migration/.registers';
+
         file_put_contents($register, '');
 
         $files = glob($this->dirname.'/db/migration/*.php');
 
         foreach ($files as $file) {
             $parts = preg_split('/([0-9_])+/', basename($file));
+
             array_shift($parts);
+
             $className = '';
             
             foreach ($parts as $part) {
@@ -162,11 +172,12 @@ class Command
      * @param $model
      * @param $type
      *
-     * @throws \ErrorException
+     * @throws mixed
      */
     private function makeMigration($model, $type)
     {
         $options = $this->options();
+
         $param = [];
 
         if ($options->has('--display-sql') && $options->get('--display-sql') === true) {
@@ -177,6 +188,7 @@ class Command
             if (is_null($model)) {
                 if ($options->get('--all') === null) {
                     echo Color::danger("cette commande est super dangereuse. Alors veuillez ajout le flag --all pour assurer bow.");
+
                     exit(1);
                 }
             }
@@ -184,6 +196,7 @@ class Command
 
         if (!is_null($model)) {
             $model = strtolower($model);
+
             $fileParten = $this->dirname.strtolower("/db/migration/*{$model}*.php");
         } else {
             $fileParten = $this->dirname.strtolower("/db/migration/*.php");
@@ -193,6 +206,7 @@ class Command
 
         if (!file_exists($this->dirname."/db/migration/.registers")) {
             echo Color::red('Le fichier de régistre de bow est introvable.');
+
             exit(0);
         }
 
@@ -200,18 +214,22 @@ class Command
 
         if (count($registers) == 0) {
             echo Color::red('Le fichier de régistre de bow est vide.');
+
             exit(0);
         }
 
         foreach (file($this->dirname."/db/migration/.registers") as $r) {
             $tmp = explode("|", $r);
+
             $register["file"][] = $tmp[0];
+
             $register["tables"][] = $tmp[1];
         }
 
         foreach (glob($fileParten) as $file) {
             if (!file_exists($file)) {
                 echo Color::red("$file n'existe pas.");
+
                 exit();
             }
 
@@ -220,6 +238,7 @@ class Command
 
             if (in_array($filename, $register["file"])) {
                 $num = array_flip($register["file"])[$filename];
+
                 $model = rtrim($register["tables"][$num]);
             }
 
@@ -230,6 +249,7 @@ class Command
 
             if (!class_exists($class)) {
                 echo Color::red("Classe \"{$class}\" introvable. Vérifiez vos fichier de régistre.");
+
                 exit(1);
             }
 
@@ -252,6 +272,7 @@ class Command
 
         if (file_exists($seeder_filename)) {
             echo "\033[0;31mLe seeder '$name' exists déja.\033[00m";
+
             exit(1);
         }
 
@@ -278,7 +299,9 @@ foreach (range(1, $num) as \$key) {
 return ['$name' => \$seeds];
 SEEDER;
         file_put_contents($seeder_filename, $content);
+
         echo "\033[0;32mLe seeder \033[00m[$name]\033[0;32m a été bien crée.\033[00m\n";
+
         exit(0);
     }
 
@@ -291,6 +314,7 @@ SEEDER;
     public function make($model)
     {
         $mapMethod = ["create", "drop"];
+
         $table = $model;
 
         $options = $this->options();
@@ -307,7 +331,9 @@ SEEDER;
             if ($options->get('--table') === true) {
                 throw new \ErrorException(sprintf(self::BAD_COMMAND, ' [--table] '));
             }
+
             $table = $options->get('--table');
+
             $mapMethod = ["table", "drop"];
         }
 
@@ -315,11 +341,14 @@ SEEDER;
             if ($options->get('--create') === true) {
                 throw new \ErrorException(sprintf(self::BAD_COMMAND, ' [--create] '));
             }
+
             $table = $options->get('--create');
+
             $mapMethod = ["create", "drop"];
         }
 
         $class_name = ucfirst(Str::camel($model));
+
         $migrate = <<<doc
 <?php
 
@@ -350,10 +379,13 @@ class {$class_name} extends Migration
 }
 doc;
         $create_at = date("Y_m_d") . "_" . date("His");
+
         file_put_contents($this->dirname."/db/migration/${create_at}_${model}.php", $migrate);
+
         Storage::append($this->dirname."/db/migration/.registers", "${create_at}_${model}|$class_name\n");
 
         echo "\033[0;32mmLe file de migration \033[00m[$model]\033[0;32m a été bien crée.\033[00m\n";
+
         return;
     }
 
@@ -365,26 +397,33 @@ doc;
     public function resource($controller_name)
     {
         $path = preg_replace("/controller/", "", strtolower($controller_name));
+
         $filename = $this->dirname."/app/Controllers/${controller_name}.php";
 
         if (file_exists($filename)) {
             echo Color::danger('Le controlleur existe déja');
+
             exit(1);
         }
 
         $model = ucfirst($path);
+
         $modelNamespace = '';
 
 
         if (static::readline("Voulez vous que je crée les vues associées?")) {
             $model = strtolower($model);
+
             @mkdir($this->dirname."/components/views/".$model, 0766);
 
             echo "\033[0;33;7m";
+
             foreach (["create", "edit", "show", "index", "update", "delete"] as $value) {
                 $file = $this->dirname."/components/views/$model/$value.twig";
+
                 echo "$file\n";
             }
+
             echo "\033[00m";
         }
 
@@ -396,11 +435,13 @@ doc;
                     $model = $options->get('--model');
                 } else {
                     echo "\033[0;32;7mLe nom du model non spécifié --model=model_name.\033[00m\n";
+
                     exit(1);
                 }
             }
 
             $this->model($model);
+
             $modelNamespace = "\nuse App\\".ucfirst($model).';';
 
             if ($this->readline('Voulez vous que je crée une migration pour ce model? ')) {
@@ -506,7 +547,9 @@ class {$controller_name} extends Controller
 }
 CC;
         file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controllerRestTemplate);
+
         echo "\033[0;32mLe controlleur \033[00m[{$controller_name}]\033[0;32m a été bien crée.\033[00m\n";
+
         exit(0);
     }
 
@@ -522,6 +565,7 @@ CC;
         } else {
             if (preg_match("/^(.+)(controller)$/", $controller_name, $match)) {
                 array_shift($match);
+
                 $controller_name = ucfirst($match[0]) . ucfirst($match[1]);
             } else {
                 $controller_name = ucfirst($controller_name);
@@ -530,6 +574,7 @@ CC;
 
         if (file_exists($this->dirname."/app/Controllers/$controller_name.php")) {
             echo "\033[0;31mLe controlleur \033[0;33m\033[0;31m[$controller_name]\033[00m\033[0;31m existe déja.\033[00m\n";
+
             exit(1);
         }
 
@@ -627,7 +672,9 @@ class {$controller_name} extends Controller
 }
 CC;
         file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controller_template);
+
         echo "\033[0;32mLe controlleur \033[00m\033[1;33m[$controller_name]\033[00m\033[0;32m a été bien crée.\033[00m\n";
+
         exit(0);
     }
 
@@ -641,6 +688,7 @@ CC;
 
         if (file_exists($this->dirname."/app/Middleware/$middleware_name.php")) {
             echo "\033[0;31mLe middleware \033[0;33m\033[0;31m[$middleware_name]\033[00m\033[0;31m existe déja.\033[00m\n";
+
             exit(1);
         }
 
@@ -666,7 +714,9 @@ class {$middleware_name}
 }
 CM;
         @mkdir($this->dirname."/app/Middleware");
+
         file_put_contents($this->dirname."/app/Middleware/$middleware_name.php", $middleware_template);
+
         echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien crée.\033[00m\n";
 
         exit(0);
@@ -695,10 +745,12 @@ class ${model_name} extends Model
 MODEL;
         if (file_exists($this->dirname."/app/${model_name}.php")) {
             echo "\033[0;33mLe model \033[0;33m\033[0;31m[${model_name}]\033[00m\033[0;31m existe déja.\033[00m\n";
+
             exit(1);
         }
 
         file_put_contents($this->dirname."/app/${model_name}.php", $model);
+
         echo "\033[0;32mLe model \033[00m[${model_name}]\033[0;32m a été bien crée.\033[00m\n";
 
         if ($this->options('-m')) {
@@ -714,9 +766,11 @@ MODEL;
     public function key()
     {
         $key = base64_encode(openssl_random_pseudo_bytes(12) . date('Y-m-d H:i:s') . microtime(true));
+
         file_put_contents($this->dirname."/config/.key", $key);
 
         echo "Application key => \033[0;32m$key\033[00m\n";
+
         exit;
     }
 
@@ -738,6 +792,7 @@ MODEL;
 
         if (file_exists($this->dirname.'/app/Validation/'.$name.'.php')) {
             echo "\033[0;33mLe validateur \033[0;33m\033[0;31m[${name}]\033[00m\033[0;31m existe déja.\033[00m\n";
+
             return 0;
         }
 

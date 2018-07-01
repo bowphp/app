@@ -99,8 +99,11 @@ class Response
         }
 
         $this->addHeader('Content-Disposition', $disposition.'; filename='.$name);
+
         $this->addHeader('Content-Type', $type);
+
         $this->addHeader('Content-Length', filesize($file));
+
         $this->addHeader('Content-Encoding', 'base64');
 
         foreach ($headers as $key => $value) {
@@ -181,6 +184,7 @@ class Response
      * @param  $template
      * @param  array    $data
      * @return string
+     * @throws
      */
     public function view($template, $data = [])
     {
@@ -197,7 +201,9 @@ class Response
         if ($excepted === null) {
             $excepted = '*';
         }
+
         $this->addHeader($allow, $excepted);
+
         return $this;
     }
 
@@ -206,7 +212,7 @@ class Response
      *
      * @param  array $excepted [optional]
      * @return Response
-     * @throws ResponseException
+     * @throws
      */
     public function accessControlAllowOrigin(array $excepted)
     {

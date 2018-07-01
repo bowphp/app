@@ -29,6 +29,7 @@ return [
     'first' => [
         // represente sur quel SGDB le site va se connecté.
         'scheme' => 'mysql',
+
         // la configuration de mysql
         'mysql' => [
             'hostname' => env('MYSQL_HOSTNAME', 'localhost'),
@@ -49,6 +50,7 @@ return [
      */
     'seconds' => [
         'scheme' => env('SQLITE_SCHEME', 'sqlite'),
+
         'sqlite' => [
             'driver' => env('SQLITE_DRIVER', 'sqlite'),
             'database' => dirname(__DIR__).'/storage/sqlite/data.sqlite',

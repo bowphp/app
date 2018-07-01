@@ -199,7 +199,7 @@ class Router
 
     /**
      * Push new route
-     * 
+     *
      * @param string $method
      * @param string $path
      * @param mixed $cb

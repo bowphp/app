@@ -146,7 +146,6 @@ class Behavior
     public function assertJson($data, $message = '')
     {
         return $this->mustBeExactJson($data, $message);
-
     }
 
     /**

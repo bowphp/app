@@ -1,5 +1,5 @@
-let path = require('path');
-let webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -13,45 +13,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ],
-            },
-            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
-                options: {
-                    loaders: {
-                        'scss': [
-                            'vue-style-loader',
-                            'css-loader',
-                            'sass-loader'
-                        ]
-                    }
-                }
             },
+            // this will apply to both plain `.js` files
+            // AND `<script>` blocks in `.vue` files
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            }
-            ,
-            {
-                test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader'
-                ],
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
+                loader: 'babel-loader'
             }
         ]
     },
@@ -60,11 +29,6 @@ module.exports = {
             'vue$': 'vue/dist/vue.esm.js'
         },
         extensions: ['*', '.js', '.vue', '.json']
-    },
-    devServer: {
-        historyApiFallback: true,
-        noInfo: true,
-        overlay: true
     },
     performance: {
         hints: false

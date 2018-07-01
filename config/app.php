@@ -38,4 +38,14 @@ return [
      * development | production
      */
     'debug' => 'development',
+
+    /**
+     * Le chemin vers le fichier de configuration
+     */
+    'migration' => __DIR__.'/../db/migration',
+
+    /**
+     * Le chemin vers le fichier des seeders
+     */
+    'seeder' => __DIR__.'/../db/seeders'
 ];

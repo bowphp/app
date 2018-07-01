@@ -4,7 +4,7 @@ namespace App\Controllers;
 {modelNamespace}
 use Bow\Database\Database;
 
-class {controllerName} extends Controller
+class {className} extends Controller
 {
     /**
      * Point d'entré

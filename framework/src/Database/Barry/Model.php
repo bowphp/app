@@ -137,7 +137,9 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         }
 
         $static = new static();
+
         $static->select($select);
+
         $static->whereIn($static->primaryKey, $id);
 
         return count($id) == 1 ? $static->first() : $static->get();
@@ -162,6 +164,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public static function findAndDelete($id, $select = ['*'])
     {
         $data = static::find($id, $select);
+
         static::$builder->delete();
 
         return $data;
@@ -207,6 +210,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         if (!array_key_exists($static->primaryKey, $data)) {
             if ($static->autoIncrement) {
                 $id_value = [$static->primaryKey => null];
+
                 $data = array_merge($id_value, $data);
             } else {
                 if ($static->primaryKeyType == 'string') {
@@ -216,6 +220,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         }
 
         $static->setAttributes($data);
+
         $static->save();
 
         return $static;
@@ -240,10 +245,12 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * Permet d'associer listerner
      *
      * @param callable $cb
+     * @throws
      */
     public static function deleted(callable $cb)
     {
         $env = str_replace('\\', '.', strtolower(static::class));
+
         add_event_once($env.'.ondelete', $cb);
     }
 
@@ -251,10 +258,12 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * Permet d'associer un listerner
      *
      * @param callable $cb
+     * @throws
      */
     public static function created(callable $cb)
     {
         $env = str_replace('\\', '.', strtolower(static::class));
+
         add_event_once($env . '.oncreate', $cb);
     }
 
@@ -262,10 +271,12 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * Permet d'associer un listerner
      *
      * @param callable $cb
+     * @throws
      */
     public static function updated(callable $cb)
     {
         $env = str_replace('\\', '.', strtolower(static::class));
+
         add_event_once($env.'.onupdate', $cb);
     }
 
@@ -273,6 +284,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * Permet d'initialiser la connection
      *
      * @return Builder
+     * @throws
      */
     private static function query()
     {
@@ -284,11 +296,14 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
 
         // Reflection action
         $reflection = new \ReflectionClass(static::class);
+
         $properties = $reflection->getDefaultProperties();
 
         if ($properties['table'] == null) {
             $parts = explode('\\', static::class);
+
             $table = end($parts);
+
             $table = Str::camel(strtolower($table)).'s';
         } else {
             $table = $properties['table'];
@@ -309,6 +324,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         $table = $prefix.$table;
 
         static::$builder = new Builder($table, DB::getPdo(), static::class, $primaryKey);
+
         static::$builder->setPrefix($prefix);
 
         return static::$builder;
@@ -336,6 +352,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * save aliase sur l'action insert
      *
      * @return int
+     * @throws
      */
     public function save()
     {
@@ -345,6 +362,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         if ($primary_key_value != null) {
             if ($builder->exists($this->primaryKey, $primary_key_value)) {
                 $this->original[$this->primaryKey] = $primary_key_value;
+
                 $update_data = [];
                 
                 foreach ($this->attributes as $key => $value) {
@@ -369,6 +387,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
 
 
         $r = $builder->insert($this->attributes);
+
         $primary_key_value = $builder->getLastInsertId();
 
         if ($this->primaryKeyType == 'int') {
@@ -380,6 +399,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         }
 
         $this->attributes[$this->primaryKey] = $primary_key_value;
+
         $this->original = $this->attributes;
 
         if ($r == 1) {
@@ -395,6 +415,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      * Permet de supprimer un enregistrement
      *
      * @return int
+     * @throws
      */
     public function delete()
     {
@@ -410,6 +431,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         }
 
         $r = $builder->where($this->primaryKey, $primary_key_value)->delete();
+
         $env = str_replace('\\', '.', strtolower(static::class));
 
         if ($r == 1 && emitter()->bound($env.'.ondelete')) {
@@ -431,6 +453,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         }
 
         $this->setAttribute('updated_at', date('Y-m-d H:i:s'));
+
         return (bool) $this->save();
     }
 
@@ -483,12 +506,9 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
      */
     private function mutableDateAttributes()
     {
-        return array_merge(
-            $this->dates,
-            [
-                'created_at', 'updated_at', 'expired_at', 'logged_at', 'sigined_at'
-            ]
-        );
+        return array_merge($this->dates, [
+            'created_at', 'updated_at', 'expired_at', 'logged_at', 'sigined_at'
+        ]);
     }
 
     /**
@@ -598,6 +618,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public function __call($name, $arguments)
     {
         $builder = static::query();
+
         if (method_exists($builder, $name)) {
             return call_user_func_array([$builder, $name], $arguments);
         }
@@ -615,6 +636,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public static function __callStatic($name, $arguments)
     {
         $builder = static::query();
+
         if (method_exists($builder, $name)) {
             return call_user_func_array([$builder, $name], $arguments);
         }

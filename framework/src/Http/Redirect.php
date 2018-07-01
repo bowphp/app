@@ -29,7 +29,7 @@ class Redirect
      * redirect, permet de lancer une redirection vers l'url passé en paramêtre
      *
      * @param string|array $path L'url de rédirection
-     * @param status       $path L'url de rédirection
+     * @param int       $status L'url de rédirection
      *                           Si $path est un
      *                           tableau : $url = [
      *                           'url' => '//' '?' =>
@@ -53,10 +53,12 @@ class Redirect
 
         if (isset($path['?'])) {
             $url .= '?';
+
             foreach ($path['?'] as $key => $value) {
                 if ($key > 0) {
                     $url .= '&';
                 }
+
                 $url .= $key . '=' . $value;
             }
         }
@@ -66,6 +68,7 @@ class Redirect
         }
 
         $this->response->statusCode($status);
+
         header('Location: ' . $url);
         
         exit;
@@ -88,6 +91,7 @@ class Redirect
     public function back($status = 302, array $data = [])
     {
         $this->withInput($data);
+
         $this->to($this->request->referer(), $status);
     }
 

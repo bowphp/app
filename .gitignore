@@ -7,3 +7,7 @@ vendor/
 package-lock.json
 public
 !public/**/.gitkeep
+!public/index.php
+!public/robots.txt
+!public/.htaccess
+!public/favicon.ico

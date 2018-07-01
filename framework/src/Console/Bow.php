@@ -37,17 +37,17 @@ class Bow
      * @param  string  $dirname
      * @param  Command $command
      * @return void
-     *
-     * @throws \ErrorException
      */
     public function __construct($dirname, Command $command)
     {
         if ($command->getParameter('trash')) {
             echo Color::red('Bad command. Type "php bow help" for more information"');
+
             exit(1);
         }
 
         $this->dirname = $dirname;
+
         $this->_command = $command;
     }
 
@@ -71,12 +71,14 @@ class Bow
     {
         if (!method_exists($this, $command)) {
             echo Color::red("Bad $command command .\n");
+
             exit(1);
         }
 
         if (!$this->_command->getParameter('action')) {
             if ($this->_command->getParameter('target') == 'help') {
                 $this->help($command);
+
                 exit(0);
             }
         }
@@ -85,6 +87,7 @@ class Bow
             call_user_func_array([$this, $command], [$this->_command->getParameter('target')]);
         } catch (\Exception $e) {
             echo "{$e->getMessage()}";
+
             exit(1);
         }
     }
@@ -99,12 +102,14 @@ class Bow
     public function migrate()
     {
         $action = $this->_command->getParameter('action');
+
         if (!in_array($action, ['up', 'down', 'refresh', null])) {
             throw new \ErrorException('Bad command. Type "php bow help migrate" for more information"');
         }
 
         if ($action == null) {
             $action = 'up';
+
             if ($this->_command->getParameter('target') !== null || $this->_command->getParameter('trash') !== null) {
                 throw new \ErrorException('Bad command. Type "php bow help migrate" for more information"');
             }
@@ -150,6 +155,7 @@ class Bow
     {
         if ($this->_command->getParameter('action') != null) {
             echo "\033[0;32mCommand not found\033[00m\033[00m\n";
+
             exit(1);
         }
 
@@ -158,6 +164,7 @@ class Bow
         if ($options->has('--all')) {
             if ($this->_command->getParameter('target') !== null) {
                 echo "\033[0;31mCommand not found\033[00m\033[00m\n";
+
                 exit(1);
             }
         }
@@ -166,15 +173,19 @@ class Bow
 
         if ($options->get('--all')) {
             $seeds_filenames = glob($this->dirname.'/db/seeders/*_seeder.php');
+
             goto seed;
         }
 
         if ($this->_command->getParameter('target') !== null) {
             $table_name = $this->_command->getParameter('target');
+
             if (!is_string($table_name) || !file_exists($this->dirname."/seeders/{$table_name}_seeder.php")) {
                 echo "\033[0;32mLe seeder \033[0;33m$table_name\033[00m\033[0;32m n'existe pas.\n";
+
                 exit(1);
             }
+
             $seeds_filenames = [$this->dirname."/db/seeders/{$table_name}_seeder.php"];
         }
 
@@ -183,17 +194,21 @@ class Bow
 
         foreach ($seeds_filenames as $filename) {
             $seeds = include $filename;
+
             Faker::reinitialize();
+
             $seed_collection = array_merge($seeds, $seed_collection);
         }
 
         try {
             foreach ($seed_collection as $table => $seeds) {
                 $n = Database::table($table)->insert($seeds);
+
                 echo "\033[0;33m'$n' seed".($n > 1 ? 's' : '')." sur la table '$table'\n\033[00m";
             }
         } catch (\Exception $e) {
             echo Color::red($e->getMessage());
+
             exit(1);
         }
 
@@ -208,7 +223,9 @@ class Bow
     public function serve()
     {
         $port = (int) $this->_command->options('--port', 5000);
+
         $hostname = $this->_command->options('--host', 'localhost');
+
         $settings = $this->_command->options('--php-settings', false);
 
         if (is_bool($settings)) {
@@ -229,7 +246,7 @@ class Bow
         $doc_root = $this->dirname.'/public';
 
         // lancement du serveur.
-        return shell_exec("php -S $hostname:$port -t $doc_root ".$this->serve_filename." $settings");
+        shell_exec("php -S $hostname:$port -t $doc_root ".$this->serve_filename." $settings");
     }
 
     /**
@@ -250,11 +267,14 @@ class Bow
 
         if (!class_exists('\Psy\Shell')) {
             echo 'Please, insall psy/psysh:@stable with this command "composer require --dev psy/psysh @stable"';
+
             return;
         }
 
         $shell = new Shell(new Configuration());
+
         $shell->setIncludes($this->bootstrap);
+
         $shell->run();
 
         return;
@@ -268,8 +288,10 @@ class Bow
     public function generate()
     {
         $action = $this->_command->getParameter('action');
+
         if (!in_array($action, ['key', 'resource'])) {
             echo Color::red("Bad $action command");
+
             exit(1);
         }
 
@@ -302,6 +324,7 @@ class Bow
         }
 
         $this->unlinks($storage.'/cache/bow');
+
         $this->unlinks($storage.'/cache/view');
     }
 
