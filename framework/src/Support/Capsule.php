@@ -53,6 +53,7 @@ class Capsule implements \ArrayAccess
      *
      * @param string $key
      * @return mixed
+     * @throws
      */
     public function make($key)
     {
@@ -94,10 +95,12 @@ class Capsule implements \ArrayAccess
      *
      * @param $key
      * @param array $parameters
+     * @throws
      */
     public function makeWith($key, $parameters = [])
     {
         $this->parameters = $parameters;
+
         $this->resolve($key);
     }
 
@@ -110,6 +113,7 @@ class Capsule implements \ArrayAccess
     public function bind($key, $value)
     {
         $this->key[$key] = true;
+
         $this[$key] = $value;
     }
 
@@ -136,7 +140,7 @@ class Capsule implements \ArrayAccess
     /**
      * @param string $key
      * @return mixed
-     * @throws \ErrorException
+     * @throws
      */
     private function resolve($key)
     {
@@ -152,6 +156,7 @@ class Capsule implements \ArrayAccess
         }
 
         $parameters = $constructor->getParameters();
+
         $parameters_lists = [];
 
         foreach ($parameters as $parameter) {
@@ -164,6 +169,7 @@ class Capsule implements \ArrayAccess
 
         if (!empty($this->parameters)) {
             $parameters_lists = $this->parameters;
+
             $this->parameters = [];
         }
 

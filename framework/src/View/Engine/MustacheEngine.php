@@ -33,9 +33,7 @@ class MustacheEngine extends EngineAbstract
         if (is_dir($config['view.path'].'/partials')) {
             $this->partails_loader = new \Mustache_Loader_FilesystemLoader(
                 $config['view.path'].'/partials',
-                [
-                'extension' => $this->config['view.extension']
-                ]
+                [ 'extension' => $this->config['view.extension'] ]
             );
         }
 

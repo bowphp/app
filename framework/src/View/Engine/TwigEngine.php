@@ -24,6 +24,7 @@ class TwigEngine extends EngineAbstract
     public function __construct(Config $config)
     {
         $this->config = $config;
+
         $loader = new \Twig_Loader_Filesystem($config['view.path']);
 
         $env = [
@@ -39,6 +40,7 @@ class TwigEngine extends EngineAbstract
          * dans le cadre de l'utilisation de Twig
          */
         $this->template->addGlobal('_public', $config['app.static']);
+
         $this->template->addGlobal('_root', $config['app.root']);
 
         /**
