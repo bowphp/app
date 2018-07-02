@@ -1,7 +1,9 @@
 <?php
+
 namespace Bow\Application;
 
 use Bow\Http\Request;
+use Bow\Router\Route;
 use Bow\Config\Config;
 use Bow\Http\Response;
 use Bow\Support\Capsule;
@@ -36,13 +38,6 @@ class Application
      * @var array
      */
     private $globale_middleware = [];
-
-    /**
-     * Définition de contrainte sur un route.
-     *
-     * @var array
-     */
-    private $with = [];
 
     /**
      * Branchement global sur un liste de route
@@ -112,7 +107,9 @@ class Application
     private function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+
         $this->response = $response;
+
         $this->capsule = Capsule::getInstance();
     }
 
@@ -125,6 +122,7 @@ class Application
     public function bind(Config $config)
     {
         $this->config = $config;
+
         $this->boot();
     }
 
@@ -141,13 +139,16 @@ class Application
 
         if (method_exists($this->config, 'services')) {
             $services = $this->config->services();
+
             $service_collection = [];
 
             // Configuration des services
             foreach ($services as $service) {
                 if (class_exists($service, true)) {
                     $class = new $service($this);
+
                     $class->make($this->config);
+
                     $service_collection[] = $class;
                 }
             }
@@ -187,8 +188,7 @@ class Application
      * @param string $branch
      * @param callable|string|array $cb
      * @return Application
-     *
-     * @throws ApplicationException
+     * @throws
      */
     public function group($branch, callable $cb)
     {
@@ -207,6 +207,7 @@ class Application
         call_user_func_array($cb, [$this]);
 
         $this->branch = '';
+
         $this->globale_middleware = [];
 
         return $this;
@@ -222,13 +223,15 @@ class Application
     public function middleware($middleware = [], callable $cb = null)
     {
         $middleware = (array) $middleware;
+
         $this->globale_middleware = $middleware;
 
         if (is_callable($cb)) {
             $cb($this);
+
             $this->globale_middleware = [];
         }
-        
+
         return $this;
     }
 
@@ -276,6 +279,7 @@ class Application
      * @param string $path
      * @param callable|string|array $cb
      * @return Application
+     * @throws
      */
     public function any($path, $cb)
     {
@@ -344,6 +348,7 @@ class Application
     public function code($code, callable $cb)
     {
         $this->error_code[$code] = $cb;
+
         return $this;
     }
 
@@ -403,9 +408,10 @@ class Application
         // route courante
         // methode courante
         $this->current = ['path' => $path, 'method' => $method];
-        
+
         // Ajout de la nouvelle route
         $route = new Route($path, $cb);
+
         $route->middleware($this->globale_middleware);
 
         $this->routes[$method][] = $route;
@@ -427,6 +433,7 @@ class Application
 
         if (env('MODE') == 'down') {
             abort(503);
+
             return true;
         }
 
@@ -436,6 +443,7 @@ class Application
         }
 
         $this->branch = '';
+
         $method = $this->request->method();
 
         // vérification de l'existance d'une methode spécial
@@ -448,6 +456,8 @@ class Application
 
         // drapeaux d'erreur.
         $error = true;
+
+        require $this->config->getRouteCollection();
 
         // Vérification de l'existance de methode de la requete dans
         // la collection de route
@@ -488,6 +498,7 @@ class Application
             }
 
             $error = false;
+
             break;
         }
 
@@ -501,7 +512,9 @@ class Application
 
         if (in_array(404, array_keys($this->error_code))) {
             $this->response->statusCode(404);
+
             $r = call_user_func($this->error_code[404]);
+
             return $this->response->send($r, true);
         }
 
@@ -545,12 +558,16 @@ class Application
         }
 
         $controller = '';
+
         $internal_middleware = null;
+
         $ignore_method = [];
+
         $controller_name = (array) $controller_name;
-        
+
         if (isset($controller_name['middleware'])) {
             $internal_middleware = $controller_name['middleware'];
+
             unset($controller_name['middleware']);
 
             $next = $this->capsule(Actionner::class)->call([
@@ -564,11 +581,13 @@ class Application
 
         if (isset($controller_name['uses'])) {
             $controller = $controller_name['uses'];
+
             unset($controller_name['uses']);
         }
 
         if (isset($controller_name['ignores'])) {
             $ignore_method = $controller_name['ignores'];
+
             unset($controller_name['ignores']);
         }
 
@@ -584,6 +603,7 @@ class Application
 
             // Formate controlleur
             $bind_controller = $controller . '@' . $value['call'];
+
             $path = $url . $value['url'];
 
             // Lancement de la methode de mapping de route.
@@ -615,7 +635,7 @@ class Application
 
         return $this;
     }
-    
+
     /**
      * Retourne la listes des routes de l'application
      *
@@ -682,11 +702,11 @@ class Application
     public function abort($code = 500, $message = '', array $headers = [])
     {
         $this->response->statusCode($code);
-        
+
         foreach ($headers as $key => $value) {
             $this->response->addHeader($key, $value);
         }
-        
+
         if ($message == null) {
             $message = 'Le procéssus a été suspendu.';
         }
@@ -736,12 +756,11 @@ class Application
             throw new ApplicationException('Deuxième paramètre doit être passer.');
         }
 
-        switch (true) {
-            case count($params) == 1:
-                return $this->capsule($params[0]);
-            case count($params) == 2:
-                return $this->capsule($params[0], $params[1]);
+        if (count($params) == 1) {
+            return $this->capsule($params[0]);
         }
+
+        return $this->capsule($params[0], $params[1]);
     }
 
     /**
@@ -757,6 +776,7 @@ class Application
 
         if (isset($this->error_code[$code])) {
             $r = call_user_func($this->error_code[$code]);
+
             $this->response->send($r);
         }
     }

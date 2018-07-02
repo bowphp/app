@@ -1,6 +1,6 @@
 <?php
 
-namespace Bow\Application;
+namespace Bow\Router;
 
 use Bow\Http\Request;
 use Bow\Config\Config;
@@ -68,8 +68,11 @@ class Route
     public function __construct($path, $cb)
     {
         $this->config = Config::getInstance();
+
         $this->cb = $cb;
+
         $this->path = str_replace('.', '\.', $path);
+
         $this->match = [];
     }
 
@@ -150,13 +153,7 @@ class Route
         // On vérifie la longeur du path défini par le programmeur
         // avec celle de l'url courante dans le navigateur de l'utilisateur.
         // Pour éviter d'aller plus loin.
-        $path = implode(
-            '',
-            preg_split(
-                '/(\/:[a-z0-9-_]+\?)/',
-                $this->path
-            )
-        );
+        $path = implode('', preg_split('/(\/:[a-z0-9-_]+\?)/', $this->path));
 
         if (count(explode('/', $path)) != count(explode('/', $uri))) {
             if (count(explode('/', $this->path)) != count(explode('/', $uri))) {
@@ -171,8 +168,11 @@ class Route
         // de contrainte sur les variables capturées
         if (empty($this->with)) {
             $path = preg_replace('~:\w+(\?)?~', '([^\s]+)$1', $this->path);
+
             preg_match_all('~:([a-z-0-9_-]+?)\?~', $this->path, $this->keys);
+
             $this->keys = end($this->keys);
+
             return $this->checkRequestUri($path, $uri);
         }
 
@@ -183,6 +183,7 @@ class Route
         }
 
         $tmp_path = $this->path;
+
         $this->keys = end($match);
 
         // Association des critrères personnalisé.
@@ -222,7 +223,9 @@ class Route
 
         if (preg_match('~^'. $path . '$~', $uri, $match)) {
             array_shift($match);
+
             $this->match = str_replace('/', '', $match);
+
             return true;
         }
 
@@ -234,8 +237,7 @@ class Route
      *
      * @param array|string $where
      * @param string       $regex_constraint
-     *
-     * @return Application
+     * @return Route
      */
     public function where($where, $regex_constraint = null)
     {
@@ -254,8 +256,8 @@ class Route
      * Fonction permettant de lancer les fonctions de rappel.
      *
      * @param Request $request
-     *
      * @return mixed
+     * @throws
      */
     public function call(Request $request)
     {
@@ -267,11 +269,14 @@ class Route
 
             if (!is_int($this->match[$key])) {
                 $this->params[$value] = urldecode($this->match[$key]);
+
                 continue;
             }
 
             $tmp = (int) $this->match[$key];
+
             $this->params[$value] = $tmp;
+
             $this->match[$key] = $tmp;
         }
 
@@ -289,7 +294,9 @@ class Route
     public function name($name)
     {
         $this->name = $name;
+
         $routes = $this->config['app.routes'];
+
         $this->config['app.routes'] = array_merge($routes, [$name => $this->getPath()]);
     }
 

@@ -1,6 +1,7 @@
 <?php
 namespace Bow\Config;
 
+use Bow\Router\Router;
 use Bow\Support\Env;
 use Bow\Support\Arraydotify;
 use Bow\Application\Exception\ApplicationException;
@@ -29,6 +30,11 @@ class Config implements \ArrayAccess
     protected $base_path;
 
     /**
+     * @var string
+     */
+    protected $routePath;
+
+    /**
      * @param string $base_path
      *
      * @throws \Bow\Exception\UtilException
@@ -40,18 +46,21 @@ class Config implements \ArrayAccess
         /**
          * Chargement complet de toute la configuration de Bow
          */
-        if (file_exists($base_path.'/../.env.json')) {
-            Env::load($base_path.'/../.env.json');
+        if (file_exists($base_path . '/../.env.json')) {
+            Env::load($base_path . '/../.env.json');
         }
 
-        $glob = glob($base_path.'/**.php');
+        $glob = glob($base_path . '/**.php');
+
         $config = [];
 
         foreach ($glob as $file) {
             $key = str_replace('.php', '', basename($file));
+
             if (in_array($key, ['bootstrap', 'helper', 'classes']) || !file_exists($file)) {
                 continue;
             }
+
             $config[$key] = include $file;
         }
 
@@ -73,6 +82,7 @@ class Config implements \ArrayAccess
      *
      * @param  string $base_path
      * @return Config
+     * @throws
      */
     public static function configure($base_path)
     {
@@ -120,6 +130,14 @@ class Config implements \ArrayAccess
     }
 
     /**
+     * Get the route collection
+     */
+    public function loadRouteCollection()
+    {
+        //
+    }
+
+    /**
      * Load configuration
      *
      * @return Config
@@ -146,9 +164,20 @@ class Config implements \ArrayAccess
     }
 
     /**
+     * Get define route collection
+     *
+     * @return string
+     */
+    public function getRouteCollection()
+    {
+        return $this->routePath;
+    }
+
+    /**
      * Alias de singleton
      *
      * @return Config
+     * @throws
      */
     public static function getInstance()
     {

@@ -67,4 +67,12 @@ class Loader extends Config
             // Vos service
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function loadRouteCollection()
+    {
+        $this->routePath = __DIR__.'/../../routes/app.php';
+    }
 }
