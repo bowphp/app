@@ -6,5 +6,3 @@ Vue.component('shell', require('../components/ShellComponent.vue'));
 new Vue({
     el: "#main"
 });
-
-console.log('hello world');
