@@ -50,7 +50,7 @@ class Database
      */
     public static function configure($config)
     {
-        if (static::$instance === null) {
+        if (is_null(static::$instance)) {
             static::$instance = new self();
 
             static::$name = $config['default'];
@@ -82,7 +82,7 @@ class Database
      */
     public static function connection($name = null)
     {
-        if (is_null($name)) {
+        if (is_null($name) || strlen($name) == 0) {
             if (is_null(static::$name)) {
                 static::$name = static::$config['default'];
             }

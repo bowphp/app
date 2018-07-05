@@ -58,6 +58,10 @@ class Bow
      */
     public function run()
     {
+        foreach ($this->bootstrap as $item) {
+            require $item;
+        }
+
         $this->call($this->_command->getParameter('command'));
     }
 

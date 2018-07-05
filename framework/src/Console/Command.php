@@ -369,6 +369,7 @@ class {$class_name} extends Migration
     {
         Schema::{$map_method[0]}("$table", function(Printer \$table) {
             \$table->increment('id');
+            \$table->engine('InnoDB');
             \$table->timestamps();
         });
     }
