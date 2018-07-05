@@ -11,3 +11,4 @@ public
 !public/robots.txt
 !public/.htaccess
 !public/favicon.ico
+.env.json
