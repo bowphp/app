@@ -274,10 +274,7 @@ class Bow
     {
         if (is_string($this->_command->getParameter('--include'))) {
             $this->setBootstrap(
-                array_merge(
-                    [$this->bootstrap],
-                    [$this->_command->getParameter('--include')]
-                )
+                array_merge($this->bootstrap, [$this->_command->getParameter('--include')])
             );
         }
 

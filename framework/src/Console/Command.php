@@ -176,8 +176,6 @@ class Command
      */
     private function makeMigration($model, $type)
     {
-        $this->filenameIsValide($model);
-
         $options = $this->options();
 
         $param = [];
@@ -399,12 +397,29 @@ doc;
      * Permet de mettre en place le système de réssource.
      *
      * @param string $controller_name
+     * @throws
      */
     public function resource($controller_name)
     {
         $this->filenameIsValide($controller_name);
 
-        $path = preg_replace("/controller/", "", strtolower($controller_name));
+        $dirname = dirname($controller_name);
+
+        $path = $this->dirname."/app/Controllers/$controller_name.php";
+
+        $classname = basename($controller_name);
+
+        if ($dirname != '.') {
+            @mkdir($this->dirname.'/app/Controllers/'.trim($dirname, '/'), 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', ucfirst(trim($dirname, '/')));
+        } else {
+            $namespace = '';
+        }
+
+        $prefix = preg_replace("/controller/", "", strtolower($controller_name));
+
+        $prefix = '/'.trim($prefix, '/');
 
         $filename = $this->dirname."/app/Controllers/${controller_name}.php";
 
@@ -450,7 +465,7 @@ doc;
 
             $this->model($model);
 
-            $modelNamespace = "\nuse App\\".ucfirst($model).';';
+            $model_namespace = "\nuse App\\".ucfirst($model).';';
 
             if ($this->readline('Voulez vous que je crée une migration pour ce model? ')) {
                 $this->make($model);
@@ -460,15 +475,16 @@ doc;
         $controllerRestTemplate =<<<CC
 <?php
 
-namespace App\Controllers;
-$modelNamespace
-use Bow\Database\Database;
+namespace App\Controllers{$namespace};
+
+$model_namespace
+use App\Controllers\Controller;
 
 class {$controller_name} extends Controller
 {
     /**
      * Point d'entré
-     * GET /$path
+     * GET $prefix
      *
      * @return void
      */
@@ -480,7 +496,7 @@ class {$controller_name} extends Controller
     /**
      * Permet d'afficher la vue permettant de créer une résource.
      *
-     * GET /$path/create
+     * GET {$prefix}/create
      * 
      * @return void
      */
@@ -492,7 +508,7 @@ class {$controller_name} extends Controller
     /**
      * Permet d'ajouter une nouvelle résource dans la base d'information
      *
-     * POST /$path
+     * POST {$prefix}
      * 
      * @return void
      */
@@ -504,7 +520,7 @@ class {$controller_name} extends Controller
     /**
      * Permet de récupérer un information précise avec un identifiant.
      *
-     * GET /$path/:id
+     * GET {$prefix}/:id
      *
      * @param mixed \$id
      * @return void
@@ -517,7 +533,7 @@ class {$controller_name} extends Controller
     /**
      * Mise à jour d'un ressource en utilisant paramètre du GET
      *
-     * GET /$path/:id/edit
+     * GET {$prefix}/:id/edit
      *
      * @param mixed \$id
      * @return void
@@ -530,7 +546,7 @@ class {$controller_name} extends Controller
     /**
      * Mise à jour d'une résource
      *
-     * PUT /$path/:id
+     * PUT {$prefix}/:id
      *
      * @param mixed \$id
      * @return void
@@ -543,7 +559,7 @@ class {$controller_name} extends Controller
     /**
      * Permet de supprimer une resource
      *
-     * DELETE /$path/:id
+     * DELETE {$prefix}/:id
      *
      * @param mixed \$id
      * @return void
