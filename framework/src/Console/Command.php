@@ -59,7 +59,7 @@ class Command
             }
 
             if ($key == 2) {
-                if (preg_match('/^[a-z_]+$/i', $param)) {
+                if (preg_match('/^[a-z0-9_\/-]+$/i', $param)) {
                     $this->options['target'] = $param;
 
                     continue;
@@ -176,6 +176,8 @@ class Command
      */
     private function makeMigration($model, $type)
     {
+        $this->filenameIsValide($model);
+
         $options = $this->options();
 
         $param = [];
@@ -234,7 +236,7 @@ class Command
             }
 
             // Collection des fichiers de migration.
-            $filename = preg_replace("@^(".$this->dirname."/migration/)|(\.php)$@", "", $file);
+            $filename = preg_replace("@^(".$this->dirname."/db/migration/)|(\.php)$@", "", $file);
 
             if (in_array($filename, $register["file"])) {
                 $num = array_flip($register["file"])[$filename];
@@ -268,6 +270,8 @@ class Command
      */
     public function seeder($name)
     {
+        $this->filenameIsValide($name);
+
         $seeder_filename = $this->dirname."/db/seeders/{$name}_seeder.php";
 
         if (file_exists($seeder_filename)) {
@@ -313,7 +317,9 @@ SEEDER;
      */
     public function make($model)
     {
-        $mapMethod = ["create", "drop"];
+        $this->filenameIsValide($model);
+
+        $map_method = ["create", "drop"];
 
         $table = $model;
 
@@ -334,7 +340,7 @@ SEEDER;
 
             $table = $options->get('--table');
 
-            $mapMethod = ["table", "drop"];
+            $map_method = ["table", "drop"];
         }
 
         if ($options->has('--create')) {
@@ -344,7 +350,7 @@ SEEDER;
 
             $table = $options->get('--create');
 
-            $mapMethod = ["create", "drop"];
+            $map_method = ["create", "drop"];
         }
 
         $class_name = ucfirst(Str::camel($model));
@@ -363,7 +369,7 @@ class {$class_name} extends Migration
      */
     public function up()
     {
-        Schema::{$mapMethod[0]}("$table", function(Printer \$table) {
+        Schema::{$map_method[0]}("$table", function(Printer \$table) {
             \$table->increment('id');
             \$table->timestamps();
         });
@@ -374,7 +380,7 @@ class {$class_name} extends Migration
      */
     public function down()
     {
-        Schema::{$mapMethod[1]}("$table");
+        Schema::{$map_method[1]}("$table");
     }
 }
 doc;
@@ -384,7 +390,7 @@ doc;
 
         Storage::append($this->dirname."/db/migration/.registers", "${create_at}_${model}|$class_name\n");
 
-        echo "\033[0;32mmLe file de migration \033[00m[$model]\033[0;32m a été bien crée.\033[00m\n";
+        echo "\033[0;32mLe file de migration \033[00m[$model]\033[0;32m a été bien crée.\033[00m\n";
 
         return;
     }
@@ -396,6 +402,8 @@ doc;
      */
     public function resource($controller_name)
     {
+        $this->filenameIsValide($controller_name);
+
         $path = preg_replace("/controller/", "", strtolower($controller_name));
 
         $filename = $this->dirname."/app/Controllers/${controller_name}.php";
@@ -560,19 +568,23 @@ CC;
      */
     public function controller($controller_name)
     {
-        if (!preg_match("/controller$/i", $controller_name)) {
-            $controller_name = ucfirst($controller_name) . "Controller";
-        } else {
-            if (preg_match("/^(.+)(controller)$/", $controller_name, $match)) {
-                array_shift($match);
+        $this->filenameIsValide($controller_name);
 
-                $controller_name = ucfirst($match[0]) . ucfirst($match[1]);
-            } else {
-                $controller_name = ucfirst($controller_name);
-            }
+        $dirname = dirname($controller_name);
+
+        $path = $this->dirname."/app/Controllers/$controller_name.php";
+
+        $classname = basename($controller_name);
+
+        if ($dirname != '.') {
+            @mkdir($this->dirname.'/app/Controllers/'.trim($dirname, '/'), 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', ucfirst(trim($dirname, '/')));
+        } else {
+            $namespace = '';
         }
 
-        if (file_exists($this->dirname."/app/Controllers/$controller_name.php")) {
+        if (file_exists($path)) {
             echo "\033[0;31mLe controlleur \033[0;33m\033[0;31m[$controller_name]\033[00m\033[0;31m existe déja.\033[00m\n";
 
             exit(1);
@@ -664,14 +676,16 @@ CONTENT;
         $controller_template =<<<CC
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers${namespace};
 
-class {$controller_name} extends Controller
+use App\Controllers\Controller;
+
+class {$classname} extends Controller
 {
     $content
 }
 CC;
-        file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controller_template);
+        file_put_contents($path, $controller_template);
 
         echo "\033[0;32mLe controlleur \033[00m\033[1;33m[$controller_name]\033[00m\033[0;32m a été bien crée.\033[00m\n";
 
@@ -679,25 +693,40 @@ CC;
     }
 
     /**
+     * Create a middleware
+     *
      * @param $middleware_name
-     * @return int
      */
     public function middleware($middleware_name)
     {
-        $middleware_name = ucfirst($middleware_name);
+        $this->filenameIsValide($middleware_name);
 
-        if (file_exists($this->dirname."/app/Middleware/$middleware_name.php")) {
+        $path = $this->dirname."/app/Middleware/$middleware_name.php";
+
+        if (file_exists($path)) {
             echo "\033[0;31mLe middleware \033[0;33m\033[0;31m[$middleware_name]\033[00m\033[0;31m existe déja.\033[00m\n";
 
             exit(1);
         }
 
+        $dirname = dirname($middleware_name);
+
+        $classname = ucfirst(basename($middleware_name));
+
+        if ($dirname != '.') {
+            @mkdir($this->dirname.'/app/Middleware/'.trim($dirname, '/'), 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', trim($dirname, '/'));
+        } else {
+            $namespace = '';
+        }
+
         $middleware_template = <<<CM
 <?php
 
-namespace App\Middleware;
+namespace App\Middleware{$namespace};
 
-class {$middleware_name}
+class {$classname}
 {
     /**
      * Fonction de lancement du middleware.
@@ -727,18 +756,34 @@ CM;
      *
      * @param  string      $model_name
      * @param  string|null $table_name
-     * @return int
+     * @throws
      */
     public function model($model_name, $table_name = null)
     {
-        $model_name = ucfirst(Str::camel($model_name));
+        $this->filenameIsValide($model_name);
+
+        $dirname = dirname($model_name);
+
+        if ($dirname != '.') {
+            @mkdir($this->dirname.'/app/'.trim($dirname, '/'), 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', trim($dirname, '/'));
+        } else {
+            $namespace = '';
+        }
+
+        $classname = ucfirst(Str::camel(
+            basename($model_name)
+        ));
+
         $model = <<<MODEL
 <?php
-namespace App;
+
+namespace App${namespace};
 
 use Bow\Database\Barry\Model;
 
-class ${model_name} extends Model
+class $classname extends Model
 {
     //
 }
@@ -782,12 +827,22 @@ MODEL;
      */
     public function validation($name)
     {
+        $this->filenameIsValide($name);
+
         if (!is_dir($this->dirname.'/app/Validation')) {
-            mkdir($this->dirname.'/app/Validation');
+            @mkdir($this->dirname.'/app/Validation');
         }
 
-        if (!preg_match('/validator/i', $name)) {
-            $name = ucfirst($name);
+        $classname = ucfirst(basename($name));
+
+        $namespace = dirname($name);
+
+        if ($namespace == '.') {
+            $namespace = '';
+        } else {
+            @mkdir($this->dirname.'/app/Validation/'.$namespace, 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', $namespace);
         }
 
         if (file_exists($this->dirname.'/app/Validation/'.$name.'.php')) {
@@ -799,11 +854,11 @@ MODEL;
         $validation = <<<VALIDATOR
 <?php
 
-namespace App\Validation;
+namespace App\Validation{$namespace};
 
 use Bow\Validation\ValidationRequest as Validator;
 
-class {$name} extends Validator
+class {$classname} extends Validator
 {
     /**
      * Permet de vérifier la permission d'un utilisateur 
@@ -842,7 +897,9 @@ class {$name} extends Validator
 VALIDATOR;
 
         file_put_contents($this->dirname.'/app/Validation/'.$name.'.php', $validation);
+
         echo "\033[0;32mLe validateur \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
+
         return 0;
     }
 
@@ -855,27 +912,40 @@ VALIDATOR;
     public function service($name)
     {
         if (!is_dir($this->dirname.'/app/Service')) {
-            mkdir($this->dirname.'/app/Service');
+            @mkdir($this->dirname.'/app/Service');
         }
 
         if (!preg_match('/service/i', $name)) {
             $name = ucfirst($name).'Service';
         }
 
+        $classname = basename($name);
+
+        $namespace = dirname($name);
+
+        if ($namespace == '.') {
+            $namespace = '';
+        } else {
+            @mkdir($this->dirname.'/app/Service/'.$namespace, 0777, true);
+
+            $namespace = '\\'.str_replace('/', '\\', $namespace);
+        }
+
         if (file_exists($this->dirname.'/app/Service/'.$name.'.php')) {
             echo "\033[0;33mLe service \033[0;33m\033[0;31m[${name}]\033[00m\033[0;31m existe déja.\033[00m\n";
+
             return 0;
         }
 
         $validation = <<<VALIDATOR
 <?php
 
-namespace App\Services;
+namespace App\Service{$namespace};
 
 use Bow\Config\Config;
 use Bow\Application\Services as BowService;
 
-class {$name} extends BowService
+class {$classname} extends BowService
 {
     /**
      * Permet de lancement de configuration du service
@@ -931,5 +1001,19 @@ VALIDATOR;
         }
 
         return false;
+    }
+
+    /**
+     * Check if filename is valide
+     *
+     * @param $filename
+     */
+    public function filenameIsValide($filename)
+    {
+        if (is_null($filename)) {
+            echo Color::red('Le nom du fichier est invalide.');
+
+            exit(1);
+        }
     }
 }

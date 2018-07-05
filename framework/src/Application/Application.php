@@ -457,8 +457,6 @@ class Application
         // drapeaux d'erreur.
         $error = true;
 
-        require $this->config->getRouteCollection();
-
         // Vérification de l'existance de methode de la requete dans
         // la collection de route
         if (!isset($this->routes[$method])) {

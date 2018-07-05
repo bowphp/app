@@ -1,7 +1,7 @@
 <?php
 
 use Bow\Http\Request;
-use Bow\Application\Route;
+use Bow\Router\Route;
 
 class RouteTest extends \PHPUnit\Framework\TestCase
 {
@@ -23,6 +23,7 @@ class RouteTest extends \PHPUnit\Framework\TestCase
         });
 
         $this->assertTrue($route->match('/'));
+
         $this->assertEquals($route->call(new Request()), 'hello');
     }
 
@@ -33,9 +34,11 @@ class RouteTest extends \PHPUnit\Framework\TestCase
         });
 
         $this->assertTrue($route->match('/bow'));
+
         $this->assertTrue($route->call(new Request()));
 
         $this->assertTrue($route->match('/dakia'));
+
         $this->assertFalse($route->call(new Request()));
 
         $this->assertFalse($route->match('/'));
@@ -48,9 +51,11 @@ class RouteTest extends \PHPUnit\Framework\TestCase
         });
 
         $this->assertTrue($route->match('/bow/1'));
+
         $this->assertTrue($route->call(new Request()));
 
         $this->assertTrue($route->match('/dakia/1'));
+
         $this->assertFalse($route->call(new Request()));
 
         $this->assertFalse($route->match('/'));
@@ -63,11 +68,15 @@ class RouteTest extends \PHPUnit\Framework\TestCase
         });
 
         $route->where(['name' => '[a-z0-9_-]+', 'id' => '\d+']);
+
         $this->assertTrue($route->match('/bow/1'));
+
         $this->assertTrue($route->call(new Request()));
 
         $route->where(['name' => '[a-z0-9_-]+', 'id' => '\d+']);
+
         $this->assertFalse($route->match('/bow/framework'));
+
         $this->assertFalse($route->match('/'));
     }
 }

@@ -24,6 +24,11 @@ return [
     'timezone' => 'Africa/Abidjan',
 
     /**
+     * Le chemin vers la root de l'application
+     */
+    'envfile' => realpath(__DIR__.'/../.env.json'),
+
+    /**
      * Le chemin vers les fichiers statics
      */
     'static' => '/',

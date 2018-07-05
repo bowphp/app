@@ -130,14 +130,6 @@ class Config implements \ArrayAccess
     }
 
     /**
-     * Get the route collection
-     */
-    public function loadRouteCollection()
-    {
-        //
-    }
-
-    /**
      * Load configuration
      *
      * @return Config

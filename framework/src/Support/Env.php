@@ -19,7 +19,7 @@ class Env
     public static function load($filename)
     {
         if (static::$env == null) {
-            static::$env = json_decode(file_get_contents($filename));
+            static::$env = json_decode(file_get_contents($filename), true);
         }
     }
 
@@ -38,7 +38,7 @@ class Env
             return $value;
         }
 
-        return isset(static::$env->$key) ? static::$env->$key : $default;
+        return isset(static::$env[$key]) ? static::$env[$key] : $default;
     }
 
     /**

@@ -134,7 +134,7 @@ class Bow
     public function add()
     {
         $action = $this->_command->getParameter('action');
-        
+
         if (!in_array($action, ['middleware', 'controller', 'model', 'validation', 'seeder', 'migration', 'service'])) {
             throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
         }
@@ -213,6 +213,22 @@ class Bow
         }
 
         exit(0);
+    }
+
+    /**
+     * Permet de rafraichir le registre
+     *
+     * @throws \ErrorException
+     */
+    public function register()
+    {
+        $action = $this->_command->getParameter('action');
+
+        if (!in_array($action, ['refresh'])) {
+            throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
+        }
+
+        $this->_command->reflesh();
     }
 
     /**
@@ -401,6 +417,7 @@ Bow usage: php bow command:action [name] [help|--with-model|--no-plain|--create|
   option: [table_name|--all]
    \033[0;33mmigrate:down\033[00m       Drop migration
    \033[0;33mmigrate:up\033[00m         Update or create table of the migration
+   \033[0;33mregister:reflesh\033[00m   Update register file
 
  \033[0;32mclear\033[00m for clear cache information [not supported]
 

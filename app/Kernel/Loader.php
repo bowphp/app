@@ -52,8 +52,10 @@ class Loader extends Config
     public function services()
     {
         return [
+            // Chargement des environement
+            \Bow\Services\EnvService::class,
+
             // Service interne
-            \Bow\Services\LoggerService::class,
             \Bow\Mail\MailService::class,
             \Bow\Security\CryptoService::class,
             \Bow\Database\DatabaseService::class,
@@ -62,17 +64,10 @@ class Loader extends Config
             \Bow\View\ViewService::class,
             \Bow\Translate\TranslatorService::class,
             \Bow\Auth\AuthenticateService::class,
-            \Bow\Services\ActionnerService::class
+            \Bow\Services\ActionnerService::class,
+            \Bow\Services\LoggerService::class
 
             // Vos service
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function loadRouteCollection()
-    {
-        $this->routePath = __DIR__.'/../../routes/app.php';
     }
 }
