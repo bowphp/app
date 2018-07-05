@@ -42,7 +42,7 @@ class TablePrinter
     /**
      * @var string
      */
-    private $engine = 'MyISAM';
+    private $engine = 'InnoDB';
 
     /**
      * @var string
