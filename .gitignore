@@ -12,4 +12,3 @@ public
 !public/.htaccess
 !public/favicon.ico
 .env.json
-!framework/tests/data/.env.json
