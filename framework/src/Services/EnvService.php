@@ -10,6 +10,7 @@ class EnvService extends BowService
 {
     /**
      * @inheritdoc
+     * @throws
      */
     public function make(Config $config)
     {
