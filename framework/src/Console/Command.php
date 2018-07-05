@@ -279,6 +279,7 @@ class Command
         }
 
         $options = $this->options();
+
         $num = 5;
 
         if ($options->has('--n-seed') && is_int($options->get('--n-seed'))) {
