@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://github.com/papac/bow/blob/master/public/img/bow.jpg">
+    <img src="https://github.com/papac/bow/blob/master/framework/bow.jpg">
     <br/>Bow
 </h1>
 <h4 align="center">The BOW PHP framework</h4>
