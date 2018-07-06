@@ -1,1 +1,2 @@
 tests/data/database.sqlite
+tests/data/cache/**

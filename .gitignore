@@ -13,5 +13,3 @@ public
 !public/.htaccess
 !public/favicon.ico
 .env.json
-framework/tests/data/cache/**
-!framework/tests/data/cache/.gitkeep
