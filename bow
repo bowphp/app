@@ -12,7 +12,7 @@ $command->setMigrationDirectory(__DIR__.'/db/migration');
 
 $command->setSeederDirectory(__DIR__.'/db/seeders');
 
-$console = new Bow($command);
+$console = new Bow(__DIR__, $command);
 
 $console->setBootstrap([__DIR__.'/public/index.php']);
 

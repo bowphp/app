@@ -60,6 +60,21 @@ class Parser
     }
 
     /**
+     * Retourne des données
+     *
+     * @return mixed|null
+     * @throws
+     */
+    public function getContent()
+    {
+        if (!$this->retournTransfertToPlain()) {
+            return null;
+        }
+
+        return $this->execute();
+    }
+
+    /**
      * Retourne la reponse en json
      *
      * @param  array $default
@@ -76,7 +91,7 @@ class Parser
             return false;
         }
 
-        $data = $this->execute();
+        $data = $this->raw();
 
         return json_encode($data);
     }
@@ -158,14 +173,10 @@ class Parser
      */
     private function execute()
     {
-        ob_start();
-
         $data = curl_exec($this->ch);
 
         if ($data === false) {
             $this->close();
-
-            ob_end_flush();
 
             throw new \Exception('Impossible de passer le résultat.');
         }
@@ -179,8 +190,6 @@ class Parser
         $this->executed = true;
 
         $this->close();
-
-        $data = ob_get_clean();
 
         return $data;
     }
