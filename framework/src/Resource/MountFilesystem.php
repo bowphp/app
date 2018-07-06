@@ -176,7 +176,13 @@ class MountFilesystem implements FilesystemInterface
             $mode = 0777;
         }
 
-        return @mkdir($this->resolvePath($dirname), $mode, $recursive);
+        $dirname = $this->resolvePath($dirname);
+
+        if (!is_dir($dirname)) {
+            return @mkdir($dirname, $mode, $recursive);
+        }
+
+        return false;
     }
 
     /**
