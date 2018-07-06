@@ -43,6 +43,9 @@ class ApplicationTest extends \Bow\Testing\BowTestCase
         $response->containsText(sprintf('<b>%s</b>', $name));
     }
 
+    /**
+     * @return array
+     */
     public function getUsers()
     {
         return [
