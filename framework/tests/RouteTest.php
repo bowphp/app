@@ -7,11 +7,9 @@ class RouteTest extends \PHPUnit\Framework\TestCase
 {
     public function testInstance()
     {
-        $route = new Route(
-            '/', function () {
-                return 'hello';
-            }
-        );
+        $route = new Route('/', function () {
+            return 'hello';
+        });
 
         $this->assertInstanceOf(Route::class, $route);
     }

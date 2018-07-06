@@ -45,6 +45,7 @@ class MountFilesystem
             }
 
             $conv = 1;
+
             array_shift($match);
 
             if ($match[1] == 'm') {
@@ -85,12 +86,14 @@ class MountFilesystem
      * @param  string $file
      * @param  string $content
      * @return bool
+     * @throws
      */
     public function prepend($file, $content)
     {
         $tmp_content = file_get_contents($file);
 
         $this->put($file, $content);
+
         return $this->append($file, $tmp_content);
     }
 
@@ -99,7 +102,6 @@ class MountFilesystem
      *
      * @param  $file
      * @param  $content
-     * @throws ResourceException
      * @return bool
      */
     public function put($file, $content)
@@ -137,14 +139,12 @@ class MountFilesystem
     public function files($dirname)
     {
         $dirname = $this->resolvePath($dirname);
+
         $directoryContents = glob($dirname."/*");
 
-        return array_filter(
-            $directoryContents,
-            function ($file) {
-                return filetype($file) == "file";
-            }
-        );
+        return array_filter($directoryContents, function ($file) {
+            return filetype($file) == "file";
+        });
     }
 
     /**
@@ -157,12 +157,9 @@ class MountFilesystem
     {
         $directoryContents = glob($this->resolvePath($dirname)."/*");
 
-        return array_filter(
-            $directoryContents,
-            function ($file) {
-                return filetype($file) == "dir";
-            }
-        );
+        return array_filter($directoryContents, function ($file) {
+            return filetype($file) == "dir";
+        });
     }
 
     /**
@@ -177,6 +174,7 @@ class MountFilesystem
     {
         if (is_bool($mode)) {
             $recursive = $mode;
+
             $mode = 0777;
         }
 
@@ -229,6 +227,7 @@ class MountFilesystem
     public function move($targerFile, $sourceFile)
     {
         $this->copy($targerFile, $sourceFile);
+
         $this->delete($targerFile);
     }
 
@@ -244,7 +243,9 @@ class MountFilesystem
 
         if (is_dir($filename)) {
             $tmp = getcwd();
+
             $r = chdir($filename);
+
             chdir($tmp);
 
             return $r;

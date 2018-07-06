@@ -23,20 +23,279 @@ class Command
     private $options = [];
 
     /**
+     * @var string
+     */
+    private $seeder_directory;
+
+    /**
+     * @var string
+     */
+    private $migration_directory;
+
+    /**
+     * @var string
+     */
+    private $controller_directory;
+
+    /**
+     * @var string
+     */
+    private $middleware_directory;
+
+    /**
+     * @var string
+     */
+    private $service_directory;
+
+    /**
+     * @var string
+     */
+    private $validation_directory;
+
+    /**
+     * @var string
+     */
+    private $app_directory;
+
+    /**
+     * @var string
+     */
+    private $model_directory;
+
+    /**
+     * @var string
+     */
+    private $component_directory;
+
+    /**
+     * @var string
+     */
+    private $config_directory;
+
+    /**
      * Command constructor.
      *
      * @param string $dirname
      */
     public function __construct($dirname)
     {
-        $this->dirname = $dirname;
+        $this->dirname = rtrim($dirname, '/');
+
+        $this->migration_directory = $this->dirname.'/db/migration';
+
+        $this->seeder_directory = $this->dirname.'/db/seeders';
+
+        $this->controller_directory = $this->dirname.'/app/Controllers';
+
+        $this->middleware_directory = $this->dirname.'/app/Middleware';
+
+        $this->service_directory = $this->dirname.'/app/Services';
+
+        $this->app_directory = $this->dirname.'/app';
+
+        $this->model_directory = $this->dirname.'/app';
+
+        $this->validation_directory = $this->dirname.'/app/Validations';
+
+        $this->component_directory = $this->dirname.'/components';
+
+        $this->config_directory = $this->dirname.'/config';
+
         $this->formatParameters();
     }
 
     /**
-     * Permet de formater les options
+     * Set the config directory
      *
-     * @return mixed
+     * @param string $dirname
+     */
+    public function setConfigDirectory($dirname)
+    {
+        $this->config_directory = $dirname;
+    }
+
+    /**
+     * Set the component directory
+     *
+     * @param string $dirname
+     */
+    public function setComponentDirectory($dirname)
+    {
+        $this->component_directory = $dirname;
+    }
+
+    /**
+     * Set the migration directory
+     *
+     * @param string $dirname
+     */
+    public function setMigrationDirectory($dirname)
+    {
+        $this->migration_directory = $dirname;
+    }
+
+    /**
+     * Set the seeder directory
+     *
+     * @param string $dirname
+     */
+    public function setSeederDirectory($dirname)
+    {
+        $this->seeder_directory = $dirname;
+    }
+
+    /**
+     * Set the controller directory
+     *
+     * @param string $dirname
+     */
+    public function setControllerDirectory($dirname)
+    {
+        $this->controller_directory = $dirname;
+    }
+
+    /**
+     * Set the validation directory
+     *
+     * @param string $dirname
+     */
+    public function setValidationDirectory($dirname)
+    {
+        $this->validation_directory = $dirname;
+    }
+
+    /**
+     * Set the middleware directory
+     *
+     * @param string $dirname
+     */
+    public function setMiddlewareDirectory($dirname)
+    {
+        $this->middleware_directory = $dirname;
+    }
+
+    /**
+     * Set the application directory
+     *
+     * @param string $dirname
+     */
+    public function setApplicationDirectory($dirname)
+    {
+        $this->app_directory = $dirname;
+    }
+
+    /**
+     * Set the model directory
+     *
+     * @param string $dirname
+     */
+    public function setModelDirectory($dirname)
+    {
+        $this->model_directory = $dirname;
+    }
+
+    /**
+     * Get the component directory
+     *
+     * @return string
+     */
+    public function getComponentDirectory()
+    {
+        return $this->component_directory;
+    }
+
+    /**
+     * Get the config directory
+     *
+     * @return string
+     */
+    public function getConfigDirectory()
+    {
+        return $this->config_directory;
+    }
+
+    /**
+     * Get the migration directory
+     *
+     * @return string
+     */
+    public function getMigrationDirectory()
+    {
+        return $this->migration_directory;
+    }
+
+    /**
+     * Get the seeder directory
+     *
+     * @return string
+     */
+    public function getSeederDirectory()
+    {
+        return $this->seeder_directory;
+    }
+
+    /**
+     * Get the validation directory
+     *
+     * @return string
+     */
+    public function getValidationDirectory()
+    {
+        return $this->migration_directory;
+    }
+
+    /**
+     * Get the service directory
+     *
+     * @return string
+     */
+    public function getServiceDirectory()
+    {
+        return $this->service_directory;
+    }
+
+    /**
+     * Get the service directory
+     *
+     * @return string
+     */
+    public function getMiddlewareDirectory()
+    {
+        return $this->service_directory;
+    }
+
+    /**
+     * Get the model directory
+     *
+     * @return string
+     */
+    public function getModelDirectory()
+    {
+        return $this->model_directory;
+    }
+
+    /**
+     * Get the controller directory
+     *
+     * @return string
+     */
+    public function getControllerDirectory()
+    {
+        return $this->model_directory;
+    }
+
+    /**
+     * Get the app directory
+     *
+     * @return string
+     */
+    public function getApplicationDirectory()
+    {
+        return $this->app_directory;
+    }
+
+    /**
+     * Permet de formater les options
      */
     public function formatParameters()
     {
@@ -48,8 +307,11 @@ class Command
             if ($key == 1) {
                 if (preg_match('/^[a-z]+:[a-z]+$/', $param)) {
                     $part = explode(':', $param);
+
                     $this->options['command'] = $part[0];
+
                     $this->options['action'] = $part[1];
+
                     continue;
                 }
 
@@ -145,11 +407,11 @@ class Command
      */
     public function reflesh()
     {
-        $register = $this->dirname.'/db/migration/.registers';
+        $register = $this->migration_directory.'/.registers';
 
         file_put_contents($register, '');
 
-        $files = glob($this->dirname.'/db/migration/*.php');
+        $files = glob($this->migration_directory.'/*.php');
 
         foreach ($files as $file) {
             $parts = preg_split('/([0-9_])+/', basename($file));
@@ -197,20 +459,20 @@ class Command
         if (!is_null($model)) {
             $model = strtolower($model);
 
-            $fileParten = $this->dirname.strtolower("/db/migration/*{$model}*.php");
+            $fileParten = $this->migration_directory.strtolower("/*{$model}*.php");
         } else {
-            $fileParten = $this->dirname.strtolower("/db/migration/*.php");
+            $fileParten = $this->migration_directory.strtolower("/*.php");
         }
 
         $register = ["file" => [], "tables" => []];
 
-        if (!file_exists($this->dirname."/db/migration/.registers")) {
+        if (!file_exists($this->migration_directory."/.registers")) {
             echo Color::red('Le fichier de régistre de bow est introvable.');
 
             exit(0);
         }
 
-        $registers = file($this->dirname."/db/migration/.registers");
+        $registers = file($this->migration_directory."/.registers");
 
         if (count($registers) == 0) {
             echo Color::red('Le fichier de régistre de bow est vide.');
@@ -218,7 +480,7 @@ class Command
             exit(0);
         }
 
-        foreach (file($this->dirname."/db/migration/.registers") as $r) {
+        foreach (file($this->migration_directory."/.registers") as $r) {
             $tmp = explode("|", $r);
 
             $register["file"][] = $tmp[0];
@@ -234,7 +496,7 @@ class Command
             }
 
             // Collection des fichiers de migration.
-            $filename = preg_replace("@^(".$this->dirname."/db/migration/)|(\.php)$@", "", $file);
+            $filename = preg_replace("@^(".$this->migration_directory."/)|(\.php)$@", "", $file);
 
             if (in_array($filename, $register["file"])) {
                 $num = array_flip($register["file"])[$filename];
@@ -270,7 +532,7 @@ class Command
     {
         $this->filenameIsValide($name);
 
-        $seeder_filename = $this->dirname."/db/seeders/{$name}_seeder.php";
+        $seeder_filename = $this->seeder_directory."/{$name}_seeder.php";
 
         if (file_exists($seeder_filename)) {
             echo "\033[0;31mLe seeder '$name' exists déja.\033[00m";
@@ -324,8 +586,8 @@ SEEDER;
 
         $options = $this->options();
 
-        if (file_exists($this->dirname."/db/migration/.registers")) {
-            @touch($this->dirname."/db/migration/.registers");
+        if (file_exists($this->migration_directory."/.registers")) {
+            @touch($this->migration_directory."/.registers");
         }
 
         if ($options->has('--create') && $options->has('--table')) {
@@ -386,9 +648,9 @@ class {$class_name} extends Migration
 doc;
         $create_at = date("Y_m_d") . "_" . date("His");
 
-        file_put_contents($this->dirname."/db/migration/${create_at}_${model}.php", $migrate);
+        file_put_contents($this->migration_directory."/${create_at}_${model}.php", $migrate);
 
-        Storage::append($this->dirname."/db/migration/.registers", "${create_at}_${model}|$class_name\n");
+        Storage::append($this->migration_directory."/.registers", "${create_at}_${model}|$class_name\n");
 
         echo "\033[0;32mLe file de migration \033[00m[$model]\033[0;32m a été bien crée.\033[00m\n";
 
@@ -407,12 +669,10 @@ doc;
 
         $dirname = dirname($controller_name);
 
-        $path = $this->dirname."/app/Controllers/$controller_name.php";
-
-        $classname = basename($controller_name);
+        $path = $this->controller_directory."/$controller_name.php";
 
         if ($dirname != '.') {
-            @mkdir($this->dirname.'/app/Controllers/'.trim($dirname, '/'), 0777, true);
+            @mkdir($this->controller_directory.'/'.trim($dirname, '/'), 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', ucfirst(trim($dirname, '/')));
         } else {
@@ -423,7 +683,7 @@ doc;
 
         $prefix = '/'.trim($prefix, '/');
 
-        $filename = $this->dirname."/app/Controllers/${controller_name}.php";
+        $filename = $this->controller_directory."/${controller_name}.php";
 
         if (file_exists($filename)) {
             echo Color::danger('Le controlleur existe déja');
@@ -433,18 +693,18 @@ doc;
 
         $model = ucfirst($path);
 
-        $modelNamespace = '';
+        $model_namespace = '';
 
 
         if (static::readline("Voulez vous que je crée les vues associées?")) {
             $model = strtolower($model);
 
-            @mkdir($this->dirname."/components/views/".$model, 0766);
+            @mkdir($this->component_directory."/views/".$model, 0766);
 
             echo "\033[0;33;7m";
 
             foreach (["create", "edit", "show", "index", "update", "delete"] as $value) {
-                $file = $this->dirname."/components/views/$model/$value.twig";
+                $file = $this->component_directory."/views/$model/$value.twig";
 
                 echo "$file\n";
             }
@@ -572,7 +832,7 @@ class {$controller_name} extends Controller
     }
 }
 CC;
-        file_put_contents($this->dirname."/app/Controllers/${controller_name}.php", $controllerRestTemplate);
+        file_put_contents($this->controller_directory."/${controller_name}.php", $controllerRestTemplate);
 
         echo "\033[0;32mLe controlleur \033[00m[{$controller_name}]\033[0;32m a été bien crée.\033[00m\n";
 
@@ -590,12 +850,12 @@ CC;
 
         $dirname = dirname($controller_name);
 
-        $path = $this->dirname."/app/Controllers/$controller_name.php";
+        $path = $this->controller_directory."/$controller_name.php";
 
         $classname = basename($controller_name);
 
         if ($dirname != '.') {
-            @mkdir($this->dirname.'/app/Controllers/'.trim($dirname, '/'), 0777, true);
+            @mkdir($this->controller_directory.'/'.trim($dirname, '/'), 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', ucfirst(trim($dirname, '/')));
         } else {
@@ -719,7 +979,7 @@ CC;
     {
         $this->filenameIsValide($middleware_name);
 
-        $path = $this->dirname."/app/Middleware/$middleware_name.php";
+        $path = $this->middleware_directory."/$middleware_name.php";
 
         if (file_exists($path)) {
             echo "\033[0;31mLe middleware \033[0;33m\033[0;31m[$middleware_name]\033[00m\033[0;31m existe déja.\033[00m\n";
@@ -732,7 +992,7 @@ CC;
         $classname = ucfirst(basename($middleware_name));
 
         if ($dirname != '.') {
-            @mkdir($this->dirname.'/app/Middleware/'.trim($dirname, '/'), 0777, true);
+            @mkdir($this->middleware_directory.'/'.trim($dirname, '/'), 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', trim($dirname, '/'));
         } else {
@@ -760,9 +1020,9 @@ class {$classname}
     }
 }
 CM;
-        @mkdir($this->dirname."/app/Middleware");
+        @mkdir($this->middleware_directory);
 
-        file_put_contents($this->dirname."/app/Middleware/$middleware_name.php", $middleware_template);
+        file_put_contents($this->middleware_directory."/$middleware_name.php", $middleware_template);
 
         echo "\033[0;32mLe middleware \033[00m[{$middleware_name}]\033[0;32m a été bien crée.\033[00m\n";
 
@@ -783,7 +1043,7 @@ CM;
         $dirname = dirname($model_name);
 
         if ($dirname != '.') {
-            @mkdir($this->dirname.'/app/'.trim($dirname, '/'), 0777, true);
+            @mkdir($this->model_directory.'/'.trim($dirname, '/'), 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', trim($dirname, '/'));
         } else {
@@ -806,13 +1066,13 @@ class $classname extends Model
     //
 }
 MODEL;
-        if (file_exists($this->dirname."/app/${model_name}.php")) {
+        if (file_exists($this->model_directory."/${model_name}.php")) {
             echo "\033[0;33mLe model \033[0;33m\033[0;31m[${model_name}]\033[00m\033[0;31m existe déja.\033[00m\n";
 
             exit(1);
         }
 
-        file_put_contents($this->dirname."/app/${model_name}.php", $model);
+        file_put_contents($this->model_directory."/${model_name}.php", $model);
 
         echo "\033[0;32mLe model \033[00m[${model_name}]\033[0;32m a été bien crée.\033[00m\n";
 
@@ -830,7 +1090,7 @@ MODEL;
     {
         $key = base64_encode(openssl_random_pseudo_bytes(12) . date('Y-m-d H:i:s') . microtime(true));
 
-        file_put_contents($this->dirname."/config/.key", $key);
+        file_put_contents($this->config_directory."/.key", $key);
 
         echo "Application key => \033[0;32m$key\033[00m\n";
 
@@ -847,8 +1107,8 @@ MODEL;
     {
         $this->filenameIsValide($name);
 
-        if (!is_dir($this->dirname.'/app/Validation')) {
-            @mkdir($this->dirname.'/app/Validation');
+        if (!is_dir($this->validation_directory)) {
+            @mkdir($this->validation_directory);
         }
 
         $classname = ucfirst(basename($name));
@@ -858,12 +1118,12 @@ MODEL;
         if ($namespace == '.') {
             $namespace = '';
         } else {
-            @mkdir($this->dirname.'/app/Validation/'.$namespace, 0777, true);
+            @mkdir($this->validation_directory.'/'.$namespace, 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', $namespace);
         }
 
-        if (file_exists($this->dirname.'/app/Validation/'.$name.'.php')) {
+        if (file_exists($this->validation_directory.'/'.$name.'.php')) {
             echo "\033[0;33mLe validateur \033[0;33m\033[0;31m[${name}]\033[00m\033[0;31m existe déja.\033[00m\n";
 
             return 0;
@@ -914,7 +1174,7 @@ class {$classname} extends Validator
 }
 VALIDATOR;
 
-        file_put_contents($this->dirname.'/app/Validation/'.$name.'.php', $validation);
+        file_put_contents($this->validation_directory.'/'.$name.'.php', $validation);
 
         echo "\033[0;32mLe validateur \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
 
@@ -929,8 +1189,8 @@ VALIDATOR;
      */
     public function service($name)
     {
-        if (!is_dir($this->dirname.'/app/Service')) {
-            @mkdir($this->dirname.'/app/Service');
+        if (!is_dir($this->service_directory)) {
+            @mkdir($this->service_directory);
         }
 
         if (!preg_match('/service/i', $name)) {
@@ -944,12 +1204,12 @@ VALIDATOR;
         if ($namespace == '.') {
             $namespace = '';
         } else {
-            @mkdir($this->dirname.'/app/Service/'.$namespace, 0777, true);
+            @mkdir($this->service_directory.'/'.$namespace, 0777, true);
 
             $namespace = '\\'.str_replace('/', '\\', $namespace);
         }
 
-        if (file_exists($this->dirname.'/app/Service/'.$name.'.php')) {
+        if (file_exists($this->service_directory.'/'.$name.'.php')) {
             echo "\033[0;33mLe service \033[0;33m\033[0;31m[${name}]\033[00m\033[0;31m existe déja.\033[00m\n";
 
             return 0;
@@ -988,8 +1248,10 @@ class {$classname} extends BowService
 }
 VALIDATOR;
 
-        file_put_contents($this->dirname.'/app/Service/'.$name.'.php', $validation);
+        file_put_contents($this->service_directory.'/'.$name.'.php', $validation);
+
         echo "\033[0;32mLe service \033[00m[${name}]\033[0;32m a été bien crée.\033[00m\n";
+
         return 0;
     }
 

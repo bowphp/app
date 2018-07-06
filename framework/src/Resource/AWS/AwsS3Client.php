@@ -31,6 +31,7 @@ class AwsS3Client
         $this->config = $config;
 
         $this->s3 = new S3Client($config);
+
         $this->version = Sdk::VERSION;
     }
 
@@ -75,11 +76,7 @@ class AwsS3Client
      */
     public function visibility($url)
     {
-        return $this->s3->getObjectAcl(
-            [
-            $url
-            ]
-        )->get('acl');
+        return $this->s3->getObjectAcl([$url])->get('acl');
     }
 
     /**
@@ -90,12 +87,7 @@ class AwsS3Client
      */
     public function put($url, $data, $visibility = 'private')
     {
-        return $this->s3->upload(
-            $this->config['bucket'],
-            $url,
-            $data,
-            $visibility
-        );
+        return $this->s3->upload($this->config['bucket'], $url, $data, $visibility);
     }
 
     /**
@@ -104,9 +96,7 @@ class AwsS3Client
      */
     public function delete($url)
     {
-        if (!is_array($url)) {
-            $url = [$url];
-        }
+        $url = (array) $url;
 
         return $this->s3->deleteObject($url);
     }

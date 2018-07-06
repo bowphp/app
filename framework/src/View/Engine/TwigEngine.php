@@ -56,6 +56,7 @@ class TwigEngine extends EngineAbstract
 
     /**
      * @inheritDoc
+     * @throws
      */
     public function render($filename, array $data = [])
     {

@@ -1,6 +1,7 @@
 <?php
 namespace Bow\View;
 
+use Bow\Config\Config;
 use Bow\View\Exception\ViewException;
 use Bow\Application\Configuration;
 
@@ -45,7 +46,7 @@ abstract class EngineAbstract
     protected $name;
 
     /**
-     * @var Configuration
+     * @var Config
      */
     protected $config;
 

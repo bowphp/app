@@ -98,6 +98,7 @@ class Storage
         $tmp_content = file_get_contents($file);
 
         static::put($file, $content);
+
         return static::append($file, $tmp_content);
     }
 
@@ -106,7 +107,6 @@ class Storage
      *
      * @param  $file
      * @param  $content
-     * @throws ResourceException
      * @return bool
      */
     public static function put($file, $content)
@@ -145,14 +145,12 @@ class Storage
     public static function files($dirname)
     {
         $dirname = static::resolvePath($dirname);
+
         $directoryContents = glob($dirname."/*");
 
-        return array_filter(
-            $directoryContents,
-            function ($file) {
-                return filetype($file) == "file";
-            }
-        );
+        return array_filter($directoryContents, function ($file) {
+            return filetype($file) == "file";
+        });
     }
 
     /**
@@ -165,12 +163,9 @@ class Storage
     {
         $directoryContents = glob(static::resolvePath($dirname)."/*");
 
-        return array_filter(
-            $directoryContents,
-            function ($file) {
-                return filetype($file) == "dir";
-            }
-        );
+        return array_filter($directoryContents, function ($file) {
+            return filetype($file) == "dir";
+        });
     }
 
     /**
@@ -185,6 +180,7 @@ class Storage
     {
         if (is_bool($mode)) {
             $recursive = $mode;
+
             $mode = 0777;
         }
 
@@ -237,6 +233,7 @@ class Storage
     public static function move($targerFile, $sourceFile)
     {
         static::copy($targerFile, $sourceFile);
+
         static::delete($targerFile);
     }
 
@@ -252,7 +249,9 @@ class Storage
 
         if (is_dir($filename)) {
             $tmp = getcwd();
+
             $r = chdir($filename);
+
             chdir($tmp);
 
             return $r;
@@ -303,6 +302,7 @@ class Storage
      *
      * @param  array $config
      * @return FTP
+     * @throws
      */
     public static function ftp($config = null)
     {
@@ -323,6 +323,7 @@ class Storage
         }
 
         static::$ftp = new FTP();
+
         static::$ftp->connect($config['hostname'], $config['username'], $config['password'], $config['port'], $config['tls'], $config['timeout']);
 
         if (isset($config['root'])) {
@@ -349,6 +350,7 @@ class Storage
         }
 
         static::$s3 = new AwsS3Client($config);
+
         return static::$s3;
     }
 
@@ -376,6 +378,7 @@ class Storage
     public static function resolvePath($filename)
     {
         $mount = static::$config['disk']['mount'];
+
         $path = realpath(static::$config['disk']['path'][$mount]);
 
         if (preg_match('~^'.$path.'~', $filename)) {
@@ -390,6 +393,7 @@ class Storage
      *
      * @param array $config
      * @return MountFilesystem
+     * @throws
      */
     public static function configure(array $config)
     {

@@ -12,7 +12,7 @@ class Bow
     /**
      * @var string
      */
-    private $serve_filename = './server.php';
+    private $serve_filename;
 
     /**
      * @var array
@@ -29,7 +29,17 @@ class Bow
     /**
      * @var Command
      */
-    private $_command;
+    private $command;
+
+    /**
+     * @var string
+     */
+    private $public_directory;
+
+    /**
+     * @var string
+     */
+    private $storage_directory;
 
     /**
      * Bow constructor.
@@ -48,7 +58,55 @@ class Bow
 
         $this->dirname = $dirname;
 
-        $this->_command = $command;
+        $this->public_directory = rtrim($dirname, '/').'/public';
+
+        $this->storage_directory = rtrim($dirname, '/').'/storage';
+
+        $this->serve_filename = rtrim($dirname, '/').'/server.php';
+
+        $this->command = $command;
+    }
+
+    /**
+     * Set public directory
+     *
+     * @param string $dirname
+     */
+    public function setPublicDirectory($dirname)
+    {
+        $this->public_directory = $dirname;
+    }
+
+    /**
+     * Set storage directory
+     *
+     * @param string $dirname
+     */
+    public function setStorageDirectory($dirname)
+    {
+        $this->storage_directory = $dirname;
+    }
+
+    /**
+     * Permet de changer les fichiers de demarage
+     *
+     * @param array $bootstrap
+     * @return void
+     */
+    public function setBootstrap(array $bootstrap)
+    {
+        $this->bootstrap = $bootstrap;
+    }
+
+    /**
+     * Permet de changer les fichiers de demarage
+     *
+     * @param string $serve_filename
+     * @return void
+     */
+    public function setServerFilename($serve_filename)
+    {
+        $this->serve_filename = $serve_filename;
     }
 
     /**
@@ -62,7 +120,7 @@ class Bow
             require $item;
         }
 
-        $this->call($this->_command->getParameter('command'));
+        $this->call($this->command->getParameter('command'));
     }
 
     /**
@@ -79,8 +137,8 @@ class Bow
             exit(1);
         }
 
-        if (!$this->_command->getParameter('action')) {
-            if ($this->_command->getParameter('target') == 'help') {
+        if (!$this->command->getParameter('action')) {
+            if ($this->command->getParameter('target') == 'help') {
                 $this->help($command);
 
                 exit(0);
@@ -88,7 +146,7 @@ class Bow
         }
 
         try {
-            call_user_func_array([$this, $command], [$this->_command->getParameter('target')]);
+            call_user_func_array([$this, $command], [$this->command->getParameter('target')]);
         } catch (\Exception $e) {
             echo "{$e->getMessage()}";
 
@@ -105,7 +163,7 @@ class Bow
      */
     public function migrate()
     {
-        $action = $this->_command->getParameter('action');
+        $action = $this->command->getParameter('action');
 
         if (!in_array($action, ['up', 'down', 'refresh', null])) {
             throw new \ErrorException('Bad command. Type "php bow help migrate" for more information"');
@@ -114,18 +172,18 @@ class Bow
         if ($action == null) {
             $action = 'up';
 
-            if ($this->_command->getParameter('target') !== null || $this->_command->getParameter('trash') !== null) {
+            if ($this->command->getParameter('target') !== null || $this->command->getParameter('trash') !== null) {
                 throw new \ErrorException('Bad command. Type "php bow help migrate" for more information"');
             }
         }
 
-        $target = $this->_command->getParameter('target');
+        $target = $this->command->getParameter('target');
 
-        if ($this->_command->getParameter('target') == '--all') {
+        if ($this->command->getParameter('target') == '--all') {
             $target = null;
         }
 
-        $this->_command->$action($target);
+        $this->command->$action($target);
     }
 
     /**
@@ -137,7 +195,7 @@ class Bow
      */
     public function add()
     {
-        $action = $this->_command->getParameter('action');
+        $action = $this->command->getParameter('action');
 
         if (!in_array($action, ['middleware', 'controller', 'model', 'validation', 'seeder', 'migration', 'service'])) {
             throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
@@ -147,7 +205,7 @@ class Bow
             $action = 'make';
         }
 
-        $this->_command->$action($this->_command->getParameter('target'));
+        $this->command->$action($this->command->getParameter('target'));
     }
 
     /**
@@ -157,16 +215,16 @@ class Bow
      */
     public function seed()
     {
-        if ($this->_command->getParameter('action') != null) {
+        if ($this->command->getParameter('action') != null) {
             echo "\033[0;32mCommand not found\033[00m\033[00m\n";
 
             exit(1);
         }
 
-        $options = $this->_command->options();
+        $options = $this->command->options();
 
         if ($options->has('--all')) {
-            if ($this->_command->getParameter('target') !== null) {
+            if ($this->command->getParameter('target') !== null) {
                 echo "\033[0;31mCommand not found\033[00m\033[00m\n";
 
                 exit(1);
@@ -181,8 +239,8 @@ class Bow
             goto seed;
         }
 
-        if ($this->_command->getParameter('target') !== null) {
-            $table_name = $this->_command->getParameter('target');
+        if ($this->command->getParameter('target') !== null) {
+            $table_name = $this->command->getParameter('target');
 
             if (!is_string($table_name) || !file_exists($this->dirname."/db/seeders/{$table_name}_seeder.php")) {
                 echo "\033[0;32mLe seeder \033[0;33m$table_name\033[00m\033[0;32m n'existe pas.\n";
@@ -197,7 +255,7 @@ class Bow
         $seed_collection = [];
 
         foreach ($seeds_filenames as $filename) {
-            $seeds = include $filename;
+            $seeds = require $filename;
 
             Faker::reinitialize();
 
@@ -226,13 +284,13 @@ class Bow
      */
     public function register()
     {
-        $action = $this->_command->getParameter('action');
+        $action = $this->command->getParameter('action');
 
         if (!in_array($action, ['refresh'])) {
             throw new \ErrorException('Bad command. Type "php bow help create" for more information"');
         }
 
-        $this->_command->reflesh();
+        $this->command->reflesh();
     }
 
     /**
@@ -242,11 +300,11 @@ class Bow
      */
     public function serve()
     {
-        $port = (int) $this->_command->options('--port', 5000);
+        $port = (int) $this->command->options('--port', 5000);
 
-        $hostname = $this->_command->options('--host', 'localhost');
+        $hostname = $this->command->options('--host', 'localhost');
 
-        $settings = $this->_command->options('--php-settings', false);
+        $settings = $this->command->options('--php-settings', false);
 
         if (is_bool($settings)) {
             $settings = '';
@@ -263,10 +321,8 @@ class Bow
 
         fclose($r);
 
-        $doc_root = $this->dirname.'/public';
-
         // lancement du serveur.
-        shell_exec("php -S $hostname:$port -t $doc_root ".$this->serve_filename." $settings");
+        shell_exec("php -S $hostname:$port -t {$this->public_directory} ".$this->serve_filename." $settings");
     }
 
     /**
@@ -276,9 +332,9 @@ class Bow
      */
     public function console()
     {
-        if (is_string($this->_command->getParameter('--include'))) {
+        if (is_string($this->command->getParameter('--include'))) {
             $this->setBootstrap(
-                array_merge($this->bootstrap, [$this->_command->getParameter('--include')])
+                array_merge($this->bootstrap, [$this->command->getParameter('--include')])
             );
         }
 
@@ -304,7 +360,7 @@ class Bow
      */
     public function generate()
     {
-        $action = $this->_command->getParameter('action');
+        $action = $this->command->getParameter('action');
 
         if (!in_array($action, ['key', 'resource'])) {
             echo Color::red("Bad $action command");
@@ -312,7 +368,7 @@ class Bow
             exit(1);
         }
 
-        $this->_command->$action($this->_command->getParameter('target'));
+        $this->command->$action($this->command->getParameter('target'));
     }
 
     /**
@@ -324,25 +380,25 @@ class Bow
      */
     public function clear()
     {
-        if (in_array($this->_command->getParameter('target'), ['view', 'cache', 'all'])) {
+        if (in_array($this->command->getParameter('target'), ['view', 'cache', 'all'])) {
             throw new \ErrorException(sprintf(''));
         }
 
-        $storage = $this->dirname.'/storage';
+        if ($this->command->getParameter('target') == 'cache') {
+            $this->unlinks($this->storage_directory.'/cache/bow');
 
-        if ($this->_command->getParameter('target') == 'cache') {
-            $this->unlinks($storage.'/cache/bow');
             return;
         }
 
-        if ($this->_command->getParameter('target') == 'view') {
-            $this->unlinks($storage.'/cache/view');
+        if ($this->command->getParameter('target') == 'view') {
+            $this->unlinks($this->storage_directory.'/cache/view');
+
             return;
         }
 
-        $this->unlinks($storage.'/cache/bow');
+        $this->unlinks($this->storage_directory.'/cache/bow');
 
-        $this->unlinks($storage.'/cache/view');
+        $this->unlinks($this->storage_directory.'/cache/view');
     }
 
     /**
@@ -358,28 +414,6 @@ class Bow
         foreach ($glob as $item) {
             @unlink($item);
         }
-    }
-
-    /**
-     * Permet de changer les fichiers de demarage
-     *
-     * @param array $bootstrap
-     * @return void
-     */
-    public function setBootstrap(array $bootstrap)
-    {
-        $this->bootstrap = $bootstrap;
-    }
-
-    /**
-     * Permet de changer les fichiers de demarage
-     *
-     * @param string $serve_filename
-     * @return void
-     */
-    public function setServerFilename($serve_filename)
-    {
-        $this->serve_filename = $serve_filename;
     }
 
     /**

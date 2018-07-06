@@ -332,10 +332,8 @@ class Str
      * Vérifie si la chaine est en alpha
      *
      * @param string $str
-     *
-     * @throws \ErrorException
-     *
      * @return bool
+     * @throws \ErrorException
      */
     public static function isAlpha($str)
     {
@@ -350,9 +348,7 @@ class Str
      * Vérifie si la chaine est en format slug
      *
      * @param string $str
-     *
      * @throws \ErrorException
-     *
      * @return bool
      */
     public static function isSlug($str)

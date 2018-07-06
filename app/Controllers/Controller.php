@@ -2,9 +2,10 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
+use Bow\Config\Config;
+use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
-use Bow\Application\Actionner;
 
 class Controller
 {
@@ -59,7 +60,7 @@ class Controller
      *
      * @param  string|array $key
      * @param  mixed        $setting
-     * @return Config|mixed
+     * @return Config|null
      */
     public function config($key = null, $setting = null)
     {
@@ -73,16 +74,21 @@ class Controller
      * @param string   $name
      * @param callable $cb
      *
-     * @return DB
+     * @return Database
      */
     public function db($name = null, callable $cb = null)
     {
         return call_user_func_array('db', func_get_args());
     }
 
+
     /**
      * Alias of table
      *
+     * @param $name
+     * @param null $class
+     * @param null $primary_key
+     * @param null $connexion
      * @return \Bow\Database\Query\Builder
      */
     public function table($name, $class = null, $primary_key = null, $connexion = null)
@@ -111,16 +117,6 @@ class Controller
     }
 
     /**
-     * Vérifie le toke généré par l'application.
-     *
-     * @return bool
-     */
-    public function verifyToken($strict = false)
-    {
-        return verify_token($this->getToken(), $strict);
-    }
-
-    /**
      * Faire la validation des données de la requête
      * en fonction des règles passées en paramètre
      *
@@ -131,6 +127,7 @@ class Controller
     protected function validate(Request $request, array $rule)
     {
         $validation = Validator::make($request->all(), $rule);
+
         return $validation;
     }
 }

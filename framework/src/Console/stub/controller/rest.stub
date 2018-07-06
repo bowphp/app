@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Controllers;
-{modelNamespace}
-use Bow\Database\Database;
+namespace App\Controllers{namespace};
 
-class {className} extends Controller
+use App\Controllers\Controller;
+
+class ClassName extends Controller
 {
     /**
      * Point d'entré
-     * GET /{path}
+     * GET prefix
      *
-     * @param mixed $id [optional] L'identifiant de l'element à récupérer
-     * @return mixed
+     * @return void
      */
-    public function index($id = null)
+    public function index()
     {
         // Codez Ici
     }
@@ -21,7 +20,9 @@ class {className} extends Controller
     /**
      * Permet d'afficher la vue permettant de créer une résource.
      *
-     * GET /{path}create
+     * GET {prefix}/create
+     *
+     * @return void
      */
     public function create()
     {
@@ -31,7 +32,9 @@ class {className} extends Controller
     /**
      * Permet d'ajouter une nouvelle résource dans la base d'information
      *
-     * POST /{path}
+     * POST {prefix}
+     *
+     * @return void
      */
     public function store()
     {
@@ -41,10 +44,10 @@ class {className} extends Controller
     /**
      * Permet de récupérer un information précise avec un identifiant.
      *
-     * GET /{path}:id
+     * GET {prefix}/:id
      *
-     * @param mixed $id L'identifiant de l'élément à récupérer
-     * @return mixed
+     * @param mixed $id
+     * @return void
      */
     public function show($id)
     {
@@ -52,12 +55,12 @@ class {className} extends Controller
     }
 
     /**
-     * Mise à jour d'un résource en utilisant paramètre du GET
+     * Mise à jour d'un ressource en utilisant paramètre du GET
      *
-     * GET /{path}:id/edit
+     * GET {prefix}/:id/edit
      *
-     * @param mixed $id L'identifiant de l'élément à mettre à jour
-     * @return mixed
+     * @param mixed $id
+     * @return void
      */
     public function edit($id)
     {
@@ -67,10 +70,10 @@ class {className} extends Controller
     /**
      * Mise à jour d'une résource
      *
-     * PUT /{path}:id
+     * PUT {prefix}/:id
      *
-     * @param mixed $id L'identifiant de l'élément à mettre à jour
-     * @return mixed
+     * @param mixed $id
+     * @return void
      */
     public function update($id)
     {
@@ -80,10 +83,10 @@ class {className} extends Controller
     /**
      * Permet de supprimer une resource
      *
-     * DELETE /{path}:id
+     * DELETE {prefix}/:id
      *
-     * @param mixed $id L'identifiant de l'élément à supprimer
-     * @return mixed
+     * @param mixed $id
+     * @return void
      */
     public function destroy($id)
     {

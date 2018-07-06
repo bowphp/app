@@ -55,6 +55,39 @@ class Request
     }
 
     /**
+     * Get request value
+     *
+     * @param string $key
+     * @param null $default
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        return static::$input->get($key, $default);
+    }
+
+    /**
+     * Check if key is exists
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function has($key)
+    {
+        return static::$input->has($key);
+    }
+
+    /**
+     * Get all input value
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return static::$input->all();
+    }
+
+    /**
      * retourne uri envoyer par client.
      *
      * @return string

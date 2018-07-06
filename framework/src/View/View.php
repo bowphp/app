@@ -56,6 +56,7 @@ class View
         }
 
         static::$config = $config;
+
         static::$template = new static::$container[$engine]($config);
     }
 
@@ -115,6 +116,7 @@ class View
     public function setEngine($engine)
     {
         static::$instance = null;
+
         static::$config['view.engine'] = $engine;
 
         return $this;
@@ -135,6 +137,7 @@ class View
     public function setExtension($extension)
     {
         static::$instance = null;
+
         static::$config['view.extension'] = $extension;
 
         return $this;
@@ -159,6 +162,7 @@ class View
         }
 
         static::$container[$name] = $engine;
+
         return true;
     }
 
