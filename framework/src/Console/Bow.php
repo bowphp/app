@@ -2,8 +2,6 @@
 
 namespace Bow\Console;
 
-use Psy\Shell;
-use Psy\Configuration;
 use Bow\Support\Faker;
 use Bow\Database\Database;
 
@@ -344,7 +342,13 @@ class Bow
             return;
         }
 
-        $shell = new Shell(new Configuration());
+        $config = new \Psy\Configuration();
+
+        $config->setPrompt('bow >> ');
+
+        $config->setUpdateCheck(\Psy\VersionUpdater\Checker::NEVER);
+
+        $shell = new \Psy\Shell($config);
 
         $shell->setIncludes($this->bootstrap);
 
