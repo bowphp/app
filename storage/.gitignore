@@ -1,8 +1,8 @@
-logs/*
+app
+workspace
+sqlite
 !app/.gitkeep
-cache/view/*
-cache/bow/*
-!cache/view/.gitkeep
-!cache/bow/.gitkeep
+!workspace/view/.gitkeep
+!workspace/cache/.gitkeep
 !sqlite/data.sqlite
 !.gitignore
