@@ -27,7 +27,7 @@ return [
     /**
      * Repertoure de cache
      */
-    'cache' => __DIR__.'/../storage/cache',
+    'cache' => __DIR__ . '/../storage/workspace/cache',
 
     /**
      * FTP configuration

@@ -36,7 +36,7 @@ return [
      * Le repertoire de cache.
      * quand le cache sera remplit c'est à vous de le vidé
      */
-    'cache' => __DIR__ . '/../storage/cache',
+    'cache' => __DIR__ . '/../storage/workspace/view',
 
     /**
      * active le systeme réchargé de cache.
