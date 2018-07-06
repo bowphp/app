@@ -47,7 +47,7 @@ class MustacheEngine extends EngineAbstract
         );
 
         $this->template = new \Mustache_Engine([
-            'cache' => $config['view.cache'].'/view',
+            'cache' => $config['view.cache'],
             'loader' => $loader,
             'partials_loader' => $this->partails_loader,
             'helpers' => $helpers

@@ -37,7 +37,7 @@ class PHPEngine extends EngineAbstract
 
         $cache_hash_filename = '_PHP_'.hash('sha1', $hash_filename).'.php';
 
-        $cache_hash_filename = $this->config['view.cache'].'/view/'.$cache_hash_filename;
+        $cache_hash_filename = $this->config['view.cache'].'/'.$cache_hash_filename;
 
         extract($data);
 

@@ -30,7 +30,7 @@ class TwigEngine extends EngineAbstract
         $env = [
             'auto_reload' => $config['view.auto_reload_cache'],
             'debug' => true,
-            'cache' => $config['view.cache'].'/view'
+            'cache' => $config['view.cache']
         ];
 
         $this->template = new \Twig_Environment($loader, $env);

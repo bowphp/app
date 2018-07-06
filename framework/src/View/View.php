@@ -74,6 +74,7 @@ class View
      * Permet de créer et retourner une instance de View
      *
      * @return View
+     * @throws
      */
     public static function getInstance()
     {
@@ -90,7 +91,6 @@ class View
      * @param  string $viewname
      * @param  array  $data
      * @return string
-     * @throws ViewException
      */
     public static function make($viewname, array $data = [])
     {
@@ -158,7 +158,7 @@ class View
         }
 
         if (!class_exists($engine)) {
-            throw new ViewException($engine, ' N\'existe pas.');
+            throw new ViewException($engine, ' n\'existe pas.');
         }
 
         static::$container[$name] = $engine;
