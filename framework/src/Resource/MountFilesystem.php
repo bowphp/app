@@ -1,11 +1,7 @@
 <?php
 namespace Bow\Resource;
 
-use BadMethodCallException;
-use Bow\Resource\Exception\ResourceException;
-use function realpath;
-
-class MountFilesystem
+class MountFilesystem implements FilesystemInterface
 {
     /**
      * @var
@@ -107,9 +103,11 @@ class MountFilesystem
     public function put($file, $content)
     {
         $file = $this->resolvePath($file);
+
         $dirname = dirname($file);
 
         $this->makeDirectory($dirname);
+
         return file_put_contents($file, $content);
     }
 
