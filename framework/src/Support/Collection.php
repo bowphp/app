@@ -223,26 +223,21 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
      * each parcour l'ensemble des valeurs de la collection
      *
      * @param callable $cb
-     *
-     * @return Collection
      */
     public function each(callable $cb)
     {
         foreach ($this->storage as $key => $value) {
             call_user_func_array($cb, [$value, $key]);
         }
-
-        return $this;
     }
 
     /**
      * fusion la collection avec un tableau ou une autre collection
      *
      * @param Collection|array $array
+     * @return Collection
      *
      * @throws \ErrorException
-     *
-     * @return Collection
      */
     public function merge($array)
     {
@@ -268,11 +263,13 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
     {
         $data = $this->storage;
 
+        $new = [];
+
         foreach ($data as $key => $value) {
-            $data[$key] = call_user_func_array($cb, [$value, $key]);
+            $new[$key] = call_user_func_array($cb, [$value, $key]);
         }
 
-        return new Collection($data);
+        return new Collection($new);
     }
 
     /**
@@ -384,7 +381,6 @@ class Collection implements \Countable, \JsonSerializable, \IteratorAggregate, \
      * Max
      *
      * @param callable $cb
-     *
      * @return number
      */
     public function min($cb = null)
