@@ -5,7 +5,7 @@
 <h4 align="center">The BOW PHP framework</h4>
 <br/>
 <p align="center">
-    <a href="https://papac.github.com/bow" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
+    <a href="https://papac.github.com/docs" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
     <a href="https://packagist.org/papac/bow" title="version"><img src="https://img.shields.io/packagist/v/papac/bow.svg?style=flat-square"/></a>
     <a href="https://github.com/papac/bow/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
     <a href="https://travis-ci.org/papac/bow" title="Travis branch"><img src="https://img.shields.io/travis/papac/bow/master.svg?style=flat-square"/></a>
