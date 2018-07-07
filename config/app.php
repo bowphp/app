@@ -42,15 +42,5 @@ return [
      * Le mode de débogage de l'application
      * development | production
      */
-    'debug' => 'development',
-
-    /**
-     * Le chemin vers le fichier de configuration
-     */
-    'migration' => __DIR__.'/../db/migration',
-
-    /**
-     * Le chemin vers le fichier des seeders
-     */
-    'seeder' => __DIR__.'/../db/seeders'
+    'debug' => env('MODE', 'development')
 ];

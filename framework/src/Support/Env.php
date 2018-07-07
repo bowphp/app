@@ -3,6 +3,9 @@ namespace Bow\Support;
 
 class Env
 {
+    /**
+     * @var object
+     */
     private static $env;
 
     /**
@@ -61,13 +64,14 @@ class Env
      *
      * @param string $key
      * @param null   $value
+     * @return mixed
      */
     public static function set($key, $value)
     {
         if (isset(static::$env->$key)) {
-            static::$env->$key = $value;
+            return static::$env->$key = $value;
         }
 
-        putenv(Str::upper($key) . '=' . $value);
+        return putenv(Str::upper($key) . '=' . $value);
     }
 }

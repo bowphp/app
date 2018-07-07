@@ -2,6 +2,7 @@
 
 namespace Bow\Application;
 
+use Bow\Http\Redirect;
 use Bow\Http\Request;
 use Bow\Router\Route;
 use Bow\Config\Config;
@@ -454,9 +455,6 @@ class Application
             }
         }
 
-        // drapeaux d'erreur.
-        $error = true;
-
         // Vérification de l'existance de methode de la requete dans
         // la collection de route
         if (!isset($this->routes[$method])) {
@@ -471,6 +469,8 @@ class Application
 
             return false;
         }
+
+        $response = null;
 
         foreach ($this->routes[$method] as $key => $route) {
             // route doit être une instance de Route
@@ -489,20 +489,12 @@ class Application
             // Appel de l'action associer à la route
             $response = $route->call($this->request);
 
-            if (is_string($response)) {
-                $this->response->send($response);
-            } elseif (is_array($response) || is_object($response)) {
-                $this->response->json($response);
-            }
-
-            $error = false;
-
             break;
         }
 
         // Gestion de erreur
-        if (!$error) {
-            return true;
+        if (!is_null($response)) {
+            return $this->sendResponse($response);
         }
 
         // Application du code d'erreur 404
@@ -512,6 +504,14 @@ class Application
             $this->response->statusCode(404);
 
             $r = call_user_func($this->error_code[404]);
+
+            return $this->response->send($r, true);
+        }
+
+        if (in_array($code = http_response_code(), array_keys($this->error_code))) {
+            $this->response->statusCode($code);
+
+            $r = call_user_func($this->error_code[$code]);
 
             return $this->response->send($r, true);
         }
@@ -526,6 +526,29 @@ class Application
             sprintf('La route "%s" n\'existe pas', $this->request->uri()),
             E_ERROR
         );
+    }
+
+    /**
+     * Envoi la reponse au client
+     *
+     * @param $response
+     * @return null
+     */
+    public function sendResponse($response)
+    {
+        if (is_string($response)) {
+            $this->response->send($response);
+        }
+
+        if (is_array($response) || is_object($response)) {
+            $this->response->json($response);
+        }
+
+        if ($response instanceof Redirect) {
+            return $this->response->addHeader('Location', (string) $response);
+        }
+
+        return;
     }
 
     /**
@@ -632,16 +655,6 @@ class Application
         }
 
         return $this;
-    }
-
-    /**
-     * Retourne la listes des routes de l'application
-     *
-     * @return array
-     */
-    public function getRoutes()
-    {
-        return $this->config['app.routes'];
     }
 
     /**
@@ -759,23 +772,5 @@ class Application
         }
 
         return $this->capsule($params[0], $params[1]);
-    }
-
-    /**
-     * __destruct
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        $code = http_response_code();
-
-        $this->response->statusCode($code);
-
-        if (isset($this->error_code[$code])) {
-            $r = call_user_func($this->error_code[$code]);
-
-            $this->response->send($r);
-        }
     }
 }

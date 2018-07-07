@@ -42,6 +42,11 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     protected $safeDeleted = false;
 
     /**
+     * @var string
+     */
+    protected $latest = 'created_at';
+
+    /**
      * @var array
      */
     protected $attributes = [];
@@ -93,6 +98,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public function __construct(array $attributes = [])
     {
         $this->attributes = $attributes;
+
         $this->original = $attributes;
 
         static::query();
@@ -121,6 +127,16 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public static function first()
     {
         return static::query()->first();
+    }
+
+    /**
+     * @return \Bow\Database\SqlUnity|null
+     */
+    public static function latest()
+    {
+        $query = new static();
+
+        return $query->orderBy($query->latest, 'desc')->first();
     }
 
     /**
@@ -198,13 +214,10 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
         $static = new static();
 
         if ($static->timestamps) {
-            $data = array_merge(
-                $data,
-                [
+            $data = array_merge($data, [
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
-                ]
-            );
+            ]);
         }
 
         if (!array_key_exists($static->primaryKey, $data)) {
@@ -357,6 +370,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public function save()
     {
         $builder = static::query();
+
         $primary_key_value = $this->getPrimaryKeyValue();
 
         if ($primary_key_value != null) {
@@ -364,7 +378,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
                 $this->original[$this->primaryKey] = $primary_key_value;
 
                 $update_data = [];
-                
+
                 foreach ($this->attributes as $key => $value) {
                     if (!isset($this->original[$key]) || $this->original[$key] != $value) {
                         $update_data[$key] = $value;
@@ -420,6 +434,7 @@ abstract class Model implements \ArrayAccess, \JsonSerializable
     public function delete()
     {
         $primary_key_value = $this->getPrimaryKeyValue();
+
         $builder = static::query();
 
         if ($primary_key_value == null) {

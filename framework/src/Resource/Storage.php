@@ -116,7 +116,7 @@ class Storage
      * Mount service
      *
      * @param string $service
-     * @return FilesystemInterface
+     * @return mixed
      */
     public static function service($service)
     {

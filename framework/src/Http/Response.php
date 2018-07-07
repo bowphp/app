@@ -79,6 +79,7 @@ class Response
     public function addHeader($key, $value)
     {
         header($key.': '.$value);
+
         return $this;
     }
 
@@ -111,6 +112,8 @@ class Response
         }
 
         readfile($file);
+
+        die;
     }
 
     /**
@@ -153,6 +156,7 @@ class Response
         }
 
         $this->statusCode($code);
+
         return $this->send(json_encode($data), false);
     }
 

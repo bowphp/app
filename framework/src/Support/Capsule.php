@@ -95,13 +95,14 @@ class Capsule implements \ArrayAccess
      *
      * @param $key
      * @param array $parameters
+     * @return mixed
      * @throws
      */
     public function makeWith($key, $parameters = [])
     {
         $this->parameters = $parameters;
 
-        $this->resolve($key);
+        return $this->resolve($key);
     }
 
     /**
@@ -151,6 +152,7 @@ class Capsule implements \ArrayAccess
         }
 
         $constructor = $reflection->getConstructor();
+
         if (!$constructor) {
             return $reflection->newInstance();
         }

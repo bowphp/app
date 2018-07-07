@@ -36,8 +36,7 @@ class Config implements \ArrayAccess
 
     /**
      * @param string $base_path
-     *
-     * @throws \Bow\Exception\UtilException
+     * @throws
      */
     public function __construct($base_path)
     {

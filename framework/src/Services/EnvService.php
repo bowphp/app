@@ -23,6 +23,7 @@ class EnvService extends BowService
 
     /**
      * @inheritdoc
+     * @throws
      */
     public function start()
     {
