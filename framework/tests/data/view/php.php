@@ -1,1 +1,0 @@
-<p><?php echo isset($name) ? $name : 'bow'; ?> see hello world by <?php echo isset($engine) ? $engine : 'php'; ?></p>
