@@ -5,6 +5,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0",
+        "bowphp/framework": "@stable",
         "filp/whoops": "^2.1",
         "nesbot/carbon": "^1.21",
         "pda/pheanstalk": "^3.1",
