@@ -1,5 +1,5 @@
 {
-    "name": "bowphp/bow",
+    "name": "bowphp/app",
     "description": "The bow PHP Framework",
     "keywords": ["framework", "bow", "php", "php-framework"],
     "type": "project",
