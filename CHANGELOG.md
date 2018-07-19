@@ -6,7 +6,7 @@
 	- Réfonte du projet
 	- Modification du concepte du middleware et Implémentation du concepte firewall
 	enfin de conserver un minimal d'inventivité
-	
+
 ### [1.0.0]
 - Changement
     - Implementation de barry ORM
@@ -38,3 +38,7 @@
 
 - Correction
 	- Correction sur l'execution des tests unitaires
+
+## [3.5]
+- Changement
+	- Externalisation du framework
