@@ -27,6 +27,7 @@ before_script:
 install:
   - composer install --prefer-dist
   - composer require mustache/mustache pug-php/pug
+  - php -r 'file_exists(".env.json") || copy(".env.exemple.json", ".env.json");'
   - php bow serve --port=5000 &
   - sleep 5
 
