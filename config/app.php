@@ -31,12 +31,22 @@ return [
     /**
      * Le chemin vers les fichiers statics
      */
-    'static' => '/',
+    'public_path' => '/',
 
     /**
      * Chemin vers le dossier des fichiers statics
      */
-    'assets' => __DIR__.'/../public',
+    'assets_path' => __DIR__.'/../public',
+
+    /**
+     * Chemin vers le dossier des fichiers statics
+     */
+    'public_path' => __DIR__.'/../public',
+
+    /**
+     * Chemin vers le dossier des fichiers statics
+     */
+    'storage_path' => __DIR__.'/../storage',
 
     /**
      * Le mode de débogage de l'application
