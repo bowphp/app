@@ -64,8 +64,8 @@ Pour participer au projet il faut:
 Ou bien allez dans la page des [issues](https://github.com/bowphp/app/issues), faites vos corrections et enfin suivez [publier](#contribution).
 
 # Auteurs
-> Franck Dakia <dakiafranck@gmail.com> &bull; [@franck_dakia](https://twitter.com/franck_dakia)
-> Ayiyikoh <fablab@ayiyikoh.org> &bull; [@ayiyikoh](https://twitter.com/ayiyikoh) hashtag: __#GoAyiyikoh__
+* Franck Dakia <dakiafranck@gmail.com> &bull; [@franck_dakia](https://twitter.com/franck_dakia)
+* Ayiyikoh <fablab@ayiyikoh.org> &bull; [@ayiyikoh](https://twitter.com/ayiyikoh) hashtag: __#GoAyiyikoh__
 
 ---
-> SVP s'il y a un bogue sur le projet veuillez me contacter.
+> SVP s'il y a un bogue sur le projet veuillez me contacter sur mon [slack](https://papac.slack.com)
