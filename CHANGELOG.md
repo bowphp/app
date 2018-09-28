@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Change] rename `.env.exemple.json` to `.env.example.json`
 - [Fix] fix travis-ci configuration [#3](https://github.com/bowphp/app/issues/3)
+- [Fix] fix undefined function `bow_hash` [#4](https://github.com/bowphp/app/issues/4)
