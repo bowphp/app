@@ -1,8 +1,8 @@
 <?php
 
-use \Bow\Database\Migration\Schema;
-use \Bow\Database\Migration\Migration;
-use \Bow\Database\Migration\TablePrinter as Printer;
+use Bow\Database\Migration\Schema;
+use Bow\Database\Migration\Migration;
+use Bow\Database\Migration\TablePrinter as Printer;
 
 class CreateUsersTable extends Migration
 {
