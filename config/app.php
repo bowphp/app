@@ -29,24 +29,19 @@ return [
     'envfile' => realpath(__DIR__.'/../.env.json'),
 
     /**
-     * Le chemin vers les fichiers statics
+     * Chemin vers le dossier components
      */
-    'public_path' => '/',
+    'component_path' => dirname(__DIR__).'/components',
 
     /**
-     * Chemin vers le dossier des fichiers statics
+     * Chemin vers le dossier public
      */
-    'assets_path' => __DIR__.'/../public',
+    'public_path' => dirname(__DIR__).'/public',
 
     /**
-     * Chemin vers le dossier des fichiers statics
+     * Chemin vers le dossier storage
      */
-    'public_path' => __DIR__.'/../public',
-
-    /**
-     * Chemin vers le dossier des fichiers statics
-     */
-    'storage_path' => __DIR__.'/../storage',
+    'storage_path' =>dirname(__DIR__).'/storage',
 
     /**
      * Le mode de débogage de l'application
