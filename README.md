@@ -35,7 +35,7 @@ Pour installer une copie de Bow il vous faut d'abord installer [composer](https:
 ```sh
   $ composer create-project --prefer-dist bowphp/app
   $ cd app
-  $ php bow serve --port=8000 --host=0.0.0.0
+  $ php bow run:server --port=8000 --host=0.0.0.0
 ```
 
 > __NB__: Il est conseillé d'installer `composer` de façon globale sur votre machine. Pour ce faire référez-vous à la [documentation](https://getcomposer.org/download) d'installation de composer.
@@ -51,7 +51,7 @@ $app->get('/hello/:name', function($name) {
 });
 ```
 
-Dans votre navigateur et tapez `http://localhost:5000/hello/bow`. `5000` est le port par défaut quand vous faites `php bow serve`.
+Dans votre navigateur et tapez `http://localhost:8000/hello/bow`. `8000` est le port par défaut quand vous faites `php bow run:server`.
 
 ```html
 hello, world bow

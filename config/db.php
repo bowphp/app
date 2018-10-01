@@ -12,7 +12,7 @@ return [
     'fetch' => PDO::FETCH_OBJ,
 
     /**
-     * La base séléctionné par defaut
+     * le point de connexion par defaut
      */
     'default' => env('DB_DEFAULT', 'first'),
 
@@ -54,8 +54,8 @@ return [
 
         'sqlite' => [
             'driver' => env('SQLITE_DRIVER', 'sqlite'),
-            'database' => dirname(__DIR__).'/storage/sqlite/data.sqlite',
-            'charset'  => env('SQLITE_CHARSET', 'sqlite'),
+            'database' => env('SQLITE_DATABASE', dirname(__DIR__).'/storage/sqlite/database.sqlite'),
+            'charset'  => env('SQLITE_CHARSET', 'utf8'),
             'prefix' => env('SQLITE_PREFIX', '')
         ]
     ]
