@@ -53,8 +53,8 @@ return [
         'scheme' => env('SQLITE_SCHEME', 'sqlite'),
 
         'sqlite' => [
-            'driver' => env('SQLITE_DRIVER', __DIR__.'/../storage/database.sqlite'),
-            'database' => env('SQLITE_DATABASE', ''),
+            'driver' => env('SQLITE_DRIVER'),
+            'database' => env('SQLITE_DATABASE', __DIR__.'/../storage/database.sqlite'),
             'charset'  => env('SQLITE_CHARSET', 'utf8'),
             'prefix' => env('SQLITE_PREFIX', '')
         ]
