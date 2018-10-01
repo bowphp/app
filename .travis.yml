@@ -28,7 +28,7 @@ install:
   - composer install --prefer-dist
   - composer require mustache/mustache pug-php/pug
   - php -r 'file_exists(".env.json") || copy(".env.example.json", ".env.json");'
-  - php bow serve --port=5000 &
+  - php bow run:server --port=5000 &
   - sleep 5
 
 matrix:
