@@ -1,21 +1,30 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__."/vendor/autoload.php";
 
-use \Bow\Console\Bow;
-use \Bow\Console\Command;
+/**
+ * Make kernel instance
+ */
+$kernel = \App\Kernel\Loader::configure(__DIR__.'/config');
 
-$command = new Command(__DIR__);
+/**
+ * Create command instance and set filename
+ */
+$command = new \Bow\Console\Command(__DIR__);
+$command->setNamespaces($kernel->namespaces());
 
-$command->setMigrationDirectory(__DIR__.'/db/migration');
+/**
+ * Create console instance
+ */
+$console = new \Bow\Console\Bow($command);
 
-$command->setSeederDirectory(__DIR__.'/db/seeders');
+/**
+ * Bind kernel to console 
+ */
+$console->bind($kernel);
 
-$console = new Bow(__DIR__, $command);
-
-$console->setBootstrap([__DIR__.'/public/index.php']);
-
-$console->setServerFilename(__DIR__.'/server.php');
-
+/**
+ * Start console
+ */
 $console->run();

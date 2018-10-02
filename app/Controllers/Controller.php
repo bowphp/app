@@ -91,9 +91,9 @@ class Controller
      * @param null $connexion
      * @return \Bow\Database\Query\Builder
      */
-    public function table($name, $class = null, $primary_key = null, $connexion = null)
+    public function table($name, $connexion = null)
     {
-        return table($name, $class, $primary_key, $connexion);
+        return table($name, $connexion);
     }
 
     /**

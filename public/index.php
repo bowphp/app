@@ -1,28 +1,32 @@
 <?php
 /**
- * chargement des configurations
- * chargement des principaux fichiers de l'application bow
+ * Load application configurations
  */
 require __DIR__."/../vendor/autoload.php";
 
-use \Bow\Http\Request;
-use \Bow\Http\Response;
+/**
+ * Create kernel instance
+ */
+$kernel = \App\Kernel\Loader::configure(realpath(__DIR__.'/../config'));
 
-$kernel = new \App\Kernel\Loader(
-    realpath(__DIR__.'/../config')
-);
-
-// Création de l'application
+/**
+ * Création de l'application
+ */
 $app = Bow\Application\Application::make(
-    new Request, new Response
+    new \Bow\Http\Request, new \Bow\Http\Response
 );
 
+/**
+ * Bind kernel to application
+ */
 $app->bind($kernel);
 
-// Chargement des routeurs.
+/**
+ * Load application routing
+ */
 require __DIR__ . "/../routes/app.php";
 
-// Lancement de l'application
+/**
+ * Send application response
+ */
 $app->send();
-
-return $app;

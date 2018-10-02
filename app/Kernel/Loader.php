@@ -2,19 +2,9 @@
 
 namespace App\Kernel;
 
-use Bow\Auth\Auth;
-use Bow\Mail\Mail;
-use Bow\View\View;
-use Bow\Http\Cache;
-use Bow\Config\Config;
-use Bow\Security\Crypto;
-use Bow\Resource\Storage;
-use Bow\Support\DateAccess;
-use Bow\Database\Database;
-use Bow\Translate\Translator;
-use Bow\Application\Actionner;
+use Bow\Configuration\Loader as ApplicationLoader;
 
-class Loader extends Config
+class Loader extends ApplicationLoader
 {
     /**
      * Get app namespace
@@ -25,7 +15,9 @@ class Loader extends Config
     {
         return [
             'controller' => 'App\\Controllers',
-            'middleware' => 'App\\Middleware'
+            'middleware' => 'App\\Middleware',
+            'service' => 'App\\Configurations',
+            'validation' => 'App\\Validations'
         ];
     }
 
@@ -45,29 +37,37 @@ class Loader extends Config
     }
 
     /**
-     * All app services register
+     * All app configurations register
      *
      * @return array
      */
-    public function services()
+    public function configurations()
     {
         return [
             // Chargement des environement
-            \Bow\Services\EnvService::class,
+            \Bow\Services\EnvConfiguration::class,
 
             // Service interne
-            \Bow\Mail\MailService::class,
-            \Bow\Security\CryptoService::class,
-            \Bow\Database\DatabaseService::class,
-            \Bow\Services\CacheService::class,
-            \Bow\Resource\StorageService::class,
-            \Bow\View\ViewService::class,
-            \Bow\Translate\TranslatorService::class,
-            \Bow\Auth\AuthenticateService::class,
-            \Bow\Services\ActionnerService::class,
-            \Bow\Services\LoggerService::class
+            \Bow\Mail\MailConfiguration::class,
+            \Bow\Security\CryptoConfiguration::class,
+            \Bow\Database\DatabaseConfiguration::class,
+            \Bow\Configurations\CacheConfiguration::class,
+            \Bow\Resource\StorageConfiguration::class,
+            \Bow\View\ViewConfiguration::class,
+            \Bow\Translate\TranslatorConfiguration::class,
+            \Bow\Auth\AuthenticateConfiguration::class,
+            \Bow\Configurations\ActionnerConfiguration::class,
+            \Bow\Configurations\LoggerConfiguration::class
 
             // Vos service
         ];
+    }
+
+    /**
+     * Service Bootstrap
+     */
+    public function boot()
+    {
+        parent::boot();
     }
 }
