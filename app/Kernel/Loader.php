@@ -45,22 +45,26 @@ class Loader extends ApplicationLoader
     public function configurations()
     {
         return [
-            // Chargement des environement
-            \Bow\Services\EnvConfiguration::class,
+            /**
+             * Configuration interne du framework 
+             */
+            \Bow\Configuration\Configurations\EnvConfiguration::class,
 
-            // Service interne
             \Bow\Mail\MailConfiguration::class,
             \Bow\Security\CryptoConfiguration::class,
             \Bow\Database\DatabaseConfiguration::class,
-            \Bow\Configurations\CacheConfiguration::class,
-            \Bow\Resource\StorageConfiguration::class,
+            \Bow\Storage\StorageConfiguration::class,
             \Bow\View\ViewConfiguration::class,
             \Bow\Translate\TranslatorConfiguration::class,
             \Bow\Auth\AuthenticateConfiguration::class,
-            \Bow\Configurations\ActionnerConfiguration::class,
-            \Bow\Configurations\LoggerConfiguration::class
+    
+            \Bow\Configuration\Configurations\CacheConfiguration::class,
+            \Bow\Configuration\Configurations\ActionnerConfiguration::class,
+            \Bow\Configuration\Configurations\LoggerConfiguration::class
 
-            // Vos service
+            /**
+             * Ajoutez vos Configuration personnalisé ici.
+             */
         ];
     }
 
