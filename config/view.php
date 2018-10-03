@@ -39,9 +39,9 @@ return [
     'cache' => __DIR__ . '/../storage/workspace/view',
 
     /**
-     * active le systeme réchargé de cache.
-     * Quand la valeur est à true
-     * Disponible seulement pour twig
+     * Option additionnel
      */
-    'auto_reload_cache' => true
+    'aditionnal_options' => [
+        // 'auto_reload_cache' => true
+    ]
 ];
