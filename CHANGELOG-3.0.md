@@ -15,3 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.0.1] - 2018-09-28
 
 - [Fix] fix undefined function `bow_hash` [#4](https://github.com/bowphp/app/issues/4)
+
+## [3.1.0] - 2018-10-03
+
+- [Change] Update view config
+- [Change] Refonte of kernel and change kernel loader concept
+- [Change] Refonte task runner
