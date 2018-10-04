@@ -1,12 +1,6 @@
 <?php
 
-use Bow\Http\Request;
-use App\User;
-
-$app->get("/", function (Request $request, User $user) {
-
-	debug($request->get('name'), $user->toSql());
-
+$app->get("/", function () {
     return view("welcome");
 });
 

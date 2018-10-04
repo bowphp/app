@@ -22,7 +22,7 @@ return [
     /**
      * Repertoire de log
      */
-    'log' => __DIR__.'/../storage/logs',
+    'log' => __DIR__.'/../storage/workspace/logs',
 
     /**
      * Repertoure de cache

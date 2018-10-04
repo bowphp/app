@@ -60,6 +60,7 @@ class Loader extends ApplicationLoader
     
             \Bow\Configuration\Configurations\CacheConfiguration::class,
             \Bow\Configuration\Configurations\ActionnerConfiguration::class,
+            \Bow\Session\SessionConfiguration::class,
 
             /**
              * Ajoutez vos Configuration personnalisé ici.

@@ -6,11 +6,10 @@
  */
 
 return [
-
     /**
      * Nom de l'Application
      */
-    'name' => 'The Bow Framework',
+    'name' => 'Bow',
 
     /**
      * Racine de l'application
