@@ -1,8 +1,12 @@
 app
 workspace
-sqlite
+
+# Not self ignore
+!.gitignore
+
+# Not ignore .gitkepp
 !app/.gitkeep
 !workspace/view/.gitkeep
 !workspace/cache/.gitkeep
-!sqlite/data.sqlite
-!.gitignore
+!workspace/logs/.gitkeep
+!workspace/session/.gitkeep
