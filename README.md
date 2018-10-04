@@ -6,7 +6,7 @@
 <br/>
 <p align="center">
     <a href="https://github.com/bowphp/docs" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
-    <a href="https://packagist.org/bowphp/app" title="version"><img src="https://img.shields.io/packagist/v/bowphp/app.svg?style=flat-square"/></a>
+    <a href="https://packagist.org/packages/bowphp/app" title="version"><img src="https://img.shields.io/packagist/v/bowphp/app.svg?style=flat-square"/></a>
     <a href="https://github.com/bowphp/app/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
     <a href="https://travis-ci.org/bowphp/app" title="Travis branch"><img src="https://img.shields.io/travis/bowphp/app/master.svg?style=flat-square"/></a>
 </p>
