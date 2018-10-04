@@ -80,9 +80,9 @@ Après l'installation de Bow, vous aurez bésoin de configurer quelques permissi
 
 Vous pouvez également configurer quelques composants supplémentaires de Bow, tels que:
 
-- [Session](https://github.com/bowphp/docs/blob/master/session.md)
-- [Base de donnée](https://github.com/bowphp/docs/blob/master/database.md)
-- [Réssource](https://github.com/bowphp/docs/blob/master/filesystem.md)
+- [Session](https://github.com/bowphp/docs/blob/3.0/session.md)
+- [Base de donnée](https://github.com/bowphp/docs/blob/3.0/database.md)
+- [Ressource](https://github.com/bowphp/docs/blob/3.0/storage.md)
 
 > Je vous invite à régarder ces configurations.
 
