@@ -80,6 +80,9 @@ Après l'installation de Bow, vous aurez bésoin de configurer quelques permissi
 
 Vous pouvez également configurer quelques composants supplémentaires de Bow, tels que:
 
+- [Installation](https://github.com/bowphp/docs/blob/3.0/installation.md)
+- [Routing](https://github.com/bowphp/docs/blob/3.0/routing.md)
+- [Controlleur](https://github.com/bowphp/docs/blob/3.0/controllers.md)
 - [Session](https://github.com/bowphp/docs/blob/3.0/session.md)
 - [Base de donnée](https://github.com/bowphp/docs/blob/3.0/database.md)
 - [Ressource](https://github.com/bowphp/docs/blob/3.0/storage.md)
