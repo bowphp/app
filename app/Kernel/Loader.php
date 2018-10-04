@@ -30,10 +30,9 @@ class Loader extends ApplicationLoader
     public function middlewares()
     {
         return [
-            'csrf' => \Bow\Middleware\CsrfMiddleware::class,
-            'trim' => \Bow\Middleware\TrimMiddleware::class,
+            'csrf' => \App\Middleware\ClientCsrfMiddleware::class,
             'auth' => \App\Middleware\Authenticate::class,
-            'guest' => \App\Middleware\Guest::class,
+            'guest' => \App\Middleware\Guest::class
         ];
     }
 
