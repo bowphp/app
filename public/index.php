@@ -10,10 +10,10 @@ require __DIR__."/../vendor/autoload.php";
 $kernel = \App\Kernel\Loader::configure(realpath(__DIR__.'/../config'));
 
 /**
- * Création de l'application
+ * Creation of application
  */
 $app = Bow\Application\Application::make(
-    new \Bow\Http\Request, new \Bow\Http\Response
+    \Bow\Http\Request::getInstance(), \Bow\Http\Response::getInstance()
 );
 
 /**

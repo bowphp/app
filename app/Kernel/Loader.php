@@ -46,8 +46,9 @@ class Loader extends ApplicationLoader
     {
         return [
             /**
-             * Configuration interne du framework 
+             * Configuration interne du framework
              */
+            \Bow\Configuration\Configurations\LoggerConfiguration::class,
             \Bow\Configuration\Configurations\EnvConfiguration::class,
 
             \Bow\Mail\MailConfiguration::class,
@@ -60,7 +61,6 @@ class Loader extends ApplicationLoader
     
             \Bow\Configuration\Configurations\CacheConfiguration::class,
             \Bow\Configuration\Configurations\ActionnerConfiguration::class,
-            \Bow\Configuration\Configurations\LoggerConfiguration::class
 
             /**
              * Ajoutez vos Configuration personnalisé ici.

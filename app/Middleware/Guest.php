@@ -3,17 +3,19 @@
 namespace App\Middleware;
 
 use Bow\Auth\Auth;
+use Bow\Http\Request;
+use Closure;
 
 class Guest
 {
     /**
      * Fonction de lancement du middleware.
      *
-     * @param  \Bow\Http\Request $request
-     * @param  callable          $next
-     * @return boolean
+     * @param  Request $request
+     * @param  Callable $next
+     * @return mixed
      */
-    public function checker($request, callable $next)
+    public function checker(Request $request, callable $next)
     {
         if (Auth::guest()) {
             return $next($request);
