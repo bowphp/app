@@ -17,7 +17,7 @@
     <strong>N'hésitez pas à commencez maintenant.</strong>
 </p>
 
-## Préréquis
+## Prérequis
 
 Vous devez vous assurer les différents elements suivants sont installés sur votre machine.
 
