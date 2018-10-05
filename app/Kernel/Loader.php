@@ -14,7 +14,7 @@ class Loader extends ApplicationLoader
     public function namespaces()
     {
         return [
-            'controller' => 'App\\Papac\\Controllers',
+            'controller' => 'App\\Controllers',
             'middleware' => 'App\\Middleware',
             'configuration' => 'App\\Configurations',
             'validation' => 'App\\Validations',
