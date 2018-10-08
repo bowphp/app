@@ -15,7 +15,7 @@ class Guest
      * @param  Callable $next
      * @return mixed
      */
-    public function process(Request $request, callable $next)
+    public function process(Request $request, Callable $next)
     {
         if (Auth::guest()) {
             return $next($request);
