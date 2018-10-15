@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
-use Bow\Config\Config;
+use Bow\Configuration\Loader as Config;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
@@ -17,8 +17,12 @@ class Controller
      * @param  array $parameters
      * @return mixed
      */
-    public function redirect($url, array $parameters = [])
+    public function redirect($url = null, array $parameters = [])
     {
+        if (is_null($url)) {
+            return redirect();
+        }
+
         return redirect(url($url, $parameters));
     }
 
