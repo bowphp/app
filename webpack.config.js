@@ -1,11 +1,14 @@
 let path = require('path');
+let UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 let bowmix = require("./Bowmix");
 let fs = require('fs');
 let webpack = require('webpack');
 let rules = [];
-let resolve = {};
+let resolve = {extensions: [".js", ".scss", ".vue", ".less"]};
 let entry = {};
 let plugins = [
+  require('autoprefixer'),
   new webpack.ProgressPlugin()
 ];
 
@@ -32,25 +35,25 @@ let addEntry = (files) => {
   const exts = {
     ".js": ".js",
     ".jsx": ".js",
-    ".scss": ".css",
-    ".sass": ".css",
+    ".scss": ".css"
   }
 
   files.map(file => {
     if (file.length != 2) {
       return;
     }
+
     let info;
     let key;
     const filename = path.resolve(
       path.join(bowmix.config.prefix, file[0])
     );
 
+    // Parse file
     info = path.parse(filename);
-    key = path.join(file[1], isProd()
-      ? info['name'] + exts[info['ext']] 
-      : info['base'] 
-    );
+    
+    // Format de entry filename
+    key = path.join(file[1], info['name'] + (exts[info['ext']] || info['base']));
 
     return entry[key] = filename;
   });
@@ -66,38 +69,69 @@ if (isProd()) {
  * Bind vue rules
  */
 if (configExists(bowmix.vue)) {
+  const { VueLoaderPlugin } = require('vue-loader');
+
   rules.push({
     test: /\.vue$/,
     loader: 'vue-loader'
   });
+  
+  rules.push({
+    test: /\.css$/,
+    use: [
+      'vue-style-loader',
+      'css-loader'
+    ]
+  });
+
+  if (! configExists(bowmix.javascript)) {
+    rules.push({
+      test: /\.js$/,
+      loader: 'babel-loader'
+    });
+  }
 
   resolve.alias = {
     'vue$': 'vue/dist/vue.esm.js' // Use the full build
   }
+
+  plugins.push(new VueLoaderPlugin());
 }
 
 /**
  * Bind javascript rules
  */
 if (configExists(bowmix.javascript)) {
+  /**
+   * Push Vanilla and Reactjs rules
+   */
   rules.push({
     test: /\.jsx?$/,
-    exclude: /(node_modules|bower_components)/,
+    exclude: file => (
+      /(node_modules|bower_components)/.test(file) &&
+      !/\.vue\.js/.test(file)
+    ),
     use: {
       loader: "babel-loader",
       options: {
-        presets: ['babel-preset-env']
+        presets: [
+          'babel-preset-env', 
+          'babel-preset-es2015', 
+          'babel-preset-react'
+        ]
       }
     }
   });
 
-  rules.push({
-    test: /\.css$/,
-    use: [
-      "style-loader",
-      "css-loader"
-    ]
-  });
+  if (!configExists(bowmix.sass)) {
+    rules.push({
+      test: /\.css$/,
+      use: [
+        "style-loader",
+        "css-loader"
+      ]
+    });
+  }
 }
 
 /**
@@ -107,9 +141,15 @@ if (configExists(bowmix.sass)) {
   rules.push({
     test: /\.scss$/,
     use: [
-      "style-loader",
+      'vue-style-loader',
+      'style-loader',
       "css-loader",
-      "sass-loader"
+      {
+        loader: "sass-loader",
+        options: {
+          indentedSyntax: true
+        }
+      }
     ]
   });
 }
@@ -128,6 +168,7 @@ for (ref in bowmix) {
  * @type {Object}
  */
 module.exports = {
+  mode: isProd() ? "production" : "development",
   entry: entry,
   output: {
     filename: "[name]",
@@ -135,6 +176,16 @@ module.exports = {
   },
   module: {
     rules: rules
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      })
+      // new OptimizeCSSAssetsPlugin({})
+    ]
   },
   plugins: plugins,
   resolve: resolve
