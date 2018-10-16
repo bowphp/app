@@ -8,20 +8,13 @@ module.exports = {
 	 * Javascript compile files
 	 */
 	javascript: [
-		["components/js/app.js", "public/js"]
+		[]
 	],
 
 	/**
 	 * Vuejs compile files
 	 */
 	vue: [
-		["components/js/app.js", "public/js"]
-	],
-
-	/**
-	 * Reactjs compile files
-	 */
-	react: [
 		["components/js/app.js", "public/js"]
 	],
 

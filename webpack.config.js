@@ -5,7 +5,6 @@ let webpack = require('webpack');
 let rules = [];
 let resolve = {};
 let entry = {};
-let md5 = require('md5')
 let plugins = [
   new webpack.ProgressPlugin()
 ];
@@ -33,9 +32,14 @@ let addEntry = (files) => {
   const exts = {
     ".js": ".js",
     ".jsx": ".js",
-    ".scss": ".css"
+    ".scss": ".css",
+    ".sass": ".css",
   }
+
   files.map(file => {
+    if (file.length != 2) {
+      return;
+    }
     let info;
     let key;
     const filename = path.resolve(
@@ -44,11 +48,9 @@ let addEntry = (files) => {
 
     info = path.parse(filename);
     key = path.join(file[1], isProd()
-      ? info['name'] + '.[chunkhash]' + exts[info['ext']] 
-      : info['name'] + (exts[info['ext']] || info['ext']) 
+      ? info['name'] + exts[info['ext']] 
+      : info['base'] 
     );
-
-    key = key.replace('[chunkhash]', md5(Date.now() + key));
 
     return entry[key] = filename;
   });
@@ -78,14 +80,8 @@ if (configExists(bowmix.vue)) {
  * Bind javascript rules
  */
 if (configExists(bowmix.javascript)) {
-  let test = /\.js$/
-
-  if (configExists(bowmix.react)) {
-    test = /.jsx?$/
-  }
-
   rules.push({
-    test: test,
+    test: /\.jsx?$/,
     exclude: /(node_modules|bower_components)/,
     use: {
       loader: "babel-loader",
@@ -98,12 +94,8 @@ if (configExists(bowmix.javascript)) {
   rules.push({
     test: /\.css$/,
     use: [
-      {
-        loader: "style-loader"
-      }, 
-      {
-        loader: "css-loader"
-      }
+      "style-loader",
+      "css-loader"
     ]
   });
 }
@@ -122,6 +114,9 @@ if (configExists(bowmix.sass)) {
   });
 }
 
+/**
+ * Map entry information
+ */
 for (ref in bowmix) {
   if (ref != 'config') {
     addEntry(bowmix[ref]);
@@ -142,8 +137,5 @@ module.exports = {
     rules: rules
   },
   plugins: plugins,
-  resolve: resolve,
-  devServer: {
-      port: 3001
-  }
+  resolve: resolve
 };

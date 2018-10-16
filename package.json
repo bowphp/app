@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "dev": "./node_modules/.bin/webpack --progress --watch --hide-modules",
+        "dev": "./node_modules/.bin/webpack --progress --hide-modules",
+        "watch": "./node_modules/.bin/webpack --progress --watch --hide-modules",
         "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --hide-modules",
         "test": "./vendor/bin/phpunit",
         "dev-server": "./node_modules/.bin/webpack-dev-server",
