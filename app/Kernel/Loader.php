@@ -58,7 +58,7 @@ class Loader extends ApplicationLoader
             \Bow\Translate\TranslatorConfiguration::class,
             \Bow\Auth\AuthenticateConfiguration::class,
     
-            \Bow\Cache\CacheConfiguration::class,
+            \Bow\Configuration\Configurations\CacheConfiguration::class,
             \Bow\Configuration\Configurations\ActionnerConfiguration::class,
             \Bow\Session\SessionConfiguration::class,
 
