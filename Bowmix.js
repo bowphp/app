@@ -8,7 +8,7 @@ module.exports = {
 	 * Javascript compile files
 	 */
 	javascript: [
-		[]
+		// ["components/js/app.js", "public/js"]
 	],
 
 	/**
