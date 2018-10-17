@@ -8,24 +8,26 @@ class ApplicationTest extends Bow\Testing\BowTestCase
     protected $base_url = 'http://localhost:5000';
 
     /**
-     * @depends testApplicationInstance
+     * Test Welcome page
      */
     public function testGetWelcome()
     {
         $response = $this->visit('GET', '/');
 
-        $response->statusCodeMustBe(200)->contentTypeMustBe('text/html');
+        $response->assertStatus(200)->contentTypeMustBe('text/html');
     }
 
     /**
-     * @depends testApplicationInstance
+     * Test hello url
+     *
      * @dataProvider getUsers
+     * @param $name
      */
     public function testIndex($name)
     {
         $response = $this->visit('GET', '/hello/'.$name);
 
-        $response->statusCodeMustBe(200)->contentTypeMustBe('text/html');
+        $response->assertStatus(200)->contentTypeMustBe('text/html');
 
         $response->containsText(sprintf('<b>%s</b>', $name));
     }

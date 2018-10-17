@@ -4,7 +4,6 @@ namespace App\Middleware;
 
 use Bow\Auth\Auth;
 use Bow\Http\Request;
-use Closure;
 
 class Guest
 {
@@ -12,7 +11,7 @@ class Guest
      * Fonction de lancement du middleware.
      *
      * @param  Request $request
-     * @param  Callable $next
+     * @param  callable $next
      * @return mixed
      */
     public function process(Request $request, callable $next)
