@@ -66,7 +66,18 @@ let addEntry = (files) => {
  */
 if (configExists(bowmix.vue)) {
   const { VueLoaderPlugin } = require('vue-loader');
-
+  
+  if (! configExists(bowmix.javascript)) {
+    rules.push({
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /(node_modules|bower_components)/,
+            options: {
+                presets: ['babel-preset-env']
+            }
+        });
+    }
+    
   rules.push({
     test: /\.vue$/,
     loader: 'vue-loader'
@@ -79,17 +90,6 @@ if (configExists(bowmix.vue)) {
         'vue-style-loader',
         'css-loader'
       ]
-    });
-  }
-
-  if (! configExists(bowmix.javascript)) {
-    rules.push({
-      test: /\.js$/,
-      loader: 'babel-loader',
-      exclude: /(node_modules|bower_components)/,
-      options: {
-        presets: ['babel-preset-env']
-      }
     });
   }
 
