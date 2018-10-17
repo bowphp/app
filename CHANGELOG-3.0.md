@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2018-10-17
+
+- [Fix] remove test depandences
+- [Fix] formating
+
 ## [3.0.0] - 2018-10-15
 
 - [Change] Update view config
