@@ -20,7 +20,7 @@ $command->setNamespaces($kernel->namespaces());
 $console = new \Bow\Console\Bow($command);
 
 /**
- * Bind kernel to console 
+ * Bind kernel to console
  */
 $console->bind($kernel);
 

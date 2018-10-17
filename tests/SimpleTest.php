@@ -5,7 +5,7 @@ function see_hello()
     return 'hello world';
 }
 
-class FixturesTest extends \PHPUnit\Framework\TestCase
+class SimpleTest extends PHPUnit\Framework\TestCase
 {
     public function testHelperSeeHello()
     {

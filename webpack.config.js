@@ -1,11 +1,9 @@
 let path = require('path');
 let UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-let bowmix = require("./Bowmix");
-let fs = require('fs');
+let bowmix = require("./Mixfile");
 let webpack = require('webpack');
 let rules = [];
-let resolve = {extensions: [".js", ".scss", ".vue", ".less"]};
+let resolve = {extensions: [".js", ".scss", ".vue", ".less", ".jsx"]};
 let entry = {};
 let plugins = [
   require('autoprefixer'),
@@ -14,32 +12,32 @@ let plugins = [
 
 /**
  * Check if env is production
- * 
+ *
  * @return boolean
  */
-let isProd = () => process.env.NODE_ENV == 'production';
+let isProd = () => process.env.NODE_ENV === 'production';
 
 /**
  * Configuration exists
- * 
+ *
  * @param  {array} ref
  */
 let configExists = (ref) => typeof ref !== undefined && ref.length > 0;
 
 /**
  * Compile entries informations
- * 
- * @param {file} files
+ *
+ * @param {array} files
  */
 let addEntry = (files) => {
   const exts = {
     ".js": ".js",
     ".jsx": ".js",
     ".scss": ".css"
-  }
+  };
 
   files.map(file => {
-    if (file.length != 2) {
+    if (file.length !== 2) {
       return;
     }
 
@@ -53,17 +51,15 @@ let addEntry = (files) => {
     info = path.parse(filename);
     
     // Format de entry filename
-    key = path.join(file[1], info['name'] + (exts[info['ext']] || info['base']));
+    key = path.join(file[1], (info['name']  + (isProd() ? '.[chunkhash]' : '')) + (exts[info['ext']] || info['base']));
+
+    if (isProd()) {
+      key = key.replace('.[chunkhash]', '');
+    }
 
     return entry[key] = filename;
   });
-}
-
-if (isProd()) {
-  plugins.push(
-    new webpack.optimize.UglifyJsPlugin()
-  );
-}
+};
 
 /**
  * Bind vue rules
@@ -76,24 +72,30 @@ if (configExists(bowmix.vue)) {
     loader: 'vue-loader'
   });
   
-  rules.push({
-    test: /\.css$/,
-    use: [
-      'vue-style-loader',
-      'css-loader'
-    ]
-  });
+  if (!configExists(bowmix.sass)) {
+    rules.push({
+      test: /\.css$/,
+      use: [
+        'vue-style-loader',
+        'css-loader'
+      ]
+    });
+  }
 
   if (! configExists(bowmix.javascript)) {
     rules.push({
       test: /\.js$/,
-      loader: 'babel-loader'
+      loader: 'babel-loader',
+      exclude: /(node_modules|bower_components)/,
+      options: {
+        presets: ['babel-preset-env']
+      }
     });
   }
 
   resolve.alias = {
     'vue$': 'vue/dist/vue.esm.js' // Use the full build
-  }
+  };
 
   plugins.push(new VueLoaderPlugin());
 }
@@ -107,16 +109,12 @@ if (configExists(bowmix.javascript)) {
    */
   rules.push({
     test: /\.jsx?$/,
-    exclude: file => (
-      /(node_modules|bower_components)/.test(file) &&
-      !/\.vue\.js/.test(file)
-    ),
+    exclude: /(node_modules|bower_components)/,
     use: {
       loader: "babel-loader",
       options: {
         presets: [
-          'babel-preset-env', 
-          'babel-preset-es2015', 
+          'babel-preset-env',
           'babel-preset-react'
         ]
       }
@@ -125,10 +123,11 @@ if (configExists(bowmix.javascript)) {
 
   if (!configExists(bowmix.sass)) {
     rules.push({
-      test: /\.css$/,
+      test: /\.(scss|css)$/,
       use: [
-        "style-loader",
-        "css-loader"
+        'style-loader',
+        'css-loader',
+        'sass-loader'
       ]
     });
   }
@@ -139,17 +138,11 @@ if (configExists(bowmix.javascript)) {
  */
 if (configExists(bowmix.sass)) {
   rules.push({
-    test: /\.scss$/,
+    test: /\.(scss|css)$/,
     use: [
-      'vue-style-loader',
       'style-loader',
-      "css-loader",
-      {
-        loader: "sass-loader",
-        options: {
-          indentedSyntax: true
-        }
-      }
+      'css-loader',
+      'sass-loader'
     ]
   });
 }
@@ -157,9 +150,11 @@ if (configExists(bowmix.sass)) {
 /**
  * Map entry information
  */
-for (ref in bowmix) {
-  if (ref != 'config') {
-    addEntry(bowmix[ref]);
+for (let ref in bowmix) {
+  if (ref !== 'config') {
+    if (bowmix.hasOwnProperty(ref)) {
+      addEntry(bowmix[ref]);
+    }
   }
 }
 
@@ -176,16 +171,6 @@ module.exports = {
   },
   module: {
     rules: rules
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
-      })
-      // new OptimizeCSSAssetsPlugin({})
-    ]
   },
   plugins: plugins,
   resolve: resolve

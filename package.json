@@ -2,8 +2,8 @@
     "scripts": {
         "dev": "./node_modules/.bin/webpack --progress --hide-modules",
         "watch": "./node_modules/.bin/webpack --progress --watch --hide-modules",
-        "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --hide-modules",
-        "test": "./vendor/bin/phpunit",
+        "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --optimize-minimize --hide-modules",
+        "test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
         "dev-server": "./node_modules/.bin/webpack-dev-server",
         "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
     },
@@ -14,7 +14,6 @@
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-plugin-transform-runtime": "^6.23.0",
         "babel-preset-env": "^1.7.0",
-        "babel-preset-es2015": "^6.24.1",
         "babel-preset-react": "^6.24.1",
         "babel-preset-stage-3": "^6.24.1",
         "cross-env": "^5.0.5",
@@ -22,12 +21,8 @@
         "file-loader": "^1.1.4",
         "img-loader": "^3.0.0",
         "jquery": "^3.3.1",
-        "less": "^3.8.1",
-        "less-loader": "^4.1.0",
         "lodash": "^4.17.5",
-        "mini-css-extract-plugin": "^0.4.4",
         "node-sass": "^4.9.4",
-        "optimize-css-assets-webpack-plugin": "^5.0.1",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
         "sass-loader": "^6.0.7",
@@ -37,9 +32,12 @@
         "vue": "^2.5.17",
         "vue-loader": "15.4.0",
         "vue-router": "^2.1.1",
+        "vue-style-loader": "^4.1.2",
         "vue-template-compiler": "^2.4.4",
-        "webpack-dev-server": "^3.1.9",
         "webpack": "^4.20.2",
+        "webpack-dev-server": "^3.1.9"
+    },
+    "devDependencies": {
         "webpack-cli": "^3.1.2"
     }
 }

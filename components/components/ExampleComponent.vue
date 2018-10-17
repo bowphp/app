@@ -1,14 +1,8 @@
 <template>
-	<div class="vue-color">
+	<div id="well">
 		I'm an example component.
 	</div>
 </template>
-
-<style type="text/css" scoped>
-	.vue-color {
-		color: #111;
-	}
-</style>
 
 <script>
 	export default {
@@ -17,3 +11,10 @@
 		}
 	}
 </script>
+
+<style>
+    #well {
+        color: #222;
+        text-align: center;
+    }
+</style>

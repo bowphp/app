@@ -1,24 +1,11 @@
 <?php
 
-class ApplicationTest extends \Bow\Testing\BowTestCase
+class ApplicationTest extends Bow\Testing\BowTestCase
 {
     /**
      * @var string
      */
     protected $base_url = 'http://localhost:5000';
-
-    /**
-     * @return mixed
-     */
-    public function testApplicationInstance()
-    {
-        // @ permet juste de fixer un bugs du côté lancement session
-        @require __DIR__.'/../../public/index.php';
-
-        $this->assertInstanceOf(\Bow\Application\Application::class, $app);
-
-        return $app;
-    }
 
     /**
      * @depends testApplicationInstance
@@ -34,7 +21,7 @@ class ApplicationTest extends \Bow\Testing\BowTestCase
      * @depends testApplicationInstance
      * @dataProvider getUsers
      */
-    public function testHello($name)
+    public function testIndex($name)
     {
         $response = $this->visit('GET', '/hello/'.$name);
 

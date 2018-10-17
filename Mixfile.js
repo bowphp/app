@@ -5,10 +5,10 @@ module.exports = {
 	},
 
 	/**
-	 * Javascript compile files
+	 * React and Vanilla Javascript compile files
 	 */
 	javascript: [
-		// ["components/js/app.js", "public/js"]
+	  // ["components/js/app.js", "public/js"]
 	],
 
 	/**

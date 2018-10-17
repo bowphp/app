@@ -1,60 +1,62 @@
-@import "variables";
 
+$color: #bd362f;
+
+$font-family: 'Lato', 'console', monospace, serif, 'sans-serif';
 div#main {
-	position: relative;
-	margin: 10% auto;
-	width: 550px;
-	text-align: center;
-	font-family: $font-family;
+    position: relative;
+    margin: 10% auto;
+    width: 550px;
+    text-align: center;
+    font-family: $font-family;
 }
 
 span.i {
-	font-style: italic;
-	font-size: 15px;
-	padding: 5px;
-	margin-top: -18px;
+    font-style: italic;
+    font-size: 15px;
+    padding: 5px;
+    margin-top: -18px;
 }
 
 .f {
-	text-shadow: 3px 2px 1px #999;
-	&::before {
-		content: "|";
-		color: #999;
-		position: relative;
-		top: -5px;
-	}
+    text-shadow: 3px 2px 1px #999;
+    &::before {
+        content: "|";
+        color: #999;
+        position: relative;
+        top: -5px;
+    }
 }
 
 a {
-	font-size: 15px;
-	border-radius: 5px;
-	background-color: $color;
-	color: #fff;
-	font-weight: bold;
-	padding: 10px;
-	text-decoration: none;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: $color;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    text-decoration: none;
 
-	&:hover {
-		background-color: #555;
-	}
+    &:hover {
+        background-color: #555;
+    }
 }
 
 .shell {
-	margin-bottom: 5px;
-	font-family: "Monaco", "Inconsolata", monospace;
-	color: #999;
-	padding: 8px;
-	border-radius: 5px;
-	background-color: #eee;
-	font-weight: bold;
-	font-size: 14px;
-	text-align: left;
-	display: inline-block;
+    margin-bottom: 5px;
+    font-family: "Monaco", "Inconsolata", monospace;
+    color: #999;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #eee;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    display: inline-block;
 }
 
 .f {
-	color: $color;
-	font-weight: bolder;
-	font-size: 80px;
-	width: auto;
+    color: $color;
+    font-weight: bolder;
+    font-size: 80px;
+    width: auto;
 }

@@ -12,8 +12,8 @@ class HomeController extends Controller
      *
      * @param Request $request
      */
-    public function index(Request $request)
+    public function index(Request $request, $name)
     {
-        return $this->render('welcome');
+        return sprintf('<b>%s</b>', $name);
     }
 }
