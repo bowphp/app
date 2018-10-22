@@ -11,6 +11,6 @@ export default class Example extends Component {
     }
 }
 
-if (document.getElementById('main')) {
-    ReactDOM.render(<Example />, document.getElementById('main'));
+if (document.getElementById('root')) {
+    ReactDOM.render(<Example />, document.getElementById('root'));
 }
