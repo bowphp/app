@@ -15,76 +15,17 @@
 		  font-family: "Lato", "console", monospace, serif, "sans-serif";
 		}
 
-		span.i {
-		  font-style: italic;
-		  font-size: 15px;
-		  padding: 5px;
-		  margin-top: -18px;
-		}
-
-		.f {
-		  text-shadow: 3px 2px 1px #999;
-		}
-		.f::before {
-		  content: "|";
-		  color: #999;
-		  position: relative;
-		  top: -5px;
-		}
-
 		a {
-		  font-size: 15px;
-		  border-radius: 5px;
-		  background-color: #bd362f;
-		  color: #fff;
-		  font-weight: bold;
-		  padding: 10px;
-		  text-decoration: none;
-		}
-		a:hover {
-		  background-color: #555;
-		}
-
-		.shell {
-		  margin-bottom: 5px;
-		  font-family: "Monaco", "Inconsolata", monospace;
-		  color: #999;
-		  padding: 8px;
-		  border-radius: 5px;
-		  background-color: #eee;
-		  font-weight: bold;
-		  font-size: 14px;
-		  text-align: left;
-		  display: inline-block;
-		}
-
-		.f {
 		  color: #bd362f;
-		  font-weight: bolder;
-		  font-size: 80px;
-		  width: auto;
+		  text-decoration: none;
 		}
 	</style>
 </head>
 <body>
 <div id="main">
-	<header>
-        <div>
-            <h1 style="font-size: 3rem; color: #555">Bow</h1>
-            <span class="i">{{ trans('welcome.message')|raw }}</span>
-        </div>
-	</header>
-	<br>
-	<br>
-	<section style="font-size: 0.8rem">
-		<a href="https://github.com/bowphp/app" target="_blank" style="font-size: 0.8rem">fork me</a>
-		<a href="https://github.com/bowphp/docs" target="_blank" style="font-size: 0.8rem">documentation</a>
-	</section>
-	<br>
-	<br>
-    <div class="shell" style="font-size: 0.8rem">
-        <span style="color: red">$</span> <span style="color: #478">composer</span> <span style="color: #bd362f">create-project</span> <span style="color: #bd362f">--prefer-dist</span> bowphp/app <span style="color: #478">App</span>
-    </div>
+	<div>
+		I'm a bow application. see the <a href="https://bowphp.github.io">documentation</a>.
+	</div>
 </div>
 <script type="text/javascript" src="/js/app.js"></script>
 </body>
