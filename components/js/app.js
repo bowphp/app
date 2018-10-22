@@ -8,4 +8,4 @@ window.jQuery = window.$ = jQuery;
 /**
  * Loader example
  */
-require('../components/Example.js');
+require('../components/Example.jsx');
