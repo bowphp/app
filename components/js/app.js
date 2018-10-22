@@ -1,19 +1,11 @@
-import Vue from 'vue';
-import JQuery from "jquery"
+import jQuery from "jquery"
 
 /**
  * Import JQuery
  */
-window.JQuery = window.$ = JQuery;
+window.jQuery = window.$ = jQuery;
 
 /**
- * Loader example vue components
+ * Loader example
  */
-Vue.component('code', require('../components/ExampleComponent.vue'));
-
-/**
- * Mount component
- */
-new Vue({
-    el: "#root"
-});
+require('../components/Example.js');
