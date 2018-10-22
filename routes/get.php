@@ -1,7 +1,18 @@
 <?php
 
-$app->get("/", function () {
-    return response()->render("welcome");
-});
+$app->route([
+	'path' => '/',
+	'method' => 'GET',
+	'handler' => function () {
+		return response()->render('welcome');
+	}
+]);
 
-$app->get('/hello/:name', 'HomeController::index');
+$app->route([
+	'path' => '/hello/:name',
+	'method' => 'GET',
+	'handler' => 'HomeController::index',
+	'where' => ['name' => '[a-z]+']
+]);
+
+
