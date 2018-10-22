@@ -10,14 +10,7 @@ module.exports = {
 	javascript: [
 	  ["components/js/app.js", "public/js"]
 	],
-
-	/**
-	 * Vuejs compile files
-	 */
-	vue: [
-		// ["components/js/app.js", "public/js"]
-	],
-
+	
 	/**
 	 * Sass compile files
 	 */

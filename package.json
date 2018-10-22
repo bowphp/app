@@ -4,7 +4,6 @@
         "watch": "./node_modules/.bin/webpack --progress --watch --hide-modules",
         "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --optimize-minimize --hide-modules",
         "test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
-        "dev-server": "./node_modules/.bin/webpack-dev-server",
         "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
     },
     "dependencies": {
@@ -23,6 +22,7 @@
         "img-loader": "^3.0.0",
         "jquery": "^3.3.1",
         "lodash": "^4.17.5",
+        "mini-css-extract-plugin": "^0.4.4",
         "node-sass": "^4.9.4",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
@@ -30,13 +30,7 @@
         "style-loader": "^0.23.1",
         "uglify-js": "^2.8.29",
         "uglifyjs-webpack-plugin": "^1.1.8",
-        "vue": "^2.5.17",
-        "vue-loader": "15.4.0",
-        "vue-router": "^2.1.1",
-        "vue-style-loader": "^4.1.2",
-        "vue-template-compiler": "^2.4.4",
-        "webpack": "^4.20.2",
-        "webpack-dev-server": "^3.1.9"
+        "webpack": "^4.20.2"
     },
     "devDependencies": {
         "webpack-cli": "^3.1.2"

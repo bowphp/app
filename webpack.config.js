@@ -3,7 +3,7 @@ let UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 let bowmix = require("./Mixfile");
 let webpack = require('webpack');
 let rules = [];
-let resolve = {extensions: [".js", ".scss", ".vue", ".less", ".jsx"]};
+let resolve = {extensions: [".js", ".scss", ".jsx"]};
 let entry = {};
 let plugins = [
   require('autoprefixer'),
@@ -62,45 +62,6 @@ let addEntry = (files) => {
 };
 
 /**
- * Bind vue rules
- */
-if (configExists(bowmix.vue)) {
-  const { VueLoaderPlugin } = require('vue-loader');
-  
-  if (! configExists(bowmix.javascript)) {
-    rules.push({
-            test: /\.js$/,
-            loader: 'babel-loader',
-            exclude: /(node_modules|bower_components)/,
-            options: {
-                presets: ['babel-preset-env']
-            }
-        });
-    }
-    
-  rules.push({
-    test: /\.vue$/,
-    loader: 'vue-loader'
-  });
-  
-  if (!configExists(bowmix.sass)) {
-    rules.push({
-      test: /\.css$/,
-      use: [
-        'vue-style-loader',
-        'css-loader'
-      ]
-    });
-  }
-
-  resolve.alias = {
-    'vue$': 'vue/dist/vue.esm.js' // Use the full build
-  };
-
-  plugins.push(new VueLoaderPlugin());
-}
-
-/**
  * Bind javascript rules
  */
 if (configExists(bowmix.javascript)) {
@@ -138,7 +99,7 @@ if (configExists(bowmix.javascript)) {
  */
 if (configExists(bowmix.sass)) {
   rules.push({
-    test: /\.(scss|css)$/,
+    test: /\.scss$/,
     use: [
       'style-loader',
       'css-loader',
@@ -156,6 +117,11 @@ for (let ref in bowmix) {
       addEntry(bowmix[ref]);
     }
   }
+}
+
+// Push UglifyJsPlugin in prod env
+if (isProd()) {
+  plugins.push(new UglifyJsPlugin());
 }
 
 /**

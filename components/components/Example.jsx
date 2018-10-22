@@ -5,12 +5,12 @@ export default class Example extends Component {
 	render() {
 		return (
 			<div>
-				I'm an example component.
+				I'm am <b>React</b> example component.
 			</div>
 		);
 	}
 }
 
-if (document.getElementById('root')) {
-	ReactDOM.render(<Example />, document.getElementById('root'));
+if (document.getElementById('main')) {
+	ReactDOM.render(<Example />, document.getElementById('main'));
 }
