@@ -14,4 +14,4 @@ $.ajaxSetup({
 /**
  * Loader example
  */
-require('../components/Example.jsx');
+require('./Example.jsx');
