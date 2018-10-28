@@ -7,7 +7,7 @@ return [
     'lang' => 'fr',
 
     /**
-     * Spécification du répègittoire des langs
+     * Chemin vers le répètoire des langs
      */
-    'directory' => __DIR__.'/../components/lang',
+    'dictionary' => __DIR__.'/../components/lang',
 ];

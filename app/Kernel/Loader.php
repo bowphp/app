@@ -50,7 +50,6 @@ class Loader extends ApplicationLoader
             \Bow\Configuration\Configurations\LoggerConfiguration::class,
             \Bow\Configuration\Configurations\EnvConfiguration::class,
             \Bow\Cache\CacheConfiguration::class,
-
             \Bow\Mail\MailConfiguration::class,
             \Bow\Security\CryptoConfiguration::class,
             \Bow\Database\DatabaseConfiguration::class,
@@ -58,8 +57,6 @@ class Loader extends ApplicationLoader
             \Bow\View\ViewConfiguration::class,
             \Bow\Translate\TranslatorConfiguration::class,
             \Bow\Auth\AuthenticateConfiguration::class,
-    
-            \Bow\Configuration\Configurations\ActionnerConfiguration::class,
             \Bow\Session\SessionConfiguration::class,
 
             /**
