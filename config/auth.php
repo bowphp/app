@@ -8,8 +8,8 @@ return [
         'model' => App\User::class
     ],
 
-    "api" => [
-        'type' => "jwt",
+    "admin" => [
+        'type' => "model",
         "model" => App\User::class
     ]
 ];
