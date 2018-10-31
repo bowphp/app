@@ -18,16 +18,17 @@ return [
 
     /**
      * Le moteur de rendu des vues.
+     *
+     * Template par defaut utiliser par Bow.
+     * Le système implement 4 moteur de template.
+     *
+     * Valeur possible (supported): twig, mustache, pug, php
+     * - Le nom du package mustache: mustache/mustache
+     * - Le nom du package pug: pug-php/pug
      */
     'engine' => 'twig',
 
     /**
-     * Template par defaut utiliser par Bow.
-     * Le système implement 3 moteur de template
-     * Valeur possible (supported): twig, mustache, pug, php
-     * - Le nom du package mustache: mustache/mustache
-     * - Le nom du package pug: pug-php/pug
-     * 'engine' => 'twig',
      * Extension des pages de vues
      */
     'extension' => '.twig',
