@@ -1,26 +1,36 @@
-{# twig exemple #}
-{% set errno = 404 %}
-{% set errmessage = "Not found file" %}
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>{{ errno }}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400" type="text/css"/>
+    <link rel="icon" type="image/x-icon" href="/favicon.png"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
+    <title>Bow - worked</title>
     <style type="text/css">
-        body {
-            font-family: "Lato", sans-serif;
-            font-size: 40px;
+        div#main {
+          position: relative;
+          margin: 10% auto;
+          font-size: 15px;
+          width: 550px;
+          text-align: center;
+          font-family: "Lato", "console", monospace, serif, "sans-serif";
+        }
+
+        h1 {
+          color: #bd362f;
+          text-decoration: none;
         }
     </style>
 </head>
 <body>
-<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #dfdfdf; border: #ddd; padding-left: 10px; text-align: center; border-top: #bd362f 3px solid; padding: 5px">
-    <h1><b>{{ errno }}</b></h1>
-    <p>
-        <b>{{ errmessage }}</b>
-    </p>
+<div id="main">
+    <div>
+        <h1>404</h1>
+        <p>
+            Not found page
+        </p>
+    </div>
 </div>
 </body>
 </html>
