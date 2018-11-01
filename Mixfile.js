@@ -1,11 +1,12 @@
 module.exports = {
 	config: {
 		prefix: __dirname,
-		version: false
+		version: false,
+		versionFilename: __dirname + '/.mixfile-version.json' 
 	},
 
 	/**
-	 * React and Vanilla Javascript compile files
+	 * React, vue and Vanilla Javascript compile files
 	 */
 	javascript: [
 	 	["components/js/app.js", "public/js"]
@@ -16,5 +17,12 @@ module.exports = {
 	 */
 	sass: [
 	 	["components/sass/app.scss", "public/css"]
+	],
+
+	/**
+	 * Sass compile files
+	 */
+	image: [
+	 	// ["components/image/*", "public/css"]
 	],
 };
