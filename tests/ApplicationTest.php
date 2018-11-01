@@ -38,10 +38,9 @@ class ApplicationTest extends Bow\Testing\BowTestCase
     public function getUsers()
     {
         return [
-            ['Franck'],
             ['Abou'],
-            ['Houssen'],
-            ['Hassane']
+            ['Franck'],
+            ['Papac']
         ];
     }
 }
