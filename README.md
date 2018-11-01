@@ -26,7 +26,8 @@ Vous devez vous assurer les différents elements suivants sont installés sur vo
 
 ## Auteur
 
-- Franck Dakia <dakiafranck@gmail.com> - [@franck_dakia](https://twitter.com/franck_dakia)
-- Ayiyikoh <fablab@ayiyikoh.org> - [@ayiyikoh](https://twitter.com/ayiyikoh) hashtag: __#GoAyiyikoh__
+**Franck Dakia** est un développeur Full Stack basé actuellement en Afrique, Côte d'ivore. Passioné de code, et développement collaboratif, Speaker, Formateur et Membre de plusieur communautés de développeurs.
+
+Contact: [dakiafranck@gmail.com](mailto:dakiafranck@gmail.com)> - [@franck_dakia](https://twitter.com/franck_dakia)
 
 **SVP s'il y a un bogue sur le projet veuillez me contacter par email ou laissez moi un message sur le [slack](https://bowphp.slack.com).**
