@@ -7,7 +7,9 @@
 <a href="https://github.com/bowphp/app/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
 <a href="https://travis-ci.org/bowphp/app" title="Travis branch"><img src="https://img.shields.io/travis/bowphp/app/master.svg?style=flat-square"/></a>
 
-Bow est un micro framework écrit Par la communauté **[ayiyikoh](http://ayiyikoh.org)** et plusieurs autre contributeurs. Le but c'est de permettre aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer. Afin de comprendre les rouages du developpement collaboratif.
+Bow est un micro framework écrit par **[Franck DAKIA](http://github.com/papac)** et plusieurs autre contributeurs.
+
+Le but c'est de permettre aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer, afin de comprendre les rouages du **développement collaboratif**. Et faire de ce framework une référence dans la communauté PHP dans le monde.
 
 **N'hésitez pas à commencez maintenant avec la [documentation](https://bowphp.github.io).**
 
