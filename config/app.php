@@ -40,7 +40,12 @@ return [
     /**
      * Chemin vers le dossier storage
      */
-    'storage_path' =>dirname(__DIR__).'/storage',
+    'storage_path' => dirname(__DIR__).'/storage',
+
+    /**
+     * Chemin vers le mixfile-version.json
+     */
+    'mixfile_version_path' => dirname(__DIR__).'/.mixfile-version.json',
 
     /**
      * Le mode de débogage de l'application

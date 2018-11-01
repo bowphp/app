@@ -1,16 +1,81 @@
 <?php
 
-if (! function_exists('gen_slix')) {
+if (!function_exists('version')) {
     /**
-     * Génère un code aléatoire.
-     * Peut être utiliser pour masquer le nom de champs de formulaire.
+     * Get mixfile chunkhash version
      *
-     * @param int $len
+     * @param string $path
      * @return string
      */
-    function gen_slix($len = 4)
+    function version($path)
     {
-        return substr(str_shuffle(uniqid()), 0, $len);
+        $manifest = config('app.mixfile_version_path');
+
+        if (! file_exists($manifest)) {
+            return $path;
+        }
+
+        $content = json_decode(file_get_contents($manifest), true);
+        
+        $key = ltrim($path, '/');
+
+        if (isset($content[$key])) {
+            return $content[$key];
+        }
+        
+        throw new Exception($path . " Not exists");
+    }
+}
+
+if (!function_exists('public_path')) {
+    /**
+     * Get public directory
+     *
+     * @param string $path
+     * @return string
+     */
+    function public_path($path = '')
+    {
+        return __DIR__.'/../public/'.ltrim($path, '/');
+    }
+}
+
+if (!function_exists('component_path')) {
+    /**
+     * Get component directory
+     *
+     * @param string $path
+     * @return string
+     */
+    function component_path($path = '')
+    {
+        return __DIR__.'/../components/'.ltrim($path, '/');
+    }
+}
+
+if (!function_exists('storage_path')) {
+    /**
+     * Get storages directory
+     *
+     * @param string $path
+     * @return string
+     */
+    function storage_path($path = '')
+    {
+        return __DIR__.'/../storage/'.ltrim($path, '/');
+    }
+}
+
+if (!function_exists('db_path')) {
+    /**
+     * Get db directory
+     *
+     * @param string $path
+     * @return string
+     */
+    function db_path($path = '')
+    {
+        return __DIR__.'/../db/'.ltrim($path, '/');
     }
 }
 
@@ -24,6 +89,20 @@ if (! function_exists('base_path')) {
     function base_path()
     {
         return realpath(__DIR__.'/..');
+    }
+}
+
+if (! function_exists('gen_slix')) {
+    /**
+     * Génère un code aléatoire.
+     * Peut être utiliser pour masquer le nom de champs de formulaire.
+     *
+     * @param int $len
+     * @return string
+     */
+    function gen_slix($len = 4)
+    {
+        return substr(str_shuffle(uniqid()), 0, $len);
     }
 }
 
@@ -67,8 +146,6 @@ if (!function_exists('convert_to_moment')) {
         return $hour.' heure'.($hour > 1 ? 's' : '').$minute;
     }
 }
-
-
 
 if (! function_exists('get_country_list')) {
     /**
