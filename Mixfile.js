@@ -17,12 +17,5 @@ module.exports = {
 	 */
 	sass: [
 	 	["components/sass/app.scss", "public/css"]
-	],
-
-	/**
-	 * Sass compile files
-	 */
-	image: [
-	 	// ["components/image/*", "public/css"]
-	],
+	]
 };
