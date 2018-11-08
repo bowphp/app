@@ -15,7 +15,7 @@ Le but c'est de permettre aux débutants qui veulent travailler sur un projet un
 
 ## Prérequis
 
-Vous devez vous assurer les différents elements suivants sont installés sur votre machine.
+Vous devez vous assurer les différents éléments suivants sont installés sur votre machine.
 
 - PHP >= 7
 - OpenSSL PHP Extension
