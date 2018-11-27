@@ -4,12 +4,12 @@ return [
     /**
      * Le nom du cookie de session
      */
-    'name' => env('SESSION_NAME', 'Bow'),
+    'name' => app_env('SESSION_NAME', 'Bow'),
 
     /**
      * La durée de vie du cookie, en secondes. Voir la directive
      */
-    'lifetime' => env('SESSION_LIFE', 180),
+    'lifetime' => app_env('SESSION_LIFE', 180),
 
     /**
      * Le chemin dans le domaine où le cookie sera accessible.

@@ -12,7 +12,7 @@ return [
      * supporté: mail, smtp
      * Si smtp est définie alors les clés password et username doivent avoir des values.
      */
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => app_env('MAIL_DRIVER', 'smtp'),
 
     /**
      * Encodage
@@ -23,13 +23,13 @@ return [
      * smtp authentification
      */
     'smtp' => [
-        'hostname' => env('SMTP_HOSTNAME'),
-        'username' => env('SMTP_USERNAME'),
-        'password' => env('SMTP_PASSWORD'),
-        'port'     => env('SMTP_PORT'),
-        'tls'      => env('SMTP_TLS'),
-        'ssl'      => env('SMTP_SSL'),
-        'timeout'  => env('SMTP_TIMEOUT')
+        'hostname' => app_env('SMTP_HOSTNAME'),
+        'username' => app_env('SMTP_USERNAME'),
+        'password' => app_env('SMTP_PASSWORD'),
+        'port'     => app_env('SMTP_PORT'),
+        'tls'      => app_env('SMTP_TLS'),
+        'ssl'      => app_env('SMTP_SSL'),
+        'timeout'  => app_env('SMTP_TIMEOUT')
     ],
 
     /**
@@ -38,8 +38,8 @@ return [
     'mail' => [
         'default' => 'contact',
         'contact' => [
-            'address' => env('CONTACT_EMAIL'),
-            'username' => env('CONTACT_NAME')
+            'address' => app_env('CONTACT_EMAIL'),
+            'username' => app_env('CONTACT_NAME')
         ],
         'info' => [
             'address' => 'info@exemple.com',
