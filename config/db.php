@@ -14,7 +14,7 @@ return [
     /**
      * le point de connexion par defaut
      */
-    'default' => env('DB_DEFAULT', 'first'),
+    'default' => app_env('DB_DEFAULT', 'first'),
 
     /**
      * La base de donnée sur laquelle se connectera l'application par défaut
