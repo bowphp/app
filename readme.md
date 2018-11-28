@@ -7,7 +7,7 @@
 <a href="https://github.com/bowphp/app/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
 <a href="https://travis-ci.org/bowphp/app" title="Travis branch"><img src="https://img.shields.io/travis/bowphp/app/master.svg?style=flat-square"/></a>
 
-Bow est un Framework PHP, écrit par **[Franck Dakia](http://github.com/papac)** et plusieurs autre contributeurs.
+Bow est un Framework PHP, écrit par **[Franck DAKIA](http://github.com/papac)** et plusieurs autre contributeurs.
 
 Le but c'est de permettre aux débutants qui veulent travailler sur un projet un peu plus grand de s'y lancer, afin de comprendre les rouages du **développement collaboratif**. Et faire de ce framework une référence dans la communauté PHP dans le monde.
 
@@ -26,7 +26,7 @@ Vous devez vous assurer les différents éléments suivants sont installés sur 
 
 ## Auteur
 
-**Franck Dakia** est un développeur Full Stack basé actuellement en Afrique, Côte d'ivore. Passioné de code, et développement collaboratif, Speaker, Formateur et Membre de plusieurs communautés de développeurs.
+**Franck DAKIA** est un développeur Full Stack basé actuellement en Afrique, Côte d'ivoire. Passioné de code, et développement collaboratif, Speaker, Formateur et Membre de plusieurs communautés de développeurs.
 
 Contact: [dakiafranck@gmail.com](mailto:dakiafranck@gmail.com) - [@franck_dakia](https://twitter.com/franck_dakia)
 
