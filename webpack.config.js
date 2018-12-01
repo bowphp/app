@@ -63,7 +63,7 @@ let addEntry = (files) => {
     // Parse file
     info = path.parse(resolveFile);
     filename = file[1].replace(/public\/?/, '') + '/' + info['name']  + (exts[info['ext']] || info['base'])
-    
+
     // Format de entry filename
     if (bowMix.config['version']) {
       key = path.join(file[1], info['name'] + '.' + Date.now() + (exts[info['ext']] || info['base']));
@@ -152,7 +152,7 @@ for (let ref in bowMix) {
 
 /**
  * Export Webpack configuration
- * 
+ *
  * @type {Object}
  */
 module.exports = {

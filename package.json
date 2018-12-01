@@ -4,7 +4,7 @@
         "watch": "./node_modules/.bin/webpack --progress --watch --hide-modules",
         "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --optimize-minimize --hide-modules",
         "test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
-        "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
+        "lint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
     },
     "dependencies": {
         "autoprefixer": "^7.2.6",
