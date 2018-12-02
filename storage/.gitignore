@@ -4,9 +4,6 @@ workspace
 # Not self ignore
 !.gitignore
 
-# Not ignore .gitkepp
+# Not ignore .gitkeep
 !app/.gitkeep
-!workspace/view/.gitkeep
-!workspace/cache/.gitkeep
-!workspace/logs/.gitkeep
-!workspace/session/.gitkeep
+!workspace/**/.gitkeep

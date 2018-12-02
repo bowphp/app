@@ -8,6 +8,7 @@ package-lock.json
 public
 !.gitkeep
 !public/**/.gitkeep
+!storage/**/.gitkeep
 !public/index.php
 !public/robots.txt
 !public/.htaccess
