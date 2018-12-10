@@ -2,14 +2,14 @@
 
 return [
     /**
-     * clé de sécurité de l'application
+     * Clé de sécurité de l'application
      * Peut être régenerer par la commande
      * <code> `php bow generate:key` </code>
      */
     'key' => __DIR__ . '/.key',
 
     /**
-     * la methode Encrypt
+     * La methode Encrypt
      */
     'cipher' => 'AES-256-CBC',
 

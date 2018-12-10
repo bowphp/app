@@ -7,7 +7,7 @@ return [
     'lang' => 'fr',
 
     /**
-     * Chemin vers le répètoire des langs
+     * Chemin vers le répètoire des langues
      */
     'dictionary' => __DIR__.'/../components/lang',
 ];
