@@ -11,7 +11,7 @@
 		div#main {
 		  position: relative;
 		  margin: 10% auto;
-		  font-size: 15px;
+		  font-size: 20px;
 		  width: 550px;
 		  text-align: center;
 		  font-family: "Lato", "console", monospace, serif, "sans-serif";
