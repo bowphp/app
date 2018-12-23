@@ -9,7 +9,7 @@ return [
     /**
      * Le point de connexion par défaut
      */
-    'default' => app_env('DB_DEFAULT', 'first'),
+    'default' => app_env('DB_DEFAULT', 'mysql'),
 
     /**
      * La base de donnée sur laquelle se connectera l'application par défaut
