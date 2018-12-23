@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.3] - 2018-12-24
+
+- Fix Fix bug [#6](https://github.com/bowphp/app/issues/6)
+- Fix Add app key to .gitignore 
+
 ## [3.1.0] - 2018-10-25
 
 ### Change
