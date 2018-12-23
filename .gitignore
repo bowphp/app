@@ -14,3 +14,4 @@ public
 !public/favicon.ico
 .env.json
 .mixfile-version.json
+config/.key
