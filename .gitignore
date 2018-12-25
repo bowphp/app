@@ -13,5 +13,5 @@ public
 !public/.htaccess
 !public/favicon.ico
 .env.json
-.mixfile-version.json
 config/.key
+mix-manifest.json
