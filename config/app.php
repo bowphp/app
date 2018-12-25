@@ -45,7 +45,7 @@ return [
     /**
      * Chemin vers le mixfile-version.json
      */
-    'mixfile_version_path' => dirname(__DIR__).'/.mixfile-version.json',
+    'mixfile_path' => dirname(__DIR__).'/public/mix-manifest.json',
 
     /**
      * Le mode de débogage de l'application
