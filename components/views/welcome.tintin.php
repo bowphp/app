@@ -14,7 +14,7 @@
           font-size: 15px;
           width: 550px;
           text-align: center;
-          font-family: "Montserrat", "Console", monospace, serif, "sans-serif";
+          font-family: "Montserrat", "console", monospace, serif, "sans-serif";
         }
 
         a {
