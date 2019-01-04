@@ -7,7 +7,7 @@ return [
      * Les vues doivent avoir l'instantion que vous avez définir
      * dans 'template_extension' si non erreur sera lancé
      */
-    'path' => __DIR__ . '/../components/views',
+    'path' => __DIR__ . '/../frontend/views',
 
     /**
      * chemin du fichier 404
