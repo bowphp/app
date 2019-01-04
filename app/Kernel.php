@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Kernel;
+namespace App;
 
 use Bow\Configuration\Loader as ApplicationLoader;
 
-class Loader extends ApplicationLoader
+class Kernel extends ApplicationLoader
 {
     /**
      * Get app namespace
@@ -14,11 +14,11 @@ class Loader extends ApplicationLoader
     public function namespaces()
     {
         return [
-            'controller' => 'App\\Controllers',
+            'controller' => 'App\\Controller',
             'middleware' => 'App\\Middleware',
-            'configuration' => 'App\\Configurations',
-            'validation' => 'App\\Validations',
-            'model' => 'App',
+            'configuration' => 'App\\Configuration',
+            'validation' => 'App\\Validation',
+            'model' => 'App\\Model',
         ];
     }
 
