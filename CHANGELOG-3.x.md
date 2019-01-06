@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.8] - 2019-01-06
+
+- [change] [config] refonte trans config, fix view location and refonte folder configuration
+- [change] [router] change routing directory name
+- [change] [assets] refonte assets preset and rename component to frontend :+1:
+- [fix] [fix] fix constroller namespace
+
 ## [3.2.4] - 2018-12-25
 
 - [fix] session loader
