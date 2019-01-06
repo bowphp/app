@@ -19,7 +19,7 @@ $command->setNamespaces($kernel->namespaces());
  */
 $command->setModelDirectory(__DIR__.'/app/Model');
 $command->setValidationDirectory(__DIR__.'/app/Validation');
-$command->setConfigDirectory(__DIR__.'/app/Configuration');
+$command->setConfigurationDirectory(__DIR__.'/app/Configuration');
 $command->setControllerDirectory(__DIR__.'/app/Controller');
 $command->setComponentDirectory(__DIR__.'/frontend');
 
