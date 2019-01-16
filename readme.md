@@ -26,7 +26,7 @@ Vous devez vous assurer les différents éléments suivants sont installés sur 
 
 ## Auteur
 
-**Franck DAKIA** est un développeur Full Stack basé actuellement en Afrique, Côte d'ivoire. Passioné de code, et développement collaboratif, Speaker, Formateur et Membre de plusieurs communautés de développeurs.
+**Franck DAKIA** est un développeur Full Stack basé actuellement en Afrique, Côte d'ivoire. Passionné de code, et développement collaboratif, Speaker, Formateur et Membre de plusieurs communautés de développeurs.
 
 Contact: [dakiafranck@gmail.com](mailto:dakiafranck@gmail.com) - [@franck_dakia](https://twitter.com/franck_dakia)
 

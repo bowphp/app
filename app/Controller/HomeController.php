@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controller;
 
-use App\Controllers\Controller;
+use App\Controller\Controller;
 use Bow\Http\Request;
 
 class HomeController extends Controller

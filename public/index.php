@@ -7,7 +7,7 @@ require __DIR__."/../vendor/autoload.php";
 /**
  * Create kernel instance
  */
-$kernel = \App\Kernel\Loader::configure(realpath(__DIR__.'/../config'));
+$kernel = \App\Kernel::configure(realpath(__DIR__.'/../config'));
 
 /**
  * Creation of application
@@ -24,7 +24,7 @@ $app->bind($kernel);
 /**
  * Load application routing
  */
-require __DIR__ . "/../routes/app.php";
+require __DIR__ . "/../routing/app.php";
 
 /**
  * Send application response

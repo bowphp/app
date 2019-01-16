@@ -7,43 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.9] - 2019-01-06
+
+- [fix] failed to open stream: No such file or directory
+
+## [3.2.8] - 2019-01-06
+
+- [change] [config] refonte trans config, fix view location and refonte folder configuration
+- [change] [router] change routing directory name
+- [change] [assets] refonte assets preset and rename component to frontend :+1:
+- [fix] [fix] fix constroller namespace
+
+## [3.2.4] - 2018-12-25
+
+- [fix] session loader
+- [change] refonte assets preset
+
+## [3.2.3] - 2018-12-24
+
+- [fix] Fix bug [#6](https://github.com/bowphp/app/issues/6)
+- [fix] Add app key to .gitignore 
+
 ## [3.1.0] - 2018-10-25
 
-### Change
-
-- Update configuration
+- [change] Update configuration
 
 ## [3.0.3] - 2018-10-25
 
-### Fix
-
-- Bug fix [#5](https://github.com/bowphp/app/issues/5)
+- [fix] Bug fix [#5](https://github.com/bowphp/app/issues/5)
 
 ## [3.0.2] - 2018-10-22
-
-### Change
-
-- Update component and Mixfile.js preset
+- [change] Update component and Mixfile.js preset
 
 ## [3.0.1] - 2018-10-17
 
-### Change
-- Formating controller and defaut route maping
-
-### Fix
-
-- Remove test depandences
+- [change] Formating controller and defaut route maping
+- [fix] Remove test depandences
 
 ## [3.0.0] - 2018-10-15
 
-###  Change
-
-- Update view config
-- Refonte of kernel and change kernel loader concept
-- Refonte task runner
-- Rename `.env.exemple.json` to `.env.example.json`
-
-### Fix
-
-- Undefined function `bow_hash` [#4](https://github.com/bowphp/app/issues/4)
-- Fix travis-ci configuration [#3](https://github.com/bowphp/app/issues/3)
+- [change] Update view config
+- [change] Refonte of kernel and change kernel loader concept
+- [change] Refonte task runner
+- [change] Rename `.env.exemple.json` to `.env.example.json`
+- [fix] Undefined function `bow_hash` [#4](https://github.com/bowphp/app/issues/4)
+- [fix] travis-ci configuration [#3](https://github.com/bowphp/app/issues/3)

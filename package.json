@@ -1,37 +1,33 @@
 {
-    "scripts": {
-        "dev": "./node_modules/.bin/webpack --progress --hide-modules",
-        "watch": "./node_modules/.bin/webpack --progress --watch --hide-modules",
-        "prod": "NODE_ENV=production ./node_modules/.bin/webpack --progress --optimize-minimize --hide-modules",
-        "test": "./vendor/bin/phpunit --configuration ./phpunit.xml",
-        "phplint": "./node_modules/.bin/phplint '**/*.php' '!vendor/**' '!storage/**' '!node_modules/**' && ./vendor/bin/phpcbf --tab-width=4 --standard=psr2 app config components/lang db routes"
-    },
-    "dependencies": {
-        "autoprefixer": "^7.2.6",
-        "babel-core": "^6.24.1",
-        "babel-loader": "^7.1.4",
-        "babel-plugin-transform-object-rest-spread": "^6.26.0",
-        "babel-plugin-transform-runtime": "^6.23.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-react": "^6.24.1",
-        "babel-preset-stage-3": "^6.24.1",
-        "css-loader": "^0.28.11",
-        "file-loader": "^1.1.4",
-        "imagemin": "^6.0.0",
-        "jquery": "^3.3.1",
-        "node-sass": "^4.9.4",
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2",
-        "sass-loader": "^6.0.7",
-        "vue": "^2.5.17",
-        "vue-loader": "^15.4.2",
-        "vue-style-loader": "^4.1.2",
-        "vue-template-compiler": "^2.5.17",
-        "webpack": "^4.20.2"
-    },
-    "devDependencies": {
-        "imagemin-webpack": "^3.0.0",
-        "img-loader": "^3.0.1",
-        "webpack-cli": "^3.1.2"
-    }
+  "scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "php-fix-sniffer": "./vendor/bin/phpcbf --standard=psr2 --tab-width=4 app tests config db",
+    "php-sniffer": "./vendor/bin/phpcs --standard=psr2 --tab-width=4 app tests config db"
+  },
+  "dependencies": {
+    "axios": "^0.18",
+    "babel-loader": "^8.0.4",
+    "bootstrap": "^4.0.0",
+    "cross-env": "^5.1",
+    "css-loader": "^2.0.2",
+    "jquery": "^3.2",
+    "laravel-mix": "^4.0.7",
+    "lodash": "^4.17.5",
+    "popper.js": "^1.12",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "resolve-url-loader": "^2.3.1",
+    "sass": "^1.15.2",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "vue-template-compiler": "^2.5.21"
+  }
 }

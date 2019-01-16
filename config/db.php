@@ -1,10 +1,5 @@
 <?php
-/**
- * Configuration de la base donnée.
- * On retourne la configuration
- * des bases de données utilisées par l'application.
- * support mysql
- */
+
 return [
     /**
      * Fetch mode.
@@ -12,9 +7,9 @@ return [
     'fetch' => PDO::FETCH_OBJ,
 
     /**
-     * le point de connexion par defaut
+     * Le point de connexion par défaut
      */
-    'default' => app_env('DB_DEFAULT', 'first'),
+    'default' => app_env('DB_DEFAULT', 'mysql'),
 
     /**
      * La base de donnée sur laquelle se connectera l'application par défaut

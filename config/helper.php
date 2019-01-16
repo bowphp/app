@@ -1,15 +1,15 @@
 <?php
 
-if (!function_exists('version')) {
+if (!function_exists('mix')) {
     /**
      * Get mixfile chunkhash version
      *
      * @param string $path
      * @return string
      */
-    function version($path)
+    function mix($path)
     {
-        $manifest = config('app.mixfile_version_path');
+        $manifest = config('app.mixfile_path');
 
         if (! file_exists($manifest)) {
             return $path;
@@ -17,7 +17,7 @@ if (!function_exists('version')) {
 
         $content = json_decode(file_get_contents($manifest), true);
         
-        $key = ltrim($path, '/');
+        $key = '/'.ltrim($path, '/');
 
         if (isset($content[$key])) {
             return $content[$key];

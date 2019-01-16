@@ -1,4 +1,15 @@
 import jQuery from "jquery"
+/**
+ * // Loader Example Vue component
+ * import Vue from "vue"
+ * import Example from "./Example.vue"
+ * 
+ * Vue.component('example', Example);
+ * 
+ * new Vue({
+ *   el: "#main"
+ * });
+ */
 
 /**
  * Import JQuery
@@ -15,11 +26,3 @@ $.ajaxSetup({
  * Loader Example React component
  */
 require('./Example.jsx');
-
-// Loader Example Vue component
-// import Vue from "vue"
-// import Example from "./Example.vue"
-// Vue.component('example', Example);
-// new Vue({
-//  el: "#main"
-// })

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers;
+namespace App\Controller;
 
 use Bow\Http\Request;
 use Bow\Configuration\Loader as Config;
