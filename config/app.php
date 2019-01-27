@@ -30,7 +30,7 @@ return [
     /**
      * Chemin vers le dossier components
      */
-    'component_path' => dirname(__DIR__).'/components',
+    'component_path' => dirname(__DIR__).'/frontend',
 
     /**
      * Chemin vers le dossier public
@@ -40,7 +40,7 @@ return [
     /**
      * Chemin vers le dossier storage
      */
-    'storage_path' => dirname(__DIR__).'/storage',
+    'storage_path' => dirname(__DIR__).'/var/storage',
 
     /**
      * Chemin vers le mixfile-version.json
@@ -51,5 +51,5 @@ return [
      * Le mode de débogage de l'application
      * development | production
      */
-    'debug' => env('MODE', 'development')
+    'debug' => env('APP_ENV', 'development')
 ];

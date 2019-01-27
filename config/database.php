@@ -11,6 +11,8 @@ return [
      */
     'default' => app_env('DB_DEFAULT', 'mysql'),
 
+    'migration' => 'migration',
+
     /**
      * La base de donnée sur laquelle se connectera l'application par défaut
      * La base de donnée par defaut, c'est sur cette base de donnée que vap va

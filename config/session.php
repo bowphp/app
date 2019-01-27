@@ -46,5 +46,5 @@ return [
      * capable de gérer un grand nombre de petits fichiers efficacement.
      * Par exemple, sous Linux, reiserfs peut se rendre plus efficace que ext2fs.
      */
-    'save_path' => __DIR__.'/../storage/workspace/session',
+    'save_path' => __DIR__.'/../var/session',
 ];

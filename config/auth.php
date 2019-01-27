@@ -11,7 +11,7 @@ return [
      */
     "web" => [
         "type" => "model",
-        'model' => App\User::class
+        'model' => App\Model\User::class
     ],
 
     /**
@@ -19,6 +19,6 @@ return [
      */
     "admin" => [
         'type' => "model",
-        "model" => App\User::class
+        "model" => App\Model\User::class
     ]
 ];
