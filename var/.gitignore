@@ -1,0 +1,15 @@
+storage/*
+view/*
+cache/*
+logs/*
+session/*
+
+# Not self ignore
+!.gitignore
+
+# Not ignore .gitkepp
+!storage/.gitkeep
+!view/.gitkeep
+!cache/.gitkeep
+!logs/.gitkeep
+!session/.gitkeep
