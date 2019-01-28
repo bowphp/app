@@ -9,7 +9,7 @@ return [
     'disk' =>[
         'mount' => 'storage',
         'path' => [
-            'storage' => __DIR__.'/../storage/app',
+            'storage' => __DIR__.'/../var/storage',
             'public' => __DIR__.'/../public',
         ]
     ],
@@ -48,10 +48,10 @@ return [
     /**
      * Repertoire de log
      */
-    'log' => __DIR__.'/../storage/workspace/logs',
+    'log' => __DIR__.'/../var/logs',
 
     /**
      * Repertoure de cache
      */
-    'cache' => __DIR__ . '/../storage/workspace/cache',
+    'cache' => __DIR__ . '/../var/cache',
 ];

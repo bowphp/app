@@ -2,7 +2,6 @@
 !.gitignore
 composer.lock
 node_modules
-db/migration/.registers
 vendor/
 package-lock.json
 public

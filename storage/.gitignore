@@ -1,9 +1,0 @@
-app
-workspace
-
-# Not self ignore
-!.gitignore
-
-# Not ignore .gitkeep
-!app/.gitkeep
-!workspace/**/.gitkeep
