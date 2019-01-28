@@ -21,7 +21,10 @@ $command->setModelDirectory(__DIR__.'/app/Model');
 $command->setValidationDirectory(__DIR__.'/app/Validation');
 $command->setConfigurationDirectory(__DIR__.'/app/Configuration');
 $command->setControllerDirectory(__DIR__.'/app/Controller');
+$command->setMigrationDirectory(__DIR__.'/database/migration');
+$command->setSeederDirectory(__DIR__.'/database/seeders');
 $command->setComponentDirectory(__DIR__.'/frontend');
+$command->setConfigDirectory(__DIR__.'/database/migration');
 
 /**
  * Create console instance
@@ -29,9 +32,21 @@ $command->setComponentDirectory(__DIR__.'/frontend');
 $console = new \Bow\Console\Bow($command);
 
 /**
+ * Defines the local server starter
+ */
+$console->setServerFilename(__DIR__.'/server.php');
+$console->setPublicDirectory(__DIR__.'/public');
+$console->setVarDirectory(__DIR__.'/var');
+
+/**
  * Bind kernel to console
  */
 $console->bind($kernel);
+
+/**
+ * Load the custom application
+ */
+require __DIR__.'/routing/console.php';
 
 /**
  * Start console
