@@ -2,20 +2,20 @@
 
 return [
     /**
-     * Clé de sécurité de l'application
-     * Peut être régenerer par la commande
-     * <code> `php bow generate:key` </code>
+     * Security key of the application
+     * Can be reorder by the command
+     * <code>`php bow generate:key`</code>
      */
     'key' => __DIR__ . '/.key',
 
     /**
-     * La methode Encrypt
+     * The Encrypt method
      */
     'cipher' => 'AES-256-CBC',
 
     /**
-     * En cas d'utilisation de token. Ceci est le temps de vie d'un token.
-     * il est vivement conseil de programmer avec des tokens.
+     * When using token. This is the life time of a token.
+     * It is strongly advised to program with tokens.
      */
     'token_expirate_time' => 50000
 ];

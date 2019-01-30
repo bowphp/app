@@ -2,19 +2,20 @@
 
 return [
     /**
-     * Le type de service utiliser pour l'envoye de mail
-     * supporté: mail, smtp
-     * Si smtp est définie alors les clés password et username doivent avoir des values.
+     * The type of service to use for sending mail
+     * If smtp is set then the password and username keys must have values.
+     *
+     * driver name: mail, smtp
      */
     'driver' => app_env('MAIL_DRIVER', 'smtp'),
 
     /**
-     * Encodage
+     * MAIL Encoding
      */
     'charset'  => 'utf8',
 
     /**
-     * smtp authentification
+     * SMTP authentification
      */
     'smtp' => [
         'hostname' => app_env('SMTP_HOSTNAME'),
@@ -27,7 +28,7 @@ return [
     ],
 
     /**
-     * mail authentification
+     * MAIL authentification
      */
     'mail' => [
         'default' => 'contact',

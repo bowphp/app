@@ -1,10 +1,8 @@
 <?php
-/**
- * Fichier de configuration de la classe réssource
- */
+
 return [
     /**
-     * Store location utilisant le systeme de disk
+     * Store location using the disk system
      */
     'disk' =>[
         'mount' => 'storage',
@@ -15,7 +13,7 @@ return [
     ],
 
     /**
-     * Liste de service externe de stockage
+     * External storage service list
      */
     "services" => [
         /**
@@ -26,9 +24,12 @@ return [
             'password' => app_env('FTP_PASSWORD'),
             'username' => app_env('FTP_USERNAME'),
             'port'     => app_env('FTP_PORT', 21),
-            'root' => app_env('FTP_STARTROOT', null), // Le dossier de base du serveur
-            'tls' => app_env('FTP_TLS', false), // A `true` pour activer une connection sécurisé.
-            'timeout' => app_env('FTP_TIMEOUT', 50) // Temps d'attente de connection
+            // The basic folder of the server
+            'root' => app_env('FTP_STARTROOT', null),
+            // A `true` to activate a secure connection.
+            'tls' => app_env('FTP_TLS', false),
+            // Connection waiting time
+            'timeout' => app_env('FTP_TIMEOUT', 50)
         ],
 
         /**
@@ -46,12 +47,12 @@ return [
     ],
     
     /**
-     * Repertoire de log
+     * Log directory
      */
     'log' => __DIR__.'/../var/logs',
 
     /**
-     * Repertoure de cache
+     * Cache locator
      */
     'cache' => __DIR__ . '/../var/cache',
 ];

@@ -2,12 +2,12 @@
 
 return [
     /**
-     * Branche par de défaut de connection
+     * Branch by default of connection
      */
     "default" => "web",
 
     /**
-     * Branche d'authentification par défaut
+     * Default authentication branch
      */
     "web" => [
         "type" => "model",
@@ -15,7 +15,7 @@ return [
     ],
 
     /**
-     * Autre branche d'authentification
+     * Other authentication branch
      */
     "admin" => [
         'type' => "model",

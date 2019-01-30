@@ -10,8 +10,7 @@ use Bow\Validation\Validator;
 class Controller
 {
     /**
-     * Permet de faire des rédirections sur une autre page ou sur l'action du même controlleur
-     * ou d'un autre controlleur et actioner une methode.
+     * Make redirect
      *
      * @param  mixed $url
      * @param  array $parameters
@@ -27,7 +26,7 @@ class Controller
     }
 
     /**
-     * Permet de charge une vue
+     * Make view rendering
      *
      * @param  string $name
      * @param  array  $data
@@ -72,8 +71,7 @@ class Controller
     }
 
     /**
-     * permet de se connecter sur une autre base de donnée
-     * et retourne l'instance de la DB
+     * Get Database Instance
      *
      * @param string   $name
      * @param callable $cb
@@ -85,14 +83,12 @@ class Controller
         return call_user_func_array('db', func_get_args());
     }
 
-
     /**
      * Alias of table
      *
      * @param $name
-     * @param null $class
-     * @param null $primary_key
-     * @param null $connexion
+     * @param string $connexion
+     *
      * @return \Bow\Database\Query\Builder
      */
     public function table($name, $connexion = null)
@@ -101,7 +97,7 @@ class Controller
     }
 
     /**
-     * Retourne id de la derniere insertion en db
+     * Get last insert ID for auto increment
      *
      * @return mixed
      */
@@ -111,7 +107,7 @@ class Controller
     }
 
     /**
-     * Retourne le token généré par l'application.
+     * Get current session token
      *
      * @return string
      */
@@ -121,11 +117,11 @@ class Controller
     }
 
     /**
-     * Faire la validation des données de la requête
-     * en fonction des règles passées en paramètre
+     * Make validation
      *
      * @param Request $request
      * @param array $rule
+     *
      * @return Validate
      */
     protected function validate(Request $request, array $rule)

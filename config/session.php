@@ -2,49 +2,54 @@
 
 return [
     /**
-     * Le nom du cookie de session
+     * The name of the session cookie
      */
     'name' => app_env('SESSION_NAME', 'Bow'),
 
     /**
-     * La durée de vie du cookie, en secondes. Voir la directive
+     * The lifetime of the cookie, in seconds. See the directive
      */
     'lifetime' => app_env('SESSION_LIFE', 180),
 
     /**
-     * Le chemin dans le domaine où le cookie sera accessible.
-     * Utilisez un simple slash ('/') pour tous les chemins du domaine.
-     * Voir la directive path: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-path.
+     * The path in the domain where the cookie will be accessible.
+     *
+     * Use a simple slash ('/') for all paths in the domain.
+     *
+     * @see: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-path.
      */
     'path' => '/',
 
     /**
-     * Le domaine du cookie, par exemple 'www.exemple.com'.
-     * Pour rendre les cookies visibles sur tous les sous-domaines,
-     * le domaine doit être préfixé avec un point, tel que '.exemple.com'.
-     * Voir la directive domain: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-domain
+     * The cookie domain, for example 'www.example.com'.
+     * To make cookies visible on all subdomains,
+     * the domain must be prefixed with a dot, such as '.example.com'.
+     *
+     * @see http://php.net/manual/fr/session.configuration.php#ini.session.cookie-domain
      */
     'domain' => null,
     
     /**
-     * Si true, le cookie ne sera envoyé que sur une connexion sécurisée.
-     * Voir la directive secure: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-secure
+     * If true, the cookie will only be sent over a secure connection.
+     *
+     * @see: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-secure
      */
     'secure' => false,
     
     /**
-     * Si true, PHP va tenter d'envoyer l'option httponly lors de la configuration du cookie.
-     * Voir la directive httponly: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-httponly
+     * If true, PHP will attempt to send the httponly option when configuring the cookie.
+     *
+     * @see http://php.net/manual/fr/session.configuration.php#ini.session.cookie-httponly
      */
     'httponly' => false,
 
     /**
-     * Chemin des données de session.
-     * Si path est spécifié, le chemin du dossier sera modifié.
+     * Session data path.
+     * If path is specified, the path of the folder will be changed.
      *
-     * Sur certains systèmes d'exploitation, vous aurez à choisir un chemin vers un dossier
-     * capable de gérer un grand nombre de petits fichiers efficacement.
-     * Par exemple, sous Linux, reiserfs peut se rendre plus efficace que ext2fs.
-     */
+     * On some operating systems, you will have to choose a path to a folder
+     * able to handle a large number of small files efficiently.
+     * For example, on Linux, reiserfs can be more efficient than ext2fs.
+    */
     'save_path' => __DIR__.'/../var/session',
 ];

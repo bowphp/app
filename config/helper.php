@@ -81,8 +81,7 @@ if (!function_exists('db_path')) {
 
 if (! function_exists('base_path')) {
     /**
-     * Retourne le chemin du dossier racine de
-     * l'application bow framework
+     * Returns the path of the root folder of the bow framework application
      *
      * @return string
      */
@@ -94,10 +93,11 @@ if (! function_exists('base_path')) {
 
 if (! function_exists('gen_slix')) {
     /**
-     * Génère un code aléatoire.
-     * Peut être utiliser pour masquer le nom de champs de formulaire.
+     * Generate a random code.
+     * Can be used to hide the name of form fields.
      *
      * @param int $len
+     *
      * @return string
      */
     function gen_slix($len = 4)
@@ -108,7 +108,10 @@ if (! function_exists('gen_slix')) {
 
 if (!function_exists('convert_to_moment')) {
     /**
-     * @param $time
+     * Convert time to moment
+     *
+     * @param int $time
+     *
      * @return string
      */
     function convert_to_moment($time)

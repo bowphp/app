@@ -7,21 +7,23 @@ return [
     'fetch' => PDO::FETCH_OBJ,
 
     /**
-     * Le point de connexion par défaut
+     * The default connection point
      */
     'default' => app_env('DB_DEFAULT', 'mysql'),
 
+    /**
+     * The migration memory table
+     */
     'migration' => 'migration',
 
     /**
-     * La base de donnée sur laquelle se connectera l'application par défaut
-     * La base de donnée par defaut, c'est sur cette base de donnée que vap va
-     * se connecte automatique. Alors vous ne devez absolument pas modifier
-     * la cle 'default'.
+     * The database on which the default application will connect.
      *
-     * Dans le case contraire vous devez executer le code dans chaque route.
-     * `db('le nom de cle')` or
-     * `Bow\Database\Database::connection('le nom de la clé')`
+     * The database by default, it is on this data base that will connects
+     * automatically. So you absolutely must not edit the default key.
+     *
+     * In the opposite box you must execute the code in each route.
+     * `db('the key name')` or `Bow\Database\Database::connection('le nom de la clé')`
      */
     'connection' => [
         /**

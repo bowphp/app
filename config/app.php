@@ -1,54 +1,56 @@
 <?php
 /**
- * Configuration de l'application
- * On retourne la configuration que php utilisera pour
- * lancer la configuration initiale de vap
+ * Configuration of the application
+ *
+ * We return the configuration that php will use for launch the initial configuration of vap
  */
 
 return [
     /**
-     * Nom de l'Application
+     * Name of the Application
      */
     'name' => 'Bow',
 
     /**
-     * Racine de l'application
+     * Root of the application
+     *
      * e.g '/app'
      */
     'root' => '',
 
     /**
-     * La Zone local
+     * The local area
      */
     'timezone' => 'Africa/Abidjan',
 
     /**
-     * Le chemin vers la root de l'application
+     * The path to the root of the application
      */
     'envfile' => realpath(__DIR__.'/../.env.json'),
 
     /**
-     * Chemin vers le dossier components
+     * Path to the components folder
      */
     'component_path' => dirname(__DIR__).'/frontend',
 
     /**
-     * Chemin vers le dossier public
+     * Path to the public folder
      */
     'public_path' => dirname(__DIR__).'/public',
 
     /**
-     * Chemin vers le dossier storage
+     * Path to the storage folder
      */
     'storage_path' => dirname(__DIR__).'/var/storage',
 
     /**
-     * Chemin vers le mixfile-version.json
+     * Path to the mix-manifest.json
      */
     'mixfile_path' => dirname(__DIR__).'/public/mix-manifest.json',
 
     /**
-     * Le mode de débogage de l'application
+     * The debug mode of the application
+     *
      * development | production
      */
     'debug' => env('APP_ENV', 'development')

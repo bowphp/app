@@ -2,45 +2,44 @@
 
 return [
     /**
-     * Le repertoire des vues. C'est dans ce repertoire que
-     * vous allez mettre tous vos vues.
-     * Les vues doivent avoir l'instantion que vous avez définir
-     * dans 'template_extension' si non erreur sera lancé
+     * The views directory. It is in this repertory that you will put all your views.
+     * The views must have the instantion you have defined in 'template_extension'
+     * if no error will be launched
      */
     'path' => __DIR__ . '/../frontend/templates',
 
     /**
-     * chemin du fichier 404
-     * Quand une uri est invalide, alors Bow
-     * chargera ce fichier.
+     * 404 file path
+     * When an uri is invalid, then Bow
+     * will load this file.
      */
     '404' => 'errors.404',
 
     /**
-     * Le moteur de rendu des vues.
+     * The rendering engine of the views.
      *
-     * Template par defaut utiliser par Bow.
-     * Le système implement 4 moteur de template.
+     * Default template use by Bow.
+     * The system implement 4 template engine.
      *
-     * Valeur possible (supported): twig, mustache, pug, php
-     * - Le nom du package mustache: mustache/mustache
-     * - Le nom du package pug: pug-php/pug
+     * Valeur possible (supported): twig, php, tintin
+     * - Le nom du package twig: twig/twig
      */
     'engine' => 'tintin',
 
     /**
-     * Extension des pages de vues
+     * Extending view pages
      */
     'extension' => '.tintin.php',
 
     /**
-     * Le repertoire de cache.
-     * quand le cache sera remplit c'est à vous de le vidé
+     * The cache directory.
+     *
+     * When the cache is filled it's up to you to empty it
      */
     'cache' => __DIR__ . '/../var/view',
 
     /**
-     * Option additionnel
+     * Additional option
      */
     'aditionnal_options' => [
         // 'auto_reload_cache' => true

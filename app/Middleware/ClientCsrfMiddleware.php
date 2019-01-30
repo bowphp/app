@@ -8,7 +8,7 @@ use Bow\Middleware\CsrfMiddleware;
 class ClientCsrfMiddleware extends CsrfMiddleware
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function preventOn()
     {

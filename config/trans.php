@@ -2,18 +2,18 @@
 
 return [
     /**
-     * Langue par defaut
+     * Default language
      */
     'lang' => 'fr',
 
     /**
-     * Quand la valeur est à `true`, le système de traduction
-     * détectera la langue du client et fera traduction en fonction
+     * When the value is true, the translation system
+     * will detect the language of the client and will translate according to
      */
     'auto_detected' => false,
 
     /**
-     * Chemin vers le répètoire des langues
+     * Path to the language repeater
      */
     'dictionary' => __DIR__.'/../frontend/lang',
 ];

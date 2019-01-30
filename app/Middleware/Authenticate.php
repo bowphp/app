@@ -6,7 +6,7 @@ use Bow\Middleware\AuthMiddleware;
 class Authenticate extends AuthMiddleware
 {
     /**
-     * Url de redirection si l'utilisateur n'est pas connecté.
+     * Redirect URL if the user is not logged in.
      *
      * @return string
      */
