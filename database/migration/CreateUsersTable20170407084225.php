@@ -11,14 +11,17 @@ class CreateUsersTable20170407084225 extends Migration
     public function up()
     {
         $this->create("users", function (SQLGenerator $table) {
-            $table->increment('id');
+            $table->addColumn('id', 'int', [
+                'increment' => true,
+                'primary' => true
+            ]);
             $table->addColumn('name', 'string');
             $table->addColumn('description', 'string');
             $table->addColumn('email', 'string');
             $table->addColumn('pseudo', 'string');
             $table->addColumn('password', 'string');
             $table->addTimestamps();
-            $table->engine('InnoDB');
+            $table->withEngine('InnoDB');
         });
     }
 
