@@ -53,5 +53,5 @@ return [
      *
      * development | production
      */
-    'debug' => env('APP_ENV', 'development')
+    'debug' => app_env('APP_ENV', 'development')
 ];
