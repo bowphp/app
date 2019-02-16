@@ -8,11 +8,3 @@ $app->route([
 	}
 ]);
 
-$app->route([
-	'path' => '/hello/:name',
-	'method' => 'GET',
-	'handler' => 'HomeController::index',
-	'where' => ['name' => '[a-zA-Z]+']
-]);
-
-
