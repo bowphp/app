@@ -3,18 +3,17 @@
 use Bow\Database\Migration\Migration;
 use Bow\Database\Migration\SQLGenerator;
 
-class CreateUsersTable20170407084225 extends Migration
+class Version20170407084225CreateUsersTable extends Migration
 {
     /**
      * Up migration
+     * 
+     * @return void
      */
     public function up()
     {
         $this->create("users", function (SQLGenerator $table) {
-            $table->addColumn('id', 'int', [
-                'increment' => true,
-                'primary' => true
-            ]);
+            $table->addColumn('id', 'int', ['increment' => true, 'primary' => true]);
             $table->addColumn('name', 'string');
             $table->addColumn('description', 'string');
             $table->addColumn('email', 'string');
@@ -27,8 +26,10 @@ class CreateUsersTable20170407084225 extends Migration
 
     /**
      * Rollback migration
+     * 
+     * @return void
      */
-    public function down()
+    public function rollback()
     {
         $this->dropIfExists("users");
     }
