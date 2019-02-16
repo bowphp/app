@@ -68,6 +68,8 @@ class Kernel extends ApplicationLoader
 
     /**
      * Service Bootstrap
+     * 
+     * @return void
      */
     public function boot()
     {
