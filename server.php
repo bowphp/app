@@ -1,6 +1,6 @@
 <?php
 
-// Changement du non du serveur.
+// Change of the server's no
 header("Server: Bow Server (" . PHP_OS . ")");
 
 $uri = urldecode(
