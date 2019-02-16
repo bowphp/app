@@ -14,7 +14,7 @@ return [
     /**
      * The migration memory table
      */
-    'migration' => 'migration',
+    'migration' => 'bow_migration_status',
 
     /**
      * The database on which the default application will connect.

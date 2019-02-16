@@ -5,6 +5,7 @@ if (!function_exists('mix')) {
      * Get mixfile chunkhash version
      *
      * @param string $path
+     * 
      * @return string
      */
     function mix($path)
@@ -32,6 +33,7 @@ if (!function_exists('public_path')) {
      * Get public directory
      *
      * @param string $path
+     * 
      * @return string
      */
     function public_path($path = '')
@@ -45,6 +47,7 @@ if (!function_exists('component_path')) {
      * Get component directory
      *
      * @param string $path
+     * 
      * @return string
      */
     function component_path($path = '')
@@ -58,6 +61,7 @@ if (!function_exists('storage_path')) {
      * Get storages directory
      *
      * @param string $path
+     * 
      * @return string
      */
     function storage_path($path = '')
@@ -71,6 +75,7 @@ if (!function_exists('db_path')) {
      * Get db directory
      *
      * @param string $path
+     * 
      * @return string
      */
     function db_path($path = '')
@@ -421,6 +426,7 @@ if (! function_exists('make_embed')) {
      * Make url vide embed
      *
      * @param string $url
+     * 
      * @return bool|string
      */
     function make_embed($url)
