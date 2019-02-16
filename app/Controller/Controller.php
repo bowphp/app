@@ -14,6 +14,7 @@ class Controller
      *
      * @param  mixed $url
      * @param  array $parameters
+     * 
      * @return mixed
      */
     public function redirect($url = null, array $parameters = [])
@@ -31,6 +32,7 @@ class Controller
      * @param  string $name
      * @param  array  $data
      * @param  int    $code
+     * 
      * @return mixed
      */
     public function render($name, array $data = [], $code = 200)
@@ -63,6 +65,7 @@ class Controller
      *
      * @param  string|array $key
      * @param  mixed        $setting
+     * 
      * @return Config|null
      */
     public function config($key = null, $setting = null)
