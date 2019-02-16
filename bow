@@ -11,32 +11,33 @@ $kernel = \App\Kernel::configure(__DIR__.'/config');
 /**
  * Create command instance and set filename
  */
-$command = new \Bow\Console\Command(__DIR__);
-$command->setNamespaces($kernel->namespaces());
+$setting = new \Bow\Console\Setting(__DIR__);
+$setting->setNamespaces($kernel->namespaces());
 
 /**
  * Change preset destination
  */
-$command->setModelDirectory(__DIR__.'/app/Model');
-$command->setValidationDirectory(__DIR__.'/app/Validation');
-$command->setConfigurationDirectory(__DIR__.'/app/Configuration');
-$command->setControllerDirectory(__DIR__.'/app/Controller');
-$command->setMigrationDirectory(__DIR__.'/database/migration');
-$command->setSeederDirectory(__DIR__.'/database/seeders');
-$command->setComponentDirectory(__DIR__.'/frontend');
-$command->setConfigDirectory(__DIR__.'/database/migration');
-
-/**
- * Create console instance
- */
-$console = new \Bow\Console\Bow($command);
+$setting->setModelDirectory(__DIR__.'/app/Model');
+$setting->setValidationDirectory(__DIR__.'/app/Validation');
+$setting->setPackageDirectory(__DIR__.'/app/Configuration');
+$setting->setControllerDirectory(__DIR__.'/app/Controller');
+$setting->setMiddlewareDirectory(__DIR__.'/app/Middleware');
+$setting->setMigrationDirectory(__DIR__.'/database/migration');
+$setting->setSeederDirectory(__DIR__.'/database/seeders');
+$setting->setComponentDirectory(__DIR__.'/frontend');
+$setting->setConfigDirectory(__DIR__.'/config');
+$setting->setPublicDirectory(__DIR__.'/public');
 
 /**
  * Defines the local server starter
  */
-$console->setServerFilename(__DIR__.'/server.php');
-$console->setPublicDirectory(__DIR__.'/public');
-$console->setVarDirectory(__DIR__.'/var');
+$setting->setServerFilename(__DIR__.'/server.php');
+$setting->setVarDirectory(__DIR__.'/var');
+
+/**
+ * Create console instance
+ */
+$console = new \Bow\Console\Console($setting);
 
 /**
  * Bind kernel to console
@@ -44,7 +45,7 @@ $console->setVarDirectory(__DIR__.'/var');
 $console->bind($kernel);
 
 /**
- * Load the custom application
+ * Load the custom command application
  */
 require __DIR__.'/routing/console.php';
 
