@@ -1,16 +1,11 @@
 <?php
 
-function see_hello()
-{
-    return 'hello world';
-}
-
 use PHPUnit\Framework\TestCase;
 
 class SimpleTest extends TestCase
 {
-    public function testHelperSeeHello()
+    public function testTrue()
     {
-        $this->assertEquals(see_hello(), 'hello world');
+        $this->assertTrue(true);
     }
 }
