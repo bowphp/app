@@ -1,11 +1,15 @@
 <?php
 
-class ApplicationTest extends Bow\Testing\BowTestCase
+use Bow\Testing\TestCase;
+
+class ApplicationTest extends TestCase
 {
     /**
+     * The base url for cURL request
+     * 
      * @var string
      */
-    protected $base_url = 'http://localhost:5000';
+    protected $url = 'http://localhost:5000';
 
     /**
      * Test Welcome page
