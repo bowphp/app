@@ -5,7 +5,6 @@ node_modules
 db/migration/.registers
 vendor/
 package-lock.json
-public
 !.gitkeep
 !public/**/.gitkeep
 !public/index.php
