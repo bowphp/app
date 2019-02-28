@@ -12,4 +12,10 @@
  * Follow the following example, it gives you an overview on how it works in general.
  */
 
-require __DIR__.'/get.php';
+$app->route([
+	'path' => '/',
+	'method' => 'GET',
+	'handler' => function () {
+		return response()->render('welcome');
+	}
+]);
