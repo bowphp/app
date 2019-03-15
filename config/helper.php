@@ -90,9 +90,9 @@ if (! function_exists('base_path')) {
      *
      * @return string
      */
-    function base_path()
+    function base_path($path = '')
     {
-        return realpath(__DIR__.'/..');
+        return rtrim(rtrim(realpath(__DIR__.'/..'), '/').'/'.$path, '/');
     }
 }
 
