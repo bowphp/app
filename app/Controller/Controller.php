@@ -14,7 +14,6 @@ class Controller
      *
      * @param  mixed $url
      * @param  array $parameters
-     * 
      * @return mixed
      */
     public function redirect($url = null, array $parameters = [])
@@ -32,7 +31,6 @@ class Controller
      * @param  string $name
      * @param  array  $data
      * @param  int    $code
-     * 
      * @return mixed
      */
     public function render($name, array $data = [], $code = 200)
@@ -65,7 +63,6 @@ class Controller
      *
      * @param  string|array $key
      * @param  mixed        $setting
-     * 
      * @return Config|null
      */
     public function config($key = null, $setting = null)
@@ -78,7 +75,6 @@ class Controller
      *
      * @param string   $name
      * @param callable $cb
-     *
      * @return Database
      */
     public function db($name = null, callable $cb = null)
@@ -91,7 +87,6 @@ class Controller
      *
      * @param $name
      * @param string $connexion
-     *
      * @return \Bow\Database\Query\Builder
      */
     public function table($name, $connexion = null)
@@ -124,7 +119,6 @@ class Controller
      *
      * @param Request $request
      * @param array $rule
-     *
      * @return Validate
      */
     protected function validate(Request $request, array $rule)

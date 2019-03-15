@@ -6,11 +6,7 @@ vendor/
 package-lock.json
 !.gitkeep
 !public/**/.gitkeep
-!storage/**/.gitkeep
-!public/index.php
-!public/robots.txt
-!public/.htaccess
-!public/favicon.ico
+!var/**/.gitkeep
 .env.json
 config/.key
 mix-manifest.json

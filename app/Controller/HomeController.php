@@ -12,7 +12,6 @@ class HomeController extends Controller
      *
      * @param Request $request
      * @param string $name
-     * 
      * @return string
      */
     public function index(Request $request, $name)
