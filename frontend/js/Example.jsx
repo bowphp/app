@@ -5,7 +5,7 @@ export default class Example extends Component {
   render() {
     return (
       <div>
-        I'm am example <b><a href="https://reactjs.org">React</a></b> Component.
+        I'm an example <b><a href="https://reactjs.org">React</a></b> Component.
       </div>
     );
   }
