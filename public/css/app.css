@@ -1,8 +1,1 @@
-#main {
-  position: relative;
-  margin: 10% auto;
-  width: 550px;
-  text-align: center;
-  font-family: "Lato", "console", monospace, serif, "sans-serif";
-}
-
+#main{position:relative;margin:10% auto;width:550px;text-align:center;font-family:Lato,console,monospace,serif,"sans-serif"}
