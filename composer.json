@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=7.0",
-        "bowphp/framework": "4.*.*"
+        "bowphp/framework": "4.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
