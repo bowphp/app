@@ -7,6 +7,19 @@ return [
     'name' => app_env('SESSION_NAME', 'Bow'),
 
     /**
+     * The session driver
+     */
+    'driver' => 'database',
+
+    /**
+     * The session database drive option
+     */
+    'database' => [
+        'table' => 'sessions',
+        'connection' => app_env('DB_DEFAULT')
+    ],
+
+    /**
      * The lifetime of the cookie, in seconds. See the directive
      */
     'lifetime' => app_env('SESSION_LIFE', 180),
