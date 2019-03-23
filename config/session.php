@@ -9,7 +9,7 @@ return [
     /**
      * The session driver
      */
-    'driver' => 'database',
+    'driver' => 'file',
 
     /**
      * The session database drive option
