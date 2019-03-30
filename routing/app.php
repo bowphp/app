@@ -11,11 +11,6 @@
  *
  * Follow the following example, it gives you an overview on how it works in general.
  */
-
-$app->route([
-	'path' => '/',
-	'method' => 'GET',
-	'handler' => function () {
-		return response()->render('welcome');
-	}
-]);
+$app->get('/', function () {
+    return response()->render('welcome');
+});

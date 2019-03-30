@@ -6,5 +6,5 @@ use Bow\Console\Color;
 use Bow\Console\ArgOption as Argument;
 
 $console->addCommand('hello', function (Argument $argument) {
-    echo Color::green("Hello bow task runner.");
+    echo Color::green("hello, bow task runner.");
 });
