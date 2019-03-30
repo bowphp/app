@@ -14,7 +14,6 @@ foreach (range(1, 5) as $key) {
         'name' => $faker->name,
         'description' => $faker->text,
         'email' => $faker->email,
-        'pseudo' => uniqid(),
         'password' => $faker->password,
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
