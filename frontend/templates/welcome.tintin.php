@@ -5,10 +5,10 @@
 #block('content')
 <!-- <Example></Example> -->
 <div>
-    I'm a bow application, you can see the <a href="https://bowphp.github.io">documentation</a>.
+    I'm a bow application, you can see my <a href="https://bowphp.github.io">documentation</a>.
 </div>
 #endblock
 
 #block('script')
-    <script type="text/javascript" src="/js/app.js"></script>
+    {# <script type="text/javascript" src="/js/app.js"></script> #}
 #endblock
