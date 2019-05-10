@@ -16,7 +16,6 @@ cache:
 
 php:
   - 7.0
-  - nightly
 
 env:
   - DB_USER=travis
