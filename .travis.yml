@@ -3,7 +3,8 @@ dist: trusty
 
 branches:
   only:
-    - 3.0
+    - 4.0
+    - master
 
 sudo: false
 
