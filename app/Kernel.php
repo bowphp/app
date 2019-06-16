@@ -61,14 +61,14 @@ class Kernel extends ApplicationLoader
             \Bow\Session\SessionConfiguration::class,
 
             /**
-             * Ajoutez vos Configuration personnalisé ici.
+             * Add your Custom Settings here.
              */
         ];
     }
 
     /**
      * Service Bootstrap
-     * 
+     *
      * @return void
      */
     public function boot()
