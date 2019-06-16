@@ -6,7 +6,7 @@ class ApplicationTest extends TestCase
 {
     /**
      * The base url for cURL request
-     * 
+     *
      * @var string
      */
     protected $url = 'http://localhost:5000';
