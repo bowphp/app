@@ -6,8 +6,6 @@ branches:
     - 4.0
     - master
 
-sudo: false
-
 services:
   - mysql
 
