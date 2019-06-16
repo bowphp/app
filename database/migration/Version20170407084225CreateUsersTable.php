@@ -7,7 +7,7 @@ class Version20170407084225CreateUsersTable extends Migration
 {
     /**
      * Up migration
-     * 
+     *
      * @return void
      */
     public function up()
@@ -25,7 +25,7 @@ class Version20170407084225CreateUsersTable extends Migration
 
     /**
      * Rollback migration
-     * 
+     *
      * @return void
      */
     public function rollback()
