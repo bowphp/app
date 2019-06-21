@@ -27,7 +27,7 @@ class ErrorHandle
      * @param array $data
      * @return mixed
      */
-    public function render($view, $data = [], $code = 200)
+    private function render($view, $data = [], $code = 200)
     {
         if (is_numeric($data)) {
             $code = $data;
@@ -46,7 +46,7 @@ class ErrorHandle
      * @param array $code
      * @return mixed
      */
-    public function json($exception)
+    private function json($exception)
     {
         $data = [
             'status' => [
