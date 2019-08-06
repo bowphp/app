@@ -16,7 +16,7 @@ class ErrorHandle
     public function handle($exception)
     {
         if ($exception instanceof NotFoundException) {
-            return $this->render('errors.404', 404);
+            return $this->render('errors.404', ['code' => 404]);
         }
     }
 
