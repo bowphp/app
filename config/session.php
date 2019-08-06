@@ -22,7 +22,7 @@ return [
     /**
      * The lifetime of the cookie, in seconds. See the directive
      */
-    'lifetime' => app_env('SESSION_LIFE', 180),
+    'lifetime' => app_env('SESSION_LIFE', 10800),
 
     /**
      * The path in the domain where the cookie will be accessible.
