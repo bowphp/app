@@ -13,7 +13,8 @@ $kernel = \App\Kernel::configure(realpath(__DIR__.'/../config'));
  * Creation of application
  */
 $app = Bow\Application\Application::make(
-    \Bow\Http\Request::getInstance(), \Bow\Http\Response::getInstance()
+    \Bow\Http\Request::getInstance(),
+    \Bow\Http\Response::getInstance()
 );
 
 /**
