@@ -14,7 +14,7 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 7.1
+  - 7.0
 
 env:
   - DB_USER=travis
