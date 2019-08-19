@@ -17,7 +17,7 @@ The goal is to allow beginners who want to work on a project a little bigger to 
 
 You must make sure the following items are installed on your machine.
 
-- PHP >= 7
+- PHP >= 7.1
 - OpenSSL PHP Extension
 - PDO PHP Extension
 - Mbstring PHP Extension
