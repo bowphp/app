@@ -34,10 +34,10 @@
     },
     "scripts": {
         "post-root-package-install":[
-            "php -r 'file_exists(\".env.json\") || copy(\".env.example.json\", \".env.json\");'"
+            "@php -r \"file_exists('.env.json') || copy('.env.example.json', '.env.json');\""
         ],
         "post-create-project-cmd": [
-            "php bow generate:key"
+            "@php bow generate:key"
         ]
     },
     "config": {
