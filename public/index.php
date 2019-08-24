@@ -25,7 +25,7 @@ $app->bind($kernel);
 /**
  * Load application routing
  */
-require __DIR__ . "/../routing/app.php";
+require __DIR__ . "/../routes/app.php";
 
 /**
  * Send application response

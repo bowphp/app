@@ -47,7 +47,7 @@ $console->bind($kernel);
 /**
  * Load the custom command application
  */
-require __DIR__.'/routing/console.php';
+require __DIR__.'/routes/console.php';
 
 /**
  * Start console
