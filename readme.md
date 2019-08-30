@@ -24,10 +24,15 @@ You must make sure the following items are installed on your machine.
 - XML PHP Extension
 - JSON PHP Extension
 
-## Author
+## Contributing
 
-**Franck DAKIA** is a Full Stack developer based in Africa, Ivory Coast. Passionate about code and collaborative development, speaker, trainer and member of several developer communities and many collaborators.
+Thank you for considering contributing to Bow Framework! The contribution guide is in the framework documentation.
 
-Contact me at [dakiafranck@gmail.com](mailto:dakiafranck@gmail.com) - [@franck_dakia](https://twitter.com/franck_dakia)
+- [Franck DAKIA](https://github.com/papac)
+- [Thank's collaborators](https://github.com/bowphp/app/graphs/contributors)
+
+## Contact
+
+[dakiafranck@gmail.com](mailto:dakiafranck@gmail.com) - [@franck_dakia](https://twitter.com/franck_dakia)
 
 **Please, if there is a bug on the project please contact me by email or leave me a message on the [slack](https://bowphp.slack.com). or [join us on slask](https://join.slack.com/t/bowphp/shared_invite/enQtNzMxOTQ0MTM2ODM5LTQ3MWQ3Mzc1NDFiNDYxMTAyNzBkNDJlMTgwNDJjM2QyMzA2YTk4NDYyN2NiMzM0YTZmNjU1YjBhNmJjZThiM2Q)**
