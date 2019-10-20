@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Controller\Controller;
 use Bow\Http\Request;
 
-class HomeController extends Controller
+class WelcomeController extends Controller
 {
     /**
      * Show index
@@ -14,8 +14,8 @@ class HomeController extends Controller
      * @param string $name
      * @return string
      */
-    public function index(Request $request, $name)
+    public function __invoke(Request $request, string $name)
     {
-        return sprintf('<b>%s</b>', $name);
+        return sprintf('Hello, <b>%s</b>', $name);
     }
 }

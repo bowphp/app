@@ -14,3 +14,5 @@
 $app->get('/', function () {
     return response()->render('welcome');
 });
+
+$app->get('/:name', 'WelcomeController');
