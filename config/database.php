@@ -33,7 +33,7 @@ return [
             'hostname' => app_env('MYSQL_HOSTNAME', 'localhost'),
             'username' => app_env('MYSQL_USERNAME', 'test'),
             'password' => app_env('MYSQL_PASSWORD', 'test'),
-            'database' => app_env('MYSQL_DBMAME', 'test'),
+            'database' => app_env('MYSQL_DBNAME', 'test'),
             'charset'  => app_env('MYSQL_CHARSET', 'utf8mb4'),
             'collation' => app_env('MYSQL_COLLATION', 'utf8mb4_unicode_ci'),
             'engine' => app_env('MYSQL_ENGINE', 'InnoDB'),
