@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Bow\Database\Exception\NotFoundException;
+use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
+use Bow\Http\Exception\ResponseException as HttpResponseException;
 use Exception;
 
 class ErrorHandle
@@ -15,8 +16,12 @@ class ErrorHandle
      */
     public function handle($exception)
     {
-        if ($exception instanceof NotFoundException) {
-            return $this->render('errors.404', ['code' => 404]);
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->render('errors.404', ['code' => 404, 'exception' => $exception]);
+        }
+
+        if ($exception instanceof HttpResponseException) {
+            return $this->render('errors.500', ['code' => 404, 'exception' => $exception]);
         }
     }
 
