@@ -40,16 +40,16 @@ if (!function_exists('public_path')) {
     }
 }
 
-if (!function_exists('component_path')) {
+if (!function_exists('frontend_path')) {
     /**
-     * Get component directory
+     * Get frontend directory
      *
      * @param string $path
      * @return string
      */
-    function component_path($path = '')
+    function frontend_path($path = '')
     {
-        return __DIR__.'/../components/'.ltrim($path, '/');
+        return __DIR__.'/../frontend/'.ltrim($path, '/');
     }
 }
 
@@ -63,19 +63,6 @@ if (!function_exists('storage_path')) {
     function storage_path($path = '')
     {
         return __DIR__.'/../storage/'.ltrim($path, '/');
-    }
-}
-
-if (!function_exists('db_path')) {
-    /**
-     * Get db directory
-     *
-     * @param string $path
-     * @return string
-     */
-    function db_path($path = '')
-    {
-        return __DIR__.'/../db/'.ltrim($path, '/');
     }
 }
 
