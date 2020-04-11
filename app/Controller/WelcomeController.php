@@ -11,11 +11,10 @@ class WelcomeController extends Controller
      * Show index
      *
      * @param Request $request
-     * @param string $name
      * @return string
      */
-    public function __invoke(Request $request, string $name)
+    public function __invoke(Request $request)
     {
-        return sprintf('Hello, <b>%s</b>', $name);
+        return response()->render('welcome');
     }
 }

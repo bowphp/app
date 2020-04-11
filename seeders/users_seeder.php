@@ -14,7 +14,7 @@ foreach (range(1, 5) as $key) {
         'name' => $faker->name,
         'description' => $faker->text,
         'email' => $faker->email,
-        'password' => $faker->password,
+        'password' => '$2y$10$2iITokZq4x/HFQgvbNZNEuKtqv8o1Eh8y.1QxgtNBGQdzRcatKq7a',
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
     ];

@@ -10,15 +10,23 @@ return [
      * Default authentication branch
      */
     "web" => [
-        "type" => "model",
-        'model' => App\Model\User::class
+        "type" => "jwt",
+        'model' => App\Model\User::class,
+        'credentials' => [
+            'username' => 'email',
+            'password' => 'password'
+        ]
     ],
 
     /**
      * Other authentication branch
      */
     "admin" => [
-        'type' => "model",
-        "model" => App\Model\User::class
+        'type' => "session",
+        "model" => App\Model\User::class,
+        'credentials' => [
+            'username' => 'email',
+            'password' => 'password'
+        ]
     ]
 ];

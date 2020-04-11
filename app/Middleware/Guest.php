@@ -16,7 +16,7 @@ class Guest
      */
     public function process(Request $request, callable $next)
     {
-        if (Auth::guest()) {
+        if (Auth::getInstance()->guest()) {
             return $next($request);
         }
 

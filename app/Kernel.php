@@ -63,6 +63,7 @@ class Kernel extends ApplicationLoader
             /**
              * Add your Custom Settings here.
              */
+            // \Policier\Bow\PolicierConfiguration::class,
         ];
     }
 

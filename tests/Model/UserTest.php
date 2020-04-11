@@ -7,7 +7,7 @@ class UserTest extends TestCase
 {
     /**
      * The simple text
-     * 
+     *
      * @return void
      */
     public function testInstance()
