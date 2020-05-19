@@ -53,5 +53,10 @@ return [
      *
      * development | production
      */
-    'debug' => app_env('APP_ENV', 'development')
+    'debug' => app_env('APP_ENV', 'development'),
+
+    /**
+     * The app error handler
+     */
+    "error_handle" => \App\Exceptions\ErrorHandle::class
 ];

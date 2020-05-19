@@ -14,11 +14,11 @@ class Kernel extends ApplicationLoader
     public function namespaces()
     {
         return [
-            'controller' => 'App\\Controller',
-            'middleware' => 'App\\Middleware',
-            'configuration' => 'App\\Configuration',
-            'validation' => 'App\\Validation',
-            'model' => 'App\\Model',
+            'controller' => 'App\\Controllers',
+            'middleware' => 'App\\Middlewares',
+            'configuration' => 'App\\Configurations',
+            'validation' => 'App\\Validations',
+            'model' => 'App\\Models',
         ];
     }
 
@@ -30,9 +30,9 @@ class Kernel extends ApplicationLoader
     public function middlewares()
     {
         return [
-            'csrf' => \App\Middleware\ClientCsrfMiddleware::class,
-            'auth' => \App\Middleware\Authenticate::class,
-            'guest' => \App\Middleware\Guest::class
+            'csrf' => \App\Middlewares\ClientCsrfMiddleware::class,
+            'auth' => \App\Middlewares\Authenticate::class,
+            'guest' => \App\Middlewares\Guest::class
         ];
     }
 

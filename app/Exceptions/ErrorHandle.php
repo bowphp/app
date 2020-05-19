@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Exceptions;
 
 use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
 use Bow\Http\Exception\ResponseException as HttpResponseException;

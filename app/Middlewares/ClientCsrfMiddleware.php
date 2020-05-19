@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middleware;
+namespace App\Middlewares;
 
 use Bow\Http\Request;
 use Bow\Middleware\CsrfMiddleware;

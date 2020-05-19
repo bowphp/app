@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middleware;
+namespace App\Middlewares;
 
 use Bow\Auth\Auth;
 use Bow\Http\Request;

@@ -17,11 +17,11 @@ $setting->setNamespaces($kernel->namespaces());
 /**
  * Change preset destination
  */
-$setting->setModelDirectory(__DIR__.'/app/Model');
-$setting->setValidationDirectory(__DIR__.'/app/Validation');
-$setting->setPackageDirectory(__DIR__.'/app/Configuration');
-$setting->setControllerDirectory(__DIR__.'/app/Controller');
-$setting->setMiddlewareDirectory(__DIR__.'/app/Middleware');
+$setting->setModelDirectory(__DIR__.'/app/Models');
+$setting->setValidationDirectory(__DIR__.'/app/Validations');
+$setting->setPackageDirectory(__DIR__.'/app/Configurations');
+$setting->setControllerDirectory(__DIR__.'/app/Controllers');
+$setting->setMiddlewareDirectory(__DIR__.'/app/Middlewares');
 $setting->setMigrationDirectory(__DIR__.'/migrations');
 $setting->setSeederDirectory(__DIR__.'/seeders');
 $setting->setComponentDirectory(__DIR__.'/frontend');

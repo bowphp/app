@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controllers;
 
-use App\Controller\Controller;
+use App\Controllers\Controller;
 use Bow\Http\Request;
 
 class WelcomeController extends Controller

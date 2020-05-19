@@ -10,8 +10,8 @@ return [
      * Default authentication branch
      */
     "web" => [
-        "type" => "jwt",
-        'model' => App\Model\User::class,
+        "type" => "session",
+        'model' => App\Models\User::class,
         'credentials' => [
             'username' => 'email',
             'password' => 'password'
@@ -23,10 +23,23 @@ return [
      */
     "admin" => [
         'type' => "session",
-        "model" => App\Model\User::class,
+        "model" => App\Models\User::class,
         'credentials' => [
             'username' => 'email',
             'password' => 'password'
         ]
-    ]
+    ],
+
+    /**
+     * Default authentication branch
+     */
+    "api" => [
+        "type" => "jwt",
+        'model' => App\Models\User::class,
+        'credentials' => [
+            'username' => 'email',
+            'password' => 'password'
+        ]
+    ],
+
 ];

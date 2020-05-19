@@ -1,5 +1,6 @@
 <?php
-namespace App\Middleware;
+
+namespace App\Middlewares;
 
 use Bow\Middleware\AuthMiddleware;
 
