@@ -19,6 +19,8 @@ class Kernel extends ApplicationLoader
             'configuration' => 'App\\Configurations',
             'validation' => 'App\\Validations',
             'model' => 'App\\Models',
+            'service' => 'App\\Services',
+            'exception' => 'App\\Exceptions',
         ];
     }
 

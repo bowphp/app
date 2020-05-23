@@ -23,6 +23,8 @@ $setting->setPackageDirectory(__DIR__.'/app/Configurations');
 $setting->setControllerDirectory(__DIR__.'/app/Controllers');
 $setting->setMiddlewareDirectory(__DIR__.'/app/Middlewares');
 $setting->setMigrationDirectory(__DIR__.'/migrations');
+$setting->setExceptionDirectory(__DIR__.'/app/Exceptions');
+$setting->setServiceDirectory(__DIR__.'/app/Services');
 $setting->setSeederDirectory(__DIR__.'/seeders');
 $setting->setComponentDirectory(__DIR__.'/frontend');
 $setting->setConfigDirectory(__DIR__.'/config');
