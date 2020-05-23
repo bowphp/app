@@ -1,7 +1,7 @@
 <?php
 
-// Change of the server's no
-header("Server: Bow Server (" . PHP_OS . ")");
+// We change here the server's name
+header("Server: Bow Development Server (" . PHP_OS . ")");
 
 $uri = urldecode(
 	parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)
