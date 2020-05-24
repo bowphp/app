@@ -131,7 +131,7 @@ if (!function_exists('convert_to_moment')) {
             $minute = '';
         }
 
-        return $hour.' heure'.($hour > 1 ? 's' : '').$minute;
+        return $hour.' hour'.($hour > 1 ? 's' : '').$minute;
     }
 }
 
@@ -398,41 +398,5 @@ if (! function_exists('gen_unique_id')) {
         $id = base_convert(microtime(false), 10, 36);
 
         return $id;
-    }
-}
-
-if (! function_exists('make_embed')) {
-    /**
-     * Make url vide embed
-     *
-     * @param string $url
-     * @return bool|string
-     */
-    function make_embed($url)
-    {
-        $url = trim($url);
-
-        // The Regular Expression filter for each video provider
-        $regExYoutubeUrl = "#(https?)\:\/\/(w{3}\.)?(youtube\.com|youtu\.be)\/(watch\?v\=|v\/)?([a-zA-Z0-9-_]+)$#";
-        $regExVimeoUrl = "#(https?)\:\/\/(w{3}\.)?(vimeo\.com\/)([0-9]+)$#";
-        $regExDailymotionUrl = '#(https?)\:\/\/(w{3}\.)?(dailymotion\.com\/video|dai\.ly)\/([a-z0-9]+)([a-z0-9-_]+)?#';
-
-        if (preg_match($regExVimeoUrl, $url, $match)) {
-            $newLink = 'https://player.vimeo.com/video/' . preg_replace($regExVimeoUrl, '$4', $url);
-
-            $video_id = end($match);
-
-            return '<div id="video-iframe" data-element-id="'.$video_id.'" style="background-color: #fff;"></div>';
-        }
-
-        if (preg_match($regExYoutubeUrl, $url)) {
-            $newLink = 'https://www.youtube.com/embed/' . preg_replace($regExYoutubeUrl, '$5', $url);
-        } elseif (preg_match($regExDailymotionUrl, $url)) {
-            $newLink = '//www.dailymotion.com/embed/video/' . preg_replace($regExDailymotionUrl, '$4', $url);
-        } else {
-            return '<video src="'.$url.'" style="width: 100%" controls></video>';
-        }
-
-        return '<iframe id="video-iframe" frameborder="0" width="854px" height="480px" src="'. $newLink .'" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
     }
 }
