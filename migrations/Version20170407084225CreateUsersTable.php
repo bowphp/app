@@ -6,9 +6,7 @@ use Bow\Database\Migration\SQLGenerator;
 class Version20170407084225CreateUsersTable extends Migration
 {
     /**
-     * Up migration
-     *
-     * @return void
+     * Up Migration
      */
     public function up()
     {
@@ -25,8 +23,6 @@ class Version20170407084225CreateUsersTable extends Migration
 
     /**
      * Rollback migration
-     *
-     * @return void
      */
     public function rollback()
     {

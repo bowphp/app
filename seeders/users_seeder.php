@@ -10,7 +10,6 @@ $seeds['users'] = [];
 
 foreach (range(1, 5) as $key) {
     $seeds['users'][] = [
-        'id' => null,
         'name' => $faker->name,
         'description' => $faker->text,
         'email' => $faker->email,
