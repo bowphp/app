@@ -1,9 +1,4 @@
 <?php
-/**
- * Configuration of the application
- *
- * We return the configuration that php will use for launch the initial configuration of vap
- */
 
 return [
     /**
@@ -58,5 +53,10 @@ return [
     /**
      * The app error handler
      */
-    "error_handle" => \App\Exceptions\ErrorHandle::class
+    "error_handle" => \App\Exceptions\ErrorHandle::class,
+
+    /**
+     * Enable the error trace the method json is called
+     */
+    "error_trace" => true
 ];
