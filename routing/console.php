@@ -1,7 +1,5 @@
 <?php
-/**
- * Put here your custom console command.
- */
+
 use Bow\Console\Color;
 use Bow\Console\ArgOption as Argument;
 
