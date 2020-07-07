@@ -59,7 +59,7 @@ class Controller
     }
 
     /**
-     * Return la configuration de l'application
+     * Return the application configuration
      *
      * @param  string|array $key
      * @param  mixed        $setting
