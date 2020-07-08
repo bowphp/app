@@ -9,6 +9,3 @@
 </div>
 #endblock
 
-#block('script')
-    {# <script type="text/javascript" src="/js/app.js"></script> #}
-#endblock
