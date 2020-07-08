@@ -30,6 +30,5 @@
     <div id="main">
       #inject('content')
     </div>
-    #inject('script')
 </body>
 </html>

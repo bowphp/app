@@ -137,7 +137,7 @@ if (!function_exists('convert_to_moment')) {
 
 if (! function_exists('get_country_list')) {
     /**
-     * Contry list
+     * Country list
      *
      * @return array
      */
