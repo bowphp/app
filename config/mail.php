@@ -33,12 +33,12 @@ return [
     'mail' => [
         'default' => 'contact',
         'contact' => [
-            'address' => app_env('CONTACT_EMAIL'),
-            'username' => app_env('CONTACT_NAME')
+            'address' => app_env('CONTACT_FROM_EMAIL'),
+            'name' => app_env('CONTACT_FROM_NAME')
         ],
         'info' => [
             'address' => 'info@exemple.com',
-            'username' => 'Address d\'Information'
+            'name' => 'Address d\'Information'
         ]
     ]
 ];
