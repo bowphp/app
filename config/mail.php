@@ -28,7 +28,7 @@ return [
     ],
 
     /**
-     * MAIL authentification
+     * MAIL authentication
      */
     'mail' => [
         'default' => 'contact',
