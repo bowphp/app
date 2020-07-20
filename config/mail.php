@@ -38,7 +38,7 @@ return [
         ],
         'info' => [
             'address' => 'info@exemple.com',
-            'name' => 'Address d\'Information'
+            'username' => 'Address information'
         ]
     ]
 ];
