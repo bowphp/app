@@ -23,7 +23,7 @@ return [
      * automatically. So you absolutely must not edit the default key.
      *
      * In the opposite box you must execute the code in each route.
-     * `db('the key name')` or `Bow\Database\Database::connection('le nom de la clé')`
+     * `db('the key name')` or `Bow\Database\Database::connection('the key name')`
      */
     'connection' => [
         /**
