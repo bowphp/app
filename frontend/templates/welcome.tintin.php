@@ -6,7 +6,7 @@
 <div class="banner">
     <img src="/img/logo.svg" alt="">
     <h1>Bow Framework</h1>
-    <p>I'm a bow application, you can see my <a href="https://bowphp.com">documentation</a>.</p>
+    <p>I'm a bow application, you can see my <a href="https://bowphp.com" target="_blank">documentation</a>.</p>
 </div>
 <div class="sub-banner">
     <a href="https://adjemin.com/">
@@ -20,4 +20,3 @@
     </a>
 </div>
 #endblock
-
