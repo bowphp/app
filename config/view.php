@@ -6,7 +6,7 @@ return [
      * The views must have the instantion you have defined in 'template_extension'
      * if no error will be launched
      */
-    'path' => __DIR__ . '/../frontend/templates',
+    'path' => __DIR__ . '/../templates',
 
     /**
      * 404 file path
