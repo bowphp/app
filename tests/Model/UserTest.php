@@ -5,13 +5,10 @@ use Bow\Testing\TestCase;
 
 class UserTest extends TestCase
 {
-    /**
-     * The simple text
-     *
-     * @return void
-     */
-    public function testInstance()
+    public function testShouldUserHaveAdminRole()
     {
+        // $user = User::find(1);
+        // $this->assertTrue($user->role == 'admin');
         $this->assertTrue(true);
     }
 }

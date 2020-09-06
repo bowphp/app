@@ -11,10 +11,7 @@ class ApplicationTest extends TestCase
      */
     protected $url = 'http://localhost:5000';
 
-    /**
-     * Test Welcome page
-     */
-    public function testGetWelcome()
+    public function testShouldAuthenticateUser()
     {
         $response = $this->visit('GET', '/');
 
