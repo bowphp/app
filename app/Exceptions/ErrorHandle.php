@@ -55,8 +55,8 @@ class ErrorHandle
     private function json($exception, $code = null)
     {
         if (is_null($code)) {
-            if (method_exists($exception, 'getErrorCode')) {
-                $code = $exception->getErrorCode();
+            if (method_exists($exception, 'getStatus')) {
+                $code = $exception->getStatus();
             } else {
                 $code = 'INTERNAL_SERVER_ERROR';
             }
@@ -70,7 +70,7 @@ class ErrorHandle
         ];
 
         if ($exception instanceof HttpException) {
-            $content = json($data, $exception->getCode());
+            $content = json($data, $exception->getStatusCode());
         } else {
             $content = json($data, 500);
         }
