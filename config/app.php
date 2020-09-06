@@ -21,12 +21,17 @@ return [
     /**
      * The path to the root of the application
      */
-    'envfile' => realpath(__DIR__.'/../.env.json'),
+    'env_file' => realpath(__DIR__.'/../.env.json'),
 
     /**
-     * Path to the components folder
+     * Path to the frontend folder
      */
-    'component_path' => dirname(__DIR__).'/frontend',
+    'frontend_path' => dirname(__DIR__).'/frontend',
+
+    /**
+     * Path to the seeders folder
+     */
+    'seeder_path' => dirname(__DIR__) . '/seeders',
 
     /**
      * Path to the public folder

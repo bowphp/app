@@ -67,6 +67,11 @@
             text-align: center;
         }
 
+        .sub-banner a:hover {
+            filter: unset;
+            opacity: 0.8;
+        }
+
         .sub-banner a:first-child img{
             width: 60px;
         }

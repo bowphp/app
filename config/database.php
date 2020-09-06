@@ -23,7 +23,7 @@ return [
      * automatically. So you absolutely must not edit the default key.
      *
      * In the opposite box you must execute the code in each route.
-     * `db('the key name')` or `Bow\Database\Database::connection('le nom de la clé')`
+     * `db('the key name')` or `Bow\Database\Database::connection('the key name')`
      */
     'connection' => [
         /**
@@ -47,7 +47,7 @@ return [
          */
         'sqlite' => [
             'driver' => app_env('SQLITE_DRIVER'),
-            'database' => app_env('SQLITE_DATABASE', __DIR__.'/../storage/database.sqlite'),
+            'database' => app_env('SQLITE_DATABASE', __DIR__.'/../var/database.sqlite'),
             'charset'  => app_env('SQLITE_CHARSET', 'utf8'),
             'prefix' => app_env('SQLITE_PREFIX', '')
         ]

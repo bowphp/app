@@ -32,9 +32,9 @@ class Kernel extends ApplicationLoader
     public function middlewares()
     {
         return [
-            'csrf' => \App\Middlewares\ClientCsrfMiddleware::class,
-            'auth' => \App\Middlewares\Authenticate::class,
-            'guest' => \App\Middlewares\Guest::class
+            'csrf' => \App\Middlewares\RequestCsrfMiddleware::class,
+            'auth' => \App\Middlewares\AuthenticateMiddleware::class,
+            'guest' => \App\Middlewares\GuestMiddleware::class
         ];
     }
 
