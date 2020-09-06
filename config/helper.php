@@ -92,49 +92,6 @@ if (! function_exists('gen_slix')) {
     }
 }
 
-if (!function_exists('convert_to_moment')) {
-    /**
-     * Convert time to moment
-     *
-     * @param int $time
-     * @return string
-     */
-    function convert_to_moment($time)
-    {
-        if ($time < 1) {
-            $second = ceil($time * 60);
-
-            return $second.' seconde'.($second > 1 ? 's' : '');
-        }
-
-        if ($time <= 59) {
-            $second = '';
-
-            if (is_float($time)) {
-                list($time, $second) = explode('.', $time);
-
-                if ($second > 0) {
-                    $second = ' '.$second.' seconde'.($second > 1 ? 's' : '');
-                }
-            }
-
-            return $time.' minute'. ($time > 1 ? 's' : '').$second;
-        }
-
-        $minute = $time % 60;
-
-        $hour = intdiv($time, 60);
-
-        if ($minute > 0) {
-            $minute = ' ' .convert_to_moment($minute);
-        } else {
-            $minute = '';
-        }
-
-        return $hour.' hour'.($hour > 1 ? 's' : '').$minute;
-    }
-}
-
 if (! function_exists('get_country_list')) {
     /**
      * Country list
