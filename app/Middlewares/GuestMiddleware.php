@@ -5,7 +5,7 @@ namespace App\Middlewares;
 use Bow\Auth\Auth;
 use Bow\Http\Request;
 
-class Guest
+class GuestMiddleware
 {
     /**
      * Launch function of the middleware.

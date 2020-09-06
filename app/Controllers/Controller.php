@@ -128,4 +128,34 @@ class Controller
 
         return $validation;
     }
+
+    /**
+     * Format API response
+     *
+     * @param string $message
+     * @param string $code
+     * @param array $data
+     * @return array
+     */
+    public function nativeApiResponse($message = 'Ok', $code = 'OK', $data = [])
+    {
+        $success = compact('message', 'code');
+
+        return compact('success',  'data');
+    }
+
+    /**
+     * Format API response
+     *
+     * @param string $message
+     * @param string $code
+     * @param array $data
+     * @return array
+     */
+    public function nativeApiErrorResponse($message = 'Ok', $code = 'OK', $data = [])
+    {
+        $error = compact('message', 'code');
+
+        return compact('error',  'data');
+    }
 }

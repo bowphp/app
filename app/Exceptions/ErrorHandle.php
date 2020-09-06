@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
+use Bow\Http\Exception\HttpException;
 use Bow\Http\Exception\ResponseException as HttpResponseException;
 use Exception;
 
@@ -48,19 +49,31 @@ class ErrorHandle
      * Send the json as response
      *
      * @param string $data
-     * @param array $code
+     * @param mixed $code
      * @return mixed
      */
-    private function json($exception)
+    private function json($exception, $code = null)
     {
+        if (is_null($code)) {
+            if (method_exists($exception, 'getErrorCode')) {
+                $code = $exception->getErrorCode();
+            } else {
+                $code = 'INTERNAL_SERVER_ERROR';
+            }
+        }
+
         $data = [
-            'status' => [
+            'error' => [
                 'message' => $exception->getMessage(),
-                'success' => false
+                'code' => $code,
             ], 'data' => $exception->getTrace()
         ];
 
-        $content = json($data, $exception->getCode());
+        if ($exception instanceof HttpException) {
+            $content = json($data, $exception->getCode());
+        } else {
+            $content = json($data, 500);
+        }
 
         $this->send($content);
     }

@@ -4,7 +4,7 @@ namespace App\Middlewares;
 
 use Bow\Middleware\AuthMiddleware;
 
-class Authenticate extends AuthMiddleware
+class AuthenticateMiddleware extends AuthMiddleware
 {
     /**
      * Redirect URL if the user is not logged in.
