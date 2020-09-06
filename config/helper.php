@@ -62,7 +62,7 @@ if (!function_exists('storage_path')) {
      */
     function storage_path($path = '')
     {
-        return __DIR__.'/../storage/'.ltrim($path, '/');
+        return __DIR__.'/../var/'.ltrim($path, '/');
     }
 }
 
