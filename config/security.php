@@ -14,6 +14,13 @@ return [
     'cipher' => 'AES-256-CBC',
 
     /**
+     * The Hash method
+     * 
+     * @see https://github.com/bowphp/framework/issues/55
+     */
+    'hash_method' => PASSWORD_BCRYPT,
+
+    /**
      * When using token. This is the life time of a token.
      * It is strongly advised to program with tokens.
      */
