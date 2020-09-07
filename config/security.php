@@ -21,6 +21,15 @@ return [
     'hash_method' => PASSWORD_BCRYPT,
 
     /**
+     * The Hash method options
+     * 
+     * @see https://www.php.net/manual/fr/password.constants.php
+     */
+    'hash_options' => [
+        'cost' => 10
+    ],
+
+    /**
      * When using token. This is the life time of a token.
      * It is strongly advised to program with tokens.
      */
