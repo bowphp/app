@@ -30,6 +30,7 @@ return [
          * Connexion mysql
          */
         'mysql' => [
+            'driver' => 'mysql',
             'hostname' => app_env('MYSQL_HOSTNAME', 'localhost'),
             'username' => app_env('MYSQL_USERNAME', 'test'),
             'password' => app_env('MYSQL_PASSWORD', 'test'),
