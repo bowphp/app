@@ -47,7 +47,7 @@ return [
          * Connexion sqlite
          */
         'sqlite' => [
-            'driver' => app_env('SQLITE_DRIVER'),
+            'driver' => app_env('SQLITE_DRIVER', 'sqlite'),
             'database' => app_env('SQLITE_DATABASE', __DIR__.'/../var/database.sqlite'),
             'charset'  => app_env('SQLITE_CHARSET', 'utf8'),
             'prefix' => app_env('SQLITE_PREFIX', '')
