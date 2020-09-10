@@ -11,7 +11,7 @@
     "require": {
         "php": ">=7.1",
         "bowphp/framework": "4.2.*",
-        "bowphp/policier": "^2.0"
+        "bowphp/policier": "^2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",

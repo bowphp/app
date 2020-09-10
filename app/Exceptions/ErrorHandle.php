@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
 use Bow\Http\Exception\HttpException;
 use Bow\Http\Exception\ResponseException as HttpResponseException;
+use Bow\Http\Exception\UnauthorizedException;
 use Exception;
 
 class ErrorHandle
