@@ -10,7 +10,7 @@
 </div>
 <div class="sub-banner">
     <a href="https://adjemin.com/">
-        <img src="https://adjemin.com/images/Admin/LOGO-ADJEMIN-150x150.png" alt="adjemin">
+        <img src="https://adjemin.com/img/logo.png" alt="adjemin">
     </a>
     <a href="https://akiltechnologies.com/">
         <img src="https://akiltechnologies.com/wp-content/uploads/2017/09/Akil-Technologies-Logotype_Bleu.png" alt="akiltechnologie">
