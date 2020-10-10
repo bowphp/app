@@ -63,17 +63,17 @@ class ErrorHandle
             }
         }
 
-        $data = [
-            'error' => [
-                'message' => $exception->getMessage(),
-                'code' => $code,
-            ], 'data' => $exception->getTrace()
+        $error = [
+            'message' => $exception->getMessage(),
+            'code' => $code,
         ];
 
+        $data = $exception->getTrace();
+
         if ($exception instanceof HttpException) {
-            $content = json($data, $exception->getStatusCode());
+            $content = json(compact('error', 'data'), $exception->getStatusCode());
         } else {
-            $content = json($data, 500);
+            $content = json(compact('error', 'data'), 500);
         }
 
         $this->send($content);
