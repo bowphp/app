@@ -18,7 +18,7 @@ return [
     'alpha' => "Le champ {attribute} doit avoir un contenu en alphabetique.",
     'exists' => "le champe {attribute} n'existe pas.",
     'not_exists' => "le champ {attribute} existe.",
-    'unique' => "le champ {attribute} n'est pas unique.",
+    'unique' => "le champ {attribute} doit être unique.",
     'date' => "Le champ {attribute} n'est pas une date au format yyyy-mm-dd",
     'datetime' => "Le champ {attribute} n'est pas une date au format yyyy-mm-dd hh:mm:ss",
     'regex' => "Le champ {attribute} n'est pas valide",
