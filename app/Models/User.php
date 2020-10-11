@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Bow\Auth\Authentication as Model;
+use Bow\Auth\Authentication as AuthenticatableModel;
 
-class User extends Model
+class User extends AuthenticatableModel
 {
     /**
      * The list of hidden field when toJson is called

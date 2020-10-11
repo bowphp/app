@@ -1,3 +1,5 @@
 <?php
 
-$app->get('/', 'WelcomeController')->name('app.index');
+use App\Controllers\WelcomeController;
+
+$app->get('/', WelcomeController::class)->name('app.index');

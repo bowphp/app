@@ -1,4 +1,4 @@
-#extends('layout')
+#extends('layouts.default')
 
 #block('title', '500 - Internal Server Error')
 
