@@ -59,7 +59,7 @@ class Kernel extends ApplicationLoader
             \Bow\Storage\StorageConfiguration::class,
             \Bow\View\ViewConfiguration::class,
             \Bow\Translate\TranslatorConfiguration::class,
-            \Bow\Auth\AuthenticateConfiguration::class,
+            \Bow\Auth\AuthenticationConfiguration::class,
             \Bow\Session\SessionConfiguration::class,
 
             /**
