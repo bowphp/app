@@ -68,7 +68,11 @@ class ErrorHandle
             'code' => $code,
         ];
 
-        $trace = $exception->getTrace();
+        if (app_env("APP_ENV") != "production") {
+            $trace = $exception->getTrace();
+        } else {
+            $trace = [];
+        }
 
         if ($exception instanceof HttpException) {
             $content = json(compact('error', 'trace'), $exception->getStatusCode());
