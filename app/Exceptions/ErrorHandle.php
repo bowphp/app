@@ -66,6 +66,7 @@ class ErrorHandle
         $error = [
             'message' => $exception->getMessage(),
             'code' => $code,
+            'time' => date('Y-d-m H:i:s')
         ];
 
         if (app_env("APP_ENV") != "production") {
