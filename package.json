@@ -10,7 +10,7 @@
     "code-sniffer": "./vendor/bin/phpcs --standard=psr2 --tab-width=4 app tests config migrations seeders routes"
   },
   "dependencies": {
-    "axios": "^0.18",
+    "axios": ">=0.21.1",
     "babel-loader": "^8.0.4",
     "bootstrap": "^4.0.0",
     "cross-env": "^5.1",
