@@ -26,7 +26,11 @@ You must make sure the following items are installed on your machine.
 
 ## Bow Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Bow Framework development. If you are interested in becoming a sponsor, please contact [Franck DAKIA](https://github.com/papac)
+We would like to extend our thanks to the following sponsors for funding Bow Framework development. If you are interested in becoming a sponsor, please contact [Franck DAKIA](https://github.com/papac):
+
+- [Adjemin](https://adjemin.com)
+- [Akil Technologies](https://akiltechnologies.com/)
+- [Etudesk](https://etudesk.com)
 
 ## Contributing
 
