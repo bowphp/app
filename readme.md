@@ -24,6 +24,10 @@ You must make sure the following items are installed on your machine.
 - XML PHP Extension
 - JSON PHP Extension
 
+## Bow Sponsors
+
+We would like to extend our thanks to the following sponsors for funding Bow Framework development. If you are interested in becoming a sponsor, please contact [Franck DAKIA](https://github.com/papac)
+
 ## Contributing
 
 Thank you for considering contributing to Bow Framework! The contribution guide is in the framework documentation.
