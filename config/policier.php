@@ -16,5 +16,5 @@ return [
     /**
      * Configures the audience
      */
-    "aud" => app_env("APP_JWT_ISSUER", "app.example.com"),
+    "aud" => app_env("APP_JWT_AUD", "app.example.com"),
 ];
