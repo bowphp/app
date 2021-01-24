@@ -21,8 +21,10 @@ return [
      * Default template use by Bow.
      * The system implement 4 template engine.
      *
-     * Valeur possible (supported): twig, php, tintin
-     * - Le nom du package twig: twig/twig
+     * Template supported twig, php, tintin
+     * Define the template name.
+     * Example: define twig with package twig/twig for define twig template
+     * Bow Framework support actualy twig, tintin, php
      */
     'engine' => 'tintin',
 
