@@ -1,28 +1,24 @@
-import jQuery from "jquery"
 /**
- * // Loader Example Vue component
  * import Vue from "vue"
  * import Example from "./Example.vue"
  * 
- * Vue.component('example', Example);
+ * Vue.component('example', Example)
  * 
  * new Vue({
  *   el: "#main"
- * });
+ * })
  */
 
-/**
- * Import JQuery
- */
-window.jQuery = window.$ = jQuery;
+window.axios = require('axios')
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+const token = document.querySelector('meta[name="csrf-token"]')
+if (token) {
+  window.axios.defaults.headers.common['X-Csrf-Token'] = token.getAttribute('content')
+}
 
 /**
  * Loader Example React component
  */
-require('./Example.jsx');
+require('./Example.jsx')

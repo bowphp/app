@@ -1,6 +1,6 @@
 <?php
 /**
- * The users seeder
+ * The users tabler seeder
  *
  * @see https://github.com/fzaninotto/Faker for all documentation
  */

@@ -135,13 +135,17 @@ class Controller
      * @param string $message
      * @param string $code
      * @param array $data
+     * @param int $status
      * @return array
      */
-    public function nativeApiResponse($message = 'Ok', $code = 'OK', $data = [])
+    public function nativeApiResponse($message = 'Ok', $code = 'OK', $data = [], $status = 200)
     {
-        $success = compact('message', 'code');
+        $time = date('Y-m-d H:i:s');
+        $success = compact('message', 'code', 'time');
 
-        return compact('success',  'data');
+        $this->response()->status($status);
+
+        return compact('success', 'data');
     }
 
     /**
@@ -150,12 +154,32 @@ class Controller
      * @param string $message
      * @param string $code
      * @param array $data
+     * @param int $status
      * @return array
      */
-    public function nativeApiErrorResponse($message = 'Ok', $code = 'OK', $data = [])
+    public function nativeApiErrorResponse($message = 'Ok', $code = 'OK', $data = [], $status = 500)
     {
-        $error = compact('message', 'code');
+        $time = date('Y-m-d H:i:s');
+        $error = compact('message', 'code', 'time');
 
-        return compact('error',  'data');
+        $this->response()->status($status);
+
+        return compact('error', 'data');
+    }
+
+    /**
+     * Fire Event
+     *
+     * @param string $event
+     * @return void
+     */
+    public function emit($event)
+    {
+        $data = func_get_args();
+
+        array_shift($data);
+        array_unshift($data, $event);
+
+        call_user_func_array('emit_event', $data);
     }
 }

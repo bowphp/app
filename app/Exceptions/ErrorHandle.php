@@ -47,14 +47,22 @@ class ErrorHandle
     }
 
     /**
-     * Send the json as response
-     *
-     * @param string $data
-     * @param mixed $code
-     * @return mixed
-     */
+    * Send the json as response
+    *
+    * @param string $data
+    * @param mixed $code
+    * @return mixed
+    */
     private function json($exception, $code = null)
     {
+        if ($exception instanceof TokenInvalidException) {
+            $code = 'TOKEN_INVALID';
+        }
+
+        if ($exception instanceof TokenExpiredException) {
+            $code = 'TOKEN_EXPIRED';
+        }
+
         if (is_null($code)) {
             if (method_exists($exception, 'getStatus')) {
                 $code = $exception->getStatus();
@@ -63,10 +71,16 @@ class ErrorHandle
             }
         }
 
+        if (app_env("APP_ENV") == "production" && $exception instanceof PDOException) {
+            $message = 'Une erreur interne est survenu';
+        } else {
+            $message = $exception->getMessage();
+        }
+
         $error = [
-            'message' => $exception->getMessage(),
+            'message' => $message,
             'code' => $code,
-            'time' => date('Y-d-m H:i:s')
+            'time' => date('Y-m-d H:i:s')
         ];
 
         if (app_env("APP_ENV") != "production") {
@@ -74,13 +88,13 @@ class ErrorHandle
         } else {
             $trace = [];
         }
-
+        
         if ($exception instanceof HttpException) {
             $content = json(compact('error', 'trace'), $exception->getStatusCode());
         } else {
             $content = json(compact('error', 'trace'), 500);
         }
-
+        
         $this->send($content);
     }
 
