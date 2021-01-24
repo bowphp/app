@@ -4,14 +4,14 @@ return [
     /**
      * Name of the Application
      */
-    'name' => 'Bow',
+    'name' => app_env('APP_NAME', 'Bow Application'),
 
     /**
      * Root of the application
      *
      * e.g '/app'
      */
-    'root' => '',
+    'root' => app_env('APP_PREFIX_URL'),
 
     /**
      * The local area

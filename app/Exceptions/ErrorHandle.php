@@ -72,7 +72,7 @@ class ErrorHandle
         }
 
         if (app_env("APP_ENV") == "production" && $exception instanceof PDOException) {
-            $message = 'Une erreur interne est survenu';
+            $message = 'Internal error occured';
         } else {
             $message = $exception->getMessage();
         }
@@ -83,12 +83,12 @@ class ErrorHandle
             'time' => date('Y-m-d H:i:s')
         ];
 
-        if (app_env("APP_ENV") != "production") {
+        if (config('app.error_trace')) {
             $trace = $exception->getTrace();
         } else {
             $trace = [];
         }
-        
+
         if ($exception instanceof HttpException) {
             $content = json(compact('error', 'trace'), $exception->getStatusCode());
         } else {
