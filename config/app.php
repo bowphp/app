@@ -7,6 +7,12 @@ return [
     'name' => app_env('APP_NAME', 'Bow Application'),
 
     /**
+     * The auto csrf enable csrf protected automaticly
+     * on POST, DELETE, PUT
+     */
+    "auto_csrf" => app_env("APP_AUTO_CSRF", true),
+
+    /**
      * Root of the application
      *
      * e.g '/app'
