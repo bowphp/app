@@ -32,13 +32,15 @@ return [
      */
     'mail' => [
         'default' => 'contact',
-        'contact' => [
-            'address' => app_env('CONTACT_FROM_EMAIL'),
-            'name' => app_env('CONTACT_FROM_NAME')
-        ],
-        'info' => [
-            'address' => 'info@exemple.com',
-            'username' => 'Address information'
+        'froms' => [
+            'contact' => [
+                'address' => app_env('MAIL_FROM_EMAIL'),
+                'name' => app_env('MAIL_FROM_NAME')
+            ],
+            'info' => [
+                'address' => 'info@exemple.com',
+                'username' => 'Address information'
+            ]
         ]
     ]
 ];

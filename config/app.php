@@ -11,7 +11,7 @@ return [
      *
      * e.g '/app'
      */
-    'root' => app_env('APP_PREFIX_URL'),
+    'root' => app_env('APP_URI_PREFIX', ''),
 
     /**
      * The local area

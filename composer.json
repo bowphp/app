@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "bowphp/framework": "4.3.*",
+        "bowphp/framework": "4.4.*",
         "bowphp/policier": "^2.1"
     },
     "require-dev": {
