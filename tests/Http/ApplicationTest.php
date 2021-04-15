@@ -4,7 +4,7 @@ use Bow\Testing\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    public function test_should_authenticate_user()
+    public function test_should_show_the_welcome_page()
     {
         $response = $this->visit('GET', '/');
 
