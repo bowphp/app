@@ -5,7 +5,7 @@ use Bow\Testing\TestCase;
 
 class UserTest extends TestCase
 {
-    public function testShouldUserHaveAdminRole()
+    public function test_should_user_have_admin_role()
     {
         // $user = User::find(1);
         // $this->assertTrue($user->role == 'admin');
