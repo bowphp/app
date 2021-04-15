@@ -1,22 +1,25 @@
 #!/usr/bin/env php
 <?php
 
+use App\Kernel;
+use Bow\Console\Setting;
+use Bow\Console\Console;
+
+// Register The Auto Loader
+if (!file_exists(__DIR__."/vendor/autoload.php")) {
+	die("Please install the depencencies with 'composer update'");
+}
+
 require __DIR__."/vendor/autoload.php";
 
-/**
- * Make kernel instance
- */
-$kernel = \App\Kernel::configure(__DIR__.'/config');
+// Make kernel instance
+$kernel = Kernel::configure(__DIR__.'/config');
 
-/**
- * Create command instance and set filename
- */
-$setting = new \Bow\Console\Setting(__DIR__);
+// Create command instance and set filename
+$setting = new Setting(__DIR__);
 $setting->setNamespaces($kernel->namespaces());
 
-/**
- * Change preset destination
- */
+// Change preset destination
 $setting->setModelDirectory(__DIR__.'/app/Models');
 $setting->setValidationDirectory(__DIR__.'/app/Validations');
 $setting->setPackageDirectory(__DIR__.'/app/Configurations');
@@ -31,28 +34,20 @@ $setting->setComponentDirectory(__DIR__.'/frontend');
 $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
 
-/**
- * Defines the local server starter
- */
+// Defines the local server starter
 $setting->setServerFilename(__DIR__.'/server.php');
 $setting->setVarDirectory(__DIR__.'/var');
 
-/**
- * Create console instance
- */
-$console = new \Bow\Console\Console($setting);
+// Create console instance
+$console = new Console($setting);
 
-/**
- * Bind kernel to console
- */
+// Bind kernel to console
 $console->bind($kernel);
 
-/**
- * Load the custom command application
- */
-require __DIR__.'/routes/console.php';
+// Load the custom command application
+if (file_exists(__DIR__.'/routes/console.php')) {
+	require __DIR__.'/routes/console.php';
+}
 
-/**
- * Start console
- */
+// Start console
 $console->run();
