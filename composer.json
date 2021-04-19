@@ -1,7 +1,12 @@
 {
     "name": "bowphp/app",
     "description": "The bow PHP Framework",
-    "keywords": ["framework", "bow", "php", "php-framework"],
+    "keywords": [
+        "framework",
+        "bow",
+        "php",
+        "php-framework"
+    ],
     "type": "project",
     "license": "MIT",
     "support": {
@@ -9,7 +14,7 @@
         "source": "https://github.com/bowphp/app"
     },
     "require": {
-        "php": ">=7.1",
+        "php": "^7.1|^8.0",
         "bowphp/framework": "dev-master",
         "bowphp/policier": "^2.1"
     },
@@ -34,7 +39,7 @@
         ]
     },
     "scripts": {
-        "post-root-package-install":[
+        "post-root-package-install": [
             "@php -r \"file_exists('.env.json') || copy('.env.example.json', '.env.json');\""
         ],
         "post-create-project-cmd": [
