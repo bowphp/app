@@ -6,8 +6,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "format": "./vendor/bin/phpcbf --standard=psr2 --tab-width=4 app tests config migrations seeders routes",
-    "code-sniffer": "./vendor/bin/phpcs --standard=psr2 --tab-width=4 app tests config migrations seeders routes"
+    "format": "composer run-script code-formating"
   },
   "dependencies": {
     "axios": ">=0.21.1",

@@ -102,7 +102,7 @@ class Controller
      */
     public function getLastInsertId()
     {
-        return last_insert_id();
+        return get_last_insert_id();
     }
 
     /**
@@ -138,8 +138,12 @@ class Controller
      * @param int $status
      * @return array
      */
-    public function nativeApiResponse($message = 'Ok', $code = 'OK', $data = [], $status = 200)
-    {
+    public function nativeApiResponse(
+        $message = 'Success',
+        $code = 'OK',
+        $data = [],
+        $status = 200
+    ) {
         $time = date('Y-m-d H:i:s');
         $success = compact('message', 'code', 'time');
 
@@ -157,8 +161,12 @@ class Controller
      * @param int $status
      * @return array
      */
-    public function nativeApiErrorResponse($message = 'Ok', $code = 'OK', $data = [], $status = 500)
-    {
+    public function nativeApiErrorResponse(
+        $message = 'Internal Server Error',
+        $code = 'INTERNAL_SERVER_ERROR',
+        $data = [],
+        $status = 500
+    ) {
         $time = date('Y-m-d H:i:s');
         $error = compact('message', 'code', 'time');
 
