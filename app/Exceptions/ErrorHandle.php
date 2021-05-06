@@ -20,12 +20,22 @@ class ErrorHandle
      */
     public function handle($exception)
     {
+        if (request()->isAjax()) {
+            return $this->json($exception);
+        }
+
         if ($exception instanceof ModelNotFoundException) {
-            return $this->render('errors.404', ['code' => 404, 'exception' => $exception]);
+            return $this->render('errors.404', [
+                'code' => 404,
+                'exception' => $exception
+            ]);
         }
 
         if ($exception instanceof HttpResponseException) {
-            return $this->render('errors.500', ['code' => 404, 'exception' => $exception]);
+            return $this->render('errors.500', [
+                'code' => 404,
+                'exception' => $exception
+            ]);
         }
     }
 
@@ -43,9 +53,7 @@ class ErrorHandle
             $data = [];
         }
 
-        $content = view($view, $data, $code)->getContent();
-
-        $this->send($content);
+        return view($view, $data, $code);
     }
 
     /**
@@ -92,22 +100,11 @@ class ErrorHandle
         }
 
         if ($exception instanceof HttpException) {
-            $content = json(compact('error', 'trace'), $exception->getStatusCode());
+            $status = $exception->getStatusCode();
         } else {
-            $content = json(compact('error', 'trace'), 500);
+            $status = 500;
         }
-        
-        $this->send($content);
-    }
 
-    /**
-     * Die the process with content
-     *
-     * @param string $content
-     * @return mixed
-     */
-    private function send($content)
-    {
-        die($content);
+        return json(compact('error', 'trace'), $status);
     }
 }
