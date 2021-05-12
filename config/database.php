@@ -25,7 +25,7 @@ return [
      * In the opposite box you must execute the code in each route.
      * `db('the key name')` or `Bow\Database\Database::connection('the key name')`
      */
-    'connection' => [
+    'connections' => [
         /**
          * Connexion mysql
          */
