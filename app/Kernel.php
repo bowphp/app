@@ -22,6 +22,7 @@ class Kernel extends ApplicationLoader
             'service' => 'App\\Services',
             'event' => 'App\\Events',
             'exception' => 'App\\Exceptions',
+            'producer' => 'App\\Producers',
         ];
     }
 
