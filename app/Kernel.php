@@ -49,7 +49,7 @@ class Kernel extends ApplicationLoader
     {
         return [
             /**
-             * Configuration interne du framework
+             * Internal configuration of the framework
              */
             \Bow\Configuration\Configurations\LoggerConfiguration::class,
             \Bow\Configuration\Configurations\EnvConfiguration::class,
