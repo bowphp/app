@@ -51,9 +51,9 @@ class Kernel extends ApplicationLoader
             /**
              * Internal configuration of the framework
              */
-            \Bow\Configuration\Configurations\LoggerConfiguration::class,
-            \Bow\Configuration\Configurations\EnvConfiguration::class,
-            
+            \Bow\Configuration\LoggerConfiguration::class,
+            \Bow\Configuration\EnvConfiguration::class,
+
             \Bow\Cache\CacheConfiguration::class,
             \Bow\Mail\MailConfiguration::class,
             \Bow\Security\CryptoConfiguration::class,
@@ -63,6 +63,7 @@ class Kernel extends ApplicationLoader
             \Bow\Translate\TranslatorConfiguration::class,
             \Bow\Auth\AuthenticationConfiguration::class,
             \Bow\Session\SessionConfiguration::class,
+            \Bow\Queue\QueueConfiguration::class,
 
             /**
              * Add your Custom Settings here.

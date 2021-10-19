@@ -33,6 +33,7 @@ $setting->setSeederDirectory(__DIR__.'/seeders');
 $setting->setComponentDirectory(__DIR__.'/frontend');
 $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
+$setting->setProducerDirectory(__DIR__.'/app/Producers');
 
 // Defines the local server starter
 $setting->setServerFilename(__DIR__.'/server.php');
