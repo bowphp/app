@@ -7,9 +7,21 @@ use Bow\Configuration\Loader as Config;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
+use Bow\Queue\ProducerService;
 
 class Controller
 {
+    /**
+     * Push the producer on queue list
+     *
+     * @param  ProducerService $producer
+     * @return mixed
+     */
+    public function queue(ProducerService $producer)
+    {
+        queue($producer);
+    }
+
     /**
      * Make redirect
      *
