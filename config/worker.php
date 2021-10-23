@@ -13,7 +13,9 @@ return [
         /**
          * The sync connexion
          */
-        "sync" => [],
+        "sync" => [
+            "directory" => storage_path("cache/queue")
+        ],
 
         /**
          * The beanstalkd connexion
