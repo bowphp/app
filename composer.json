@@ -16,7 +16,14 @@
     "require": {
         "php": "^7.1|^8.0",
         "bowphp/framework": "4.4.*",
-        "bowphp/policier": "^2.1"
+        "bowphp/policier": "^2.1",
+        "ext-openssl": "*",
+        "ext-pdo": "*",
+        "ext-mbstring": "*",
+        "ext-xml": "*",
+        "ext-json": "*",
+        "ext-pdo_mysql": "*",
+        "ext-pdo_sqlite": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",
