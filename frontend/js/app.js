@@ -1,12 +1,6 @@
 /**
  * import Vue from "vue"
  * import Example from "./Example.vue"
- * 
- * Vue.component('example', Example)
- * 
- * new Vue({
- *   el: "#main"
- * })
  */
 
 window.axios = require('axios')
@@ -22,3 +16,11 @@ if (token) {
  * Loader Example React component
  */
 require('./Example.jsx')
+
+/*
+ * Vue.component('example', Example)
+ * 
+ * new Vue({
+ *   el: "#main"
+ * })
+ */
