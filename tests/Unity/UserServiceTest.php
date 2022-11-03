@@ -2,7 +2,6 @@
 
 use App\Models\User;
 use App\Services\UserService;
-use Bow\Mail\Mail;
 use PHPUnit\Framework\TestCase;
 
 class UserServiceTest extends TestCase

@@ -34,7 +34,8 @@ class UserService
         $this->user->name = $name;
         $this->user->lastname = $lastname;
         $this->user->email = $email;
+        $this->user->save();
 
-        return $this->user->save();
+        return $this->user;
     }
 }

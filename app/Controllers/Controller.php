@@ -29,7 +29,7 @@ class Controller
      * @param  array $parameters
      * @return mixed
      */
-    public function redirect($url = null, array $parameters = [])
+    public function redirect($url = null, array $parameters = []): RedirectInterface
     {
         if (is_null($url)) {
             return redirect();
@@ -134,34 +134,11 @@ class Controller
      * @param array $rule
      * @return Validate
      */
-    protected function validate(Request $request, array $rule)
+    protected function validate(Request $request, array $rule): Validate
     {
         $validation = Validator::make($request->all(), $rule);
 
         return $validation;
-    }
-
-    /**
-     * Format API response
-     *
-     * @param string $message
-     * @param string $code
-     * @param array $data
-     * @param int $status
-     * @return array
-     */
-    public function nativeApiResponse(
-        $message = 'Success',
-        $code = 'OK',
-        $data = [],
-        $status = 200
-    ) {
-        $time = date('Y-m-d H:i:s');
-        $success = compact('message', 'code', 'time');
-
-        $this->response()->status($status);
-
-        return compact('success', 'data');
     }
 
     /**
