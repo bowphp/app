@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace App\Services;
 
@@ -34,6 +34,7 @@ class UserService
         $this->user->name = $name;
         $this->user->lastname = $lastname;
         $this->user->email = $email;
+        $this->user->password = app_hash("password");
         $this->user->save();
 
         return $this->user;
