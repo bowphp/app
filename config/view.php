@@ -9,13 +9,6 @@ return [
     'path' => __DIR__ . '/../templates',
 
     /**
-     * 404 file path
-     * When an uri is invalid, then Bow
-     * will load this file.
-     */
-    '404' => 'errors.404',
-
-    /**
      * The rendering engine of the views.
      *
      * Default template use by Bow.

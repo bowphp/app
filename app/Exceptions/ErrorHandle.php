@@ -24,8 +24,9 @@ class ErrorHandle
             return $this->json($exception);
         }
 
-        if ($exception instanceof ModelNotFoundException) {
-            return $this->render('errors.404', [
+        if ($exception instanceof ModelNotFoundException || $exception instanceof HttpException) {
+            $code = $exception->getStatusCode();
+            return $this->render('errors.' . $code, [
                 'code' => 404,
                 'exception' => $exception
             ]);

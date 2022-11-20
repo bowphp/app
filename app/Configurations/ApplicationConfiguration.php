@@ -13,9 +13,9 @@ class ApplicationConfiguration extends Configuration
      * @param Loader $config
      * @return void
      */
-    public function create(Loader $config)
+    public function create(Loader $config): void
     {
-        //
+        // Event::on("user.created", UserCreatedListener::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class ApplicationConfiguration extends Configuration
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         //
     }

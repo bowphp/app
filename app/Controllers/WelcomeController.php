@@ -13,7 +13,7 @@ class WelcomeController extends Controller
      * @param Request $request
      * @return string
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): ?string
     {
         return $this->render('welcome');
     }

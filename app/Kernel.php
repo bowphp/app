@@ -81,10 +81,12 @@ class Kernel extends ApplicationLoader
     /**
      * Service Bootstrap
      *
-     * @return void
+     * @return ApplicationLoader
      */
-    public function boot(): void
+    public function boot(): ApplicationLoader
     {
         parent::boot();
+
+        return $this;
     }
 }
