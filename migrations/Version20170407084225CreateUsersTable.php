@@ -14,7 +14,7 @@ class Version20170407084225CreateUsersTable extends Migration
             $table->addIncrement('id');
             $table->addString('name');
             $table->addString('email', ['unique' => true]);
-            $table->addString('description');
+            $table->addString('description', ['nullable' => true]);
             $table->addString('password');
             $table->addTimestamps();
             $table->withEngine('InnoDB');

@@ -11,7 +11,7 @@ class Kernel extends ApplicationLoader
      *
      * @return array
      */
-    public function namespaces()
+    public function namespaces(): array
     {
         return [
             'controller' => 'App\\Controllers',
@@ -32,7 +32,7 @@ class Kernel extends ApplicationLoader
      *
      * @return array
      */
-    public function middlewares()
+    public function middlewares(): array
     {
         return [
             'csrf' => \App\Middlewares\RequestCsrfMiddleware::class,
@@ -46,7 +46,7 @@ class Kernel extends ApplicationLoader
      *
      * @return array
      */
-    public function configurations()
+    public function configurations(): array
     {
         return [
             /**
@@ -70,16 +70,23 @@ class Kernel extends ApplicationLoader
              * Add your Custom Settings here.
              */
             // \Policier\Bow\PolicierConfiguration::class,
+
+            /**
+             * Should be the last to loading
+             */
+            \App\Configurations\ApplicationConfiguration::class,
         ];
     }
 
     /**
      * Service Bootstrap
      *
-     * @return void
+     * @return ApplicationLoader
      */
-    public function boot()
+    public function boot(): ApplicationLoader
     {
         parent::boot();
+
+        return $this;
     }
 }

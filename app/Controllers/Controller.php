@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
+use Bow\Http\Response;
 use Bow\Configuration\Loader as Config;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
@@ -29,7 +30,7 @@ class Controller
      * @param  array $parameters
      * @return mixed
      */
-    public function redirect($url = null, array $parameters = [])
+    public function redirect($url = null, array $parameters = []): RedirectInterface
     {
         if (is_null($url)) {
             return redirect();
@@ -54,9 +55,9 @@ class Controller
     /**
      * Get the current user request
      *
-     * @return \Bow\Http\Request
+     * @return Request
      */
-    public function request()
+    public function request(): Request
     {
         return request();
     }
@@ -64,9 +65,9 @@ class Controller
     /**
      * Get the response instance
      *
-     * @return \Bow\Http\Response
+     * @return Response
      */
-    public function response()
+    public function response(): Response
     {
         return response();
     }
@@ -78,7 +79,7 @@ class Controller
      * @param  mixed        $setting
      * @return Config|null
      */
-    public function config($key = null, $setting = null)
+    public function config(?string $key = null, mixed $setting = null)
     {
         return config($key, $setting);
     }
@@ -86,11 +87,11 @@ class Controller
     /**
      * Get Database Instance
      *
-     * @param string   $name
-     * @param callable $cb
+     * @param ?string $name
+     * @param ?callable $cb
      * @return Database
      */
-    public function db($name = null, callable $cb = null)
+    public function db(?string $name = null, ?callable $cb = null)
     {
         return call_user_func_array('db', func_get_args());
     }
@@ -102,7 +103,7 @@ class Controller
      * @param string $connexion
      * @return \Bow\Database\Query\Builder
      */
-    public function table($name, $connexion = null)
+    public function table(string $name, ?string $connexion = null): \Bow\Database\Query\Builder
     {
         return table($name, $connexion);
     }
@@ -112,7 +113,7 @@ class Controller
      *
      * @return mixed
      */
-    public function getLastInsertId()
+    public function getLastInsertId(): mixed
     {
         return get_last_insert_id();
     }
@@ -122,7 +123,7 @@ class Controller
      *
      * @return string
      */
-    public function getToken()
+    public function getToken(): string
     {
         return csrf_token();
     }
@@ -134,34 +135,11 @@ class Controller
      * @param array $rule
      * @return Validate
      */
-    protected function validate(Request $request, array $rule)
+    protected function validate(Request $request, array $rule): Validate
     {
         $validation = Validator::make($request->all(), $rule);
 
         return $validation;
-    }
-
-    /**
-     * Format API response
-     *
-     * @param string $message
-     * @param string $code
-     * @param array $data
-     * @param int $status
-     * @return array
-     */
-    public function nativeApiResponse(
-        $message = 'Success',
-        $code = 'OK',
-        $data = [],
-        $status = 200
-    ) {
-        $time = date('Y-m-d H:i:s');
-        $success = compact('message', 'code', 'time');
-
-        $this->response()->status($status);
-
-        return compact('success', 'data');
     }
 
     /**
