@@ -27,12 +27,12 @@ return [
     /**
      * The path to the root of the application
      */
-    'env_file' => realpath(__DIR__.'/../.env.json'),
+    'env_file' => realpath(__DIR__ . '/../.env.json'),
 
     /**
      * Path to the frontend folder
      */
-    'frontend_path' => dirname(__DIR__).'/frontend',
+    'frontend_path' => dirname(__DIR__) . '/frontend',
 
     /**
      * Path to the seeders folder
@@ -42,17 +42,17 @@ return [
     /**
      * Path to the public folder
      */
-    'public_path' => dirname(__DIR__).'/public',
+    'public_path' => dirname(__DIR__) . '/public',
 
     /**
      * Path to the storage folder
      */
-    'storage_path' => dirname(__DIR__).'/var/storage',
+    'storage_path' => dirname(__DIR__) . '/var/storage',
 
     /**
      * Path to the mix-manifest.json
      */
-    'mixfile_path' => dirname(__DIR__).'/public/mix-manifest.json',
+    'mixfile_path' => dirname(__DIR__) . '/public/mix-manifest.json',
 
     /**
      * The debug mode of the application
