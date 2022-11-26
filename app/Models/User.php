@@ -14,6 +14,6 @@ class User extends AuthenticatableModel
     protected array $hidden = [
         'password'
     ];
-    
+
     // Do something
 }

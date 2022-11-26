@@ -6,7 +6,7 @@ return [
      * Can be reorder by the command
      * <code>`php bow generate:key`</code>
      */
-    'key' => __DIR__.'/.key',
+    'key' => __DIR__ . '/.key',
 
     /**
      * The Encrypt method

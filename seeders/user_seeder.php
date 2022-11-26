@@ -1,9 +1,11 @@
 <?php
+
 /**
  * The users tabler seeder
  *
  * @see https://github.com/fzaninotto/Faker for all documentation
  */
+
 $faker = \Faker\Factory::create();
 
 $seeds = [];

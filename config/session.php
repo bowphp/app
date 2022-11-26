@@ -41,14 +41,14 @@ return [
      * @see http://php.net/manual/fr/session.configuration.php#ini.session.cookie-domain
      */
     'domain' => null,
-    
+
     /**
      * If true, the cookie will only be sent over a secure connection.
      *
      * @see: http://php.net/manual/fr/session.configuration.php#ini.session.cookie-secure
      */
     'secure' => false,
-    
+
     /**
      * If true, PHP will attempt to send the httponly option when configuring the cookie.
      *
@@ -64,5 +64,5 @@ return [
      * able to handle a large number of small files efficiently.
      * For example, on Linux, reiserfs can be more efficient than ext2fs.
     */
-    'save_path' => __DIR__.'/../var/session',
+    'save_path' => __DIR__ . '/../var/session',
 ];

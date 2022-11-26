@@ -16,13 +16,13 @@ if (!function_exists('mix')) {
         }
 
         $content = json_decode(file_get_contents($manifest), true);
-        
-        $key = '/'.ltrim($path, '/');
+
+        $key = '/' . ltrim($path, '/');
 
         if (isset($content[$key])) {
             return $content[$key];
         }
-        
+
         throw new Exception($path . " Not exists");
     }
 }
@@ -36,7 +36,7 @@ if (!function_exists('public_path')) {
      */
     function public_path($path = '')
     {
-        return __DIR__.'/../public/'.ltrim($path, '/');
+        return __DIR__ . '/../public/' . ltrim($path, '/');
     }
 }
 
@@ -49,7 +49,7 @@ if (!function_exists('frontend_path')) {
      */
     function frontend_path($path = '')
     {
-        return __DIR__.'/../frontend/'.ltrim($path, '/');
+        return __DIR__ . '/../frontend/' . ltrim($path, '/');
     }
 }
 
@@ -62,7 +62,7 @@ if (!function_exists('storage_path')) {
      */
     function storage_path($path = '')
     {
-        return __DIR__.'/../var/'.ltrim($path, '/');
+        return __DIR__ . '/../var/' . ltrim($path, '/');
     }
 }
 
@@ -74,7 +74,7 @@ if (! function_exists('base_path')) {
      */
     function base_path($path = '')
     {
-        return rtrim(rtrim(realpath(__DIR__.'/..'), '/').'/'.$path, '/');
+        return rtrim(rtrim(realpath(__DIR__ . '/..'), '/') . '/' . $path, '/');
     }
 }
 
