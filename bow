@@ -29,6 +29,7 @@ $setting->setMigrationDirectory(__DIR__.'/migrations');
 $setting->setExceptionDirectory(__DIR__.'/app/Exceptions');
 $setting->setServiceDirectory(__DIR__.'/app/Services');
 $setting->setEventDirectory(__DIR__.'/app/Events');
+$setting->setEventListenerDirectory(__DIR__.'/app/Listeners');
 $setting->setSeederDirectory(__DIR__.'/seeders');
 $setting->setComponentDirectory(__DIR__.'/frontend');
 $setting->setConfigDirectory(__DIR__.'/config');

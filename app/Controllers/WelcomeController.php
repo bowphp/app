@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Controllers\Controller;
 use Bow\Http\Request;
+use App\Controllers\Controller;
 
 class WelcomeController extends Controller
 {
