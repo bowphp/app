@@ -7,7 +7,19 @@ use Bow\Configuration\Loader as ApplicationLoader;
 class Kernel extends ApplicationLoader
 {
     /**
-     * Get app namespace
+     * Define your events
+     *
+     * @return array
+     */
+    public function events(): array
+    {
+        return [
+            // Put your event here
+        ];
+    }
+
+    /**
+     * Define the app namespace
      *
      * @return array
      */
@@ -21,6 +33,7 @@ class Kernel extends ApplicationLoader
             'model' => 'App\\Models',
             'service' => 'App\\Services',
             'event' => 'App\\Events',
+            'listener' => 'App\\Listeners',
             'exception' => 'App\\Exceptions',
             'producer' => 'App\\Producers',
             'command' => 'App\\Commands',
@@ -28,7 +41,7 @@ class Kernel extends ApplicationLoader
     }
 
     /**
-     * The middleware lists
+     * Define the app middlewares
      *
      * @return array
      */
