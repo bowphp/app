@@ -31,26 +31,27 @@ return [
          */
         'mysql' => [
             'driver' => 'mysql',
-            'hostname' => app_env('MYSQL_HOSTNAME', 'localhost'),
-            'username' => app_env('MYSQL_USERNAME', 'test'),
-            'password' => app_env('MYSQL_PASSWORD', 'test'),
-            'database' => app_env('MYSQL_DBNAME', 'test'),
-            'charset'  => app_env('MYSQL_CHARSET', 'utf8mb4'),
-            'collation' => app_env('MYSQL_COLLATION', 'utf8mb4_unicode_ci'),
-            'engine' => app_env('MYSQL_ENGINE', 'InnoDB'),
-            'prefix' => app_env('MYSQL_PREFIX', ''),
-            'port' => app_env('MYSQL_PORT', 3306),
-            'socket' => app_env('MYSQL_SOCKET', null)
+            'hostname' => app_env('DB_HOSTNAME', 'localhost'),
+            'username' => app_env('DB_USERNAME', 'test'),
+            'password' => app_env('DB_PASSWORD', 'test'),
+            'database' => app_env('DB_DBNAME', 'test'),
+            'charset'  => app_env('DB_CHARSET', 'utf8mb4'),
+            'collation' => app_env('DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'engine' => app_env('DB_ENGINE', 'InnoDB'),
+            'prefix' => app_env('DB_PREFIX', ''),
+            'port' => app_env('DB_PORT', 3306),
+            'socket' => app_env('DB_SOCKET', null)
         ],
 
         /**
          * Connexion sqlite
          */
         'sqlite' => [
-            'driver' => app_env('SQLITE_DRIVER', 'sqlite'),
-            'database' => app_env('SQLITE_DATABASE', __DIR__ . '/../var/database.sqlite'),
-            'charset'  => app_env('SQLITE_CHARSET', 'utf8'),
-            'prefix' => app_env('SQLITE_PREFIX', '')
+            'driver' => app_env('DB_DRIVER', 'sqlite'),
+            'database' => app_env('DB_DATABASE', __DIR__ . '/../var/database.sqlite'),
+            'charset'  => app_env('DB_CHARSET', 'utf8'),
+            'prefix' => app_env('DB_PREFIX', ''),
+            'foreign_key_constraints' => app_env('DB_FOREIGN_KEYS', true),
         ]
     ]
 ];
