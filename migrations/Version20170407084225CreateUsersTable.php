@@ -8,7 +8,7 @@ class Version20170407084225CreateUsersTable extends Migration
     /**
      * Up Migration
      */
-    public function up()
+    public function up(): void
     {
         $this->create("users", function (SQLGenerator $table) {
             $table->addIncrement('id');
@@ -24,7 +24,7 @@ class Version20170407084225CreateUsersTable extends Migration
     /**
      * Rollback migration
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->dropIfExists("users");
     }
