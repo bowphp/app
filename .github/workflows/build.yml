@@ -1,0 +1,52 @@
+name: build
+
+on: [ push, pull_request ]
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest ]
+        php-versions: [ '8.1', '8.2' ]
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, pdo, pdo_mysql, intl, zip, xml, json, pdo_sqlite, openssl
+          coverage: none
+
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306
+          container port: 3306
+          character set server: 'utf8mb4'
+          collation server: 'utf8mb4_general_ci'
+          mysql version: '5.7'
+          mysql database: 'test'
+          mysql root password: 'secret'
+
+      - name: Install dependencies for PHP
+        run: composer update --prefer-dist --no-progress
+
+      - name: Install twig/twig
+        run: composer require twig/twig
+
+      - name: .env.json file setup
+        run: php -r 'file_exists(".env.json") || copy(".env.example.json", ".env.json");'
+
+      - name: Run the Bow development server
+        run: php bow run:server --port=5000 &
+
+      - name: Sleep 5 seconds
+        run: sleep 5
+
+      - name: Run test suite
+        run: vendor/bin/phpunit

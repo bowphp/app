@@ -4,11 +4,11 @@ return [
     /**
      * Store location using the disk system
      */
-    'disk' =>[
+    'disk' => [
         'mount' => 'storage',
         'path' => [
-            'storage' => __DIR__.'/../var/storage',
-            'public' => __DIR__.'/../public',
+            'storage' => __DIR__ . '/../var/storage',
+            'public' => __DIR__ . '/../public',
         ]
     ],
 
@@ -45,11 +45,11 @@ return [
             'version' => 'latest'
         ]
     ],
-    
+
     /**
      * Log directory
      */
-    'log' => __DIR__.'/../var/logs',
+    'log' => __DIR__ . '/../var/logs',
 
     /**
      * Cache locator

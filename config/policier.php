@@ -2,7 +2,7 @@
 
 return [
     "signkey" => app_env("APP_JWT_SECRET", "FivwuTmpJlwfXB/WMjAyMS0wMS0yNCAyMDozMTozMTE2MTE1MjAyOTEuMDEwOA=="),
-    
+
     /**
     * Token expiration time
     */
@@ -12,7 +12,7 @@ return [
      * Configures the issuer
      */
     "iss" => app_env("APP_JWT_ISSUER", "app.example.com"),
-    
+
     /**
      * Configures the audience
      */

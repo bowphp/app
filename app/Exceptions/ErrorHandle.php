@@ -18,14 +18,15 @@ class ErrorHandle
      * @param Exception $exception
      * @return void
      */
-    public function handle($exception)
+    public function handle(Exception $exception)
     {
         if (request()->isAjax()) {
             return $this->json($exception);
         }
 
-        if ($exception instanceof ModelNotFoundException) {
-            return $this->render('errors.404', [
+        if ($exception instanceof ModelNotFoundException || $exception instanceof HttpException) {
+            $code = $exception->getStatusCode();
+            return $this->render('errors.' . $code, [
                 'code' => 404,
                 'exception' => $exception
             ]);

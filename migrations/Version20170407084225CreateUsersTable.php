@@ -8,13 +8,13 @@ class Version20170407084225CreateUsersTable extends Migration
     /**
      * Up Migration
      */
-    public function up()
+    public function up(): void
     {
         $this->create("users", function (SQLGenerator $table) {
             $table->addIncrement('id');
             $table->addString('name');
             $table->addString('email', ['unique' => true]);
-            $table->addString('description');
+            $table->addString('description', ['nullable' => true]);
             $table->addString('password');
             $table->addTimestamps();
             $table->withEngine('InnoDB');
@@ -24,7 +24,7 @@ class Version20170407084225CreateUsersTable extends Migration
     /**
      * Rollback migration
      */
-    public function rollback()
+    public function rollback(): void
     {
         $this->dropIfExists("users");
     }

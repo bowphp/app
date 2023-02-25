@@ -11,9 +11,9 @@ class User extends AuthenticatableModel
      *
      * @var array
      */
-    protected $hidden = [
+    protected array $hidden = [
         'password'
     ];
-    
+
     // Do something
 }
