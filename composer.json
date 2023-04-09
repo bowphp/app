@@ -4,6 +4,7 @@
     "keywords": [
         "framework",
         "bow",
+        "bowphp",
         "php",
         "php-framework"
     ],
@@ -31,19 +32,12 @@
         "monolog/monolog": "^1.22",
         "squizlabs/php_codesniffer": "3.*"
     },
-    "authors": [
-        {
-            "name": "Franck DAKIA",
-            "email": "dakiafranck@gmail.com",
-            "role": "Lead Developer"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/"
         },
         "files": [
-            "config/helper.php"
+            "config/helpers.php"
         ]
     },
     "scripts": {
