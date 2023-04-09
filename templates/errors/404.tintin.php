@@ -1,8 +1,8 @@
-#extends('layouts.default')
+%extends('layouts.default')
 
-#block('title', '404 - Not Found')
+%block('title', '404 - Not Found')
 
-#block('content')
+%block('content')
 <div>
     <h1>404</h1>
     <p>
@@ -10,4 +10,4 @@
         <a href="/">Back</a>
     </p>
 </div>
-#endblock
+%endblock

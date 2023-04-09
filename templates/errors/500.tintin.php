@@ -1,8 +1,8 @@
-#extends('layouts.default')
+%extends('layouts.default')
 
-#block('title', '500 - Internal Server Error')
+%block('title', '500 - Internal Server Error')
 
-#block('content')
+%block('content')
 <div>
     <h1>500</h1>
     <p>
@@ -10,4 +10,4 @@
         <a href="/">Back</a>
     </p>
 </div>
-#endblock
+%endblock

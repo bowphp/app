@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.png"/>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&display=swap" rel="stylesheet">
-    <title>#inject('title', 'It\'s Worked')</title>
+    <title>%inject('title', 'It\'s Worked')</title>
     <style type="text/css">
         * {
             margin: 0;
@@ -100,7 +100,7 @@
 </head>
 <body>
 <main id="main">
-    #inject('content')
+    %inject('content')
 </main>
 </body>
 </html>
