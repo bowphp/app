@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "^8.1",
-        "bowphp/framework": "5.x-dev",
+        "bowphp/framework": "^5.0",
         "bowphp/policier": "^2.1",
         "ext-openssl": "*",
         "ext-pdo": "*",
@@ -58,5 +58,7 @@
     "suggest": {
         "twig/twig": "For using Twig template engine",
         "papac/bow-blade": "For using Blade template engine"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
