@@ -13,7 +13,10 @@
         <img src="https://adjemin.com/assets/icones/LOGO-ADJEMINV3.png" alt="adjemin">
     </a>
     <a href="https://akiltechnologies.com/">
-        <img src="https://akiltechnologies.com/wp-content/uploads/2017/09/Akil-Technologies-Logotype_Bleu.png" alt="akiltechnologie">
+        <img src="https://www.akiltechnologies.com/wp-content/uploads/2022/07/logoakil.png" alt="akiltechnologie">
+    </a>
+    <a href="https://snapdevhq.com/">
+        <img src="https://raw.githubusercontent.com/snapdevapp/arts/main/PROFIL%2001.png?token=GHSAT0AAAAAAB73SOKP6FQPPVKFDI2FLPCKZCRCK7A" style="width: 50px" alt="Snapdev Côte d'ivoire">
     </a>
     <a href="https://www.etudesk.com/">
         <img src="https://www.etudesk.com/images/logo.png" alt="etudesk">
