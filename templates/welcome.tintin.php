@@ -16,7 +16,7 @@
         <img src="https://www.akiltechnologies.com/wp-content/uploads/2022/07/logoakil.png" alt="akiltechnologie">
     </a>
     <a href="https://snapdevhq.com/">
-        <img src="https://raw.githubusercontent.com/snapdevapp/arts/main/PROFIL%2001.png?token=GHSAT0AAAAAAB73SOKP6FQPPVKFDI2FLPCKZCRCK7A" style="width: 50px" alt="Snapdev Côte d'ivoire">
+        <img src="https://avatars.githubusercontent.com/u/94787620?s=400&u=eb5a8540cbd56914443c8518f24d6e2a967d69c3&v=4" style="width: 50px" alt="Snapdev Côte d'ivoire">
     </a>
     <a href="https://www.etudesk.com/">
         <img src="https://www.etudesk.com/images/logo.png" alt="etudesk">
