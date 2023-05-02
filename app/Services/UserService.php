@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Bow\Database\Collection;
 
 class UserService
 {
@@ -19,6 +20,16 @@ class UserService
     public function __construct(User $user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * Get all available users
+     *
+     * @return Collection
+     */
+    public function fetchAll()
+    {
+        return $this->user->get();
     }
 
     /**
