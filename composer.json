@@ -58,5 +58,7 @@
     "suggest": {
         "twig/twig": "For using Twig template engine",
         "papac/bow-blade": "For using Blade template engine"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

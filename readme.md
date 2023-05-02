@@ -2,12 +2,13 @@
 
 ## Bow Framework
 
-<a href="https://bowphp.com" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
-<a href="https://packagist.org/packages/bowphp/app" title="version"><img src="https://img.shields.io/packagist/v/bowphp/app.svg?style=flat-square"/></a>
-<a href="https://packagist.org/packages/bowphp/framework" title="bowphp/framework"><img src="https://img.shields.io/packagist/v/bowphp/framework.svg?style=flat-square"/></a>
-<a href="https://github.com/bowphp/app/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
+The simple way to create the web app
+The bowphp is a PHP Framework, written by **[Franck DAKIA](http://github.com/papac)** and several other contributors.
 
-Bow is a PHP Framework, written by **[Franck DAKIA](http://github.com/papac)** and several other contributors.
+<a href="https://bowphp.com" title="docs"><img src="https://img.shields.io/badge/docs-read%20docs-blue.svg?style=flat-square"/></a>
+<a href="https://packagist.org/packages/bowphp/framework" title="bowphp/framework"><img src="https://img.shields.io/packagist/v/bowphp/framework.svg?style=flat-square"/></a>
+<a href="https://packagist.org/packages/bowphp/app" title="bowphp/app"><img src="https://img.shields.io/packagist/v/bowphp/app.svg?style=flat-square"/></a>
+<a href="https://github.com/bowphp/app/blob/master/LICENSE" title="license"><img src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square"/></a>
 
 The goal is to allow beginners who want to work on a more significant project to get started and understand the workings of collaborative development. And make this framework a reference in the PHP community around the world.
 
@@ -44,4 +45,11 @@ Thank you for considering contributing to Bow Framework! The contribution guide 
 - [Franck DAKIA](https://github.com/papac)
 - [Thank's collaborators](https://github.com/bowphp/docs/graphs/contributors)
 
-**Please, if there is a bug on the project please contact me by email or leave me a message on the [slack](https://bowphp.slack.com). or [join us on slask](https://join.slack.com/t/bowphp/shared_invite/enQtNzMxOTQ0MTM2ODM5LTQ3MWQ3Mzc1NDFiNDYxMTAyNzBkNDJlMTgwNDJjM2QyMzA2YTk4NDYyN2NiMzM0YTZmNjU1YjBhNmJjZThiM2Q)**
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+Please, if there is a bug on the project contact me by email or leave me a message on [Slack](https://bowphp.slack.com). or [join us on Slask](https://join.slack.com/t/bowphp/shared_invite/enQtNzMxOTQ0MTM2ODM5LTQ3MWQ3Mzc1NDFiNDYxMTAyNzBkNDJlMTgwNDJjM2QyMzA2YTk4NDYyN2NiMzM0YTZmNjU1YjBhNmJjZThiM2Q)
+

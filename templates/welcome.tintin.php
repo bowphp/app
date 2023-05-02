@@ -1,8 +1,8 @@
-#extends('layouts.default')
+%extends('layouts.default')
 
-#block('title', 'It\'s Worked')
+%block('title', 'It\'s Worked')
 
-#block('content')
+%block('content')
 <div class="banner">
     <img src="/img/logo.svg" alt="">
     <h1>Bow Framework</h1>
@@ -19,4 +19,4 @@
         <img src="https://www.etudesk.com/images/logo.png" alt="etudesk">
     </a>
 </div>
-#endblock
+%endblock

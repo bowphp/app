@@ -15,6 +15,7 @@ class Kernel extends ApplicationLoader
     {
         return [
             // Put your event here
+            // "user.created" => UserCreatedListener::class
         ];
     }
 

@@ -44,6 +44,20 @@ return [
         ],
 
         /**
+         * Connexion pgsql
+         */
+        'pgsql' => [
+            'driver' => 'pgsql',
+            'hostname' => app_env('DB_HOSTNAME', 'localhost'),
+            'username' => app_env('DB_USERNAME', 'test'),
+            'password' => app_env('DB_PASSWORD', 'test'),
+            'database' => app_env('DB_DBNAME', 'test'),
+            'charset'  => app_env('DB_CHARSET', 'utf8'),
+            'prefix' => app_env('DB_PREFIX', ''),
+            'port' => app_env('DB_PORT', 3306)
+        ],
+
+        /**
          * Connexion sqlite
          */
         'sqlite' => [

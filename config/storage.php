@@ -2,6 +2,11 @@
 
 return [
     /**
+     * Log directory
+     */
+    'log' => __DIR__ . '/../var/logs',
+
+    /**
      * Store location using the disk system
      */
     'disk' => [
@@ -47,14 +52,4 @@ return [
             'version' => 'latest'
         ]
     ],
-
-    /**
-     * Log directory
-     */
-    'log' => __DIR__ . '/../var/logs',
-
-    /**
-     * Cache locator
-     */
-    'cache' => __DIR__ . '/../var/cache',
 ];
