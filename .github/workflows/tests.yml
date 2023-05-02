@@ -52,6 +52,9 @@ jobs:
       - name: .env.json file setup
         run: php -r 'file_exists(".env.json") || copy(".env.example.json", ".env.json");'
 
+      - name: Generate the key
+        run: php bow generate:key
+
       - name: Run the Bow development server
         run: php bow run:server --port=5000 &
 

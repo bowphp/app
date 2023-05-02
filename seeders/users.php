@@ -1,12 +1,15 @@
 <?php
 
+use Faker\Factory;
+use App\Models\User;
+
 /**
  * The users tabler seeder
  *
- * @see https://github.com/fzaninotto/Faker for all documentation
+ * @see https://fakerphp.github.io for all documentation
  */
 
-$faker = \Faker\Factory::create();
+$faker = Factory::create();
 
 $seeds = [];
 
@@ -15,10 +18,10 @@ foreach (range(1, 5) as $key) {
         'name' => $faker->name,
         'description' => $faker->text,
         'email' => $faker->email,
-        'password' => bow_hash('password'),
+        'password' => app_hash('password'),
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s'),
     ];
 }
 
-return ['users' => $seeds];
+return [User::class => $seeds];

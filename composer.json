@@ -16,7 +16,7 @@
     },
     "require": {
         "php": "^8.1",
-        "bowphp/framework": "^5.0",
+        "bowphp/framework": "5.x-dev",
         "bowphp/policier": "^2.1",
         "ext-openssl": "*",
         "ext-pdo": "*",
