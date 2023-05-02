@@ -6,7 +6,7 @@ return [
      * Can be reorder by the command
      * <code>`php bow generate:key`</code>
      */
-    'key' => app_env('APP_KEY'),
+    'key' => app_env('APP_KEY', file_get_contents(__DIR__. "/.key")),
 
     /**
      * The Encrypt method
