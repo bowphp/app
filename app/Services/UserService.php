@@ -27,7 +27,7 @@ class UserService
      *
      * @return Collection
      */
-    public function fetchAll()
+    public function fetchAll(): ?Collection
     {
         return $this->user->get();
     }
