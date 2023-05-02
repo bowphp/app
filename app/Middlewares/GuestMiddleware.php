@@ -30,7 +30,7 @@ class GuestMiddleware implements BaseMiddleware
      *
      * @return string
      */
-    public function redirectTo()
+    public function redirectTo(): string
     {
         return '/';
     }

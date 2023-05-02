@@ -9,9 +9,10 @@ class RequestCsrfMiddleware extends CsrfMiddleware
     /**
      * {@inheritdoc}
      */
-    public function preventOn()
+    public function preventOn(): array
     {
         return [
+            // Add the route pattern for escape the X-CSRF checker
         ];
     }
 }
