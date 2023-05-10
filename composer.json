@@ -22,10 +22,10 @@
         "ext-openssl": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
-        "ext-pdo_sqlite": "*",
         "ext-pdo_pgsql": "*",
-        "ext-xml": "*",
+        "ext-pdo_sqlite": "*",
         "ext-redis": "*",
+        "ext-xml": "*",
         "bowphp/framework": "5.x-dev",
         "bowphp/meta-manager": "^1.0",
         "bowphp/policier": "^2.1"
@@ -45,7 +45,7 @@
     },
     "scripts": {
         "lint": "phpcbf --standard=psr12 --tab-width=4 app tests config migrations seeders routes",
-        "test": "phpunit --configuration phpunit.dist.xml",
+        "test": "phpunit --configuration phpunit.xml",
         "post-root-package-install": [
             "@php -r \"file_exists('.env.json') || copy('.env.example.json', '.env.json');\""
         ],
