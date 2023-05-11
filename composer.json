@@ -26,7 +26,7 @@
         "ext-pdo_sqlite": "*",
         "ext-redis": "*",
         "ext-xml": "*",
-        "bowphp/framework": "5.x-dev",
+        "bowphp/framework": "^5.0",
         "bowphp/meta-manager": "^1.0",
         "bowphp/policier": "^2.1"
     },
