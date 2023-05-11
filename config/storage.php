@@ -43,13 +43,13 @@ return [
          */
         's3' => [
             'driver' => 's3',
+            'bucket' => app_env('S3_BUCKET', 'settlements'),
+            'region' => app_env('S3_REGION'),
+            'version' => 'latest',
             'credentials' => [
                 'key'    => app_env('S3_KEY'),
                 'secret' => app_env('S3_SECRET'),
             ],
-            'bucket' => app_env('S3_BUCKET'),
-            'region' => app_env('S3_REGION'),
-            'version' => 'latest'
         ]
     ],
 ];

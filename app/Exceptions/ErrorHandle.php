@@ -2,13 +2,14 @@
 
 namespace App\Exceptions;
 
-use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
-use Bow\Http\Exception\HttpException;
-use Bow\Http\Exception\ResponseException as HttpResponseException;
 use Exception;
 use PDOException;
+use Bow\Http\Exception\HttpException;
+use Bow\Router\Exception\RouterException;
 use Policier\Exception\TokenExpiredException;
 use Policier\Exception\TokenInvalidException;
+use Bow\Http\Exception\ResponseException as HttpResponseException;
+use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
 
 class ErrorHandle
 {
