@@ -27,10 +27,12 @@ class ErrorHandle extends BaseErrorHandler
 
         if ($exception instanceof ModelNotFoundException || $exception instanceof HttpException) {
             $code = $exception->getStatusCode();
-            return $this->render('errors.' . $code, [
+            $source = $this->render('errors.' . $code, [
                 'code' => 404,
                 'exception' => $exception
             ]);
+
+            return $source;
         }
 
         if ($exception instanceof HttpResponseException) {
