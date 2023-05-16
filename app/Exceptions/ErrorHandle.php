@@ -5,21 +5,21 @@ namespace App\Exceptions;
 use Exception;
 use PDOException;
 use Bow\Http\Exception\HttpException;
-use Bow\Router\Exception\RouterException;
 use Policier\Exception\TokenExpiredException;
 use Policier\Exception\TokenInvalidException;
+use Bow\Application\Exception\BaseErrorHandler;
 use Bow\Http\Exception\ResponseException as HttpResponseException;
 use Bow\Database\Exception\NotFoundException as ModelNotFoundException;
 
-class ErrorHandle
+class ErrorHandle extends BaseErrorHandler
 {
     /**
      * handle the error
      *
      * @param Exception $exception
-     * @return void
+     * @return mixed
      */
-    public function handle(Exception $exception)
+    public function handle($exception): mixed
     {
         if (request()->isAjax()) {
             return $this->json($exception);
@@ -39,23 +39,6 @@ class ErrorHandle
                 'exception' => $exception
             ]);
         }
-    }
-
-    /**
-     * Render view as response
-     *
-     * @param string $view
-     * @param array $data
-     * @return mixed
-     */
-    private function render($view, $data = [], $code = 200)
-    {
-        if (is_numeric($data)) {
-            $code = $data;
-            $data = [];
-        }
-
-        return view($view, $data, $code);
     }
 
     /**
