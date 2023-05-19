@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 use Bow\Http\Request;
 use Bow\Http\Response;
-use Bow\Configuration\Loader as Config;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
 use Bow\Queue\ProducerService;
+use Bow\Contracts\ResponseInterface;
+use Bow\Configuration\Loader as Config;
+use Bow\Database\QueryBuilder;
 
 class Controller
 {
@@ -28,9 +30,9 @@ class Controller
      *
      * @param  mixed $url
      * @param  array $parameters
-     * @return mixed
+     * @return ResponseInterface
      */
-    public function redirect($url = null, array $parameters = []): RedirectInterface
+    public function redirect($url = null, array $parameters = []): ResponseInterface
     {
         if (is_null($url)) {
             return redirect();
@@ -101,9 +103,9 @@ class Controller
      *
      * @param $name
      * @param string $connexion
-     * @return \Bow\Database\Query\Builder
+     * @return QueryBuilder
      */
-    public function table(string $name, ?string $connexion = null): \Bow\Database\Query\Builder
+    public function table(string $name, ?string $connexion = null): QueryBuilder
     {
         return table($name, $connexion);
     }
