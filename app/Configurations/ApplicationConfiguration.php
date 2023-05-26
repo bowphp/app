@@ -15,7 +15,7 @@ class ApplicationConfiguration extends Configuration
      */
     public function create(Loader $config): void
     {
-        // Event::on("user.created", UserCreatedListener::class);
+        //
     }
 
     /**
