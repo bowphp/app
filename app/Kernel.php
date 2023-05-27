@@ -42,7 +42,7 @@ class Kernel extends ApplicationLoader
     }
 
     /**
-     * Define the app middlewares
+     * Define the app middleware
      *
      * @return array
      */
