@@ -14,22 +14,22 @@ class ErrorHandle extends BaseErrorHandler
      * handle the error
      *
      * @param Exception $exception
-     * @return mixed
      */
-    public function handle($exception): mixed
+    public function handle($exception)
     {
         if (request()->isAjax()) {
             return $this->json($exception);
         }
 
-        if ($exception instanceof ModelNotFoundException || $exception instanceof HttpException) {
+        if (
+            $exception instanceof ModelNotFoundException 
+            || $exception instanceof HttpException
+        ) {
             $code = $exception->getStatusCode();
-            $source = $this->render('errors.' . $code, [
+            return $this->render('errors.' . $code, [
                 'code' => 404,
                 'exception' => $exception
             ]);
-
-            return $source;
         }
 
         if ($exception instanceof HttpResponseException) {
