@@ -44,11 +44,11 @@ return [
         's3' => [
             'driver' => 's3',
             'bucket' => app_env('S3_BUCKET', 'settlements'),
-            'region' => app_env('S3_REGION'),
+            'region' => app_env('AWS_REGION'),
             'version' => 'latest',
             'credentials' => [
-                'key'    => app_env('S3_KEY'),
-                'secret' => app_env('S3_SECRET'),
+                'key'    => app_env('AWS_KEY'),
+                'secret' => app_env('AWS_SECRET'),
             ],
         ]
     ],

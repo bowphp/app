@@ -14,7 +14,7 @@ return [
     /**
      * The migration memory table
      */
-    'migration' => 'bow_migration_status',
+    'migration' => 'migrations',
 
     /**
      * The database on which the default application will connect.
@@ -66,6 +66,20 @@ return [
             'charset'  => app_env('DB_CHARSET', 'utf8'),
             'prefix' => app_env('DB_PREFIX', ''),
             'foreign_key_constraints' => app_env('DB_FOREIGN_KEYS', true),
-        ]
+        ],
+    ],
+
+    /**
+     * Connexion redis
+     */
+    "redis" => [
+        'driver' => 'redis',
+        'host' => app_env('REDIS_HOSTNAME', '127.0.0.1'),
+        'port' => app_env('REDIS_PORT', 6379),
+        'timeout' => 2.5,
+        'ssl' => false,
+        'username' => app_env('REDIS_USERNAME'),
+        'password' => app_env('REDIS_PASSWORD'),
+        'database' => app_env('REDIS_CACHE_DB', '1'),
     ]
 ];
