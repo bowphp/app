@@ -14,7 +14,7 @@ return [
          * The sync connexion
          */
         "sync" => [
-            "directory" => storage_path("cache/queue")
+            "queue" => "default",
         ],
 
         /**
@@ -24,12 +24,14 @@ return [
             "hostname" => "127.0.0.0",
             "port" => 11300,
             "timeout" => 10,
+            "queue" => "default",
         ],
 
         /**
          * The sqs connexion
          */
         "sqs" => [
+            "queue" => "default",
             "url" => app_env("SQS_URL"),
             'region' => app_env('AWS_REGION'),
             'version' => 'latest',
@@ -43,6 +45,7 @@ return [
          * The database connexion
          */
         "database" => [
+            "queue" => "default",
             "table" => "queues",
         ]
     ]
