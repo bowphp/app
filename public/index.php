@@ -11,7 +11,7 @@ if (file_exists(__DIR__ . '/../var/storage/maintenance.php')) {
 
 // Register The Auto Loader
 if (!file_exists(__DIR__ . "/../vendor/autoload.php")) {
-	die("Please install the depencencies with 'composer update'");
+	die("Please install the dependencies with 'composer update'");
 }
 
 require __DIR__."/../vendor/autoload.php";

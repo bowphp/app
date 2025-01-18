@@ -11,7 +11,7 @@ class WelcomeController extends Controller
      * Show index
      *
      * @param Request $request
-     * @return string
+     * @return string|null
      */
     public function __invoke(Request $request): ?string
     {

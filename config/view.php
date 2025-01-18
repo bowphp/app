@@ -3,7 +3,7 @@
 return [
     /**
      * The views directory. It is in this repertory that you will put all your views.
-     * The views must have the instantion you have defined in 'template_extension'
+     * The views must have the installation you have defined in 'template_extension'
      * if no error will be launched
      */
     'path' => __DIR__ . '/../templates',
@@ -17,7 +17,7 @@ return [
      * Template supported twig, php, tintin
      * Define the template name.
      * Example: define twig with package twig/twig for define twig template
-     * Bow Framework support actualy twig, tintin, php
+     * Bow Framework support actually twig, tintin, php
      */
     'engine' => 'tintin',
 
@@ -36,7 +36,7 @@ return [
     /**
      * Additional option
      */
-    'aditionnal_options' => [
+    'additional_options' => [
         // 'auto_reload_cache' => true
     ]
 ];

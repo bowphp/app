@@ -19,7 +19,7 @@ return [
     /**
      * The database on which the default application will connect.
      *
-     * The database by default, it is on this data base that will connects
+     * The database by default, it is on this database that will connect
      * automatically. So you absolutely must not edit the default key.
      *
      * In the opposite box you must execute the code in each route.

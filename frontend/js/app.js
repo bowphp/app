@@ -1,7 +1,6 @@
-/**
- * import Vue from "vue"
- * import Example from "./Example.vue"
- */
+// import Vue from "vue"
+// import Example from "./Example.vue"
+
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -16,10 +15,8 @@ if (token) {
  */
 require('./Example.jsx');
 
-/*
- * Vue.component('example', Example);
- * 
- * new Vue({
- *   el: "#main"
- * });
- */
+// Vue.component('example', Example);
+ 
+// new Vue({
+//   el: "#main"
+// });
