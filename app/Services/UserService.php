@@ -25,7 +25,7 @@ class UserService
     /**
      * Get all available users
      *
-     * @return Collection
+     * @return Collection|null
      */
     public function fetchAll(): ?Collection
     {
@@ -38,7 +38,7 @@ class UserService
      * @param string $name
      * @param string $lastname
      * @param string $email
-     * @return User
+     * @return User|null
      */
     public function create(string $name, string $lastname, string $email): ?User
     {

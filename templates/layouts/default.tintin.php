@@ -6,8 +6,8 @@
     <link rel="icon" type="image/x-icon" href="/favicon.png"/>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&display=swap" rel="stylesheet">
-    <title>%inject('title', 'It\'s Worked')</title>
-    <style type="text/css">
+    <title>%inject("title", "It's Worked")</title>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -21,8 +21,8 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            color: #333333;
-            background-color: #f7fafb;
+            color: #fff;
+            background-color: #181818;
         }
 
         #main {
@@ -40,8 +40,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #fff;
+            background-color: rgba(0, 0, 0, 0.05);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            color: white;
         }
 
         .banner img {
@@ -91,7 +92,7 @@
         }
 
         h1 {
-            color: #111;
+            color: white;
             font-size: 42px;
             font-weight: 600;
             line-height: 1.8;

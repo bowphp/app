@@ -2,7 +2,7 @@
 
 return [
     /**
-     * The defaut connexion
+     * The default connexion
      */
     "default" => "beanstalkd",
 

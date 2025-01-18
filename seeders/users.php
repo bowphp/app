@@ -4,11 +4,10 @@ use Faker\Factory;
 use App\Models\User;
 
 /**
- * The users tabler seeder
+ * The users table seeder
  *
  * @see https://fakerphp.github.io for all documentation
  */
-
 $faker = Factory::create();
 
 $seeds = [];

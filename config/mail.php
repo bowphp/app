@@ -20,7 +20,7 @@ return [
     "from" => "sender@example.com",
 
     /**
-     * SMTP authentification
+     * SMTP authentication
      */
     "smtp" => [
         "hostname" => app_env("SMTP_HOSTNAME"),
@@ -33,7 +33,7 @@ return [
     ],
 
     /**
-     * SMTP authentification
+     * SMTP authentication
      */
     "ses" => [
         "profile" => app_env("SES_PROFILE", "default"),

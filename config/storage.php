@@ -30,11 +30,8 @@ return [
             'password' => app_env('FTP_PASSWORD'),
             'username' => app_env('FTP_USERNAME'),
             'port'     => app_env('FTP_PORT', 21),
-            // The basic folder of the server
             'root' => app_env('FTP_STARTROOT', null),
-            // A `true` to activate a secure connection.
             'tls' => app_env('FTP_TLS', false),
-            // Connection waiting time
             'timeout' => app_env('FTP_TIMEOUT', 50)
         ],
 

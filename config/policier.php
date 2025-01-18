@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "signkey" => app_env("APP_JWT_SECRET", "FivwuTmpJlwfXB/WMjAyMS0wMS0yNCAyMDozMTozMTE2MTE1MjAyOTEuMDEwOA=="),
+    "signkey" => app_env("APP_JWT_SECRET"),
 
     /**
     * Token expiration time
