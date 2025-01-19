@@ -4,7 +4,7 @@ if (!function_exists('mix')) {
     /**
      * Get mix file chunk hash version
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      * @throws Exception
      */
@@ -32,7 +32,7 @@ if (!function_exists('public_path')) {
     /**
      * Get public directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     function public_path(string $path = ''): string
@@ -45,7 +45,7 @@ if (!function_exists('frontend_path')) {
     /**
      * Get frontend directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     function frontend_path(string $path = '')
@@ -58,7 +58,7 @@ if (!function_exists('storage_path')) {
     /**
      * Get storages directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     function storage_path(string $path = '')
@@ -84,7 +84,7 @@ if (! function_exists('gen_slix')) {
      * Generate a random code.
      * Can be used to hide the name of form fields.
      *
-     * @param int $len
+     * @param  int $len
      * @return string
      */
     function gen_slix(int $len = 4): string

@@ -89,8 +89,8 @@ class Controller
     /**
      * Get Database Instance
      *
-     * @param ?string $name
-     * @param ?callable $cb
+     * @param  ?string   $name
+     * @param  ?callable $cb
      * @return Database
      */
     public function db(?string $name = null, ?callable $cb = null)
@@ -101,8 +101,8 @@ class Controller
     /**
      * Alias of table
      *
-     * @param $name
-     * @param string $connexion
+     * @param  $name
+     * @param  string $connexion
      * @return QueryBuilder
      */
     public function table(string $name, ?string $connexion = null): QueryBuilder
@@ -133,8 +133,8 @@ class Controller
     /**
      * Make validation
      *
-     * @param Request $request
-     * @param array $rule
+     * @param  Request $request
+     * @param  array   $rule
      * @return Validate
      */
     protected function validate(Request $request, array $rule): Validate
@@ -147,10 +147,10 @@ class Controller
     /**
      * Format API response
      *
-     * @param string $message
-     * @param string $code
-     * @param array $data
-     * @param int $status
+     * @param  string $message
+     * @param  string $code
+     * @param  array  $data
+     * @param  int    $status
      * @return array
      */
     public function nativeApiErrorResponse(
@@ -170,7 +170,7 @@ class Controller
     /**
      * Fire Event
      *
-     * @param string $event
+     * @param  string $event
      * @return void
      */
     public function emit($event)

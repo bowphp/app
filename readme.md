@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/bowphp/arts/master/bow.jpg" width="100">
+<img src="https://raw.githubusercontent.com/bowphp/arts/master/bow.png" width="50">
 
 ## Bow Framework
 

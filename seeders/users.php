@@ -8,6 +8,7 @@ use App\Models\User;
  *
  * @see https://fakerphp.github.io for all documentation
  */
+
 $faker = Factory::create();
 
 $seeds = [];

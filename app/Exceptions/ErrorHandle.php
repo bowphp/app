@@ -12,7 +12,7 @@ class ErrorHandle extends BaseErrorHandler
     /**
      * handle the error
      *
-     * @param Exception $exception
+     * @param  Exception $exception
      * @return mixed|string
      */
     public function handle(Exception $exception): mixed
@@ -22,20 +22,26 @@ class ErrorHandle extends BaseErrorHandler
         }
 
         if (
-            $exception instanceof ModelNotFoundException 
+            $exception instanceof ModelNotFoundException
             || $exception instanceof HttpException
         ) {
             $code = $exception->getStatusCode();
 
-            return $this->render('errors.' . $code, [
+            return $this->render(
+                'errors.' . $code,
+                [
                 'code' => 404,
                 'exception' => $exception
-            ]);
+                ]
+            );
         }
 
-        return $this->render('errors.500', [
+        return $this->render(
+            'errors.500',
+            [
             'code' => 404,
             'exception' => $exception
-        ]);
+            ]
+        );
     }
 }
