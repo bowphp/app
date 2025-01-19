@@ -10,7 +10,7 @@ class WelcomeController extends Controller
     /**
      * Show index
      *
-     * @param Request $request
+     * @param  Request $request
      * @return string|null
      */
     public function __invoke(Request $request): ?string

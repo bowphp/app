@@ -1,6 +1,6 @@
 <?php
 
-$users = require __DIR__ . "/users.php";
+$users = include __DIR__ . "/users.php";
 
 $seeders = array_merge($users);
 

@@ -35,9 +35,9 @@ class UserService
     /**
      * Create new user
      *
-     * @param string $name
-     * @param string $lastname
-     * @param string $email
+     * @param  string $name
+     * @param  string $lastname
+     * @param  string $email
      * @return User|null
      */
     public function create(string $name, string $lastname, string $email): ?User

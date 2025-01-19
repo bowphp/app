@@ -11,9 +11,9 @@ class GuestMiddleware implements BaseMiddleware
     /**
      * Launch function of the middleware.
      *
-     * @param  Request $request
+     * @param  Request  $request
      * @param  callable $next
-     * @param  array $args
+     * @param  array    $args
      * @return mixed
      */
     public function process(Request $request, callable $next, array $args = []): mixed

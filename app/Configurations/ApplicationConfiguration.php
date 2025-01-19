@@ -10,7 +10,7 @@ class ApplicationConfiguration extends Configuration
     /**
      * Launch configuration
      *
-     * @param Loader $config
+     * @param  Loader $config
      * @return void
      */
     public function create(Loader $config): void
