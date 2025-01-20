@@ -5,13 +5,13 @@ use Bow\Application\Application;
 use Bow\Http\Request;
 use Bow\Http\Response;
 
-if (file_exists(__DIR__ . '/../var/storage/maintenance.php')) {
-    require __DIR__ . '/../var/storage/maintenance.php';
-}
-
 // Register The Auto Loader
 if (!file_exists(__DIR__ . "/../vendor/autoload.php")) {
-	die("Please install the dependencies with 'composer update'");
+    die("Please install the dependencies with 'composer update'");
+}
+
+if (file_exists(__DIR__ . '/../var/storage/maintenance.php')) {
+    require __DIR__ . '/../var/storage/maintenance.php';
 }
 
 require __DIR__."/../vendor/autoload.php";
