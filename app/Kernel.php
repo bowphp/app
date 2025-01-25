@@ -38,7 +38,7 @@ class Kernel extends ApplicationLoader
             'exception' => 'App\\Exceptions',
             'producer' => 'App\\Producers',
             'command' => 'App\\Commands',
-            'messaging' => 'App\\Messaging',
+            'messaging' => 'App\\Messages',
         ];
     }
 
