@@ -36,6 +36,7 @@ $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
 $setting->setProducerDirectory(__DIR__.'/app/Producers');
 $setting->setCommandDirectory(__DIR__.'/app/Commands');
+$setting->setMessagingDirectory(__DIR__.'/app/Messages');
 
 // Defines the local server starter
 $setting->setServerFilename(__DIR__.'/server.php');
