@@ -20,11 +20,11 @@ $app = Application::make(Request::getInstance(), Response::getInstance());
 
 // Bind kernel to application
 $app->bind(
-    Kernel::configure(realpath(__DIR__ . '/../config'))
+    Kernel::configure(base_path('config'))
 );
 
 // Load application routing
-require __DIR__ . "/../routes/app.php";
+require base_path('routes/app.php');
 
 // Run The Application
 $app->send();
