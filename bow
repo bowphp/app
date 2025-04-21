@@ -31,7 +31,7 @@ $setting->setServiceDirectory(__DIR__.'/app/Services');
 $setting->setEventDirectory(__DIR__.'/app/Events');
 $setting->setEventListenerDirectory(__DIR__.'/app/Listeners');
 $setting->setSeederDirectory(__DIR__.'/seeders');
-$setting->setComponentDirectory(__DIR__.'/frontend');
+$setting->setComponentDirectory(__DIR__.'/assets');
 $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
 $setting->setProducerDirectory(__DIR__.'/app/Producers');

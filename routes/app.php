@@ -2,4 +2,4 @@
 
 use App\Controllers\WelcomeController;
 
-$app->get('/', WelcomeController::class)->name('app.index');
+$router->get('/', WelcomeController::class)->name('app.index');

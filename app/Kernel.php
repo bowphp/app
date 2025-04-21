@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Bow\Router\Router;
 use Bow\Configuration\Loader as ApplicationLoader;
 
 class Kernel extends ApplicationLoader
@@ -102,6 +103,20 @@ class Kernel extends ApplicationLoader
     {
         parent::boot();
 
+        $this->routes();
+
         return $this;
+    }
+
+    /**
+     * Load the define route
+     *
+     * @return void
+     */
+    public function routes(): void
+    {
+        $router = Router::getInstance();
+        
+        require base_path('routes/app.php');
     }
 }

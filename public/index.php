@@ -23,8 +23,5 @@ $app->bind(
     Kernel::configure(base_path('config'))
 );
 
-// Load application routing
-require base_path('routes/app.php');
-
 // Run The Application
-$app->send();
+$app->run();
