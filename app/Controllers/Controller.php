@@ -93,7 +93,7 @@ class Controller
      * @param  ?callable $cb
      * @return Database
      */
-    public function db(?string $name = null, ?callable $cb = null)
+    public function app_db(?string $name = null, ?callable $cb = null)
     {
         return call_user_func_array('db', func_get_args());
     }
