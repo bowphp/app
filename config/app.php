@@ -30,9 +30,9 @@ return [
     'env_file' => realpath(__DIR__ . '/../.env.json'),
 
     /**
-     * Path to the frontend folder
+     * Path to the assets folder
      */
-    'frontend_path' => dirname(__DIR__) . '/frontend',
+    'frontend_path' => dirname(__DIR__) . '/assets',
 
     /**
      * Path to the seeders folder

@@ -37,16 +37,20 @@ return [
 
         /**
          * S3 configuration
+         * Supports both AWS S3 and MinIO (S3-compatible storage)
          */
         's3' => [
             'driver' => 's3',
             'bucket' => app_env('S3_BUCKET', 'settlements'),
-            'region' => app_env('AWS_REGION'),
+            'region' => app_env('AWS_REGION', 'us-east-1'),
             'version' => 'latest',
             'credentials' => [
                 'key'    => app_env('AWS_KEY'),
                 'secret' => app_env('AWS_SECRET'),
             ],
-        ]
+            // MinIO configuration (optional)
+            'endpoint' => app_env('AWS_ENDPOINT'), // e.g., 'http://localhost:9000' for MinIO
+            'use_path_style_endpoint' => app_env('AWS_USE_PATH_STYLE_ENDPOINT', false), // Set to true for MinIO
+        ],
     ],
 ];

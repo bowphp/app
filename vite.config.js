@@ -6,13 +6,13 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), vue(), tailwindcss()],
-  root: path.resolve(__dirname, 'frontend'),
+  root: path.resolve(__dirname, 'assets'),
   build: {
     outDir: path.resolve(__dirname, 'public'),
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        app: path.resolve(__dirname, 'frontend/js/app.js')
+        app: path.resolve(__dirname, 'assets/js/app.js')
       },
       output: {
         entryFileNames: 'js/[name].js',
@@ -31,7 +31,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "${path.resolve(__dirname, 'frontend/sass/variables.scss')}";`
+        additionalData: `@import "${path.resolve(__dirname, 'assets/sass/variables.scss')}";`
       },
       less: {
         javascriptEnabled: true
@@ -40,8 +40,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'frontend/js'),
-      '@sass': path.resolve(__dirname, 'frontend/sass')
+      '@': path.resolve(__dirname, 'assets/js'),
+      '@sass': path.resolve(__dirname, 'assets/sass')
     }
   },
   server: {

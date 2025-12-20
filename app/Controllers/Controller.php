@@ -7,7 +7,7 @@ use Bow\Http\Response;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
-use Bow\Queue\ProducerService;
+use Bow\Queue\QueueJob;
 use Bow\Contracts\ResponseInterface;
 use Bow\Configuration\Loader as Config;
 use Bow\Database\QueryBuilder;
@@ -17,12 +17,12 @@ class Controller
     /**
      * Push the producer on queue list
      *
-     * @param  ProducerService $producer
+     * @param  QueueJob $job
      * @return mixed
      */
-    public function queue(ProducerService $producer)
+    public function queue(QueueJob $job)
     {
-        queue($producer);
+        queue($job);
     }
 
     /**
@@ -93,7 +93,7 @@ class Controller
      * @param  ?callable $cb
      * @return Database
      */
-    public function db(?string $name = null, ?callable $cb = null)
+    public function app_db(?string $name = null, ?callable $cb = null)
     {
         return call_user_func_array('db', func_get_args());
     }

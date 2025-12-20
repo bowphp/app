@@ -100,8 +100,8 @@
     </style>
 </head>
 <body>
-<main id="main">
-    %inject('content')
-</main>
+    <main id="main">
+        %inject('content')
+    </main>
 </body>
 </html>
