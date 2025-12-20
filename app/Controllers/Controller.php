@@ -7,7 +7,7 @@ use Bow\Http\Response;
 use Bow\Database\Database;
 use Bow\Validation\Validate;
 use Bow\Validation\Validator;
-use Bow\Queue\ProducerService;
+use Bow\Queue\Worker;
 use Bow\Contracts\ResponseInterface;
 use Bow\Configuration\Loader as Config;
 use Bow\Database\QueryBuilder;
@@ -17,12 +17,12 @@ class Controller
     /**
      * Push the producer on queue list
      *
-     * @param  ProducerService $producer
+     * @param  Worker $producer
      * @return mixed
      */
-    public function queue(ProducerService $producer)
+    public function queue(Worker $worker)
     {
-        queue($producer);
+        queue($worker);
     }
 
     /**

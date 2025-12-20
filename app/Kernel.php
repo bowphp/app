@@ -37,7 +37,7 @@ class Kernel extends ApplicationLoader
             'event' => 'App\\Events',
             'listener' => 'App\\Listeners',
             'exception' => 'App\\Exceptions',
-            'producer' => 'App\\Producers',
+            'job' => 'App\\Jobs',
             'command' => 'App\\Commands',
             'messaging' => 'App\\Messages',
         ];
@@ -115,8 +115,10 @@ class Kernel extends ApplicationLoader
      */
     public function routes(): void
     {
+        global $router;
+
         $router = Router::getInstance();
-        
-        require base_path('routes/app.php');
+
+        require_once base_path('routes/app.php');
     }
 }
