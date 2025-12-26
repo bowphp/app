@@ -91,5 +91,12 @@ return [
                 "username" => "Address information"
             ]
         ]
-    ]
+    ],
+
+    /**
+     * Log driver configuration
+     */
+    "log" => [
+        "path" => sys_get_temp_dir() . '/bow/mails',
+    ],
 ];

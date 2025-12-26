@@ -69,7 +69,6 @@ class Kernel extends ApplicationLoader
              * Internal configuration of the framework
              */
             \Bow\Configuration\LoggerConfiguration::class,
-            \Bow\Configuration\EnvConfiguration::class,
 
             \Bow\Cache\CacheConfiguration::class,
             \Bow\Mail\MailConfiguration::class,
