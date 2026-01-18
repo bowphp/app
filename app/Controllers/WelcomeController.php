@@ -3,9 +3,8 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
-use App\Controllers\Controller;
 
-class WelcomeController extends Controller
+class WelcomeController
 {
     /**
      * Show index
@@ -15,6 +14,6 @@ class WelcomeController extends Controller
      */
     public function __invoke(Request $request): ?string
     {
-        return $this->render('welcome');
+        return view('welcome');
     }
 }

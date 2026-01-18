@@ -36,7 +36,7 @@ $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
 $setting->setJobDirectory(__DIR__.'/app/Jobs');
 $setting->setCommandDirectory(__DIR__.'/app/Commands');
-$setting->setMessagingDirectory(__DIR__.'/app/Messages');
+$setting->setNotifierDirectory(__DIR__.'/app/Notifiers');
 
 // Defines the local server starter
 $setting->setServerFilename(__DIR__.'/server.php');
