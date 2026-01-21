@@ -20,7 +20,7 @@ $app = Application::make(Request::getInstance(), Response::getInstance());
 
 // Bind kernel to application
 $app->bind(
-    Kernel::configure(base_path('config'))
+    Kernel::configure(dirname(__DIR__))->withConfigPath(dirname(__DIR__) . '/config')
 );
 
 // Run The Application

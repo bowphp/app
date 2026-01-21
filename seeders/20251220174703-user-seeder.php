@@ -10,7 +10,7 @@ class UserSeeder20251220174703
         $faker = FakerFactory::create();
 
         foreach (range(1, 5) as $value) {
-            $user =[
+            $user = [
                 'name' => $faker->name,
                 'description' => $faker->text(100),
                 'email' => $faker->email,

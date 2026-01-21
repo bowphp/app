@@ -12,9 +12,20 @@ return [
         'webhook_url' => app_env('SLACK_WEBHOOK_URL'),
     ],
 
-    'twilio' => [
-        'account_sid' => app_env('TWILIO_ACCOUNT_SID'),
-        'auth_token' => app_env('TWILIO_AUTH_TOKEN'),
-        'from' => app_env('TWILIO_FROM'),
+    'sms' => [
+        'provider' => app_env('SMS_PROVIDER', 'twilio'), // Default SMS provider
+
+        'twilio' => [
+            'account_sid' => app_env('TWILIO_ACCOUNT_SID'),
+            'auth_token' => app_env('TWILIO_AUTH_TOKEN'),
+            'from' => app_env('TWILIO_FROM'),
+        ],
+
+        'callisto' => [
+            'access_key' => app_env('CALLISTO_ACCESS_KEY'),
+            'access_secret' => app_env('CALLISTO_ACCESS_SECRET'),
+            'notify_url' => app_env('CALLISTO_NOTIFY_URL'),
+            'sender' => app_env('CALLISTO_SENDER'),
+        ],
     ],
 ];
