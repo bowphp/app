@@ -13,7 +13,7 @@ if (!file_exists(__DIR__."/vendor/autoload.php")) {
 require __DIR__."/vendor/autoload.php";
 
 // Make kernel instance
-$kernel = Kernel::configure(__DIR__.'/config');
+$kernel = Kernel::configure(__DIR__)->withConfigPath(__DIR__ . '/config');
 
 // Create command instance and set filename
 $setting = new Setting(__DIR__);
