@@ -34,7 +34,7 @@ $setting->setSeederDirectory(__DIR__.'/seeders');
 $setting->setComponentDirectory(__DIR__.'/assets');
 $setting->setConfigDirectory(__DIR__.'/config');
 $setting->setPublicDirectory(__DIR__.'/public');
-$setting->setJobDirectory(__DIR__.'/app/Jobs');
+$setting->setTaskDirectory(__DIR__.'/app/Tasks');
 $setting->setCommandDirectory(__DIR__.'/app/Commands');
 $setting->setNotifierDirectory(__DIR__.'/app/Notifiers');
 
