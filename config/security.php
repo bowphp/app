@@ -6,7 +6,7 @@ return [
      * Can be reorder by the command
      * <code>`php bow generate:key`</code>
      */
-    'key' => app_env('APP_KEY', file_get_contents(__DIR__. "/.key")),
+    'key' => app_env('APP_KEY'),
 
     /**
      * The Encrypt method
@@ -30,7 +30,7 @@ return [
     ],
 
     /**
-     * When using token. This is the life time of a token.
+     * When using token. This is the lifetime of a token.
      * It is strongly advised to program with tokens.
      */
     'token_expirate_time' => 50000

@@ -10,3 +10,4 @@ package-lock.json
 .env.json
 config/.key
 mix-manifest.json
+.phpunit.result.cache

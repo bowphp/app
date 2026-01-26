@@ -2,12 +2,13 @@
 
 if (!function_exists('mix')) {
     /**
-     * Get mixfile chunkhash version
+     * Get mix file chunk hash version
      *
-     * @param string $path
+     * @param  string $path
      * @return string
+     * @throws Exception
      */
-    function mix($path)
+    function mix(string $path)
     {
         $manifest = config('app.mixfile_path');
 
@@ -31,10 +32,10 @@ if (!function_exists('public_path')) {
     /**
      * Get public directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
-    function public_path($path = '')
+    function public_path(string $path = ''): string
     {
         return __DIR__ . '/../public/' . ltrim($path, '/');
     }
@@ -44,10 +45,10 @@ if (!function_exists('frontend_path')) {
     /**
      * Get frontend directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
-    function frontend_path($path = '')
+    function frontend_path(string $path = '')
     {
         return __DIR__ . '/../frontend/' . ltrim($path, '/');
     }
@@ -57,10 +58,10 @@ if (!function_exists('storage_path')) {
     /**
      * Get storages directory
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
-    function storage_path($path = '')
+    function storage_path(string $path = '')
     {
         return __DIR__ . '/../var/' . ltrim($path, '/');
     }
@@ -72,7 +73,7 @@ if (! function_exists('base_path')) {
      *
      * @return string
      */
-    function base_path($path = '')
+    function base_path($path = ''): string
     {
         return rtrim(rtrim(realpath(__DIR__ . '/..'), '/') . '/' . $path, '/');
     }
@@ -83,10 +84,10 @@ if (! function_exists('gen_slix')) {
      * Generate a random code.
      * Can be used to hide the name of form fields.
      *
-     * @param int $len
+     * @param  int $len
      * @return string
      */
-    function gen_slix($len = 4)
+    function gen_slix(int $len = 4): string
     {
         return substr(str_shuffle(uniqid()), 0, $len);
     }
@@ -98,7 +99,7 @@ if (! function_exists('gen_unique_id')) {
      *
      * @return string
      */
-    function gen_unique_id()
+    function gen_unique_id(): string
     {
         $id = base_convert(microtime(false), 10, 36);
 

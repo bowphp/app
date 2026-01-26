@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "signkey" => app_env("APP_JWT_SECRET", "FivwuTmpJlwfXB/WMjAyMS0wMS0yNCAyMDozMTozMTE2MTE1MjAyOTEuMDEwOA=="),
+    "signkey" => app_env("APP_JWT_SECRET"),
 
     /**
     * Token expiration time
@@ -12,6 +12,13 @@ return [
      * Configures the issuer
      */
     "iss" => app_env("APP_JWT_ISSUER", "app.example.com"),
+
+    /**
+     * Hashing algorithm being used
+     *
+     * HS256, HS384, HS512, ES256, ES384, ES512
+     */
+    "alg" => "HS512",
 
     /**
      * Configures the audience

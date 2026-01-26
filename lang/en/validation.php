@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'email' => 'The {attribute} field must be an email.',
+    'required' => 'The {attribute} field is required.',
+    'empty' => 'The {attribute} field is missing in the fields to be validated.',
+    'min' => 'The {attribute} field must be at least {length} characters long.',
+    'max' => 'The {attribute} field must not exceed {length} characters.',
+    'same' => 'The {attribute} field must be the same as {value}.',
+    'number' => 'The {attribute} field must be a number.',
+    'int' => 'The {attribute} field must be an integer.',
+    'float' => 'The {attribute} field must be a decimal.',
+    'alphanum' => 'Only alphanumeric characters are allowed for field {attribute}.',
+    'in' => 'The {attribute} field must be one of the following {value}.',
+    'size' => 'The {attribute} field must be {length} characters long.',
+    'lower' => 'Only lowercase letters are allowed for field {attribute}.',
+    'upper' => 'Only uppercase letters are allowed for field {attribute}.',
+    'alpha' => 'Only alphabetic characters are allowed for field {attribute}.',
+    'exists' => 'The {attribute} field does not exists.',
+    'not_exists' => 'The {attribute} field already exists.',
+    'unique' => 'The {attribute} field must be unique.',
+    'date' => 'The {attribute} field must use the format: yyyy-mm-dd',
+    'datetime' => 'The {attribute} field must use the format: yyyy-mm-dd hh:mm:ss',
+    'regex' => 'The {attribute} field does not match the pattern',
+];

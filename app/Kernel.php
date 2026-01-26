@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Bow\Router\Router;
 use Bow\Configuration\Loader as ApplicationLoader;
 
 class Kernel extends ApplicationLoader
@@ -36,13 +37,14 @@ class Kernel extends ApplicationLoader
             'event' => 'App\\Events',
             'listener' => 'App\\Listeners',
             'exception' => 'App\\Exceptions',
-            'producer' => 'App\\Producers',
+            'task' => 'App\\Tasks',
             'command' => 'App\\Commands',
+            'messaging' => 'App\\Messages',
         ];
     }
 
     /**
-     * Define the app middlewares
+     * Define the app middleware
      *
      * @return array
      */
@@ -67,7 +69,6 @@ class Kernel extends ApplicationLoader
              * Internal configuration of the framework
              */
             \Bow\Configuration\LoggerConfiguration::class,
-            \Bow\Configuration\EnvConfiguration::class,
 
             \Bow\Cache\CacheConfiguration::class,
             \Bow\Mail\MailConfiguration::class,
@@ -101,6 +102,22 @@ class Kernel extends ApplicationLoader
     {
         parent::boot();
 
+        $this->routes();
+
         return $this;
+    }
+
+    /**
+     * Load the define route
+     *
+     * @return void
+     */
+    public function routes(): void
+    {
+        global $router;
+
+        $router = Router::getInstance();
+
+        require_once base_path('routes/app.php');
     }
 }

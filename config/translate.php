@@ -15,5 +15,5 @@ return [
     /**
      * Path to the language repeater
      */
-    'dictionary' => __DIR__ . '/../frontend/lang',
+    'dictionary' => __DIR__ . '/../lang',
 ];

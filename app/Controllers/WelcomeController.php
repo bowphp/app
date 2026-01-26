@@ -3,18 +3,17 @@
 namespace App\Controllers;
 
 use Bow\Http\Request;
-use App\Controllers\Controller;
 
-class WelcomeController extends Controller
+class WelcomeController
 {
     /**
      * Show index
      *
-     * @param Request $request
-     * @return string
+     * @param  Request $request
+     * @return string|null
      */
     public function __invoke(Request $request): ?string
     {
-        return $this->render('welcome');
+        return view('welcome');
     }
 }

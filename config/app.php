@@ -7,10 +7,10 @@ return [
     'name' => app_env('APP_NAME', 'Bow Application'),
 
     /**
-     * The auto csrf enable csrf protected automaticly
+     * The auto csrf enable csrf protected automatically
      * on POST, DELETE, PUT
      */
-    "auto_csrf" => app_env("APP_AUTO_CSRF", true),
+    "auto_csrf" => (bool) app_env("APP_AUTO_CSRF", true),
 
     /**
      * Root of the application
@@ -30,9 +30,9 @@ return [
     'env_file' => realpath(__DIR__ . '/../.env.json'),
 
     /**
-     * Path to the frontend folder
+     * Path to the assets folder
      */
-    'frontend_path' => dirname(__DIR__) . '/frontend',
+    'frontend_path' => dirname(__DIR__) . '/assets',
 
     /**
      * Path to the seeders folder

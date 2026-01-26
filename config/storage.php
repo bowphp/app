@@ -30,26 +30,27 @@ return [
             'password' => app_env('FTP_PASSWORD'),
             'username' => app_env('FTP_USERNAME'),
             'port'     => app_env('FTP_PORT', 21),
-            // The basic folder of the server
             'root' => app_env('FTP_STARTROOT', null),
-            // A `true` to activate a secure connection.
             'tls' => app_env('FTP_TLS', false),
-            // Connection waiting time
             'timeout' => app_env('FTP_TIMEOUT', 50)
         ],
 
         /**
          * S3 configuration
+         * Supports both AWS S3 and MinIO (S3-compatible storage)
          */
         's3' => [
             'driver' => 's3',
+            'bucket' => app_env('S3_BUCKET', 'settlements'),
+            'region' => app_env('AWS_REGION', 'us-east-1'),
+            'version' => 'latest',
             'credentials' => [
-                'key'    => app_env('S3_KEY'),
-                'secret' => app_env('S3_SECRET'),
+                'key'    => app_env('AWS_KEY'),
+                'secret' => app_env('AWS_SECRET'),
             ],
-            'bucket' => app_env('S3_BUCKET'),
-            'region' => app_env('S3_REGION'),
-            'version' => 'latest'
-        ]
+            // MinIO configuration (optional)
+            'endpoint' => app_env('AWS_ENDPOINT'), // e.g., 'http://localhost:9000' for MinIO
+            'use_path_style_endpoint' => app_env('AWS_USE_PATH_STYLE_ENDPOINT', false), // Set to true for MinIO
+        ],
     ],
 ];
