@@ -1,7 +1,7 @@
 <?php
 
 use Bow\Database\Migration\Migration;
-use Bow\Database\Migration\SQLGenerator;
+use Bow\Database\Migration\Table;
 
 class Version20170407084225CreateUsersTable extends Migration
 {
@@ -10,7 +10,7 @@ class Version20170407084225CreateUsersTable extends Migration
      */
     public function up(): void
     {
-        $this->create("users", function (SQLGenerator $table) {
+        $this->create("users", function (Table $table) {
             $table->addIncrement('id');
             $table->addString('name');
             $table->addString('email', ['unique' => true]);
