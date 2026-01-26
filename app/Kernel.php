@@ -37,7 +37,7 @@ class Kernel extends ApplicationLoader
             'event' => 'App\\Events',
             'listener' => 'App\\Listeners',
             'exception' => 'App\\Exceptions',
-            'job' => 'App\\Jobs',
+            'task' => 'App\\Tasks',
             'command' => 'App\\Commands',
             'messaging' => 'App\\Messages',
         ];

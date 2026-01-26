@@ -13,7 +13,7 @@ return [
     ],
 
     'sms' => [
-        'provider' => app_env('SMS_PROVIDER', 'twilio'), // Default SMS provider
+        'provider' => app_env('SMS_PROVIDER', 'callisto'), // Default SMS provider
 
         'twilio' => [
             'account_sid' => app_env('TWILIO_ACCOUNT_SID'),
