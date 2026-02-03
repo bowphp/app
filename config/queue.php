@@ -47,6 +47,14 @@ return [
         "database" => [
             "queue" => "default",
             "table" => "queues",
-        ]
+        ],
+
+        /**
+         * The redis connexion
+         */
+        "redis" => [
+            "queue" => "default",
+            "block_timeout" => 5,
+        ],
     ]
 ];
