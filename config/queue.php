@@ -28,6 +28,30 @@ return [
         ],
 
         /**
+         * The rabbitmq connection
+         */
+        'rabbitmq' => [
+            'queue' => 'default',
+            'host' => app_env('RABBITMQ_HOST', '127.0.0.1'),
+            'port' => app_env('RABBITMQ_PORT', 5672),
+            'user' => app_env('RABBITMQ_USER', 'guest'),
+            'password' => app_env('RABBITMQ_PASSWORD', 'guest'),
+            'vhost' => app_env('RABBITMQ_VHOST', '/'),
+        ],
+
+        /**
+         * The kafka connection
+         */
+        "kafka" => [
+            'host' => 'localhost',
+            'port' => 9092,
+            'topic' => 'default',
+            'group_id' => 'bow_queue_group',
+            'auto_offset_reset' => 'earliest',
+            'enable_auto_commit' => 'true',
+        ],
+
+        /**
          * The sqs connexion
          */
         "sqs" => [
