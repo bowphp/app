@@ -3,6 +3,7 @@
 namespace App;
 
 use Bow\Router\Router;
+use Bow\Scheduler\Scheduler;
 use Bow\Configuration\Loader as ApplicationLoader;
 
 class Kernel extends ApplicationLoader
@@ -18,6 +19,19 @@ class Kernel extends ApplicationLoader
             // Put your event here
             // "user.created" => UserCreatedListener::class
         ];
+    }
+
+    /**
+     * Define your scheduled tasks
+     *
+     * @param Scheduler $schedule
+     * @return void
+     */
+    public function schedules(Scheduler $schedule): void
+    {
+        // Define your scheduled tasks here
+        // $schedule->command("cache:clear")->daily();
+        // $schedule->call(fn () => logger()->info("Heartbeat"))->everyMinute();
     }
 
     /**
