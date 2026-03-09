@@ -1,107 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="icon" type="image/x-icon" href="/favicon.png"/>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&display=swap" rel="stylesheet">
-    <title>%inject("title", "It's Worked")</title>
+    <title>%inject("title", "Bow Framework")</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700" rel="stylesheet" />
     <style>
-        * {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            font-size: 100%;
+        :root {
+            --bow-red: #e63946;
+            --bow-red-dark: #c1121f;
+            --bow-dark: #1d1d1d;
+            --bow-darker: #141414;
+            --bow-light: #f8f9fa;
+            --bow-gray: #6c757d;
+            --bow-border: #2d2d2d;
+        }
+
+        html {
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            color: #fff;
-            background-color: #181818;
-        }
-
-        #main {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-        }
-
-        #main .banner {
-            flex: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.05);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            color: white;
-        }
-
-        .banner img {
-            height: 80px;
-            opacity: 0.5;
-        }
-
-        .sub-banner {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-around;
-            width: 100%;
-        }
-
-        .sub-banner a {
-            flex: 0 0 120px;
-            width: 120px;
-            filter: grayscale(100%);
-            margin-right: 40px;
-            opacity: 0.3;
-            text-align: center;
-        }
-
-        .sub-banner a:hover {
-            filter: unset;
-            opacity: 0.8;
-        }
-
-        .sub-banner a:first-child img{
-            width: 60px;
-        }
-
-        .sub-banner a > img {
-            width: 100%;
-            height: auto;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bow-darker);
+            color: var(--bow-light);
+            min-height: 100vh;
         }
 
         a {
-            color: #bd362f;
+            color: var(--bow-red);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         a:hover {
-            text-decoration: underline;
-        }
-
-        h1 {
-            color: white;
-            font-size: 42px;
-            font-weight: 600;
-            line-height: 1.8;
+            color: var(--bow-red-dark);
         }
     </style>
 </head>
 <body>
-    <main id="main">
-        %inject('content')
-    </main>
+    %inject('content')
 </body>
 </html>

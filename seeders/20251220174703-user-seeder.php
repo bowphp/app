@@ -10,16 +10,16 @@ class UserSeeder20251220174703
         $faker = FakerFactory::create();
 
         foreach (range(1, 5) as $value) {
-            $user = [
+            $user = User::create([
                 'name' => $faker->name,
                 'description' => $faker->text(100),
                 'email' => $faker->email,
                 'password' => app_hash('password'),
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ];
+            ]);
 
-            User::create($user);
+            $user->persist();
         }
     }
 }
