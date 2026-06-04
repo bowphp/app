@@ -15,8 +15,8 @@
         "source": "https://github.com/bowphp/app"
     },
     "require": {
-        "php": "^8.1",
-        "bowphp/framework": "^5.2",
+        "php": "^8.2",
+        "bowphp/framework": "^5.3",
         "bowphp/policier": "^3.0",
         "ext-pdo": "*",
         "ext-redis": "*",

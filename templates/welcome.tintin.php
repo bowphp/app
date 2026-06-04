@@ -15,7 +15,6 @@
         justify-content: space-between;
         align-items: center;
         padding: 1.5rem 3rem;
-        border-bottom: 1px solid var(--bow-border);
     }
 
     .brand {
@@ -65,7 +64,7 @@
         justify-content: center;
         text-align: center;
         padding: 6rem 2rem;
-        background: radial-gradient(ellipse at 50% 0%, rgba(230, 57, 70, 0.08) 0%, transparent 60%);
+        background: radial-gradient(ellipse at 50% 0%, rgba(154, 160, 170, 0.10) 0%, transparent 60%);
     }
 
     .hero-section h1 {
@@ -77,7 +76,7 @@
     }
 
     .hero-section h1 span {
-        background: linear-gradient(135deg, var(--bow-red) 0%, #ff6b6b 100%);
+        background: linear-gradient(135deg, var(--bow-red) 0%, #e2e5ea 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -124,17 +123,13 @@
     }
 
     .btn-secondary:hover {
-        background: #3d3d3d;
+        background: #33333a;
         color: white;
     }
 
     .features {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 1px;
-        background: var(--bow-border);
-        border-top: 1px solid var(--bow-border);
-        border-bottom: 1px solid var(--bow-border);
     }
 
     @media (max-width: 900px) {
@@ -153,7 +148,7 @@
         width: 48px;
         height: 48px;
         margin: 0 auto 1.5rem;
-        background: linear-gradient(135deg, var(--bow-red) 0%, #ff6b6b 100%);
+        background: linear-gradient(135deg, #6b7280 0%, #9aa0aa 100%);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -200,7 +195,6 @@
 
     .code-block {
         background: var(--bow-dark);
-        border: 1px solid var(--bow-border);
         border-radius: 12px;
         padding: 1.5rem 2rem;
         max-width: 700px;
@@ -223,7 +217,6 @@
 
     footer {
         padding: 2rem 3rem;
-        border-top: 1px solid var(--bow-border);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -253,7 +246,7 @@
     <header>
         <div class="brand">
             <img src="/img/logo.svg" alt="Bow">
-            <span>Bow</span>
+            <span>BowPHP</span>
         </div>
         <nav class="nav-links">
             <a href="https://bowphp.com" target="_blank">Documentation</a>

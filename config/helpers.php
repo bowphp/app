@@ -1,30 +1,44 @@
 <?php
 
-if (!function_exists('mix')) {
+if (!function_exists('vite')) {
     /**
-     * Get mix file chunk hash version
+     * Resolve a Vite-built asset URL from the manifest.
      *
-     * @param  string $path
+     * @param  string $file     Manifest entry key, e.g. "js/app.js".
+     * @param  bool   $absolute Return an absolute URL prefixed with the app URL.
      * @return string
      * @throws Exception
      */
-    function mix(string $path)
+    function vite(string $file, bool $absolute = false): string
     {
-        $manifest = config('app.mixfile_path');
+        static $manifest = null;
 
-        if (! file_exists($manifest)) {
-            return $path;
+        if ($manifest === null) {
+            $candidates = [
+                public_path('build/.vite/manifest.json'),
+                public_path('build/manifest.json'),
+                public_path('.vite/manifest.json'),
+                base_path() . '/manifest.json',
+            ];
+
+            $manifest = [];
+            foreach ($candidates as $candidate) {
+                if (file_exists($candidate)) {
+                    $manifest = json_decode(file_get_contents($candidate), true) ?: [];
+                    break;
+                }
+            }
         }
 
-        $content = json_decode(file_get_contents($manifest), true);
+        $key = ltrim($file, '/');
 
-        $key = '/' . ltrim($path, '/');
-
-        if (isset($content[$key])) {
-            return $content[$key];
+        if (!isset($manifest[$key]['file'])) {
+            throw new Exception("Vite manifest entry not found: {$file}");
         }
 
-        throw new Exception($path . " Not exists");
+        $path = '/build/' . ltrim($manifest[$key]['file'], '/');
+
+        return $absolute ? url($path) : $path;
     }
 }
 

@@ -1,0 +1,1 @@
+window.axios=require("axios");window.axios.defaults.headers.common["X-Requested-With"]="XMLHttpRequest";const e=document.querySelector('meta[name="csrf-token"]');e&&(window.axios.defaults.headers.common["X-Csrf-Token"]=e.getAttribute("content"));require("./Example.jsx");
