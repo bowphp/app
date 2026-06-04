@@ -50,11 +50,6 @@ return [
     'storage_path' => dirname(__DIR__) . '/var/storage',
 
     /**
-     * Path to the mix-manifest.json
-     */
-    'mixfile_path' => dirname(__DIR__) . '/public/mix-manifest.json',
-
-    /**
      * The debug mode of the application
      *
      * development | production

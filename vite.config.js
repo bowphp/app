@@ -3,8 +3,31 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import fullReload from 'vite-plugin-full-reload';
 import { resolve } from 'path';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, rmSync } from 'fs';
+
+// Publish the Vite build manifest at the project root (`manifest.json`) instead
+// of leaving it under `public/.vite/`. Vite's `manifest` option only accepts a
+// path relative to `outDir` (Rollup forbids escaping it with `..`), so we move
+// the emitted file in a post-build hook. Only runs when a manifest is produced.
+const publishManifestToRoot = () => ({
+	name: 'bow-publish-manifest',
+	apply: 'build',
+	enforce: 'post',
+	writeBundle(options, bundle) {
+		const key = Object.keys(bundle).find((name) => name.endsWith('.vite/manifest.json'));
+		if (!key) {
+			return;
+		}
+
+		const asset = bundle[key];
+		writeFileSync(resolve(__dirname, 'manifest.json'), asset.source ?? asset.code ?? '');
+
+		// Drop the default copy so the root file is the single source of truth.
+		rmSync(resolve(options.dir, '.vite'), { recursive: true, force: true });
+	},
+});
 
 // Load .env.json if exists
 const loadBowEnv = () => {
@@ -43,6 +66,24 @@ export default defineConfig(({ mode }) => {
 				fastRefresh: true,
 			}),
 			tailwindcss(),
+			// Full-page live reload when server-rendered files change. Vite's HMR
+			// only covers JS/CSS modules it serves from `assets/`; editing a
+			// Tintin/Twig template, a route or a PHP class won't reload the page
+			// on its own. This watches those files and triggers a browser reload.
+			// `apply: 'serve'` means it is a no-op during `vite build`.
+			fullReload(
+				[
+					'templates/**/*.tintin.php',
+					'templates/**/*.twig',
+					'templates/**/*.php',
+					'routes/**/*.php',
+					'app/**/*.php',
+					'config/**/*.php',
+					'lang/**/*.php',
+				],
+				{ root: __dirname, delay: 100 }
+			),
+			publishManifestToRoot(),
 		],
 
 		root: resolve(__dirname, 'assets'),
