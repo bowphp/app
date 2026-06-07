@@ -18,7 +18,7 @@ The goal is to allow beginners who want to work on a more significant project to
 
 You must make sure the following items are installed on your machine.
 
-- PHP >= 8.1
+- PHP >= 8.2
 - OpenSSL PHP Extension
 - PDO PHP Extension
 - Mbstring PHP Extension
