@@ -1,0 +1,118 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: bowphp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bowphp
+      MYSQL_USER: bowphp
+      MYSQL_PASSWORD: bowphp
+      MYSQL_ROOT_PASSWORD: bowphp
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - bowphp-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ubowphp", "-pbowphp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: bowphp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: bowphp
+      POSTGRES_USER: bowphp
+      POSTGRES_PASSWORD: bowphp
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bowphp-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bowphp -d bowphp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  adminer:
+    image: adminer:latest
+    container_name: bowphp-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    networks:
+      - bowphp-network
+    depends_on:
+      - mysql
+      - postgres
+
+  redis:
+    image: redis:7-alpine
+    container_name: bowphp-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - bowphp-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  beanstalkd:
+    image: schickling/beanstalkd:latest
+    container_name: bowphp-beanstalkd
+    restart: unless-stopped
+    ports:
+      - "11300:11300"
+    volumes:
+      - beanstalkd_data:/var/lib/beanstalkd
+    networks:
+      - bowphp-network
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'stats' | nc -w 1 localhost 11300 | grep -q current-jobs-ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: bowphp-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - bowphp-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql_data:
+  postgres_data:
+  redis_data:
+  beanstalkd_data:
+  rabbitmq_data:
+
+networks:
+  bowphp-network:
+    driver: bridge
