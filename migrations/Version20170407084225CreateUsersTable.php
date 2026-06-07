@@ -16,6 +16,7 @@ class Version20170407084225CreateUsersTable extends Migration
             $table->addString('email', ['unique' => true]);
             $table->addString('description', ['nullable' => true]);
             $table->addString('password');
+            $table->addString('remember_token', ['nullable' => true, 'size' => 100]);
             $table->addTimestamps();
             $table->withEngine('InnoDB');
         });
