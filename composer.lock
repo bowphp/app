@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73b6a02c4a6241420b6ac094c8efc9f3",
+    "content-hash": "3b503644bdb333d8f7af415cd4ae3033",
     "packages": [
         {
             "name": "bowphp/framework",
-            "version": "5.3.12",
+            "version": "5.3.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bowphp/framework.git",
-                "reference": "f3cc1ef3d36db0adfd6edc7574bb05c8100c355d"
+                "reference": "c5367a8eac671cadb08899f8e8c561d8343db556"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bowphp/framework/zipball/f3cc1ef3d36db0adfd6edc7574bb05c8100c355d",
-                "reference": "f3cc1ef3d36db0adfd6edc7574bb05c8100c355d",
+                "url": "https://api.github.com/repos/bowphp/framework/zipball/c5367a8eac671cadb08899f8e8c561d8343db556",
+                "reference": "c5367a8eac671cadb08899f8e8c561d8343db556",
                 "shasum": ""
             },
             "require": {
@@ -98,7 +98,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2026-06-02T14:11:49+00:00"
+            "time": "2026-06-10T16:56:44+00:00"
         },
         {
             "name": "bowphp/policier",
@@ -1681,16 +1681,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92"
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/14c5439eec4ccff081ac14eca2dc57feb2a66d92",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
                 "shasum": ""
             },
             "require": {
@@ -1742,7 +1742,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -1762,20 +1762,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T12:51:13+00:00"
+            "time": "2026-05-27T06:59:30+00:00"
         },
         {
             "name": "symfony/polyfill-php83",
-            "version": "v1.38.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php83.git",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2"
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/8339098cae28673c15cce00d80734af0453054e2",
-                "reference": "8339098cae28673c15cce00d80734af0453054e2",
+                "url": "https://api.github.com/repos/symfony/polyfill-php83/zipball/796a26abb75ce49f3a84433cd81bf1009d73d5f8",
+                "reference": "796a26abb75ce49f3a84433cd81bf1009d73d5f8",
                 "shasum": ""
             },
             "require": {
@@ -1822,7 +1822,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-php83/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -1842,7 +1842,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T12:51:13+00:00"
+            "time": "2026-05-27T06:51:48+00:00"
         },
         {
             "name": "symfony/polyfill-php85",
@@ -4282,7 +4282,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-pdo": "*",
         "ext-redis": "*",
         "ext-curl": "*",

@@ -12,10 +12,10 @@ class ErrorHandle extends BaseErrorHandler
     /**
      * handle the error
      *
-     * @param  Exception $exception
+     * @param  mixed $exception
      * @return mixed|string
      */
-    public function handle(Exception $exception): mixed
+    public function handle($exception): mixed
     {
         if (request()->isAjax()) {
             return $this->json($exception);
